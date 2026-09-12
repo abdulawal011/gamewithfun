@@ -22,7 +22,7 @@ const games = [
     title: "Flag Guess",
     category: "Quiz",
     icon: "games/file_00000000f6e0821198b5d1d570b62f71.png",
-    url: "games/flag-guess.html",
+    url: "games/flag-guess-2.html",
     newGame: true,
     popular: false
   },
