@@ -50,40 +50,72 @@ let favorites = JSON.parse(
   localStorage.getItem("gameWithFunFavorites") || "[]"
 );
 
+
+/* =========================
+   GAME ITEM
+   ========================= */
+
 function gameCard(game) {
   const isFavorite = favorites.includes(game.id);
 
+  const isImage =
+    game.icon &&
+    (
+      game.icon.includes(".png") ||
+      game.icon.includes(".jpg") ||
+      game.icon.includes(".jpeg") ||
+      game.icon.includes(".webp")
+    );
+
+  const gameUrl = game.url && game.url !== "#" ? game.url : null;
+
   return `
-    <article class="game-card">
+    <article class="game-item">
 
       <button
         class="favorite-btn ${isFavorite ? "active" : ""}"
-        onclick="toggleFavorite(${game.id})">
+        onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(${game.id})"
+        aria-label="Favorite ${game.title}">
         ${isFavorite ? "♥" : "♡"}
       </button>
 
-      <div class="game-icon">
-  ${
-    game.icon.includes(".png") || game.icon.includes(".jpg") || game.icon.includes(".jpeg") || game.icon.includes(".webp")
-      ? `<img src="${game.icon}" alt="${game.title}">`
-      : game.icon
-  }
-</div>
+      ${
+        gameUrl
+        ? `
+          <a
+            class="game-link"
+            href="${gameUrl}"
+            aria-label="Play ${game.title}">
+        `
+        : `
+          <a
+            class="game-link"
+            href="#"
+            onclick="showToast('This game is coming soon 🎮'); return false;"
+            aria-label="${game.title} coming soon">
+        `
+      }
 
-      <div class="game-info">
-        <h3>${game.title}</h3>
-        <p>${game.category}</p>
-      </div>
+          <div class="game-logo">
+            ${
+              isImage
+                ? `<img src="${game.icon}" alt="${game.title}">`
+                : `<span class="emoji-logo">${game.icon}</span>`
+            }
+          </div>
 
-      <button
-        class="play-btn"
-        onclick="playGame(${game.id})">
-        Play
-      </button>
+          <h3>${game.title}</h3>
+
+        </a>
 
     </article>
   `;
 }
+
+
+/* =========================
+   RENDER GAMES
+   ========================= */
 
 function renderGames() {
   const newGrid = document.getElementById("newGrid");
@@ -104,6 +136,11 @@ function renderGames() {
   }
 }
 
+
+/* =========================
+   CATEGORIES
+   ========================= */
+
 function renderCategories() {
   const categoryGrid = document.getElementById("categoryGrid");
   const allCategoryGrid = document.getElementById("allCategoryGrid");
@@ -112,8 +149,10 @@ function renderCategories() {
     <button
       class="category-card"
       onclick="showCategory('${category}')">
+
       <span>${categoryIcon(category)}</span>
       <b>${category}</b>
+
     </button>
   `).join("");
 
@@ -125,6 +164,7 @@ function renderCategories() {
     allCategoryGrid.innerHTML = html;
   }
 }
+
 
 function categoryIcon(category) {
   const icons = {
@@ -138,6 +178,11 @@ function categoryIcon(category) {
 
   return icons[category] || "🎮";
 }
+
+
+/* =========================
+   FAVORITES
+   ========================= */
 
 function toggleFavorite(id) {
   if (favorites.includes(id)) {
@@ -153,7 +198,11 @@ function toggleFavorite(id) {
 
   renderGames();
 
-  if (!document.getElementById("favoritesPage").classList.contains("hidden")) {
+  if (
+    !document
+      .getElementById("favoritesPage")
+      .classList.contains("hidden")
+  ) {
     renderFavorites();
   }
 
@@ -163,6 +212,7 @@ function toggleFavorite(id) {
       : "Removed from favorites"
   );
 }
+
 
 function renderFavorites() {
   const favoriteGrid = document.getElementById("favoriteGrid");
@@ -181,6 +231,7 @@ function renderFavorites() {
         <p>Tap the heart on a game to add it here.</p>
       </div>
     `;
+
     return;
   }
 
@@ -188,6 +239,11 @@ function renderFavorites() {
     .map(gameCard)
     .join("");
 }
+
+
+/* =========================
+   OPEN GAME
+   ========================= */
 
 function playGame(id) {
   const game = games.find(item => item.id === id);
@@ -202,6 +258,11 @@ function playGame(id) {
   window.location.href = game.url;
 }
 
+
+/* =========================
+   PAGE NAVIGATION
+   ========================= */
+
 function showPage(page) {
   const pages = {
     home: "homePage",
@@ -212,7 +273,10 @@ function showPage(page) {
 
   Object.values(pages).forEach(id => {
     const element = document.getElementById(id);
-    if (element) element.classList.add("hidden");
+
+    if (element) {
+      element.classList.add("hidden");
+    }
   });
 
   const target = document.getElementById(pages[page]);
@@ -221,20 +285,29 @@ function showPage(page) {
     target.classList.remove("hidden");
   }
 
-  document.querySelectorAll(".bottom-nav button").forEach(button => {
-    button.classList.remove("active");
-  });
+  document
+    .querySelectorAll(".bottom-nav button")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
 
   if (page === "home") {
-    document.getElementById("navHome")?.classList.add("active");
+    document
+      .getElementById("navHome")
+      ?.classList.add("active");
   }
 
   if (page === "categories") {
-    document.getElementById("navCategories")?.classList.add("active");
+    document
+      .getElementById("navCategories")
+      ?.classList.add("active");
   }
 
   if (page === "favorites") {
-    document.getElementById("navFavorites")?.classList.add("active");
+    document
+      .getElementById("navFavorites")
+      ?.classList.add("active");
+
     renderFavorites();
   }
 
@@ -243,6 +316,11 @@ function showPage(page) {
     behavior: "smooth"
   });
 }
+
+
+/* =========================
+   VIEW ALL
+   ========================= */
 
 function openAll(type) {
   const title = document.getElementById("allTitle");
@@ -254,18 +332,31 @@ function openAll(type) {
 
   if (type === "new") {
     selectedGames = games.filter(game => game.newGame);
-    if (title) title.textContent = "New Games";
+
+    if (title) {
+      title.textContent = "New Games";
+    }
   }
 
   if (type === "popular") {
     selectedGames = games.filter(game => game.popular);
-    if (title) title.textContent = "Popular Games";
+
+    if (title) {
+      title.textContent = "Popular Games";
+    }
   }
 
-  grid.innerHTML = selectedGames.map(gameCard).join("");
+  grid.innerHTML = selectedGames
+    .map(gameCard)
+    .join("");
 
   showPage("all");
 }
+
+
+/* =========================
+   CATEGORY
+   ========================= */
 
 function showCategory(category) {
   const title = document.getElementById("allTitle");
@@ -294,6 +385,11 @@ function showCategory(category) {
   showPage("all");
 }
 
+
+/* =========================
+   SEARCH
+   ========================= */
+
 function searchGames() {
   const input = document.getElementById("searchInput");
 
@@ -315,7 +411,8 @@ function searchGames() {
   const grid = document.getElementById("allGrid");
 
   if (title) {
-    title.textContent = `Search results for "${input.value}"`;
+    title.textContent =
+      `Search results for "${input.value}"`;
   }
 
   if (grid) {
@@ -333,12 +430,18 @@ function searchGames() {
   showPage("all");
 }
 
+
+/* =========================
+   TOAST
+   ========================= */
+
 function showToast(message) {
   const toast = document.getElementById("toast");
 
   if (!toast) return;
 
   toast.textContent = message;
+
   toast.classList.add("show");
 
   setTimeout(() => {
@@ -346,11 +449,17 @@ function showToast(message) {
   }, 2000);
 }
 
+
+/* =========================
+   START
+   ========================= */
+
 document.addEventListener("DOMContentLoaded", () => {
   renderGames();
   renderCategories();
 
-  const searchInput = document.getElementById("searchInput");
+  const searchInput =
+    document.getElementById("searchInput");
 
   if (searchInput) {
     searchInput.addEventListener("keydown", event => {
