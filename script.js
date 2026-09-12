@@ -28,10 +28,10 @@ const games = [
   },
   {
     id: 4,
-    title: "Chess AI",
+    title: "Car Racing",
     category: "Board",
-    icon: "♟️",
-    url: "#",
+    icon: "games/file_00000000f2808208ae73d8b75c491ce3.png",
+    url: "games/careering.html",
     newGame: false,
     popular: true
   }
