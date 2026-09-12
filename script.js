@@ -21,7 +21,7 @@ const games = [
     id: 3,
     title: "Flag Guess",
     category: "Quiz",
-    icon: "🌍",
+    icon: "games/file_00000000c8388211815dc83cd8039c22.png",
     url: "games/flag-guess.html",
     newGame: true,
     popular: false
