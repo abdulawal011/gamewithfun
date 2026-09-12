@@ -4,7 +4,7 @@ const games = [
     title: "Neon Tic Tac Toe",
     category: "Puzzle",
     icon: "⭕",
-    url: "https://mim681550-dot.github.io/neon-tic-tac-toe/",
+    url: "games/neon_tic_tac_toe-1.html",
     newGame: true,
     popular: true
   },
