@@ -1,1 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flag Guess Game — Neon Edition</title>
+<meta name="description" content="Guess country flags in a colorful free online quiz game with sound effects.">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 10%,#25135c,#080b1b 55%,#03040b);color:#fff;font-family:Arial,sans-serif}
+.wrap{width:min(760px,94%);margin:auto;padding:14px 0}.top{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #343a62}.top a{color:#6ff;text-decoration:none;font-weight:900}.tools button{background:#19144b;color:#fff;border:1px solid #9b5cff;border-radius:10px;padding:8px 10px;margin-left:5px;cursor:pointer}
+.ad{height:64px;border:1px dashed #445071;color:#7785a6;display:flex;align-items:center;justify-content:center;font-size:10px;margin:14px 0}
+.card{background:#0d1226eF;border:2px solid #6d35ff;border-radius:24px;padding:20px;box-shadow:0 0 40px #662cff44;text-align:center}
+h1{font-size:clamp(30px,8vw,48px);margin:4px 0;background:linear-gradient(90deg,#54f,#0ff,#ff4db8,#ffcf32);-webkit-background-clip:text;color:transparent}
+.sub{color:#b7c0d8}.stats{display:flex;justify-content:space-around;gap:8px;flex-wrap:wrap;color:#fff;margin:15px 0}.pill{padding:8px 12px;border-radius:10px;background:#171d39;border:1px solid #35416b}.timer{color:#5dff91;font-weight:900}
+.flag{width:min(400px,92%);height:220px;margin:18px auto;border-radius:16px;border:4px solid #fff;background:#111;display:flex;align-items:center;justify-content:center;font-size:110px;box-shadow:0 0 35px #00eaff77}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px;margin:auto}.answers button{min-height:60px;border:2px solid #fff;border-radius:13px;color:#fff;font-weight:900;font-size:16px;cursor:pointer;transition:.15s}.answers button:nth-child(1){background:linear-gradient(135deg,#ff185d,#b600ff)}.answers button:nth-child(2){background:linear-gradient(135deg,#008cff,#00d9ff)}.answers button:nth-child(3){background:linear-gradient(135deg,#00b95d,#00e68a)}.answers button:nth-child(4){background:linear-gradient(135deg,#ff7a00,#ffd000)}.answers button:hover{transform:translateY(-3px);filter:brightness(1.15)}
+.result{min-height:30px;font-size:21px;font-weight:bold;margin:15px}.btn{padding:12px 22px;border:1px solid #6ff;border-radius:11px;background:#152846;color:#fff;font-weight:bold;cursor:pointer}.hidden{display:none}
+.progress{height:9px;background:#202842;border-radius:20px;overflow:hidden;margin:10px 0}.bar{height:100%;width:10%;background:linear-gradient(90deg,#00e5ff,#ff3dce,#ffd000)}
+@media(max-width:500px){.flag{height:170px;font-size:85px}.answers button{font-size:14px}.card{padding:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><a href="../index.html">← NEON ARCADE</a><strong>🌍 FLAG GUESS</strong><div class="tools"><button id="sound" title="Toggle sound">🔊</button><button id="music" title="Toggle music">🎵</button></div></div>
+<div class="ad">ADVERTISEMENT</div>
+<div class="card">
+<h1>FLAG GUESS</h1><p class="sub">Can you identify the country?</p>
+<div class="stats"><span class="pill">🏆 Score <b id="score">0</b></span><span class="pill">❓ <b id="round">1</b>/10</span><span class="pill">❤️ <b id="lives">3</b></span><span class="pill">⏱️ <b id="time">15</b>s</span></div>
+<div class="progress"><div id="bar" class="bar"></div></div>
+<div id="flag" class="flag"></div>
+<div id="answers" class="answers"></div>
+<div id="result" class="result"></div>
+<button id="restart" class="btn hidden">PLAY AGAIN</button>
+</div>
+<div class="ad">ADVERTISEMENT</div>
+</div>
+<script>
+const countries = [
+  {name:"Afghanistan", code:"AF"},
+  {name:"Albania", code:"AL"},
+  {name:"Algeria", code:"DZ"},
+  {name:"Andorra", code:"AD"},
+  {name:"Angola", code:"AO"},
+  {name:"Antigua and Barbuda", code:"AG"},
+  {name:"Argentina", code:"AR"},
+  {name:"Armenia", code:"AM"},
+  {name:"Australia", code:"AU"},
+  {name:"Austria", code:"AT"},
+  {name:"Azerbaijan", code:"AZ"},
+  {name:"Bahamas", code:"BS"},
+  {name:"Bahrain", code:"BH"},
+  {name:"Bangladesh", code:"BD"},
+  {name:"Barbados", code:"BB"},
+  {name:"Belarus", code:"BY"},
+  {name:"Belgium", code:"BE"},
+  {name:"Belize", code:"BZ"},
+  {name:"Benin", code:"BJ"},
+  {name:"Bhutan", code:"BT"},
+  {name:"Bolivia", code:"BO"},
+  {name:"Bosnia and Herzegovina", code:"BA"},
+  {name:"Botswana", code:"BW"},
+  {name:"Brazil", code:"BR"},
+  {name:"Brunei", code:"BN"},
+  {name:"Bulgaria", code:"BG"},
+  {name:"Burkina Faso", code:"BF"},
+  {name:"Burundi", code:"BI"},
+  {name:"Cabo Verde", code:"CV"},
+  {name:"Cambodia", code:"KH"},
+  {name:"Cameroon", code:"CM"},
+  {name:"Canada", code:"CA"},
+  {name:"Central African Republic", code:"CF"},
+  {name:"Chad", code:"TD"},
+  {name:"Chile", code:"CL"},
+  {name:"China", code:"CN"},
+  {name:"Colombia", code:"CO"},
+  {name:"Comoros", code:"KM"},
+  {name:"Congo, Democratic Republic of the", code:"CD"},
+  {name:"Congo, Republic of the", code:"CG"},
+  {name:"Costa Rica", code:"CR"},
+  {name:"C\u00f4te d'Ivoire", code:"CI"},
+  {name:"Croatia", code:"HR"},
+  {name:"Cuba", code:"CU"},
+  {name:"Cyprus", code:"CY"},
+  {name:"Czechia", code:"CZ"},
+  {name:"Denmark", code:"DK"},
+  {name:"Djibouti", code:"DJ"},
+  {name:"Dominica", code:"DM"},
+  {name:"Dominican Republic", code:"DO"},
+  {name:"Ecuador", code:"EC"},
+  {name:"Egypt", code:"EG"},
+  {name:"El Salvador", code:"SV"},
+  {name:"Equatorial Guinea", code:"GQ"},
+  {name:"Eritrea", code:"ER"},
+  {name:"Estonia", code:"EE"},
+  {name:"Eswatini", code:"SZ"},
+  {name:"Ethiopia", code:"ET"},
+  {name:"Fiji", code:"FJ"},
+  {name:"Finland", code:"FI"},
+  {name:"France", code:"FR"},
+  {name:"Gabon", code:"GA"},
+  {name:"Gambia", code:"GM"},
+  {name:"Georgia", code:"GE"},
+  {name:"Germany", code:"DE"},
+  {name:"Ghana", code:"GH"},
+  {name:"Greece", code:"GR"},
+  {name:"Grenada", code:"GD"},
+  {name:"Guatemala", code:"GT"},
+  {name:"Guinea", code:"GN"},
+  {name:"Guinea-Bissau", code:"GW"},
+  {name:"Guyana", code:"GY"},
+  {name:"Haiti", code:"HT"},
+  {name:"Honduras", code:"HN"},
+  {name:"Hungary", code:"HU"},
+  {name:"Iceland", code:"IS"},
+  {name:"India", code:"IN"},
+  {name:"Indonesia", code:"ID"},
+  {name:"Iran", code:"IR"},
+  {name:"Iraq", code:"IQ"},
+  {name:"Ireland", code:"IE"},
+  {name:"Israel", code:"IL"},
+  {name:"Italy", code:"IT"},
+  {name:"Jamaica", code:"JM"},
+  {name:"Japan", code:"JP"},
+  {name:"Jordan", code:"JO"},
+  {name:"Kazakhstan", code:"KZ"},
+  {name:"Kenya", code:"KE"},
+  {name:"Kiribati", code:"KI"},
+  {name:"Kuwait", code:"KW"},
+  {name:"Kyrgyzstan", code:"KG"},
+  {name:"Laos", code:"LA"},
+  {name:"Latvia", code:"LV"},
+  {name:"Lebanon", code:"LB"},
+  {name:"Lesotho", code:"LS"},
+  {name:"Liberia", code:"LR"},
+  {name:"Libya", code:"LY"},
+  {name:"Liechtenstein", code:"LI"},
+  {name:"Lithuania", code:"LT"},
+  {name:"Luxembourg", code:"LU"},
+  {name:"Madagascar", code:"MG"},
+  {name:"Malawi", code:"MW"},
+  {name:"Malaysia", code:"MY"},
+  {name:"Maldives", code:"MV"},
+  {name:"Mali", code:"ML"},
+  {name:"Malta", code:"MT"},
+  {name:"Marshall Islands", code:"MH"},
+  {name:"Mauritania", code:"MR"},
+  {name:"Mauritius", code:"MU"},
+  {name:"Mexico", code:"MX"},
+  {name:"Micronesia", code:"FM"},
+  {name:"Moldova", code:"MD"},
+  {name:"Monaco", code:"MC"},
+  {name:"Mongolia", code:"MN"},
+  {name:"Montenegro", code:"ME"},
+  {name:"Morocco", code:"MA"},
+  {name:"Mozambique", code:"MZ"},
+  {name:"Myanmar", code:"MM"},
+  {name:"Namibia", code:"NA"},
+  {name:"Nauru", code:"NR"},
+  {name:"Nepal", code:"NP"},
+  {name:"Netherlands", code:"NL"},
+  {name:"New Zealand", code:"NZ"},
+  {name:"Nicaragua", code:"NI"},
+  {name:"Niger", code:"NE"},
+  {name:"Nigeria", code:"NG"},
+  {name:"North Korea", code:"KP"},
+  {name:"North Macedonia", code:"MK"},
+  {name:"Norway", code:"NO"},
+  {name:"Oman", code:"OM"},
+  {name:"Pakistan", code:"PK"},
+  {name:"Palau", code:"PW"},
+  {name:"Palestine", code:"PS"},
+  {name:"Panama", code:"PA"},
+  {name:"Papua New Guinea", code:"PG"},
+  {name:"Paraguay", code:"PY"},
+  {name:"Peru", code:"PE"},
+  {name:"Philippines", code:"PH"},
+  {name:"Poland", code:"PL"},
+  {name:"Portugal", code:"PT"},
+  {name:"Qatar", code:"QA"},
+  {name:"Romania", code:"RO"},
+  {name:"Russia", code:"RU"},
+  {name:"Rwanda", code:"RW"},
+  {name:"Saint Kitts and Nevis", code:"KN"},
+  {name:"Saint Lucia", code:"LC"},
+  {name:"Saint Vincent and the Grenadines", code:"VC"},
+  {name:"Samoa", code:"WS"},
+  {name:"San Marino", code:"SM"},
+  {name:"Sao Tome and Principe", code:"ST"},
+  {name:"Saudi Arabia", code:"SA"},
+  {name:"Senegal", code:"SN"},
+  {name:"Serbia", code:"RS"},
+  {name:"Seychelles", code:"SC"},
+  {name:"Sierra Leone", code:"SL"},
+  {name:"Singapore", code:"SG"},
+  {name:"Slovakia", code:"SK"},
+  {name:"Slovenia", code:"SI"},
+  {name:"Solomon Islands", code:"SB"},
+  {name:"Somalia", code:"SO"},
+  {name:"South Africa", code:"ZA"},
+  {name:"South Korea", code:"KR"},
+  {name:"South Sudan", code:"SS"},
+  {name:"Spain", code:"ES"},
+  {name:"Sri Lanka", code:"LK"},
+  {name:"Sudan", code:"SD"},
+  {name:"Suriname", code:"SR"},
+  {name:"Sweden", code:"SE"},
+  {name:"Switzerland", code:"CH"},
+  {name:"Syria", code:"SY"},
+  {name:"Taiwan", code:"TW"},
+  {name:"Tajikistan", code:"TJ"},
+  {name:"Tanzania", code:"TZ"},
+  {name:"Thailand", code:"TH"},
+  {name:"Timor-Leste", code:"TL"},
+  {name:"Togo", code:"TG"},
+  {name:"Tonga", code:"TO"},
+  {name:"Trinidad and Tobago", code:"TT"},
+  {name:"Tunisia", code:"TN"},
+  {name:"Turkey", code:"TR"},
+  {name:"Turkmenistan", code:"TM"},
+  {name:"Tuvalu", code:"TV"},
+  {name:"Uganda", code:"UG"},
+  {name:"Ukraine", code:"UA"},
+  {name:"United Arab Emirates", code:"AE"},
+  {name:"United Kingdom", code:"GB"},
+  {name:"United States", code:"US"},
+  {name:"Uruguay", code:"UY"},
+  {name:"Uzbekistan", code:"UZ"},
+  {name:"Vanuatu", code:"VU"},
+  {name:"Vatican City", code:"VA"},
+  {name:"Venezuela", code:"VE"},
+  {name:"Vietnam", code:"VN"},
+  {name:"Yemen", code:"YE"},
+  {name:"Zambia", code:"ZM"},
+  {name:"Zimbabwe", code:"ZW"}
+];
+let score=0,round=1,lives=3,current=null,time=15,timer=null,soundOn=true,musicOn=false,audio=null;
+const $=id=>document.getElementById(id);
+function tone(freq,dur,type="sine",vol=.07){if(!soundOn)return;try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=freq;g.gain.value=vol;o.connect(g);g.connect(audio.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.stop(audio.currentTime+dur)}catch(e){}}
+function correctSound(){tone(660,.1);setTimeout(()=>tone(880,.14),90)}
+function wrongSound(){tone(180,.18,"sawtooth");}
+function start(){score=0;round=1;lives=3;clearInterval(timer);$("restart").classList.add("hidden");$("result").textContent="";update();next()}
+function update(){$("score").textContent=score;$("round").textContent=Math.min(round,10);$("lives").textContent=lives;$("time").textContent=time;$("bar").style.width=((round-1)/10*100+10)+"%"}
+function next(){
+ if(round>10||lives<=0){end();return}
+ current=countries[Math.floor(Math.random()*countries.length)];$("flag").textContent=current[1];time=15;update();
+ let opts=[current];while(opts.length<4){let c=countries[Math.floor(Math.random()*countries.length)];if(!opts.some(x=>x[0]===c[0]))opts.push(c)}opts.sort(()=>Math.random()-.5);
+ $("answers").innerHTML="";opts.forEach(c=>{let b=document.createElement("button");b.textContent=c[0];b.onclick=()=>choose(c);$("answers").appendChild(b)});
+ clearInterval(timer);timer=setInterval(()=>{time--;update();if(time<=0){clearInterval(timer);lives--;wrongSound();$("result").textContent="⏰ Time's up!";round++;setTimeout(()=>{$("result").textContent="";next()},700)}},1000);
+}
+function choose(c){clearInterval(timer);let buttons=[...$("answers").children];buttons.forEach(b=>b.disabled=true);
+if(c[0]===current[0]){score+=10;correctSound();$("result").textContent="🎉 CORRECT! +10";}else{lives--;wrongSound();$("result").textContent="❌ Wrong! It was "+current[0]+"."}
+round++;update();setTimeout(()=>{$("result").textContent="";next()},700)}
+function end(){clearInterval(timer);$("flag").textContent="🏆";$("answers").innerHTML="";$("result").textContent=`Game Over! Final score: ${score} 🎉`;$("restart").classList.remove("hidden");update()}
+$("restart").onclick=start;
+$("sound").onclick=()=>{soundOn=!soundOn;$("sound").textContent=soundOn?"🔊":"🔇";if(soundOn)tone(700,.08)}
+$("music").onclick=()=>{musicOn=!musicOn;$("music").textContent=musicOn?"🎶":"🎵";if(musicOn)tone(260,.12,"triangle",.04)}
+start();
 
+function flagEmoji(code){
+  return [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
+}
+</script>
+</body></html>
