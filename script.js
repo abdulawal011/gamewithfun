@@ -3,7 +3,7 @@ const games = [
     id: 1,
     title: "Neon Tic Tac Toe",
     category: "Puzzle",
-    icon: "⭕",
+    icon: "games/file_00000000c8388211815dc83cd8039c22.png",
     url: "games/neon_tic_tac_toe-1.html",
     newGame: true,
     popular: true
