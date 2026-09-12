@@ -22,7 +22,7 @@ const games = [
     title: "Flag Guess",
     category: "Quiz",
     icon: "🌍",
-    url: "#",
+    url: "games/flag-guess.html",
     newGame: true,
     popular: false
   },
