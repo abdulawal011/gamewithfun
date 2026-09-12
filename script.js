@@ -62,7 +62,13 @@ function gameCard(game) {
         ${isFavorite ? "♥" : "♡"}
       </button>
 
-      <div class="game-icon">${game.icon}</div>
+      <div class="game-icon">
+  ${
+    game.icon.includes(".png") || game.icon.includes(".jpg") || game.icon.includes(".jpeg") || game.icon.includes(".webp")
+      ? `<img src="${game.icon}" alt="${game.title}">`
+      : game.icon
+  }
+</div>
 
       <div class="game-info">
         <h3>${game.title}</h3>
