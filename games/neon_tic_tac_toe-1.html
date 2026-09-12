@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tic Tac Toe — Neon AI</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#07031d;color:#fff}
+body{min-height:100vh;overflow-x:hidden}
+button,select{font:inherit}
+.app{min-height:100vh;background:
+ radial-gradient(circle at 75% 45%,rgba(155,28,255,.28),transparent 30%),
+ radial-gradient(circle at 15% 75%,rgba(0,122,255,.22),transparent 34%),
+ linear-gradient(180deg,#09051f 0%,#08031c 100%);padding-bottom:30px}
+.topbar{height:72px;background:#f7f5fa;color:#17151d;display:flex;align-items:center;padding:0 18px;gap:18px;box-shadow:0 2px 10px #0002}
+.back{font-size:38px;border:0;background:none;color:#24222a;line-height:1;cursor:pointer}
+.title{font-size:24px;font-weight:800}
+.container{width:min(680px,100%);margin:auto;padding:18px}
+.logo{text-align:center;font-weight:1000;font-style:italic;line-height:.8;margin:5px 0 28px;text-shadow:0 5px 0 #19104d}
+.logo .tic{display:block;font-size:57px;color:#fff}
+.logo .tac{display:block;font-size:38px;color:#ffd000;-webkit-text-stroke:1px #ff5b00}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card{border:2px solid;border-radius:28px;padding:15px 8px;text-align:center;background:linear-gradient(145deg,#11104c,#180d43);box-shadow:0 8px 22px #0005}
+.card.you{border-color:#008cff}.card.draw{border-color:#6230cf}.card.ai{border-color:#df1684}
+.card .label{font-size:20px;font-weight:800;color:#ddd}
+.card .score{font-size:54px;font-weight:900;margin-top:5px}.you .score{color:#16dfff}.ai .score{color:#ff3b98}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.settings .setting:first-child{grid-column:1/-1}
+.setting{border:2px solid #48229a;border-radius:28px;padding:13px 16px;background:#0c082e}
+.setting label{display:block;color:#aaa4ce;font-size:16px;font-weight:800;margin-bottom:9px}
+.setting select{width:100%;border:0;border-radius:17px;padding:15px;background:#17114b;color:#fff;font-weight:800;font-size:19px;outline:none}
+.turn{width:max-content;margin:10px auto 18px;padding:15px 30px;border:2px solid #6530e8;border-radius:30px;background:#0b072c;font-size:23px;font-weight:900;box-shadow:0 0 20px #6620ff22}
+.turn span{color:#16dfff}
+.timer{height:10px;background:linear-gradient(90deg,#14d9ff,#8050ff,#ff2995);border-radius:20px;margin:0 0 18px;box-shadow:0 0 12px #4d57ff}
+.board{width:min(100%,500px);margin:0 auto 22px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px;border:2px solid #5b2aca;border-radius:25px;background:#0b0730;box-shadow:0 0 28px #5b1cff40}
+.cell{aspect-ratio:1;border:2px solid #392279;border-radius:18px;background:linear-gradient(145deg,#17104e,#0f0a39);color:#fff;font-size:clamp(48px,15vw,82px);font-weight:1000;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center}
+.cell:active{transform:scale(.94)}
+.cell.x{color:#16dfff;text-shadow:0 0 18px #16dfff}
+.cell.o{color:#ff3b98;text-shadow:0 0 18px #ff3b98}
+.friend-mode .turn span{color:#ff3b98}
+
+.cell.win{background:#24165c;border-color:#fff;box-shadow:0 0 25px #b550ff}
+.actions{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:12px}
+.action{border:0;border-radius:25px;color:white;font-weight:900;font-size:18px;padding:17px 8px;cursor:pointer;box-shadow:0 8px 0 #0004}
+.new{background:linear-gradient(145deg,#287bff,#1254d7)}
+.reset{background:linear-gradient(145deg,#28e76b,#0ab648)}
+.undo{background:linear-gradient(145deg,#8247f4,#5920cf)}
+.action:active{transform:translateY(4px);box-shadow:0 4px 0 #0004}
+.message{text-align:center;color:#8c87ad;font-weight:800;margin-top:28px;font-size:17px}
+.message strong{color:#fff}
+.modal{position:fixed;inset:0;background:#050218cc;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal.show{display:flex}
+.modal-box{width:min(400px,100%);background:#10083b;border:2px solid #6b36e9;border-radius:28px;padding:28px;text-align:center;box-shadow:0 0 50px #6a20ff66}
+.modal-box h2{font-size:34px;margin:0 0 10px}.modal-box p{color:#bdb7df;font-size:18px}
+.modal-box button{border:0;border-radius:18px;padding:14px 24px;background:#16d9ff;color:#041326;font-weight:900;cursor:pointer}
+@media(max-width:480px){
+ .container{padding:14px}.logo{margin-bottom:24px}.logo .tic{font-size:48px}.logo .tac{font-size:32px}
+ .card{border-radius:21px}.card .label{font-size:16px}.card .score{font-size:45px}
+ .settings{gap:9px}.setting{padding:11px;border-radius:21px}.setting select{font-size:16px;padding:13px}
+ .turn{font-size:19px;padding:13px 23px}.actions{gap:8px}.action{font-size:15px;border-radius:20px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+<button class="back" onclick="history.back()" aria-label="Back">‹</button>
+<div class="title">Tic Tac Toe — Neon AI</div>
+</header>
+
+<main class="container">
+<div class="logo"><span class="tic">TIC</span><span class="tac">TAC TOE</span></div>
+
+<section class="cards">
+<div class="card you"><div class="label">YOU</div><div class="score" id="youScore">0</div></div>
+<div class="card draw"><div class="label">🏆 DRAWS</div><div class="score" id="drawScore">0</div></div>
+<div class="card ai"><div class="label">AI 🤖</div><div class="score" id="aiScore">0</div></div>
+</section>
+
+<section class="settings">
+<div class="setting"><label>GAME MODE</label>
+<select id="mode">
+<option value="ai" selected>🤖 PLAY WITH AI</option>
+<option value="friend">👥 PLAY WITH FRIEND</option>
+</select>
+</div>
+<div class="setting"><label id="symbolLabel">YOU ARE</label>
+<select id="symbol">
+<option value="X">❌ X</option><option value="O">⭕ O</option>
+</select>
+</div>
+<div class="setting" id="difficultyBox"><label>DIFFICULTY</label>
+<select id="difficulty">
+<option value="easy">EASY</option><option value="medium" selected>MEDIUM</option><option value="hard">HARD</option>
+</select></div>
+</section>
+
+<div class="turn" id="turn">YOU <span>(X)</span> TURN</div>
+<div class="timer" id="timer"></div>
+
+<div class="board" id="board">
+<button class="cell" data-i="0"></button><button class="cell" data-i="1"></button><button class="cell" data-i="2"></button>
+<button class="cell" data-i="3"></button><button class="cell" data-i="4"></button><button class="cell" data-i="5"></button>
+<button class="cell" data-i="6"></button><button class="cell" data-i="7"></button><button class="cell" data-i="8"></button>
+</div>
+
+<div class="actions">
+<button class="action new" id="newRound">↻ NEW<br>ROUND</button>
+<button class="action reset" id="reset">↻ RESET SCORES</button>
+<button class="action undo" id="undo">💡 UNDO</button>
+</div>
+
+<div class="message" id="message">♟ <strong>BEAT THE AI. WIN THE GAME!</strong></div>
+</main>
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<h2 id="resultTitle">You Win!</h2><p id="resultText"></p>
+<button id="modalBtn">PLAY AGAIN</button>
+</div>
+</div>
+
+<script>
+const cells=[...document.querySelectorAll('.cell')];
+const modeEl=document.getElementById('mode');
+const symbolEl=document.getElementById('symbol');
+const difficultyEl=document.getElementById('difficulty');
+const difficultyBox=document.getElementById('difficultyBox');
+const symbolLabel=document.getElementById('symbolLabel');
+const turnEl=document.getElementById('turn');
+const timerEl=document.getElementById('timer');
+const messageEl=document.getElementById('message');
+const modal=document.getElementById('modal');
+const resultTitle=document.getElementById('resultTitle');
+const resultText=document.getElementById('resultText');
+
+let board=Array(9).fill('');
+let player='X', ai='O', turn='X', gameOver=false;
+let mode='ai';
+let history=[];
+let scores={you:0,draw:0,ai:0};
+let timer=100, timerId=null;
+
+const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+function loadScores(){
+ try{scores=JSON.parse(localStorage.getItem('tttNeonScores'))||scores}catch(e){}
+ updateScores();
+}
+function saveScores(){localStorage.setItem('tttNeonScores',JSON.stringify(scores));}
+function updateScores(){
+ document.getElementById('youScore').textContent=scores.you;
+ document.getElementById('drawScore').textContent=scores.draw;
+ document.getElementById('aiScore').textContent=scores.ai;
+ const labels=document.querySelectorAll('.card .label');
+ labels[0].textContent=mode==='friend'?'PLAYER 1':'YOU';
+ labels[2].textContent=mode==='friend'?'PLAYER 2':'AI 🤖';
+}
+function checkWinner(b=board){
+ for(const w of wins){
+  if(b[w[0]]&&b[w[0]]===b[w[1]]&&b[w[1]]===b[w[2]]) return {winner:b[w[0]],line:w};
+ }
+ if(b.every(Boolean)) return {winner:'draw',line:[]};
+ return null;
+}
+function render(){
+ cells.forEach((c,i)=>{
+  c.textContent=board[i];
+  c.className='cell '+(board[i]==='X'?'x':board[i]==='O'?'o':'');
+ });
+ updateTurn();
+}
+function updateTurn(){
+ if(gameOver)return;
+ if(mode==='friend'){
+  turnEl.innerHTML=turn==='X'?'PLAYER 1 <span>(X)</span> TURN':'PLAYER 2 <span>(O)</span> TURN';
+ }else{
+  turnEl.innerHTML=turn===player?'YOU <span>('+player+')</span> TURN':'AI <span>('+ai+')</span> THINKING…';
+ }
+}
+function startTimer(){
+ clearInterval(timerId); timer=100; timerEl.style.width='100%';
+ if(mode!=='ai' || turn!==player || gameOver)return;
+ timerId=setInterval(()=>{
+  if(gameOver||mode!=='ai'||turn!==player){clearInterval(timerId);return}
+  timer-=2;
+  timerEl.style.width=Math.max(0,timer)+'%';
+  if(timer<=0){clearInterval(timerId);aiMove();}
+ },100);
+}
+function newRound(){
+ board=Array(9).fill(''); history=[]; gameOver=false; turn=mode==='friend'?'X':player; modal.classList.remove('show');
+ messageEl.innerHTML=mode==='friend'
+   ? '👥 <strong>PASS THE PHONE — PLAYER 1 STARTS!</strong>'
+   : '♟ <strong>BEAT THE AI. WIN THE GAME!</strong>';
+ render();
+ if(mode==='ai' && turn!==player)setTimeout(aiMove,450);
+ else startTimer();
+}
+function makeMove(i,p){
+ if(board[i]||gameOver)return false;
+ history.push(board.slice()); board[i]=p; render(); return true;
+}
+function endGame(result){
+ gameOver=true;clearInterval(timerId);
+ if(result.winner==='draw'){
+  scores.draw++; resultTitle.textContent='Draw!'; resultText.textContent='Nobody wins this round.';
+  }else if(mode==='friend'){
+  if(result.winner==='X'){
+   scores.you++; resultTitle.textContent='🎉 Player 1 Wins!'; resultText.textContent='Player 1 got three in a row!';
+  }else{
+   scores.ai++; resultTitle.textContent='🎉 Player 2 Wins!'; resultText.textContent='Player 2 got three in a row!';
+  }
+ }else if(result.winner===player){
+  scores.you++; resultTitle.textContent='🎉 You Win!'; resultText.textContent='Amazing! You beat the AI.';
+ }else{
+  scores.ai++; resultTitle.textContent='🤖 AI Wins'; resultText.textContent='The AI got you this time. Try again!';
+ }
+ saveScores();updateScores();
+ result.line.forEach(i=>cells[i].classList.add('win'));
+ setTimeout(()=>modal.classList.add('show'),250);
+}
+function afterMove(){
+ const r=checkWinner();
+ if(r){endGame(r);return true}
+ if(mode==='friend'){
+  turn=turn==='X'?'O':'X';
+  render();
+  return false;
+ }
+ turn=turn===player?ai:player;
+ render();
+ if(turn===player)startTimer(); else setTimeout(aiMove,350);
+ return false;
+}
+function humanMove(i){
+ if(gameOver)return;
+ if(mode==='friend'){
+  if(!makeMove(i,turn))return;
+  afterMove();
+ }else{
+  if(turn!==player||!makeMove(i,player))return;
+  afterMove();
+ }
+}
+function available(b=board){return b.map((v,i)=>v?null:i).filter(i=>i!==null)}
+function randomMove(){const a=available();return a[Math.floor(Math.random()*a.length)]}
+function findWinningMove(p){
+ for(const i of available()){board[i]=p;const r=checkWinner();board[i]='';if(r&&r.winner===p)return i}
+ return null;
+}
+function minimax(b,maximizing){
+ const r=checkWinner(b);
+ if(r){if(r.winner===ai)return 10;if(r.winner===player)return -10;return 0}
+ const moves=b.map((v,i)=>v?null:i).filter(i=>i!==null);
+ if(maximizing){
+  let best=-Infinity;
+  for(const i of moves){b[i]=ai;best=Math.max(best,minimax(b,false));b[i]=''}
+  return best;
+ }else{
+  let best=Infinity;
+  for(const i of moves){b[i]=player;best=Math.min(best,minimax(b,true));b[i]=''}
+  return best;
+ }
+}
+function hardMove(){
+ let best=-Infinity,move=null;
+ for(const i of available()){
+  board[i]=ai;let score=minimax(board,false);board[i]='';
+  if(score>best){best=score;move=i}
+ }
+ return move;
+}
+function aiMove(){
+ if(gameOver||turn!==ai)return;
+ clearInterval(timerId);
+ let move;
+ const d=difficultyEl.value;
+ if(d==='easy')move=randomMove();
+ else if(d==='medium'){
+  move=findWinningMove(ai);
+  if(move===null)move=findWinningMove(player);
+  if(move===null&&board[4]==='')move=4;
+  if(move===null)move=randomMove();
+ }else move=hardMove();
+ if(move!==undefined&&move!==null)makeMove(move,ai);
+ afterMove();
+}
+cells.forEach(c=>c.addEventListener('click',()=>humanMove(+c.dataset.i)));
+
+document.getElementById('newRound').onclick=newRound;
+document.getElementById('modalBtn').onclick=newRound;
+document.getElementById('reset').onclick=()=>{
+ scores={you:0,draw:0,ai:0};saveScores();updateScores();newRound();
+};
+document.getElementById('undo').onclick=()=>{
+ if(gameOver||history.length===0)return;
+ board=history.pop();
+ if(mode==='friend'){
+   const count=board.filter(Boolean).length;
+   turn=count%2===0?'X':'O';
+ }else{
+   turn=player;
+ }
+ render();startTimer();
+ messageEl.innerHTML='↩ <strong>Move undone.</strong>';
+};
+modeEl.onchange=()=>{
+ mode=modeEl.value;
+ document.body.classList.toggle('friend-mode',mode==='friend');
+ difficultyBox.style.display=mode==='friend'?'none':'block';
+ symbolLabel.textContent=mode==='friend'?'PLAYER 1':'YOU ARE';
+ updateScores();
+ symbolEl.innerHTML=mode==='friend'
+   ? '<option value="X">❌ PLAYER 1 — X</option><option value="O">⭕ PLAYER 1 — O</option>'
+   : '<option value="X">❌ X</option><option value="O">⭕ O</option>';
+ player=symbolEl.value;
+ ai=player==='X'?'O':'X';
+ newRound();
+};
+symbolEl.onchange=()=>{
+ player=symbolEl.value;ai=player==='X'?'O':'X';newRound();
+};
+difficultyEl.onchange=()=>{if(!gameOver)messageEl.innerHTML='⚙ <strong>Difficulty changed to '+difficultyEl.options[difficultyEl.selectedIndex].text+'.</strong>'};
+
+loadScores();
+modeEl.dispatchEvent(new Event('change'));
+</script>
+</body>
+</html>
