@@ -1,54 +1,569 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Color Racing Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Neon Rush — VIP Racing</title>
 <style>
-*{box-sizing:border-box}body{margin:0;overflow:hidden;font-family:Arial,sans-serif;background:#6fc7ff}
-#game{height:100vh;position:relative;background:linear-gradient(#69c8ff 0 35%,#4f9b45 35% 100%)}
-.road{position:absolute;left:18%;right:18%;top:0;bottom:0;background:#333;transform:perspective(500px);border-left:8px solid #eee;border-right:8px solid #eee}
-.road:after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:7px dashed #fff;opacity:.8}
-.hud{position:absolute;z-index:10;top:15px;left:15px;right:15px;display:flex;justify-content:space-between;gap:8px}.box{background:#09284fd9;color:white;padding:12px 16px;border-radius:14px;font-weight:bold}
-#player,.enemy{position:absolute;width:58px;height:100px;border-radius:16px;z-index:5;box-shadow:0 5px 15px #111}
-#player{background:linear-gradient(90deg,#0878ff,#50c8ff,#0878ff);bottom:90px;left:50%;transform:translateX(-50%)}
-#player:before,.enemy:before{content:"";position:absolute;left:9px;right:9px;top:14px;height:34px;background:#132d4d;border-radius:10px}
-#player:after{content:"";position:absolute;left:8px;right:8px;bottom:10px;height:8px;background:#ff334f;border-radius:5px}
-.enemy{top:-130px}.red{background:#e73543}.yellow{background:#ffd21f}.purple{background:#8346ee}
-.controls{position:absolute;z-index:12;bottom:20px;left:0;right:0;display:flex;justify-content:space-between;padding:0 25px}
-button{border:2px solid white;background:#071a33dd;color:white;border-radius:50%;width:78px;height:78px;font-size:38px;font-weight:bold}
-#nitro{width:100px;border-radius:20px;background:#087cff;font-size:18px}
-#start{position:absolute;inset:0;z-index:20;background:#04152dcc;display:flex;align-items:center;justify-content:center}
-.panel{background:#09284f;padding:30px;border-radius:24px;text-align:center;color:#fff;border:2px solid #4bb6ff;width:min(90%,350px)}
-.panel h1{font-size:36px;margin:0 0 10px}.panel button{width:auto;height:auto;border-radius:14px;padding:14px 24px;background:#1188ff;font-size:18px}
-#message{position:absolute;z-index:15;top:43%;left:50%;transform:translate(-50%,-50%);font-size:38px;font-weight:900;color:white;text-shadow:0 3px 10px #000;display:none}
+*{box-sizing:border-box}
+:root{
+ --bg:#050817;--card:#111b32;--line:#34496e;
+ --cyan:#57eaff;--purple:#a98cff;--pink:#ff70d5;
+ --gold:#ffe18b;--red:#ff6682;--green:#45edb0;
+}
+body{
+ margin:0;min-height:100vh;color:white;
+ font-family:Arial,"Noto Sans Bengali",sans-serif;
+ background:
+ radial-gradient(circle at 15% 0,#172b60,transparent 42%),
+ radial-gradient(circle at 100% 80%,#3b1458,transparent 42%),var(--bg);
+}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+#app{width:min(100%,680px);margin:auto;padding:14px 12px 28px}
+.hidden{display:none!important}
+.screen{
+ animation:appear .4s ease;
+}
+@keyframes appear{
+ from{opacity:0;transform:translateY(16px)}
+ to{opacity:1;transform:translateY(0)}
+}
+.panel{
+ position:relative;overflow:hidden;text-align:center;
+ padding:27px 19px;border:1px solid #354c79;border-radius:28px;
+ background:linear-gradient(145deg,#172746,#0b1124 80%);
+ box-shadow:0 20px 60px #0008;
+}
+.logo{font-size:68px;filter:drop-shadow(0 0 24px #6a9dff55)}
+h1{
+ font-size:clamp(28px,7vw,42px);margin:12px 0;
+ background:linear-gradient(90deg,#fff,#61eaff,#c6a4ff);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+h2{font-size:24px;margin:12px 0}
+p{color:#afc1dc;line-height:1.85}
+.close{
+ position:absolute;right:12px;top:12px;width:38px;height:38px;
+ border:1px solid #704365;border-radius:12px;background:#351f3c;
+ color:#ffb1d7;font-size:21px;
+}
+.primary{
+ width:100%;padding:16px;margin-top:15px;border:1px solid #80eaff55;
+ border-radius:16px;color:#fff;font-weight:bold;font-size:18px;
+ background:linear-gradient(120deg,#079fcf,#7054ef);
+ box-shadow:0 5px 0 #263a8d,0 0 28px #536eff22;
+}
+.primary:active{transform:translateY(4px);box-shadow:none}
+.tag{
+ display:inline-block;padding:8px 13px;margin:3px;
+ border:1px solid #3c5075;border-radius:30px;
+ background:#1a2a47;color:#d5e8ff;font-size:14px;
+}
+.rules{
+ text-align:left;background:#0b152a;padding:13px 16px;
+ border-radius:15px;margin:12px 0;color:#b5c9e3;line-height:1.9;
+}
+.hud{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;
+}
+.stat{
+ min-width:0;text-align:center;padding:10px 4px;
+ background:linear-gradient(145deg,#182a4a,#0d172c);
+ border:1px solid #344b71;border-radius:15px;
+}
+.stat small{display:block;color:#91acd0;font-size:12px}
+.stat strong{display:block;color:var(--gold);font-size:22px;margin-top:4px}
+#stage{
+ position:relative;overflow:hidden;border-radius:23px;
+ border:1px solid #3d5580;box-shadow:0 0 35px #536eff18;
+ background:#070c20;touch-action:none;
+}
+canvas{display:block;width:100%;height:auto}
+#message{
+ text-align:center;min-height:28px;margin:10px 0 5px;
+ font-weight:bold;font-size:17px;color:var(--cyan);
+}
+.actions{display:flex;gap:9px;margin-top:10px}
+.secondary{
+ flex:1;padding:12px;border:1px solid #3a5073;border-radius:13px;
+ background:#15243e;color:#cbdcf4;font-weight:bold;
+}
+#mobileHint{text-align:center;font-size:13px;color:#819abe;margin:10px 0}
+.result-score{
+ font-size:65px;font-weight:bold;color:var(--gold);
+ text-shadow:0 0 30px #ffe18b33;
+}
+.result-text{text-align:center}
+@media(max-width:380px){
+ #app{padding:10px 8px 25px}
+ .panel{padding:24px 12px}
+ .stat strong{font-size:19px}
+ .stat small{font-size:11px}
+}
 </style>
 </head>
 <body>
-<div id="game">
-<div class="road"></div>
-<div class="hud"><div class="box">🏁 POS <span id="pos">1</span>/4</div><div class="box">LAP <span id="lap">1</span>/3</div><div class="box">⏱ <span id="time">0.0</span></div></div>
-<div id="player"></div><div class="enemy red" id="e1"></div><div class="enemy yellow" id="e2"></div><div class="enemy purple" id="e3"></div>
-<div id="message"></div>
-<div class="controls"><button id="left">‹</button><button id="nitro">NITRO</button><button id="right">›</button></div>
-<div id="start"><div class="panel"><h1>🏎️ Color Racing</h1><p>Use ◀ ▶ to change lanes. Avoid cars and use NITRO!</p><button id="startBtn">START RACE</button></div></div>
+<div id="app">
+
+<!-- নোটিশ -->
+<section id="notice" class="panel screen">
+ <button class="close" id="closeNotice" aria-label="নোটিশ বন্ধ করুন">✕</button>
+ <div class="logo">🏎️</div>
+ <h1>নিয়ন রাশ</h1>
+ <h2>খেলার নিয়ম</h2>
+ <p>নিয়ন শহরের রাস্তায় গাড়ি চালান এবং যত দূর সম্ভব এগিয়ে যান!</p>
+ <div class="rules">
+  🚗 আঙুল দিয়ে গাড়ি ডানে-বামে সরান।<br>
+  🚧 অন্য গাড়িতে ধাক্কা লাগলে খেলা শেষ।<br>
+  💎 রাস্তার কয়েন সংগ্রহ করলে স্কোর বাড়বে।<br>
+  ⚡ নাইট্রো ব্যবহার করে দ্রুত এগিয়ে যান।<br>
+  🏆 যত দূর যাবেন, আপনার স্কোর তত বাড়বে।
+ </div>
+ <button class="primary" id="understood">বুঝেছি, এগিয়ে যান ➜</button>
+</section>
+
+<!-- শুরু -->
+<section id="start" class="panel screen hidden">
+ <div class="logo">🚀</div>
+ <h1>নিয়ন রাশ</h1>
+ <p>রেসিংয়ের জন্য প্রস্তুত তো?</p>
+ <span class="tag">🏎️ স্পোর্টস কার</span>
+ <span class="tag">🌃 নিয়ন শহর</span>
+ <span class="tag">⚡ নাইট্রো</span>
+ <button class="primary" id="startGame">রেস শুরু করুন 🏁</button>
+</section>
+
+<!-- গেম -->
+<section id="game" class="hidden">
+ <div class="hud">
+  <div class="stat"><small>স্কোর</small><strong id="score">০</strong></div>
+  <div class="stat"><small>দূরত্ব</small><strong id="distance">০ মি</strong></div>
+  <div class="stat"><small>কয়েন</small><strong id="coins">০</strong></div>
+ </div>
+
+ <div id="stage">
+  <canvas id="canvas" width="600" height="800"></canvas>
+ </div>
+ <div id="message" aria-live="polite">রেস শুরু করুন!</div>
+ <div id="mobileHint">আঙুল দিয়ে গাড়ি ডানে-বামে সরান</div>
+
+ <div class="actions">
+  <button class="secondary" id="pause">⏸ থামান</button>
+  <button class="secondary" id="restart">🔄 আবার শুরু</button>
+ </div>
+</section>
+
+<!-- ফলাফল -->
+<section id="result" class="panel hidden">
+ <div class="logo">🏆</div>
+ <h1>রেস শেষ!</h1>
+ <p>আপনার মোট স্কোর</p>
+ <div class="result-score" id="finalScore">০</div>
+ <p id="resultText" class="result-text"></p>
+ <button class="primary" id="again">আবার রেস করুন 🔄</button>
+</section>
+
 </div>
+
 <script>
-const lanes=[35,50,65], player=document.getElementById("player"), enemies=[e1,e2,e3];
-let lane=1,running=false,last=0,time=0,score=0,nitro=false,lap=1;
-function setLane(){player.style.left=lanes[lane]+"%"} function move(d){if(running){lane=Math.max(0,Math.min(2,lane+d));setLane()}}
-function reset(e,i){e.style.left=lanes[Math.floor(Math.random()*3)]+"%";e.style.top=(-160-i*210-Math.random()*250)+"px"}
-function hit(a,b){let A=a.getBoundingClientRect(),B=b.getBoundingClientRect();return A.left<B.right-10&&A.right>B.left+10&&A.top<B.bottom-10&&A.bottom>B.top+10}
-function end(text){running=false;message.textContent=text;message.style.display="block";start.style.display="flex";startBtn.textContent="PLAY AGAIN"}
-function startGame(){start.style.display="none";message.style.display="none";running=true;time=0;score=0;lap=1;speed=5;enemies.forEach(reset);last=performance.now();requestAnimationFrame(loop)}
-function loop(now){if(!running)return;let dt=Math.min(40,now-last);last=now;time+=dt/1000;document.getElementById("time").textContent=time.toFixed(1);
-let speed=5+(nitro?5:0);
-for(let i=0;i<enemies.length;i++){let e=enemies[i],y=parseFloat(e.style.top)+speed*dt/16;e.style.top=y+"px";
-if(hit(player,e)){end("💥 CRASH!");return} if(y>innerHeight+120){score++;reset(e,i);if(score%7===0){lap++;document.getElementById("lap").textContent=Math.min(lap,3);if(lap>3){end("🏆 YOU WIN!");return}}}}
-requestAnimationFrame(loop)}
-left.onclick=()=>move(-1);right.onclick=()=>move(1);
-nitro.onpointerdown=()=>nitro=true;nitro.onpointerup=()=>nitro=false;nitro.onpointerleave=()=>nitro=false;
-onkeydown=e=>{if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1);if(e.code==="Space")nitro=true};
-onkeyup=e=>{if(e.code==="Space")nitro=false};startBtn.onclick=startGame;setLane();
+"use strict";
+
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+const W=600,H=800;
+const $=id=>document.getElementById(id);
+const bn=n=>String(Math.floor(n)).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+
+let running=false,paused=false,gameOver=false;
+let score=0,distance=0,coins=0;
+let speed=240,roadOffset=0,spawnTimer=0;
+let lastTime=0,raf=null;
+let traffic=[],coinItems=[],particles=[],stars=[];
+let pointerActive=false;
+let audio=null;
+
+const car={
+ x:W/2,y:H-135,w:65,h:112,
+ targetX:W/2,tilt:0
+};
+
+for(let i=0;i<70;i++){
+ stars.push({
+  x:Math.random()*W,y:Math.random()*H,
+  r:Math.random()*1.7+.3,a:Math.random()*.7+.2
+ });
+}
+
+function show(id){$(id).classList.remove("hidden")}
+function hide(id){$(id).classList.add("hidden")}
+
+function stopFrame(){
+ if(raf!==null)cancelAnimationFrame(raf);
+ raf=null;
+}
+
+function updateHud(){
+ $("score").textContent=bn(score);
+ $("distance").textContent=bn(distance)+" মি";
+ $("coins").textContent=bn(coins);
+}
+
+function initGame(){
+ stopFrame();
+ score=0;distance=0;coins=0;
+ speed=240;roadOffset=0;spawnTimer=0;
+ traffic=[];coinItems=[];particles=[];
+ car.x=W/2;car.targetX=W/2;car.tilt=0;
+ running=true;paused=false;gameOver=false;
+ lastTime=performance.now();
+ hide("notice");hide("start");hide("result");show("game");
+ $("pause").textContent="⏸ থামান";
+ $("message").textContent="রেস শুরু হয়েছে! 🚗";
+ updateHud();
+ raf=requestAnimationFrame(loop);
+}
+
+function rounded(x,y,w,h,r){
+ ctx.beginPath();
+ ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+ ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+ ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+ ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+ ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
+ ctx.closePath();
+}
+
+function drawBackground(){
+ let g=ctx.createLinearGradient(0,0,0,H);
+ g.addColorStop(0,"#090d25");
+ g.addColorStop(.6,"#10183a");
+ g.addColorStop(1,"#060a1b");
+ ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+ stars.forEach(s=>{
+  ctx.globalAlpha=s.a;
+  ctx.fillStyle="#b8d4ff";
+  ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+ });
+ ctx.globalAlpha=1;
+
+ // দূরের শহরের বিল্ডিং
+ for(let i=0;i<20;i++){
+  const x=i*33;
+  const bh=50+(i*37%100);
+  ctx.fillStyle=i%2?"#111b38":"#15213e";
+  ctx.fillRect(x,180-bh,28,bh);
+  ctx.fillStyle="#49bfff44";
+  for(let y=195-bh;y<180;y+=18){
+   ctx.fillRect(x+7,y,4,6);
+   ctx.fillRect(x+17,y,4,6);
+  }
+ }
+
+ // রাস্তা
+ const roadL=92,roadR=508;
+ ctx.fillStyle="#151b30";
+ ctx.fillRect(roadL,0,roadR-roadL,H);
+
+ // রাস্তার কিনারা
+ ctx.fillStyle="#27375b";
+ ctx.fillRect(roadL-8,0,8,H);
+ ctx.fillRect(roadR,0,8,H);
+
+ ctx.strokeStyle="#56dfff";
+ ctx.lineWidth=3;
+ ctx.beginPath();ctx.moveTo(roadL,0);ctx.lineTo(roadL,H);ctx.stroke();
+ ctx.beginPath();ctx.moveTo(roadR,0);ctx.lineTo(roadR,H);ctx.stroke();
+
+ // চলন্ত লেনের দাগ
+ const dashH=65,gap=65;
+ ctx.fillStyle="#b9c9e955";
+ for(let lane=1;lane<3;lane++){
+  const x=roadL+(roadR-roadL)/3*lane;
+  for(let y=-dashH+roadOffset%(dashH+gap);y<H;y+=dashH+gap){
+   ctx.fillRect(x-3,y,6,dashH);
+  }
+ }
+
+ // নিয়ন রাস্তার আলো
+ for(let y=-40+roadOffset%110;y<H;y+=110){
+  ctx.fillStyle="#a78bfa";
+  ctx.shadowBlur=16;ctx.shadowColor="#a78bfa";
+  ctx.fillRect(50,y,8,35);ctx.fillRect(542,y,8,35);
+  ctx.shadowBlur=0;
+ }
+}
+
+function drawPlayer(){
+ const x=car.x,y=car.y,w=car.w,h=car.h;
+ ctx.save();ctx.translate(x,y);ctx.rotate(car.tilt);
+ ctx.shadowBlur=25;ctx.shadowColor="#4deaff";
+
+ // গাড়ির বাইরের বডি
+ let g=ctx.createLinearGradient(-w/2,0,w/2,0);
+ g.addColorStop(0,"#0873b9");
+ g.addColorStop(.45,"#54eaff");
+ g.addColorStop(1,"#1751b6");
+ ctx.fillStyle=g;
+ rounded(-w/2,-h/2,w,h,15);ctx.fill();
+
+ ctx.shadowBlur=0;
+
+ // চাকা
+ ctx.fillStyle="#080b16";
+ rounded(-w/2-7,-h/2+18,13,31,5);ctx.fill();
+ rounded(w/2-6,-h/2+18,13,31,5);ctx.fill();
+ rounded(-w/2-7,h/2-49,13,31,5);ctx.fill();
+ rounded(w/2-6,h/2-49,13,31,5);ctx.fill();
+
+ // কাচ
+ let glass=ctx.createLinearGradient(0,-h/2,0,0);
+ glass.addColorStop(0,"#d3faff");
+ glass.addColorStop(1,"#184d88");
+ ctx.fillStyle=glass;
+ rounded(-w*.31,-h*.35,w*.62,h*.27,8);ctx.fill();
+
+ ctx.strokeStyle="#b5f8ff";ctx.lineWidth=2;
+ ctx.beginPath();ctx.moveTo(0,-h*.35);ctx.lineTo(0,-h*.1);ctx.stroke();
+
+ // সামনের আলো
+ ctx.fillStyle="#f4ffff";
+ ctx.shadowBlur=18;ctx.shadowColor="#d7ffff";
+ rounded(-w*.34,-h*.45,w*.2,8,3);ctx.fill();
+ rounded(w*.14,-h*.45,w*.2,8,3);ctx.fill();
+
+ // নিচের আলো
+ ctx.fillStyle="#ff4fd2";
+ ctx.shadowColor="#ff4fd2";
+ rounded(-w*.35,h*.35,w*.7,5,2);ctx.fill();
+ ctx.shadowBlur=0;
+ ctx.restore();
+}
+
+function drawTraffic(o){
+ const x=o.x,y=o.y,w=o.w,h=o.h;
+ ctx.save();ctx.translate(x,y);
+ ctx.shadowBlur=16;ctx.shadowColor=o.color;
+
+ let g=ctx.createLinearGradient(-w/2,0,w/2,0);
+ g.addColorStop(0,o.dark);g.addColorStop(.5,o.color);g.addColorStop(1,o.dark);
+ ctx.fillStyle=g;rounded(-w/2,-h/2,w,h,13);ctx.fill();
+ ctx.shadowBlur=0;
+
+ ctx.fillStyle="#070c18";
+ rounded(-w*.31,-h*.35,w*.62,h*.28,7);ctx.fill();
+
+ ctx.fillStyle="#fff1b0";
+ rounded(-w*.33,-h*.44,w*.2,7,2);ctx.fill();
+ rounded(w*.13,-h*.44,w*.2,7,2);ctx.fill();
+
+ ctx.fillStyle="#ff415f";
+ rounded(-w*.3,h*.34,w*.6,6,2);ctx.fill();
+
+ ctx.fillStyle="#080b16";
+ rounded(-w/2-5,-h*.28,10,26,4);ctx.fill();
+ rounded(w/2-5,-h*.28,10,26,4);ctx.fill();
+ rounded(-w/2-5,h*.05,10,26,4);ctx.fill();
+ rounded(w/2-5,h*.05,10,26,4);ctx.fill();
+
+ ctx.restore();
+}
+
+function drawCoin(o){
+ ctx.save();ctx.translate(o.x,o.y);
+ ctx.rotate(o.rot);
+ ctx.shadowBlur=22;ctx.shadowColor="#ffe18b";
+ let g=ctx.createLinearGradient(-o.r,0,o.r,0);
+ g.addColorStop(0,"#c68b28");g.addColorStop(.5,"#fff0a0");g.addColorStop(1,"#e2a634");
+ ctx.fillStyle=g;
+ ctx.beginPath();ctx.arc(0,0,o.r,0,Math.PI*2);ctx.fill();
+ ctx.shadowBlur=0;
+ ctx.strokeStyle="#fff7bf";ctx.lineWidth=2;ctx.stroke();
+ ctx.fillStyle="#a56d1e";ctx.font="bold 19px Arial";
+ ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("★",0,1);
+ ctx.restore();
+}
+
+function drawParticles(){
+ particles.forEach(p=>{
+  ctx.globalAlpha=Math.max(0,p.life/500);
+  ctx.fillStyle=p.color;
+  ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+ });
+ ctx.globalAlpha=1;
+}
+
+function burst(x,y,color){
+ for(let i=0;i<14;i++){
+  const a=Math.random()*Math.PI*2;
+  const s=35+Math.random()*100;
+  particles.push({
+   x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,
+   size:2+Math.random()*3,life:500,color
+  });
+ }
+}
+
+function draw(){
+ drawBackground();
+ coinItems.forEach(drawCoin);
+ traffic.forEach(drawTraffic);
+ drawParticles();
+ drawPlayer();
+}
+
+function spawnTraffic(){
+ const roadL=92,roadR=508;
+ const lane=Math.floor(Math.random()*3);
+ const laneW=(roadR-roadL)/3;
+ const x=roadL+laneW*(lane+.5);
+
+ traffic.push({
+  x,y:-90,w:62,h:108,
+  color:["#ff5f91","#a98cff","#ffbd66","#5de7c3"][Math.floor(Math.random()*4)],
+  dark:"#19234e",
+  vy:speed*(.72+Math.random()*.24)
+ });
+}
+
+function spawnCoin(){
+ const roadL=115,roadR=485;
+ coinItems.push({
+  x:roadL+Math.random()*(roadR-roadL),
+  y:-35,r:17,vy:speed*.88,rot:0
+ });
+}
+
+function intersects(a,b){
+ return Math.abs(a.x-b.x)<(a.w+b.w)/2-8 &&
+        Math.abs(a.y-b.y)<(a.h+b.h)/2-10;
+}
+
+function coinCaught(c){
+ return Math.abs(c.x-car.x)<(car.w+c.r)/2 &&
+        Math.abs(c.y-car.y)<(car.h+c.r)/2;
+}
+
+function update(dt){
+ distance+=speed*dt/1000*.04;
+ score+=speed*dt/1000*.035;
+ speed=Math.min(530,240+distance*1.4);
+ roadOffset=(roadOffset+speed*dt/1000)%130;
+
+ spawnTimer-=dt;
+ if(spawnTimer<=0){
+  spawnTraffic();
+  spawnTimer=Math.max(370,900-distance*1.2);
+ }
+ if(Math.random()<dt/1000*.75)spawnCoin();
+
+ traffic.forEach(o=>o.y+=o.vy*dt/1000);
+ coinItems.forEach(o=>{
+  o.y+=o.vy*dt/1000;
+  o.rot+=dt/1000*4;
+ });
+
+ for(let i=traffic.length-1;i>=0;i--){
+  if(intersects(car,traffic[i])){
+   burst(car.x,car.y,"#ff617c");
+   finish();return;
+  }
+  if(traffic[i].y>H+100)traffic.splice(i,1);
+ }
+
+ for(let i=coinItems.length-1;i>=0;i--){
+  if(coinCaught(coinItems[i])){
+   coins++;score+=50;
+   burst(coinItems[i].x,coinItems[i].y,"#ffe18b");
+   coinItems.splice(i);
+   $("message").textContent="💎 কয়েন সংগ্রহ! +৫০";
+   continue;
+  }
+  if(coinItems[i].y>H+40)coinItems.splice(i,1);
+ }
+
+ particles.forEach(p=>{
+  p.x+=p.vx*dt/1000;
+  p.y+=p.vy*dt/1000;
+  p.vy+=70*dt/1000;
+  p.life-=dt;
+ });
+ particles=particles.filter(p=>p.life>0);
+
+ // গাড়িকে লক্ষ্যের দিকে মসৃণভাবে সরানো
+ const diff=car.targetX-car.x;
+ car.x+=diff*Math.min(1,dt/100);
+ car.tilt=Math.max(-.12,Math.min(.12,diff*.002));
+
+ const minX=125,maxX=475;
+ car.x=Math.max(minX,Math.min(maxX,car.x));
+
+ updateHud();
+}
+
+function loop(now){
+ if(!running)return;
+ raf=requestAnimationFrame(loop);
+ if(paused){draw();return;}
+ const dt=Math.min(35,now-lastTime);
+ lastTime=now;
+ update(dt);draw();
+}
+
+function finish(){
+ if(gameOver)return;
+ gameOver=true;running=false;
+ stopFrame();
+ $("finalScore").textContent=bn(score);
+ $("resultText").textContent=
+ "আপনি "+bn(Math.floor(distance))+" মিটার পথ অতিক্রম করেছেন এবং "+
+ bn(coins)+"টি কয়েন সংগ্রহ করেছেন।";
+ hide("game");show("result");
+}
+
+function moveCar(clientX){
+ const rect=canvas.getBoundingClientRect();
+ const x=(clientX-rect.left)*W/rect.width;
+ car.targetX=Math.max(125,Math.min(475,x));
+}
+
+canvas.addEventListener("pointerdown",e=>{
+ pointerActive=true;
+ if(canvas.setPointerCapture)canvas.setPointerCapture(e.pointerId);
+ moveCar(e.clientX);
+});
+canvas.addEventListener("pointermove",e=>{
+ if(pointerActive)moveCar(e.clientX);
+});
+canvas.addEventListener("pointerup",()=>pointerActive=false);
+canvas.addEventListener("pointercancel",()=>pointerActive=false);
+
+$("closeNotice").addEventListener("click",()=>{
+ hide("notice");show("start");
+});
+$("understood").addEventListener("click",()=>{
+ hide("notice");show("start");
+});
+$("startGame").addEventListener("click",initGame);
+$("again").addEventListener("click",initGame);
+$("restart").addEventListener("click",initGame);
+
+$("pause").addEventListener("click",()=>{
+ if(!running||gameOver)return;
+ paused=!paused;
+ $("pause").textContent=paused?"▶ চালু করুন":"⏸ থামান";
+ $("message").textContent=paused?"খেলা থামানো হয়েছে":"আবার শুরু হয়েছে!";
+ if(!paused)lastTime=performance.now();
+});
+
+document.addEventListener("visibilitychange",()=>{
+ if(document.hidden&&running&&!paused){
+  paused=true;
+  $("pause").textContent="▶ চালু করুন";
+  $("message").textContent="খেলা থামানো হয়েছে";
+ }
+});
 </script>
-</body></html>
+</body>
+  </html>
