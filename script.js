@@ -37,10 +37,10 @@ const games = [
   },
   {
     id: 5,
-    title: "Flag Guess",
+    title: "Sliding Puzzle",
     category: "Quiz",
     icon: "games/file_0000000082608208928c87863ab5eea1.png",
-    url: "games/flag-guess.html",
+    url: "games/puzzle-game.html",
     newGame: true,
     popular: false
   }
