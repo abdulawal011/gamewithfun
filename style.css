@@ -110,7 +110,7 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: 28px;
+  border-radius: 24px;
 }
 
 .hero-slider .hero {
@@ -120,18 +120,19 @@ body {
 }
 
 .hero-slider .hero.active {
-  display: flex;
-  animation: heroFade 0.45s ease;
+  display: flex !important;
+  animation: heroPopupIn 0.45s ease both;
 }
 
-@keyframes heroFade {
+@keyframes heroPopupIn {
   from {
     opacity: 0;
-    transform: translateX(15px);
+    transform: scale(.96) translateY(6px);
   }
+
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -140,14 +141,20 @@ body {
    ========================= */
 
 .hero {
-  min-height: 300px;
-  border-radius: 28px;
-  padding: 42px 5%;
+  min-height: 260px;
+  height: 260px;
+  border-radius: 24px;
+  padding: 35px 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(120deg, #0878f9, #09b8ee 55%, #6939ed);
+  background: linear-gradient(
+    120deg,
+    #0878f9,
+    #09b8ee 55%,
+    #6939ed
+  );
   color: #fff;
   box-shadow: 0 15px 35px #2476d32e;
 }
@@ -170,6 +177,7 @@ body {
 
 .hero p:not(.eyebrow) {
   font-size: 18px;
+  margin: 12px 0;
 }
 
 .primary {
@@ -190,17 +198,17 @@ body {
 }
 
 .hero-art {
-  font-size: 150px;
+  font-size: 120px;
   position: relative;
   transform: rotate(-8deg);
   filter: drop-shadow(0 15px 10px #0003);
 }
 
 .hero-art span {
-  font-size: 58px;
+  font-size: 50px;
   position: absolute;
-  top: -25px;
-  left: 65px;
+  top: -20px;
+  left: 55px;
 }
 
 /* =========================
@@ -215,9 +223,9 @@ body {
   height: 40px;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, .92);
   color: #102957;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 30px;
   cursor: pointer;
   z-index: 5;
@@ -233,7 +241,37 @@ body {
 }
 
 .hero-arrow:active {
-  transform: translateY(-50%) scale(0.9);
+  transform: translateY(-50%) scale(.9);
+}
+
+/* =========================
+   HERO DOTS
+   ========================= */
+
+.hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+
+.hero-dots button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.55);
+  cursor: pointer;
+}
+
+.hero-dots button.active {
+  width: 18px;
+  border-radius: 8px;
+  background: #fff;
 }
 
 /* =========================
@@ -300,7 +338,7 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 5px 20px #173a7010;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .game-link:hover .game-logo {
@@ -335,18 +373,26 @@ body {
   right: 7px;
   top: 7px;
   z-index: 5;
-  border: 0;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 50%;
+
   width: 30px;
   height: 30px;
+
   padding: 0;
+  border: 0;
+  border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: rgba(255,255,255,.95);
+  color: #102957;
+
   font-size: 16px;
   line-height: 1;
+
   cursor: pointer;
+
   box-shadow: 0 3px 9px #0002;
 }
 
@@ -408,24 +454,53 @@ body {
    EMPTY STATE
    ========================= */
 
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
+/*
+   IMPORTANT:
+   Empty favorite box will now take
+   full width of the grid.
+*/
+
+.game-grid .empty-state {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+
+  min-height: 260px;
+  padding: 45px 20px;
+
   background: #fff;
   border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
   color: #7184a6;
 }
 
-.empty-state div {
-  font-size: 50px;
+.game-grid .empty-state div {
+  font-size: 55px;
+  margin-bottom: 15px;
 }
 
-.empty-state h3 {
+.game-grid .empty-state h3 {
+  margin: 0 0 12px;
   color: #102957;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.game-grid .empty-state p {
+  max-width: 320px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
 }
 
 /* =========================
-   BOTTOM NAVIGATION
+   BOTTOM NAV
    ========================= */
 
 .bottom-nav {
@@ -433,12 +508,16 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+
   height: 72px;
+
   background: #fff;
   border-top: 1px solid #e8eef8;
+
   display: flex;
   justify-content: center;
   gap: min(18vw, 180px);
+
   z-index: 30;
 }
 
@@ -446,9 +525,12 @@ body {
   width: 100px;
   border: 0;
   background: none;
+
   color: #6c7f9e;
+
   font-weight: 700;
   font-size: 24px;
+
   cursor: pointer;
 }
 
@@ -470,14 +552,20 @@ body {
   position: fixed;
   left: 50%;
   bottom: 92px;
+
   transform: translateX(-50%) translateY(20px);
+
   background: #102957;
   color: #fff;
+
   padding: 11px 18px;
   border-radius: 25px;
+
   opacity: 0;
   pointer-events: none;
-  transition: 0.25s;
+
+  transition: .25s;
+
   z-index: 50;
 }
 
@@ -491,6 +579,7 @@ body {
    ========================= */
 
 @media (max-width: 850px) {
+
   .game-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -502,6 +591,7 @@ body {
   .category-large {
     grid-template-columns: repeat(3, 1fr);
   }
+
 }
 
 /* =========================
@@ -509,10 +599,15 @@ body {
    ========================= */
 
 @media (max-width: 600px) {
+
+  /* TOP BAR */
+
   .topbar {
     height: auto;
     min-height: 76px;
+
     padding: 10px 4%;
+
     flex-wrap: wrap;
     gap: 9px;
   }
@@ -533,6 +628,8 @@ body {
     font-size: 34px;
   }
 
+  /* SEARCH */
+
   .search-wrap {
     order: 3;
     width: 100%;
@@ -543,45 +640,78 @@ body {
     font-size: 16px;
   }
 
+  /* PAGE */
+
   .page {
     padding: 12px 4%;
   }
 
-  /* SMALL HERO */
+  /* =====================
+     SMALL HERO
+     ===================== */
 
   .hero-slider {
-    border-radius: 20px;
+    width: 100% !important;
+    height: 180px !important;
+
+    min-height: 180px !important;
+    max-height: 180px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    border-radius: 20px !important;
   }
 
   .hero-slider .hero {
-    min-height: 0;
-    height: 220px;
-    padding: 22px 6%;
-    border-radius: 20px;
+    width: 100% !important;
+
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+
+    padding: 18px 6% !important;
+
+    margin: 0 !important;
+
+    border-radius: 20px !important;
+
+    overflow: hidden !important;
+
+    align-items: center !important;
   }
 
-  .hero h1 {
-    font-size: 30px;
-    line-height: 1.05;
+  .hero-slider .hero h1 {
+    font-size: 26px !important;
+    line-height: 1.02 !important;
+    margin: 0 !important;
   }
 
-  .hero p:not(.eyebrow) {
-    font-size: 14px;
-    line-height: 1.3;
+  .hero-slider .hero p:not(.eyebrow) {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+
+    margin: 7px 0 10px !important;
   }
 
-  .eyebrow {
-    font-size: 12px;
-    letter-spacing: 1px;
+  .hero-slider .eyebrow {
+    font-size: 11px !important;
+    letter-spacing: .8px !important;
+
+    margin-bottom: 5px !important;
   }
 
-  .primary {
-    font-size: 14px;
-    padding: 10px 17px;
+  .hero-slider .primary {
+    font-size: 12px !important;
+    padding: 8px 14px !important;
+
+    box-shadow: 0 3px 0 #d6a900 !important;
   }
 
-  .hero-art {
-    display: none;
+  .hero-slider .hero-art {
+    display: none !important;
   }
 
   /* HERO ARROWS */
@@ -589,7 +719,8 @@ body {
   .hero-arrow {
     width: 32px;
     height: 32px;
-    font-size: 25px;
+
+    font-size: 24px;
     line-height: 25px;
   }
 
@@ -599,6 +730,12 @@ body {
 
   .hero-arrow.next {
     right: 7px;
+  }
+
+  /* HERO DOTS */
+
+  .hero-dots {
+    bottom: 7px;
   }
 
   /* SECTIONS */
@@ -619,12 +756,18 @@ body {
     font-size: 14px;
   }
 
-  /* 3 GAMES PER ROW - NOT SLIDEABLE */
+  /* =====================
+     3 GAMES PER ROW
+     ===================== */
 
   .game-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
     gap: 13px 9px;
+
     overflow: visible;
     padding: 0;
   }
@@ -637,13 +780,16 @@ body {
   .game-logo {
     width: 100%;
     height: auto;
+
     aspect-ratio: 1 / 1;
+
     border-radius: 12px;
   }
 
   .game-link h3 {
     font-size: 12px;
     line-height: 1.2;
+
     margin: 7px 1px 0;
   }
 
@@ -651,23 +797,33 @@ body {
     font-size: 50px;
   }
 
-  /* SMALL HEART */
+  /* =====================
+     SMALL HEART
+     ===================== */
 
   .favorite-btn {
     width: 27px;
     height: 27px;
+
     right: 5px;
     top: 5px;
+
     font-size: 15px;
+
     box-shadow: 0 2px 7px #0002;
   }
 
-  /* CATEGORY */
+  /* =====================
+     CATEGORY
+     ===================== */
 
   .category-grid {
     display: flex;
+
     overflow-x: auto;
+
     padding-bottom: 6px;
+
     -webkit-overflow-scrolling: touch;
   }
 
@@ -687,7 +843,55 @@ body {
     min-height: 105px;
   }
 
-  /* BOTTOM NAV */
+  /* =====================
+     EMPTY FAVORITE FIX
+     ===================== */
+
+  .game-grid .empty-state {
+    grid-column: 1 / -1 !important;
+
+    width: 100% !important;
+    min-width: 100% !important;
+
+    min-height: 300px;
+
+    padding: 40px 20px;
+
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .game-grid .empty-state div {
+    font-size: 55px;
+    margin-bottom: 15px;
+  }
+
+  .game-grid .empty-state h3 {
+    font-size: 22px;
+    line-height: 1.25;
+
+    margin: 0 0 12px;
+  }
+
+  .game-grid .empty-state p {
+    max-width: 280px;
+
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  /* =====================
+     BOTTOM NAV
+     ===================== */
 
   .bottom-nav {
     height: 72px;
@@ -701,6 +905,7 @@ body {
   .bottom-nav button span {
     font-size: 13px;
   }
+
 }
 
 /* =========================
@@ -708,6 +913,7 @@ body {
    ========================= */
 
 @media (max-width: 380px) {
+
   .brand b {
     font-size: 21px;
   }
@@ -716,17 +922,28 @@ body {
     font-size: 30px;
   }
 
+  .hero-slider,
   .hero-slider .hero {
-    height: 205px;
-    padding: 18px 7%;
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
   }
 
-  .hero h1 {
-    font-size: 27px;
+  .hero-slider .hero {
+    padding: 16px 7% !important;
   }
 
-  .hero p:not(.eyebrow) {
-    font-size: 13px;
+  .hero-slider .hero h1 {
+    font-size: 23px !important;
+  }
+
+  .hero-slider .hero p:not(.eyebrow) {
+    font-size: 11px !important;
+  }
+
+  .hero-slider .primary {
+    font-size: 11px !important;
+    padding: 7px 12px !important;
   }
 
   .game-grid {
@@ -742,194 +959,9 @@ body {
     height: 25px;
     font-size: 14px;
   }
-}
-
-
-/* =========================================================
-   FINAL MOBILE HERO FIX
-   This override is intentionally placed at the end so it
-   wins over earlier hero rules.
-   ========================================================= */
-
-@media (max-width: 600px) {
-  .hero-slider {
-    width: 100% !important;
-    height: 180px !important;
-    min-height: 180px !important;
-    max-height: 180px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    border-radius: 20px !important;
-  }
-
-  .hero-slider .hero {
-    width: 100% !important;
-    height: 180px !important;
-    min-height: 180px !important;
-    max-height: 180px !important;
-    padding: 18px 6% !important;
-    margin: 0 !important;
-    border-radius: 20px !important;
-    overflow: hidden !important;
-    align-items: center !important;
-  }
-
-  .hero-slider .hero h1 {
-    font-size: 26px !important;
-    line-height: 1.02 !important;
-    margin: 0 !important;
-  }
-
-  .hero-slider .hero p:not(.eyebrow) {
-    font-size: 12px !important;
-    line-height: 1.25 !important;
-    margin: 7px 0 10px !important;
-  }
-
-  .hero-slider .eyebrow {
-    font-size: 11px !important;
-    letter-spacing: .8px !important;
-    margin-bottom: 5px !important;
-  }
-
-  .hero-slider .primary {
-    font-size: 12px !important;
-    padding: 8px 14px !important;
-    box-shadow: 0 3px 0 #d6a900 !important;
-  }
-
-  .hero-slider .hero-art {
-    display: none !important;
-  }
-
-  /* Optional small slide indicator */
-  .hero-dots {
-    position: absolute;
-    left: 50%;
-    bottom: 8px;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 5px;
-    z-index: 10;
-  }
-
-  .hero-dots button {
-    width: 6px;
-    height: 6px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: rgba(255,255,255,.55);
-    cursor: pointer;
-  }
-
-  .hero-dots button.active {
-    width: 18px;
-    border-radius: 8px;
-    background: #fff;
-  }
-}
-
-/* Extra-small phones */
-@media (max-width: 380px) {
-  .hero-slider,
-  .hero-slider .hero {
-    height: 165px !important;
-    min-height: 165px !important;
-    max-height: 165px !important;
-  }
-
-  .hero-slider .hero h1 {
-    font-size: 23px !important;
-  }
-
-  .hero-slider .hero p:not(.eyebrow) {
-    font-size: 11px !important;
-  }
-
-  .hero-slider .primary {
-    font-size: 11px !important;
-    padding: 7px 12px !important;
-  }
-}
-
-/* =========================================================
-   HERO SLIDER / POPUP-STYLE TRANSITION
-   ========================================================= */
-
-.hero-slider {
-  position: relative !important;
-}
-
-.hero-slider .hero {
-  display: none;
-}
-
-.hero-slider .hero.active {
-  display: flex !important;
-  animation: heroPopupIn .45s ease both;
-}
-
-@keyframes heroPopupIn {
-  from {
-    opacity: 0;
-    transform: scale(.96) translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Keep the desktop hero compact too */
-@media (min-width: 601px) {
-  .hero-slider .hero {
-    min-height: 260px;
-  } 
-
-/* =========================
-   FIX EMPTY STATE ON MOBILE
-   ========================= */
-
-.game-grid .empty-state {
-  grid-column: 1 / -1;
-  width: 100%;
-  min-width: 0;
-  min-height: 240px;
-  padding: 45px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 600px) {
 
   .game-grid .empty-state {
-    grid-column: 1 / -1;
-    width: 100%;
-    min-height: 260px;
-    padding: 35px 20px;
-    border-radius: 20px;
+    min-height: 270px;
   }
 
-  .game-grid .empty-state div {
-    font-size: 55px;
-    margin-bottom: 15px;
   }
-
-  .game-grid .empty-state h3 {
-    font-size: 22px;
-    line-height: 1.25;
-    margin: 0 0 12px;
-  }
-
-  .game-grid .empty-state p {
-    max-width: 280px;
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.45;
-  }
-}
-                                  }
