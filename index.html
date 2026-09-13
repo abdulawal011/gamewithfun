@@ -3,24 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta name="description" content="GameWithFun - Play free online games instantly. Enjoy puzzle, action, racing, arcade, sports and adventure games with no download required.">
 <meta name="keywords" content="free online games, online games, browser games, play games online, puzzle games, action games, racing games, arcade games, GameWithFun">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="author" content="GameWithFun">
 <meta name="theme-color" content="#0878f9">
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GameWithFun">
 <meta property="og:title" content="GameWithFun - Free Online Games">
 <meta property="og:description" content="Play free online games instantly on GameWithFun. No download required.">
 <meta property="og:url" content="https://YOUR-DOMAIN.com/">
+
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GameWithFun - Free Online Games">
 <meta name="twitter:description" content="Play free online games instantly. No download required.">
+
 <link rel="canonical" href="https://YOUR-DOMAIN.com/">
-<title>GameWithFun - Free Online Games | Play Games Online</title>
 <link rel="stylesheet" href="style.css">
 
-<script src="hero-slider.js"></script>
+<title>GameWithFun - Free Online Games | Play Games Online</title>
+
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -36,69 +40,283 @@
 }
 </script>
 </head>
+
 <body>
+
 <header class="topbar">
+
   <a class="brand" href="#" onclick="showPage('home');return false;">
     <span class="brand-icon">🎮</span>
-    <span><b>Game<span>With</span>Fun</b><small>Play • Enjoy • Be Happy</small></span>
+    <span>
+      <b>Game<span>With</span>Fun</b>
+      <small>Play • Enjoy • Be Happy</small>
+    </span>
   </a>
+
   <div class="search-wrap">
-    <input id="searchInput" type="search" placeholder="Search games..." aria-label="Search games">
-    <button onclick="searchGames()">⌕</button>
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search games..."
+      aria-label="Search games"
+    >
+    <button onclick="searchGames()" aria-label="Search">⌕</button>
   </div>
+
 </header>
 
+
 <main>
+
 <section id="homePage" class="page">
-  <div class="hero">
-    <div>
-      <p class="eyebrow">FREE ONLINE GAMES</p>
-      <h1>Play Your Favorite<br><strong>Games Online!</strong></h1>
-      <p>Play free online games • No download • Free to play</p>
-      <button class="primary" onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})">▶ Start Playing</button>
+
+  <!-- =========================
+       HERO SLIDER
+       3 BANNERS / 3 SECOND AUTO
+       ========================= -->
+
+  <div class="hero-slider">
+
+    <!-- BANNER 1 -->
+    <div class="hero active">
+
+      <div>
+        <p class="eyebrow">FREE ONLINE GAMES</p>
+
+        <h1>
+          Play Your Favorite<br>
+          <strong>Games Online!</strong>
+        </h1>
+
+        <p>
+          Play free online games • No download • Free to play
+        </p>
+
+        <button
+          class="primary"
+          onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})"
+        >
+          ▶ Start Playing
+        </button>
+      </div>
+
+      <div class="hero-art">
+        🎮
+        <span>👑</span>
+      </div>
+
     </div>
-    <div class="hero-art">🎮<span>👑</span></div>
+
+
+    <!-- BANNER 2 -->
+    <div class="hero">
+
+      <div>
+        <p class="eyebrow">🔥 POPULAR GAMES</p>
+
+        <h1>
+          Play &amp; Have<br>
+          <strong>More Fun!</strong>
+        </h1>
+
+        <p>
+          Discover popular games and play instantly.
+        </p>
+
+        <button
+          class="primary"
+          onclick="document.querySelector('#popularGrid').scrollIntoView({behavior:'smooth'})"
+        >
+          ▶ Play Now
+        </button>
+      </div>
+
+      <div class="hero-art">
+        🏆
+        <span>🎮</span>
+      </div>
+
+    </div>
+
+
+    <!-- BANNER 3 -->
+    <div class="hero">
+
+      <div>
+        <p class="eyebrow">✨ NEW GAMES</p>
+
+        <h1>
+          New Games<br>
+          <strong>Every Time!</strong>
+        </h1>
+
+        <p>
+          Find new games and start playing for free.
+        </p>
+
+        <button
+          class="primary"
+          onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})"
+        >
+          ▶ Explore Games
+        </button>
+      </div>
+
+      <div class="hero-art">
+        🚀
+        <span>⭐</span>
+      </div>
+
+    </div>
+
   </div>
 
+
+  <!-- =========================
+       NEW GAMES
+       ========================= -->
+
   <section id="newGames" class="section">
-    <div class="section-title"><h2>✨ New Games</h2><button onclick="openAll('new')">View All →</button></div>
+
+    <div class="section-title">
+      <h2>✨ New Games</h2>
+      <button onclick="openAll('new')">
+        View All →
+      </button>
+    </div>
+
     <div id="newGrid" class="game-grid"></div>
+
   </section>
 
-  <section class="section">
-    <div class="section-title"><h2>🔥 Popular Games</h2><button onclick="openAll('popular')">View All →</button></div>
+
+  <!-- =========================
+       POPULAR GAMES
+       ========================= -->
+
+  <section id="popularGames" class="section">
+
+    <div class="section-title">
+      <h2>🔥 Popular Games</h2>
+      <button onclick="openAll('popular')">
+        View All →
+      </button>
+    </div>
+
     <div id="popularGrid" class="game-grid"></div>
+
   </section>
 
+
+  <!-- =========================
+       CATEGORIES
+       ========================= -->
+
   <section class="section">
-    <div class="section-title"><h2>▦ Categories</h2></div>
+
+    <div class="section-title">
+      <h2>▦ Categories</h2>
+    </div>
+
     <div id="categoryGrid" class="category-grid"></div>
+
   </section>
+
 </section>
+
+
+<!-- =========================
+     CATEGORIES PAGE
+     ========================= -->
 
 <section id="categoriesPage" class="page hidden">
-  <div class="page-heading"><h1>Categories</h1><p>Choose a type of game and start playing.</p></div>
+
+  <div class="page-heading">
+    <h1>Categories</h1>
+    <p>Choose a type of game and start playing.</p>
+  </div>
+
   <div id="allCategoryGrid" class="category-large"></div>
+
 </section>
+
+
+<!-- =========================
+     FAVORITES PAGE
+     ========================= -->
 
 <section id="favoritesPage" class="page hidden">
-  <div class="page-heading"><h1>❤️ Favorites</h1><p>Your saved games appear here.</p></div>
+
+  <div class="page-heading">
+    <h1>❤️ Favorites</h1>
+    <p>Your saved games appear here.</p>
+  </div>
+
   <div id="favoriteGrid" class="game-grid"></div>
+
 </section>
+
+
+<!-- =========================
+     ALL GAMES PAGE
+     ========================= -->
 
 <section id="allGamesPage" class="page hidden">
-  <div class="page-heading"><h1 id="allTitle">All Games</h1><p>Pick a game and have fun.</p></div>
+
+  <div class="page-heading">
+    <h1 id="allTitle">All Games</h1>
+    <p>Pick a game and have fun.</p>
+  </div>
+
   <div id="allGrid" class="game-grid"></div>
+
 </section>
+
 </main>
 
+
+<!-- =========================
+     BOTTOM NAV
+     ========================= -->
+
 <nav class="bottom-nav">
-  <button id="navHome" class="active" onclick="showPage('home')">⌂<span>Home</span></button>
-  <button id="navCategories" onclick="showPage('categories')">▦<span>Categories</span></button>
-  <button id="navFavorites" onclick="showPage('favorites')">♡<span>Favorites</span></button>
+
+  <button
+    id="navHome"
+    class="active"
+    onclick="showPage('home')"
+  >
+    ⌂
+    <span>Home</span>
+  </button>
+
+  <button
+    id="navCategories"
+    onclick="showPage('categories')"
+  >
+    ▦
+    <span>Categories</span>
+  </button>
+
+  <button
+    id="navFavorites"
+    onclick="showPage('favorites')"
+  >
+    ♡
+    <span>Favorites</span>
+  </button>
+
 </nav>
 
+
 <div id="toast" class="toast"></div>
+
+
+<!-- MAIN WEBSITE JS -->
 <script src="script.js"></script>
+
+<!-- HERO SLIDER JS -->
+<script src="hero-slider.js"></script>
+
 </body>
 </html>
