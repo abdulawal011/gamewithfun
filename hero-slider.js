@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       showSlide(currentSlide);
 
-    }, 3000);
+    }, 5000);
 
   }
 
