@@ -34,6 +34,15 @@ const games = [
     url: "games/careering.html",
     newGame: false,
     popular: true
+  },
+  {
+    id: 5,
+    title: "Flag Guess",
+    category: "Quiz",
+    icon: "games/file_0000000082608208928c87863ab5eea1.png",
+    url: "games/flag-guess.html",
+    newGame: true,
+    popular: false
   }
 ];
 
