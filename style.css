@@ -129,7 +129,6 @@ body {
     opacity: 0;
     transform: translateX(15px);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -148,13 +147,7 @@ body {
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  background:
-    linear-gradient(
-      120deg,
-      #0878f9,
-      #09b8ee 55%,
-      #6939ed
-    );
+  background: linear-gradient(120deg, #0878f9, #09b8ee 55%, #6939ed);
   color: #fff;
   box-shadow: 0 15px 35px #2476d32e;
 }
@@ -297,10 +290,6 @@ body {
   cursor: pointer;
 }
 
-/* =========================
-   GAME LOGO
-   ========================= */
-
 .game-logo {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -311,9 +300,7 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 5px 20px #173a7010;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .game-link:hover .game-logo {
@@ -332,10 +319,6 @@ body {
   font-size: 70px;
 }
 
-/* =========================
-   GAME NAME
-   ========================= */
-
 .game-link h3 {
   margin: 10px 3px 0;
   font-size: 16px;
@@ -352,26 +335,18 @@ body {
   right: 7px;
   top: 7px;
   z-index: 5;
-
   border: 0;
   background: rgba(255, 255, 255, 0.95);
-
   border-radius: 50%;
-
   width: 30px;
   height: 30px;
-
   padding: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 16px;
   line-height: 1;
-
   cursor: pointer;
-
   box-shadow: 0 3px 9px #0002;
 }
 
@@ -406,10 +381,6 @@ body {
   font-size: 38px;
   margin-bottom: 8px;
 }
-
-/* =========================
-   LARGE CATEGORIES
-   ========================= */
 
 .category-large {
   display: grid;
@@ -462,31 +433,22 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-
   height: 72px;
-
   background: #fff;
   border-top: 1px solid #e8eef8;
-
   display: flex;
   justify-content: center;
-
   gap: min(18vw, 180px);
-
   z-index: 30;
 }
 
 .bottom-nav button {
   width: 100px;
-
   border: 0;
   background: none;
-
   color: #6c7f9e;
-
   font-weight: 700;
   font-size: 24px;
-
   cursor: pointer;
 }
 
@@ -506,24 +468,16 @@ body {
 
 .toast {
   position: fixed;
-
   left: 50%;
   bottom: 92px;
-
   transform: translateX(-50%) translateY(20px);
-
   background: #102957;
   color: #fff;
-
   padding: 11px 18px;
-
   border-radius: 25px;
-
   opacity: 0;
   pointer-events: none;
-
   transition: 0.25s;
-
   z-index: 50;
 }
 
@@ -537,7 +491,6 @@ body {
    ========================= */
 
 @media (max-width: 850px) {
-
   .game-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -556,15 +509,10 @@ body {
    ========================= */
 
 @media (max-width: 600px) {
-
-  /* TOP BAR */
-
   .topbar {
     height: auto;
     min-height: 76px;
-
     padding: 10px 4%;
-
     flex-wrap: wrap;
     gap: 9px;
   }
@@ -585,8 +533,6 @@ body {
     font-size: 34px;
   }
 
-  /* SEARCH */
-
   .search-wrap {
     order: 3;
     width: 100%;
@@ -597,15 +543,11 @@ body {
     font-size: 16px;
   }
 
-  /* PAGE */
-
   .page {
     padding: 12px 4%;
   }
 
-  /* =========================
-     SMALL HERO
-     ========================= */
+  /* SMALL HERO */
 
   .hero-slider {
     border-radius: 20px;
@@ -614,9 +556,7 @@ body {
   .hero-slider .hero {
     min-height: 0;
     height: 220px;
-
     padding: 22px 6%;
-
     border-radius: 20px;
   }
 
@@ -640,8 +580,6 @@ body {
     padding: 10px 17px;
   }
 
-  /* Hide large artwork */
-
   .hero-art {
     display: none;
   }
@@ -651,7 +589,6 @@ body {
   .hero-arrow {
     width: 32px;
     height: 32px;
-
     font-size: 25px;
     line-height: 25px;
   }
@@ -664,9 +601,7 @@ body {
     right: 7px;
   }
 
-  /* =========================
-     SECTIONS
-     ========================= */
+  /* SECTIONS */
 
   .section {
     margin-top: 25px;
@@ -684,19 +619,12 @@ body {
     font-size: 14px;
   }
 
-  /* =========================
-     3 GAMES PER ROW
-     NOT SLIDEABLE
-     ========================= */
+  /* 3 GAMES PER ROW - NOT SLIDEABLE */
 
   .game-grid {
     display: grid;
-
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 13px 9px;
-
     overflow: visible;
     padding: 0;
   }
@@ -706,59 +634,40 @@ body {
     width: 100%;
   }
 
-  /* GAME IMAGE */
-
   .game-logo {
     width: 100%;
     height: auto;
-
     aspect-ratio: 1 / 1;
-
     border-radius: 12px;
   }
-
-  /* GAME NAME */
 
   .game-link h3 {
     font-size: 12px;
     line-height: 1.2;
-
     margin: 7px 1px 0;
   }
-
-  /* EMOJI */
 
   .emoji-logo {
     font-size: 50px;
   }
 
-  /* =========================
-     SMALL HEART
-     ========================= */
+  /* SMALL HEART */
 
   .favorite-btn {
     width: 27px;
     height: 27px;
-
     right: 5px;
     top: 5px;
-
     font-size: 15px;
-
     box-shadow: 0 2px 7px #0002;
   }
 
-  /* =========================
-     CATEGORY
-     ========================= */
+  /* CATEGORY */
 
   .category-grid {
     display: flex;
-
     overflow-x: auto;
-
     padding-bottom: 6px;
-
     -webkit-overflow-scrolling: touch;
   }
 
@@ -778,9 +687,7 @@ body {
     min-height: 105px;
   }
 
-  /* =========================
-     BOTTOM NAV
-     ========================= */
+  /* BOTTOM NAV */
 
   .bottom-nav {
     height: 72px;
@@ -801,7 +708,6 @@ body {
    ========================= */
 
 @media (max-width: 380px) {
-
   .brand b {
     font-size: 21px;
   }
@@ -836,4 +742,149 @@ body {
     height: 25px;
     font-size: 14px;
   }
+}
+
+
+/* =========================================================
+   FINAL MOBILE HERO FIX
+   This override is intentionally placed at the end so it
+   wins over earlier hero rules.
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .hero-slider {
+    width: 100% !important;
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 20px !important;
   }
+
+  .hero-slider .hero {
+    width: 100% !important;
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+    padding: 18px 6% !important;
+    margin: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    align-items: center !important;
+  }
+
+  .hero-slider .hero h1 {
+    font-size: 26px !important;
+    line-height: 1.02 !important;
+    margin: 0 !important;
+  }
+
+  .hero-slider .hero p:not(.eyebrow) {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    margin: 7px 0 10px !important;
+  }
+
+  .hero-slider .eyebrow {
+    font-size: 11px !important;
+    letter-spacing: .8px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .hero-slider .primary {
+    font-size: 12px !important;
+    padding: 8px 14px !important;
+    box-shadow: 0 3px 0 #d6a900 !important;
+  }
+
+  .hero-slider .hero-art {
+    display: none !important;
+  }
+
+  /* Optional small slide indicator */
+  .hero-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+  }
+
+  .hero-dots button {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.55);
+    cursor: pointer;
+  }
+
+  .hero-dots button.active {
+    width: 18px;
+    border-radius: 8px;
+    background: #fff;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 380px) {
+  .hero-slider,
+  .hero-slider .hero {
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
+  }
+
+  .hero-slider .hero h1 {
+    font-size: 23px !important;
+  }
+
+  .hero-slider .hero p:not(.eyebrow) {
+    font-size: 11px !important;
+  }
+
+  .hero-slider .primary {
+    font-size: 11px !important;
+    padding: 7px 12px !important;
+  }
+}
+
+/* =========================================================
+   HERO SLIDER / POPUP-STYLE TRANSITION
+   ========================================================= */
+
+.hero-slider {
+  position: relative !important;
+}
+
+.hero-slider .hero {
+  display: none;
+}
+
+.hero-slider .hero.active {
+  display: flex !important;
+  animation: heroPopupIn .45s ease both;
+}
+
+@keyframes heroPopupIn {
+  from {
+    opacity: 0;
+    transform: scale(.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Keep the desktop hero compact too */
+@media (min-width: 601px) {
+  .hero-slider .hero {
+    min-height: 260px;
+  }
+    }
