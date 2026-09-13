@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Picture Puzzle</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#151a46,#40206f);font-family:Arial,sans-serif;color:#fff;display:flex;justify-content:center}
+.app{width:min(100%,480px);padding:22px 16px;text-align:center}
+h1{margin:8px 0 5px;font-size:30px}.sub{color:#c8cced;margin:0 0 18px}
+.stats{display:flex;justify-content:center;gap:12px;margin-bottom:18px}.stat{background:#101538aa;border:1px solid #6670aa;border-radius:14px;padding:10px 17px;font-weight:bold}
+#board{width:min(92vw,400px);aspect-ratio:1;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;background:#080b23;border:3px solid #8896ff;border-radius:14px;box-shadow:0 10px 35px #080516}
+.tile{border:0;border-radius:8px;font-size:44px;cursor:pointer;background:linear-gradient(145deg,#4d72ff,#783ce8);color:#fff;font-weight:bold;box-shadow:0 3px 0 #25155d;transition:transform .12s}
+.tile:active{transform:scale(.94)}.empty{background:transparent;box-shadow:none;cursor:default}
+.controls{display:flex;gap:10px;justify-content:center;margin:22px 0}.btn{border:0;border-radius:14px;padding:14px 22px;color:#fff;font-size:16px;font-weight:bold;background:linear-gradient(100deg,#258cff,#7b29e8);box-shadow:0 5px 15px #24155c}
+#message{min-height:28px;font-size:18px;font-weight:bold;color:#ffe24b;margin:8px}.how{background:#0c1030aa;border:1px solid #4b5484;border-radius:15px;padding:14px;text-align:left;color:#dce0f7;font-size:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+<h1>🧩 PUZZLE GAME</h1>
+<p class="sub">Arrange the numbers from 1 to 8</p>
+<div class="stats"><div class="stat">👆 Moves: <span id="moves">0</span></div><div class="stat">🏆 Best: <span id="best">0</span></div></div>
+<div id="board"></div>
+<div id="message"></div>
+<div class="controls"><button class="btn" onclick="shuffle()">🔀 SHUFFLE</button><button class="btn" onclick="resetGame()">↻ RESET</button></div>
+<div class="how"><b>How to play:</b><br>Tap a tile next to the empty space to move it. Put the numbers in order: <b>1 → 8</b>.</div>
+</div>
+<script>
+const board=document.getElementById('board'), movesEl=document.getElementById('moves'), bestEl=document.getElementById('best'), msg=document.getElementById('message');
+let state=[1,2,3,4,5,6,7,8,0],moves=0,best=Number(localStorage.getItem('puzzleBest')||0);
+bestEl.textContent=best;
+
+function render(){
+ board.innerHTML='';
+ state.forEach((n,i)=>{
+  const b=document.createElement('button');
+  b.className='tile'+(n===0?' empty':'');
+  b.textContent=n||'';
+  if(n)b.onclick=()=>move(i);
+  board.appendChild(b);
+ });
+ movesEl.textContent=moves;
+}
+function adjacent(a,b){
+ const ar=Math.floor(a/3),ac=a%3,br=Math.floor(b/3),bc=b%3;
+ return Math.abs(ar-br)+Math.abs(ac-bc)===1;
+}
+function move(i){
+ const empty=state.indexOf(0);
+ if(!adjacent(i,empty)||msg.textContent)return;
+ [state[i],state[empty]]=[state[empty],state[i]];moves++;render();checkWin();
+}
+function checkWin(){
+ if(state.every((v,i)=>v===(i===8?0:i+1))){
+  msg.textContent='🎉 YOU WON!';
+  if(!best||moves<best){best=moves;localStorage.setItem('puzzleBest',best);bestEl.textContent=best;}
+ }
+}
+function shuffle(){
+ msg.textContent='';state=[1,2,3,4,5,6,7,8,0];moves=0;
+ let empty=8,last=-1;
+ for(let k=0;k<150;k++){
+  const choices=[0,1,2,3,4,5,6,7,8].filter(i=>adjacent(i,empty)&&i!==last);
+  const pick=choices[Math.floor(Math.random()*choices.length)];
+  [state[pick],state[empty]]=[state[empty],state[pick]];last=empty;empty=pick;
+ }
+ if(state.every((v,i)=>v===(i===8?0:i+1)))shuffle(); else render();
+}
+function resetGame(){state=[1,2,3,4,5,6,7,8,0];moves=0;msg.textContent='';render();}
+render();shuffle();
+</script>
+</body></html>
