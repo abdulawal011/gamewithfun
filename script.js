@@ -10,10 +10,10 @@ const games = [
   },
   {
     id: 2,
-    title: "Color Match",
+    title: "Guess People",
     category: "Puzzle",
-    icon: "🎨",
-    url: "#",
+    icon: "games/IMG-20260913-WA0009(1).jpg",
+    url: "games/guesspepole.html",
     newGame: true,
     popular: true
   },
