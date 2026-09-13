@@ -14,7 +14,6 @@ body {
   padding-bottom: 84px;
 }
 
-
 /* =========================
    TOP BAR
    ========================= */
@@ -59,7 +58,6 @@ body {
   font-weight: 600;
 }
 
-
 /* =========================
    SEARCH
    ========================= */
@@ -89,7 +87,6 @@ body {
   color: #173a70;
 }
 
-
 /* =========================
    PAGE
    ========================= */
@@ -104,7 +101,6 @@ body {
   display: none !important;
 }
 
-
 /* =========================
    HERO
    ========================= */
@@ -117,7 +113,6 @@ body {
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-
   background:
     linear-gradient(
       120deg,
@@ -125,7 +120,6 @@ body {
       #09b8ee 55%,
       #6939ed
     );
-
   color: #fff;
   box-shadow: 0 15px 35px #2476d32e;
 }
@@ -176,7 +170,6 @@ body {
   left: 65px;
 }
 
-
 /* =========================
    SECTIONS
    ========================= */
@@ -207,9 +200,8 @@ body {
   cursor: pointer;
 }
 
-
 /* =========================
-   NEW GAME LOGO GRID
+   GAME LOGO GRID
    ========================= */
 
 .game-grid {
@@ -231,7 +223,6 @@ body {
   cursor: pointer;
 }
 
-
 /* =========================
    GAME LOGO
    ========================= */
@@ -239,19 +230,13 @@ body {
 .game-logo {
   width: 100%;
   aspect-ratio: 1 / 1;
-
   background: #fff;
-
   border-radius: 18px;
-
   overflow: hidden;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   box-shadow: 0 5px 20px #173a7010;
-
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -273,7 +258,6 @@ body {
   font-size: 70px;
 }
 
-
 /* =========================
    GAME NAME
    ========================= */
@@ -285,7 +269,6 @@ body {
   line-height: 1.25;
 }
 
-
 /* =========================
    FAVORITE HEART
    ========================= */
@@ -294,29 +277,20 @@ body {
   position: absolute;
   right: 8px;
   top: 8px;
-
   z-index: 5;
-
   border: 0;
-
   background: rgba(255, 255, 255, 0.95);
-
   border-radius: 50%;
-
   width: 36px;
   height: 36px;
-
   font-size: 20px;
-
   cursor: pointer;
-
   box-shadow: 0 3px 10px #0002;
 }
 
 .favorite-btn.active {
   color: #ff3d73;
 }
-
 
 /* =========================
    CATEGORIES
@@ -346,7 +320,6 @@ body {
   margin-bottom: 8px;
 }
 
-
 /* =========================
    LARGE CATEGORIES
    ========================= */
@@ -361,7 +334,6 @@ body {
   min-height: 125px;
 }
 
-
 /* =========================
    PAGE HEADING
    ========================= */
@@ -373,7 +345,6 @@ body {
 .page-heading p {
   color: #7184a6;
 }
-
 
 /* =========================
    EMPTY STATE
@@ -395,7 +366,6 @@ body {
   color: #102957;
 }
 
-
 /* =========================
    BOTTOM NAVIGATION
    ========================= */
@@ -405,33 +375,22 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-
   height: 72px;
-
   background: #fff;
-
   border-top: 1px solid #e8eef8;
-
   display: flex;
   justify-content: center;
-
   gap: min(18vw, 180px);
-
   z-index: 30;
 }
 
 .bottom-nav button {
   width: 100px;
-
   border: 0;
   background: none;
-
   color: #6c7f9e;
-
   font-weight: 700;
-
   font-size: 24px;
-
   cursor: pointer;
 }
 
@@ -445,53 +404,35 @@ body {
   color: #0878f9;
 }
 
-
 /* =========================
    TOAST
    ========================= */
 
 .toast {
   position: fixed;
-
   left: 50%;
   bottom: 92px;
-
-  transform:
-    translateX(-50%)
-    translateY(20px);
-
+  transform: translateX(-50%) translateY(20px);
   background: #102957;
-
   color: #fff;
-
   padding: 11px 18px;
-
   border-radius: 25px;
-
   opacity: 0;
-
   pointer-events: none;
-
   transition: 0.25s;
-
   z-index: 50;
 }
 
 .toast.show {
   opacity: 1;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
-
 
 /* =========================
    TABLET
    ========================= */
 
 @media (max-width: 850px) {
-
   .game-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -505,21 +446,17 @@ body {
   }
 }
 
-
 /* =========================
    MOBILE
+   ONE HORIZONTAL ROW
    ========================= */
 
 @media (max-width: 600px) {
-
   .topbar {
     height: auto;
     min-height: 76px;
-
     padding: 10px 4%;
-
     flex-wrap: wrap;
-
     gap: 9px;
   }
 
@@ -546,9 +483,7 @@ body {
 
   .hero {
     min-height: 255px;
-
     padding: 27px 6%;
-
     border-radius: 22px;
   }
 
@@ -568,15 +503,32 @@ body {
     font-size: 23px;
   }
 
-
-  /* TWO LOGOS PER ROW */
-
+  /* ONE GAME PER HORIZONTAL CARD */
   .game-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .game-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .game-item {
+    flex: 0 0 165px;
+    min-width: 165px;
+    scroll-snap-align: start;
   }
 
   .game-logo {
+    width: 165px;
+    height: 165px;
+    aspect-ratio: 1 / 1;
     border-radius: 15px;
   }
 
@@ -592,22 +544,20 @@ body {
   .favorite-btn {
     width: 32px;
     height: 32px;
-
     font-size: 18px;
-
     top: 6px;
     right: 6px;
   }
 
-
   /* CATEGORIES */
-
   .category-grid {
     display: flex;
-
     overflow-x: auto;
-
     padding-bottom: 6px;
+  }
+
+  .category-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .category-grid .category-card {
@@ -622,9 +572,7 @@ body {
     min-height: 105px;
   }
 
-
   /* BOTTOM NAV */
-
   .bottom-nav {
     gap: 18vw;
   }
@@ -636,4 +584,4 @@ body {
   .primary {
     padding: 13px 20px;
   }
-  }
+}
