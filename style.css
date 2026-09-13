@@ -14,10 +14,6 @@ body {
   padding-bottom: 84px;
 }
 
-/* =========================
-   TOP BAR
-   ========================= */
-
 .topbar {
   height: 82px;
   background: #fff;
@@ -58,10 +54,6 @@ body {
   font-weight: 600;
 }
 
-/* =========================
-   SEARCH
-   ========================= */
-
 .search-wrap {
   display: flex;
   background: #eef5ff;
@@ -87,10 +79,6 @@ body {
   color: #173a70;
 }
 
-/* =========================
-   PAGE
-   ========================= */
-
 .page {
   max-width: 1200px;
   margin: auto;
@@ -113,13 +101,7 @@ body {
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  background:
-    linear-gradient(
-      120deg,
-      #0878f9,
-      #09b8ee 55%,
-      #6939ed
-    );
+  background: linear-gradient(120deg, #0878f9, #09b8ee 55%, #6939ed);
   color: #fff;
   box-shadow: 0 15px 35px #2476d32e;
 }
@@ -170,10 +152,6 @@ body {
   left: 65px;
 }
 
-/* =========================
-   SECTIONS
-   ========================= */
-
 .section {
   margin-top: 35px;
 }
@@ -201,7 +179,7 @@ body {
 }
 
 /* =========================
-   GAME LOGO GRID
+   GAME GRID
    ========================= */
 
 .game-grid {
@@ -214,6 +192,7 @@ body {
   position: relative;
   text-align: center;
   background: transparent;
+  min-width: 0;
 }
 
 .game-link {
@@ -222,10 +201,6 @@ body {
   color: #102957;
   cursor: pointer;
 }
-
-/* =========================
-   GAME LOGO
-   ========================= */
 
 .game-logo {
   width: 100%;
@@ -237,9 +212,7 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 5px 20px #173a7010;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .game-link:hover .game-logo {
@@ -258,10 +231,6 @@ body {
   font-size: 70px;
 }
 
-/* =========================
-   GAME NAME
-   ========================= */
-
 .game-link h3 {
   margin: 10px 3px 0;
   font-size: 16px;
@@ -269,17 +238,13 @@ body {
   line-height: 1.25;
 }
 
-/* =========================
-   FAVORITE HEART
-   ========================= */
-
 .favorite-btn {
   position: absolute;
   right: 8px;
   top: 8px;
   z-index: 5;
   border: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, .95);
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -291,10 +256,6 @@ body {
 .favorite-btn.active {
   color: #ff3d73;
 }
-
-/* =========================
-   CATEGORIES
-   ========================= */
 
 .category-grid {
   display: grid;
@@ -320,10 +281,6 @@ body {
   margin-bottom: 8px;
 }
 
-/* =========================
-   LARGE CATEGORIES
-   ========================= */
-
 .category-large {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -334,10 +291,6 @@ body {
   min-height: 125px;
 }
 
-/* =========================
-   PAGE HEADING
-   ========================= */
-
 .page-heading {
   padding: 20px 0;
 }
@@ -345,10 +298,6 @@ body {
 .page-heading p {
   color: #7184a6;
 }
-
-/* =========================
-   EMPTY STATE
-   ========================= */
 
 .empty-state {
   text-align: center;
@@ -365,10 +314,6 @@ body {
 .empty-state h3 {
   color: #102957;
 }
-
-/* =========================
-   BOTTOM NAVIGATION
-   ========================= */
 
 .bottom-nav {
   position: fixed;
@@ -404,10 +349,6 @@ body {
   color: #0878f9;
 }
 
-/* =========================
-   TOAST
-   ========================= */
-
 .toast {
   position: fixed;
   left: 50%;
@@ -419,7 +360,7 @@ body {
   border-radius: 25px;
   opacity: 0;
   pointer-events: none;
-  transition: 0.25s;
+  transition: .25s;
   z-index: 50;
 }
 
@@ -427,10 +368,6 @@ body {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
-
-/* =========================
-   TABLET
-   ========================= */
 
 @media (max-width: 850px) {
   .game-grid {
@@ -448,7 +385,6 @@ body {
 
 /* =========================
    MOBILE
-   ONE HORIZONTAL ROW
    ========================= */
 
 @media (max-width: 600px) {
@@ -478,12 +414,14 @@ body {
   }
 
   .page {
-    padding: 15px 4%;
+    padding: 12px 4%;
   }
 
+  /* SMALLER HERO LIKE YOUR REFERENCE */
   .hero {
-    min-height: 255px;
-    padding: 27px 6%;
+    min-height: 0;
+    height: 250px;
+    padding: 25px 6%;
     border-radius: 22px;
   }
 
@@ -491,34 +429,73 @@ body {
     font-size: 34px;
   }
 
+  .hero p:not(.eyebrow) {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .eyebrow {
+    font-size: 14px;
+  }
+
   .hero-art {
     display: none;
   }
 
+  .primary {
+    font-size: 15px;
+    padding: 12px 20px;
+  }
+
   .section {
-    margin-top: 28px;
+    margin-top: 25px;
+  }
+
+  .section-title {
+    margin-bottom: 11px;
   }
 
   .section-title h2 {
     font-size: 23px;
   }
 
-  .section-title {
-    margin-bottom: 12px;
-  }
-
-  /* THREE GAMES PER ROW ON MOBILE */
+  /* 3 GAMES VISIBLE + HORIZONTAL SLIDE */
   .game-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 20px) / 3);
     gap: 14px 10px;
-    overflow: visible;
-    padding-bottom: 0;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 0 0 12px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+  }
+
+  .game-grid::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .game-grid::-webkit-scrollbar-track {
+    background: #dce9fb;
+    border-radius: 10px;
+  }
+
+  .game-grid::-webkit-scrollbar-thumb {
+    background: #0878f9;
+    border-radius: 10px;
   }
 
   .game-item {
     min-width: 0;
     width: 100%;
+    scroll-snap-align: start;
   }
 
   .game-logo {
@@ -539,18 +516,18 @@ body {
   }
 
   .favorite-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
-    top: 6px;
-    right: 6px;
+    width: 31px;
+    height: 31px;
+    font-size: 17px;
+    top: 5px;
+    right: 5px;
   }
 
-  /* CATEGORIES */
   .category-grid {
     display: flex;
     overflow-x: auto;
     padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .category-grid::-webkit-scrollbar {
@@ -569,7 +546,6 @@ body {
     min-height: 105px;
   }
 
-  /* BOTTOM NAV */
   .bottom-nav {
     gap: 18vw;
   }
@@ -577,8 +553,39 @@ body {
   .bottom-nav button {
     font-size: 22px;
   }
+}
 
-  .primary {
-    padding: 13px 20px;
+/* =========================
+   OPTIONAL SLIDE ARROW
+   ========================= */
+
+.slide-arrow {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .slide-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    right: 8px;
+    margin-top: -66px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.96);
+    color: #0878f9;
+    font-size: 21px;
+    font-weight: 900;
+    box-shadow: 0 4px 14px #173a7025;
+    pointer-events: none;
+    animation: slideArrow 1.4s ease-in-out infinite;
   }
+
+  @keyframes slideArrow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
   }
+    }
