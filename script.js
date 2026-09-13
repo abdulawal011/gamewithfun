@@ -12,7 +12,7 @@ const games = [
     id: 2,
     title: "Guess People",
     category: "Puzzle",
-    icon: "games/IMG-20260913-WA0009(1).jpg",
+    icon: "games/GUuhrKZZGsIRBscIOCGwbaYGs0M.jpg",
     url: "games/guesspepole.html",
     newGame: true,
     popular: true
