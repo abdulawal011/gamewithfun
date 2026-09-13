@@ -70,106 +70,76 @@
 
 <section id="homePage" class="page">
 
-  <!-- =========================
-       HERO SLIDER
-       3 BANNERS / 3 SECOND AUTO
-       ========================= -->
+<!-- =========================
+     HERO SLIDER
+========================= -->
 
-  <div class="hero-slider">
+<div class="hero-slider" id="heroSlider">
 
-    <!-- BANNER 1 -->
-    <div class="hero active">
-
-      <div>
-        <p class="eyebrow">FREE ONLINE GAMES</p>
-
-        <h1>
-          Play Your Favorite<br>
-          <strong>Games Online!</strong>
-        </h1>
-
-        <p>
-          Play free online games • No download • Free to play
-        </p>
-
-        <button
-          class="primary"
-          onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})"
-        >
-          ▶ Start Playing
-        </button>
-      </div>
-
-      <div class="hero-art">
-        🎮
-        <span>👑</span>
-      </div>
-
+  <!-- BANNER 1 -->
+  <div class="hero active">
+    <div>
+      <p class="eyebrow">FREE ONLINE GAMES</p>
+      <h1>Play Your Favorite<br>
+        <strong>Games Online!</strong>
+      </h1>
+      <p>Play free online games • No download • Free to play</p>
+      <button class="primary"
+        onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})">
+        ▶ Start Playing
+      </button>
     </div>
-
-
-    <!-- BANNER 2 -->
-    <div class="hero">
-
-      <div>
-        <p class="eyebrow">🔥 POPULAR GAMES</p>
-
-        <h1>
-          Play &amp; Have<br>
-          <strong>More Fun!</strong>
-        </h1>
-
-        <p>
-          Discover popular games and play instantly.
-        </p>
-
-        <button
-          class="primary"
-          onclick="document.querySelector('#popularGrid').scrollIntoView({behavior:'smooth'})"
-        >
-          ▶ Play Now
-        </button>
-      </div>
-
-      <div class="hero-art">
-        🏆
-        <span>🎮</span>
-      </div>
-
-    </div>
-
-
-    <!-- BANNER 3 -->
-    <div class="hero">
-
-      <div>
-        <p class="eyebrow">✨ NEW GAMES</p>
-
-        <h1>
-          New Games<br>
-          <strong>Every Time!</strong>
-        </h1>
-
-        <p>
-          Find new games and start playing for free.
-        </p>
-
-        <button
-          class="primary"
-          onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})"
-        >
-          ▶ Explore Games
-        </button>
-      </div>
-
-      <div class="hero-art">
-        🚀
-        <span>⭐</span>
-      </div>
-
-    </div>
-
   </div>
+
+  <!-- BANNER 2 -->
+  <div class="hero"
+       style="background:linear-gradient(120deg,#6939ed,#0878f9,#09b8ee);">
+    <div>
+      <p class="eyebrow">NEW GAMES</p>
+      <h1>Discover <br>
+        <strong>New Games!</strong>
+      </h1>
+      <p>Fresh games added regularly • Play instantly</p>
+      <button class="primary"
+        onclick="document.getElementById('newGames').scrollIntoView({behavior:'smooth'})">
+        🎮 Explore Games
+      </button>
+    </div>
+  </div>
+
+  <!-- BANNER 3 -->
+  <div class="hero"
+       style="background:linear-gradient(120deg,#ff7a18,#ff3d73,#6939ed);">
+    <div>
+      <p class="eyebrow">POPULAR GAMES</p>
+      <h1>Play What's<br>
+        <strong>Popular!</strong>
+      </h1>
+      <p>Fun • Fast • Free • Play with no download</p>
+      <button class="primary"
+        onclick="document.querySelector('.section:nth-of-type(2)').scrollIntoView({behavior:'smooth'})">
+        🔥 Play Popular
+      </button>
+    </div>
+  </div>
+
+  <!-- ARROWS -->
+  <button class="hero-arrow prev" onclick="changeHero(-1)" aria-label="Previous">
+    ‹
+  </button>
+
+  <button class="hero-arrow next" onclick="changeHero(1)" aria-label="Next">
+    ›
+  </button>
+
+  <!-- DOTS -->
+  <div class="hero-dots">
+    <button class="active" onclick="showHero(0)"></button>
+    <button onclick="showHero(1)"></button>
+    <button onclick="showHero(2)"></button>
+  </div>
+
+</div>
 
 
   <!-- =========================
