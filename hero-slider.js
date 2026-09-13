@@ -1,68 +1,107 @@
-/* =========================================================
-   GAMEWITHFUN - HERO BANNER SLIDER
-   3 BANNERS
-   AUTO CHANGE EVERY 3 SECONDS
-   ========================================================= */
+/* =========================
+   HERO SLIDER
+   Auto slide: 3 seconds
+========================= */
 
+let currentHero = 0;
+let heroTimer;
+
+function getHeroSlides() {
+  return document.querySelectorAll("#heroSlider .hero");
+}
+
+function getHeroDots() {
+  return document.querySelectorAll(".hero-dots button");
+}
+
+function showHero(index) {
+
+  const slides = getHeroSlides();
+  const dots = getHeroDots();
+
+  if (!slides.length) return;
+
+  if (index >= slides.length) {
+    index = 0;
+  }
+
+  if (index < 0) {
+    index = slides.length - 1;
+  }
+
+  currentHero = index;
+
+  slides.forEach((slide, i) => {
+    slide.classList.toggle("active", i === currentHero);
+  });
+
+  dots.forEach((dot, i) => {
+    dot.classList.toggle("active", i === currentHero);
+  });
+}
+
+function changeHero(direction) {
+  showHero(currentHero + direction);
+
+  restartHeroTimer();
+}
+
+function startHeroTimer() {
+  heroTimer = setInterval(() => {
+    showHero(currentHero + 1);
+  }, 5000);
+}
+
+function restartHeroTimer() {
+  clearInterval(heroTimer);
+  startHeroTimer();
+}
+
+/* Start slider */
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Find the hero slider
-  const slider = document.querySelector(".hero-slider");
+  showHero(0);
 
-  // If slider doesn't exist, stop
-  if (!slider) {
-    console.log("Hero slider not found.");
-    return;
-  }
+  startHeroTimer();
 
-  // Find all hero banners
-  const slides = Array.from(
-    slider.querySelectorAll(".hero")
-  );
+  const slider = document.getElementById("heroSlider");
 
-  // If there are no banners, stop
-  if (slides.length === 0) {
-    console.log("No hero banners found.");
-    return;
-  }
+  if (slider) {
 
-  let currentSlide = 0;
-
-  // Show selected banner
-  function showSlide(index) {
-
-    slides.forEach(function (slide, i) {
-
-      if (i === index) {
-        slide.classList.add("active");
-      } else {
-        slide.classList.remove("active");
-      }
-
+    /* Pause while touching/hovering */
+    slider.addEventListener("mouseenter", function () {
+      clearInterval(heroTimer);
     });
 
-  }
+    slider.addEventListener("mouseleave", function () {
+      startHeroTimer();
+    });
 
-  // Show first banner
-  showSlide(currentSlide);
+    /* Mobile touch support */
+    let touchStartX = 0;
 
+    slider.addEventListener("touchstart", function (e) {
+      touchStartX = e.touches[0].clientX;
+      clearInterval(heroTimer);
+    }, { passive: true });
 
-  // Change banner every 3 seconds
-  if (slides.length > 1) {
+    slider.addEventListener("touchend", function (e) {
 
-    setInterval(function () {
+      const touchEndX = e.changedTouches[0].clientX;
+      const difference = touchStartX - touchEndX;
 
-      currentSlide++;
+      if (Math.abs(difference) > 50) {
 
-      // Go back to first banner
-      if (currentSlide >= slides.length) {
-        currentSlide = 0;
+        if (difference > 0) {
+          changeHero(1);
+        } else {
+          changeHero(-1);
+        }
+
+      } else {
+        startHeroTimer();
       }
 
-      showSlide(currentSlide);
-
-    }, 5000);
-
+    }, { passive: true });
   }
-
 });
