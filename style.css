@@ -113,26 +113,28 @@ body {
   border-radius: 24px;
 }
 
+/* Only active hero is visible */
 .hero-slider .hero {
-  display: none;
+  display: none !important;
   width: 100%;
   margin: 0;
 }
 
 .hero-slider .hero.active {
   display: flex !important;
-  animation: heroPopupIn 0.45s ease both;
+  animation: heroSlide 0.5s ease both;
 }
 
-@keyframes heroPopupIn {
+/* Hero slide animation */
+@keyframes heroSlide {
   from {
     opacity: 0;
-    transform: scale(.96) translateY(6px);
+    transform: translateX(25px);
   }
 
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateX(0);
   }
 }
 
@@ -145,17 +147,22 @@ body {
   height: 260px;
   border-radius: 24px;
   padding: 35px 5%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   overflow: hidden;
+
   background: linear-gradient(
     120deg,
     #0878f9,
     #09b8ee 55%,
     #6939ed
   );
+
   color: #fff;
+
   box-shadow: 0 15px 35px #2476d32e;
 }
 
@@ -183,12 +190,17 @@ body {
 .primary {
   border: 0;
   border-radius: 30px;
+
   background: #ffd51b;
   color: #132d61;
+
   font-weight: 900;
   font-size: 17px;
+
   padding: 15px 25px;
+
   cursor: pointer;
+
   box-shadow: 0 6px 0 #d6a900;
 }
 
@@ -212,36 +224,11 @@ body {
 }
 
 /* =========================
-   HERO ARROWS
+   HERO ARROWS REMOVED
    ========================= */
 
 .hero-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .92);
-  color: #102957;
-  font-size: 28px;
-  line-height: 30px;
-  cursor: pointer;
-  z-index: 5;
-  box-shadow: 0 3px 12px #0002;
-}
-
-.hero-arrow.prev {
-  left: 12px;
-}
-
-.hero-arrow.next {
-  right: 12px;
-}
-
-.hero-arrow:active {
-  transform: translateY(-50%) scale(.9);
+  display: none !important;
 }
 
 /* =========================
@@ -250,27 +237,39 @@ body {
 
 .hero-dots {
   position: absolute;
+
   left: 50%;
   bottom: 8px;
+
   transform: translateX(-50%);
+
   display: flex;
   gap: 5px;
+
   z-index: 10;
 }
 
 .hero-dots button {
   width: 6px;
   height: 6px;
+
   padding: 0;
   border: 0;
+
   border-radius: 50%;
-  background: rgba(255,255,255,.55);
+
+  background: rgba(255, 255, 255, 0.55);
+
   cursor: pointer;
+
+  transition: 0.25s ease;
 }
 
 .hero-dots button.active {
   width: 18px;
+
   border-radius: 8px;
+
   background: #fff;
 }
 
@@ -286,6 +285,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   margin-bottom: 15px;
 }
 
@@ -298,9 +298,12 @@ body {
 .section-title button {
   border: 0;
   background: none;
+
   color: #0878f9;
+
   font-weight: 800;
   font-size: 15px;
+
   cursor: pointer;
 }
 
@@ -316,40 +319,57 @@ body {
 
 .game-item {
   position: relative;
+
   text-align: center;
+
   background: transparent;
+
   min-width: 0;
 }
 
 .game-link {
   display: block;
+
   text-decoration: none;
+
   color: #102957;
+
   cursor: pointer;
 }
 
 .game-logo {
   width: 100%;
   aspect-ratio: 1 / 1;
+
   background: #fff;
+
   border-radius: 18px;
+
   overflow: hidden;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   box-shadow: 0 5px 20px #173a7010;
-  transition: transform .2s ease, box-shadow .2s ease;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .game-link:hover .game-logo {
   transform: translateY(-4px);
+
   box-shadow: 0 10px 25px #173a7020;
 }
 
 .game-logo img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+
   display: block;
 }
 
@@ -359,8 +379,11 @@ body {
 
 .game-link h3 {
   margin: 10px 3px 0;
+
   font-size: 16px;
+
   font-weight: 800;
+
   line-height: 1.25;
 }
 
@@ -370,14 +393,17 @@ body {
 
 .favorite-btn {
   position: absolute;
+
   right: 7px;
   top: 7px;
+
   z-index: 5;
 
   width: 30px;
   height: 30px;
 
   padding: 0;
+
   border: 0;
   border-radius: 50%;
 
@@ -385,7 +411,8 @@ body {
   align-items: center;
   justify-content: center;
 
-  background: rgba(255,255,255,.95);
+  background: rgba(255, 255, 255, 0.95);
+
   color: #102957;
 
   font-size: 16px;
@@ -406,31 +433,45 @@ body {
 
 .category-grid {
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
+
   gap: 15px;
 }
 
 .category-card {
   border: 0;
+
   border-radius: 18px;
+
   padding: 20px 12px;
+
   background: #fff;
+
   box-shadow: 0 5px 20px #173a700d;
+
   font-weight: 800;
+
   color: #173a70;
+
   cursor: pointer;
+
   font-size: 16px;
 }
 
 .category-card span {
   display: block;
+
   font-size: 38px;
+
   margin-bottom: 8px;
 }
 
 .category-large {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 16px;
 }
 
@@ -454,48 +495,56 @@ body {
    EMPTY STATE
    ========================= */
 
-/*
-   IMPORTANT:
-   Empty favorite box will now take
-   full width of the grid.
-*/
-
 .game-grid .empty-state {
   grid-column: 1 / -1;
+
   width: 100%;
   min-width: 0;
 
   min-height: 260px;
+
   padding: 45px 20px;
 
   background: #fff;
+
   border-radius: 20px;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
 
   text-align: center;
+
   color: #7184a6;
 }
 
 .game-grid .empty-state div {
   font-size: 55px;
+
   margin-bottom: 15px;
 }
 
 .game-grid .empty-state h3 {
   margin: 0 0 12px;
+
   color: #102957;
+
   font-size: 22px;
+
   line-height: 1.25;
 }
 
 .game-grid .empty-state p {
   max-width: 320px;
+
   margin: 0;
+
   font-size: 16px;
+
   line-height: 1.45;
 }
 
@@ -505,6 +554,7 @@ body {
 
 .bottom-nav {
   position: fixed;
+
   bottom: 0;
   left: 0;
   right: 0;
@@ -512,10 +562,13 @@ body {
   height: 72px;
 
   background: #fff;
+
   border-top: 1px solid #e8eef8;
 
   display: flex;
+
   justify-content: center;
+
   gap: min(18vw, 180px);
 
   z-index: 30;
@@ -523,12 +576,15 @@ body {
 
 .bottom-nav button {
   width: 100px;
+
   border: 0;
+
   background: none;
 
   color: #6c7f9e;
 
   font-weight: 700;
+
   font-size: 24px;
 
   cursor: pointer;
@@ -536,7 +592,9 @@ body {
 
 .bottom-nav button span {
   display: block;
+
   font-size: 13px;
+
   margin-top: 3px;
 }
 
@@ -550,27 +608,32 @@ body {
 
 .toast {
   position: fixed;
+
   left: 50%;
   bottom: 92px;
 
   transform: translateX(-50%) translateY(20px);
 
   background: #102957;
+
   color: #fff;
 
   padding: 11px 18px;
+
   border-radius: 25px;
 
   opacity: 0;
+
   pointer-events: none;
 
-  transition: .25s;
+  transition: 0.25s;
 
   z-index: 50;
 }
 
 .toast.show {
   opacity: 1;
+
   transform: translateX(-50%) translateY(0);
 }
 
@@ -604,11 +667,13 @@ body {
 
   .topbar {
     height: auto;
+
     min-height: 76px;
 
     padding: 10px 4%;
 
     flex-wrap: wrap;
+
     gap: 9px;
   }
 
@@ -632,7 +697,9 @@ body {
 
   .search-wrap {
     order: 3;
+
     width: 100%;
+
     height: 54px;
   }
 
@@ -647,17 +714,20 @@ body {
   }
 
   /* =====================
-     SMALL HERO
+     SMALL MOBILE HERO
      ===================== */
 
   .hero-slider {
     width: 100% !important;
+
     height: 180px !important;
 
     min-height: 180px !important;
+
     max-height: 180px !important;
 
     margin: 0 !important;
+
     padding: 0 !important;
 
     overflow: hidden !important;
@@ -669,7 +739,9 @@ body {
     width: 100% !important;
 
     height: 180px !important;
+
     min-height: 180px !important;
+
     max-height: 180px !important;
 
     padding: 18px 6% !important;
@@ -685,12 +757,15 @@ body {
 
   .hero-slider .hero h1 {
     font-size: 26px !important;
+
     line-height: 1.02 !important;
+
     margin: 0 !important;
   }
 
   .hero-slider .hero p:not(.eyebrow) {
     font-size: 12px !important;
+
     line-height: 1.25 !important;
 
     margin: 7px 0 10px !important;
@@ -698,13 +773,15 @@ body {
 
   .hero-slider .eyebrow {
     font-size: 11px !important;
-    letter-spacing: .8px !important;
+
+    letter-spacing: 0.8px !important;
 
     margin-bottom: 5px !important;
   }
 
   .hero-slider .primary {
     font-size: 12px !important;
+
     padding: 8px 14px !important;
 
     box-shadow: 0 3px 0 #d6a900 !important;
@@ -714,22 +791,10 @@ body {
     display: none !important;
   }
 
-  /* HERO ARROWS */
+  /* ARROWS COMPLETELY HIDDEN */
 
   .hero-arrow {
-    width: 32px;
-    height: 32px;
-
-    font-size: 24px;
-    line-height: 25px;
-  }
-
-  .hero-arrow.prev {
-    left: 7px;
-  }
-
-  .hero-arrow.next {
-    right: 7px;
+    display: none !important;
   }
 
   /* HERO DOTS */
@@ -738,7 +803,18 @@ body {
     bottom: 7px;
   }
 
-  /* SECTIONS */
+  .hero-dots button {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hero-dots button.active {
+    width: 18px;
+  }
+
+  /* =====================
+     SECTIONS
+     ===================== */
 
   .section {
     margin-top: 25px;
@@ -769,16 +845,19 @@ body {
     gap: 13px 9px;
 
     overflow: visible;
+
     padding: 0;
   }
 
   .game-item {
     min-width: 0;
+
     width: 100%;
   }
 
   .game-logo {
     width: 100%;
+
     height: auto;
 
     aspect-ratio: 1 / 1;
@@ -788,6 +867,7 @@ body {
 
   .game-link h3 {
     font-size: 12px;
+
     line-height: 1.2;
 
     margin: 7px 1px 0;
@@ -803,9 +883,11 @@ body {
 
   .favorite-btn {
     width: 27px;
+
     height: 27px;
 
     right: 5px;
+
     top: 5px;
 
     font-size: 15px;
@@ -844,13 +926,14 @@ body {
   }
 
   /* =====================
-     EMPTY FAVORITE FIX
+     EMPTY FAVORITES
      ===================== */
 
   .game-grid .empty-state {
     grid-column: 1 / -1 !important;
 
     width: 100% !important;
+
     min-width: 100% !important;
 
     min-height: 300px;
@@ -860,9 +943,11 @@ body {
     border-radius: 20px;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     text-align: center;
@@ -870,11 +955,13 @@ body {
 
   .game-grid .empty-state div {
     font-size: 55px;
+
     margin-bottom: 15px;
   }
 
   .game-grid .empty-state h3 {
     font-size: 22px;
+
     line-height: 1.25;
 
     margin: 0 0 12px;
@@ -886,6 +973,7 @@ body {
     margin: 0;
 
     font-size: 16px;
+
     line-height: 1.45;
   }
 
@@ -895,6 +983,7 @@ body {
 
   .bottom-nav {
     height: 72px;
+
     gap: 18vw;
   }
 
@@ -922,14 +1011,23 @@ body {
     font-size: 30px;
   }
 
-  .hero-slider,
-  .hero-slider .hero {
+  /* Smaller Hero */
+
+  .hero-slider {
     height: 165px !important;
+
     min-height: 165px !important;
+
     max-height: 165px !important;
   }
 
   .hero-slider .hero {
+    height: 165px !important;
+
+    min-height: 165px !important;
+
+    max-height: 165px !important;
+
     padding: 16px 7% !important;
   }
 
@@ -941,10 +1039,17 @@ body {
     font-size: 11px !important;
   }
 
+  .hero-slider .eyebrow {
+    font-size: 10px !important;
+  }
+
   .hero-slider .primary {
     font-size: 11px !important;
+
     padding: 7px 12px !important;
   }
+
+  /* Games */
 
   .game-grid {
     gap: 11px 7px;
@@ -954,14 +1059,30 @@ body {
     font-size: 11px;
   }
 
+  /* Heart */
+
   .favorite-btn {
     width: 25px;
+
     height: 25px;
+
     font-size: 14px;
   }
+
+  /* Empty state */
 
   .game-grid .empty-state {
     min-height: 270px;
   }
 
+}
+
+/* =========================
+   FINAL ARROW SAFETY FIX
+   ========================= */
+
+.hero-arrow,
+.hero-arrow.prev,
+.hero-arrow.next {
+  display: none !important;
   }
