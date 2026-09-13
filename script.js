@@ -28,10 +28,10 @@ const games = [
   },
   {
     id: 4,
-    title: "Car Racing",
+    title: "Math Quiz",
     category: "Board",
-    icon: "games/file_00000000f2808208ae73d8b75c491ce3.png",
-    url: "games/careering.html",
+    icon: "games/file_00000000b20c81f59277a71fc4330a3a.png",
+    url: "games/math_quiz_sound.html",
     newGame: false,
     popular: true
   },
