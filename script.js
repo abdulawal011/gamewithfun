@@ -43,7 +43,17 @@ const games = [
     url: "games/puzzle-game.html",
     newGame: true,
     popular: false
-  }
+  },
+  {
+    id: 6,
+    title: "Car Racing",
+    category: "Board",
+    icon: "games/file_00000000f2808208ae73d8b75c491ce3.png",
+    url: "games/careering.html",
+    newGame: false,
+    popular: true
+  },
+  
 ];
 
 const categories = [
