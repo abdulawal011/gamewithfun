@@ -459,43 +459,18 @@ body {
     font-size: 23px;
   }
 
-  /* 3 GAMES VISIBLE + HORIZONTAL SLIDE */
+  /* 3 GAMES PER ROW — NOT SLIDEABLE */
   .game-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-flow: column;
-    grid-auto-columns: calc((100% - 20px) / 3);
     gap: 14px 10px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    padding: 0 0 12px;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: thin;
-  }
-
-  .game-grid::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  .game-grid::-webkit-scrollbar-track {
-    background: #dce9fb;
-    border-radius: 10px;
-  }
-
-  .game-grid::-webkit-scrollbar-thumb {
-    background: #0878f9;
-    border-radius: 10px;
+    overflow: visible;
+    padding: 0;
   }
 
   .game-item {
     min-width: 0;
     width: 100%;
-    scroll-snap-align: start;
   }
 
   .game-logo {
@@ -553,39 +528,4 @@ body {
   .bottom-nav button {
     font-size: 22px;
   }
-}
-
-/* =========================
-   OPTIONAL SLIDE ARROW
-   ========================= */
-
-.slide-arrow {
-  display: none;
-}
-
-@media (max-width: 600px) {
-  .slide-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    position: absolute;
-    right: 8px;
-    margin-top: -66px;
-    border: 0;
-    border-radius: 50%;
-    background: rgba(255,255,255,.96);
-    color: #0878f9;
-    font-size: 21px;
-    font-weight: 900;
-    box-shadow: 0 4px 14px #173a7025;
-    pointer-events: none;
-    animation: slideArrow 1.4s ease-in-out infinite;
-  }
-
-  @keyframes slideArrow {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(5px); }
-  }
-  }
+    }
