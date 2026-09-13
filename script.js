@@ -39,7 +39,7 @@ const games = [
     id: 5,
     title: "Sliding Puzzle",
     category: "Quiz",
-    icon: "games/file_0000000082608208928c87863ab5eea1.png",
+    icon: "games/sliding-puzzle-logo.jpg",
     url: "games/puzzle-game.html",
     newGame: true,
     popular: false
