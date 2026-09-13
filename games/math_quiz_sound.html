@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Math Quiz Game</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;font-family:Arial,sans-serif;color:white;background:#020617}
+.game-wrapper{width:100%;max-width:950px}
+.stage{position:relative;min-height:650px;padding:28px;border-radius:30px;overflow:hidden;background:radial-gradient(circle at 10% 10%,#07598555,transparent 32%),radial-gradient(circle at 90% 15%,#7e22ce44,transparent 30%),radial-gradient(circle at 50% 100%,#1d4ed844,transparent 38%),linear-gradient(145deg,#020617,#080b18 52%,#111827);border:1px solid #334155;box-shadow:0 0 45px #0009,inset 0 0 45px #0ea5e922}
+.stage:before,.stage:after{content:"";position:absolute;border-radius:50%;pointer-events:none;animation:floatEffect 8s ease-in-out infinite}
+.stage:before{width:180px;height:180px;right:-75px;top:80px;background:#06b6d422;border:1px solid #22d3ee33}
+.stage:after{width:140px;height:140px;left:-65px;bottom:60px;background:#a855f722;border:1px solid #c084fc33;animation-delay:2s}
+@keyframes floatEffect{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-24px) rotate(18deg)}}
+.content{position:relative;z-index:2;max-width:850px;margin:auto}
+.screen{display:none}.screen.active{display:block;animation:fadeScreen .45s ease both}
+@keyframes fadeScreen{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.card{position:relative;padding:clamp(20px,4vw,36px);border-radius:25px;background:linear-gradient(145deg,#111827ef,#0b1120ef);border:1px solid #334155;box-shadow:0 20px 55px #0007,inset 0 1px #ffffff0b;backdrop-filter:blur(14px)}
+.logo{text-align:center;font-size:clamp(30px,6vw,58px);font-weight:1000;letter-spacing:2px;background:linear-gradient(90deg,#67e8f9,#60a5fa,#c084fc,#67e8f9);background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientMove 5s linear infinite}
+@keyframes gradientMove{to{background-position:250% center}}
+.subtitle{max-width:600px;margin:12px auto 25px;color:#b7c4d8;text-align:center;font-size:15px;line-height:1.8}
+.close{position:absolute;top:17px;right:17px;width:42px;height:42px;border-radius:50%;background:#ef444422;border:1px solid #f8717166;color:#fecaca;font-size:28px;cursor:pointer}
+.close:hover{background:#ef4444}
+.rules-list{display:grid;gap:14px;margin:24px 0}.rule{display:flex;align-items:flex-start;gap:13px;color:#dbeafe;line-height:1.7;font-size:15px}
+.rule-icon{min-width:35px;height:35px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#0891b2,#4f46e5);box-shadow:0 0 16px #0891b244}
+button{font-family:inherit;cursor:pointer;transition:transform .2s,box-shadow .2s,filter .2s}
+button:active{transform:scale(.97)}button:focus-visible{outline:3px solid #facc15;outline-offset:3px}
+.primary{width:100%;padding:17px 22px;border:0;border-radius:16px;color:white;font-size:18px;font-weight:900;background:linear-gradient(100deg,#0891b2,#2563eb,#7c3aed);background-size:200% auto;box-shadow:0 0 25px #2563eb55;animation:buttonGlow 4s ease infinite}
+.primary:hover{filter:brightness(1.15);box-shadow:0 0 35px #3b82f688}
+@keyframes buttonGlow{0%,100%{background-position:0% center}50%{background-position:100% center}}
+.pill{display:inline-block;padding:8px 12px;margin:4px;border:1px solid #475569;border-radius:999px;background:#0f172acc;color:#cbd5e1;font-size:12px;font-weight:800}
+.game-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.game-name{color:#67e8f9;font-size:18px;font-weight:900;letter-spacing:1px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.stat{padding:17px 8px;text-align:center;border-radius:18px;background:linear-gradient(145deg,#172033,#0b1220);border:1px solid #334155;box-shadow:inset 0 1px #ffffff0a}
+.stat small{display:block;color:#94a3b8;font-size:11px;font-weight:800;letter-spacing:1px;margin-bottom:8px}
+.stat strong{display:block;color:#67e8f9;font-size:clamp(23px,5vw,34px);font-weight:1000;text-shadow:0 0 15px #22d3ee44}
+.progress-head{display:flex;justify-content:space-between;gap:10px;color:#94a3b8;font-size:12px;font-weight:800;margin-bottom:8px}
+.timer{height:13px;border-radius:999px;background:#1e293b;overflow:hidden;border:1px solid #334155;margin-bottom:28px}
+.timer-bar{width:100%;height:100%;border-radius:999px;background:linear-gradient(90deg,#22c55e,#eab308,#ef4444);box-shadow:0 0 15px #22c55e77;transition:width 1s linear}
+.question-card{padding:28px 15px;margin-bottom:22px;text-align:center;border-radius:24px;background:radial-gradient(circle at 50% 0%,#2563eb22,transparent 65%),linear-gradient(145deg,#0f172a,#111827);border:1px solid #334155;box-shadow:inset 0 0 35px #0ea5e90b}
+.question-label{color:#94a3b8;font-size:12px;font-weight:900;letter-spacing:2px;margin-bottom:12px}
+.question{color:#f8fafc;font-size:clamp(40px,9vw,72px);font-weight:1000;letter-spacing:2px;text-shadow:0 0 25px #60a5fa55;animation:questionPop .35s ease both}
+@keyframes questionPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.answer{min-height:78px;border-radius:18px;color:#e2e8f0;font-size:clamp(24px,5vw,34px);font-weight:1000;background:linear-gradient(145deg,#1e293b,#111827);border:1px solid #475569;box-shadow:0 8px 0 #020617,0 0 20px #0005}
+.answer:hover{border-color:#22d3ee;color:#67e8f9;transform:translateY(-3px);box-shadow:0 11px 0 #020617,0 0 25px #22d3ee33}
+.answer.correct{background:linear-gradient(145deg,#166534,#14532d);border-color:#4ade80;color:#dcfce7;box-shadow:0 0 25px #22c55e55}
+.answer.wrong{background:linear-gradient(145deg,#991b1b,#7f1d1d);border-color:#f87171;color:#fee2e2}
+.message{min-height:30px;margin:22px 0 15px;text-align:center;font-size:16px;font-weight:900;line-height:1.6}
+.hidden{display:none!important}
+.result-number{margin:20px 0;text-align:center;color:#facc15;font-size:clamp(60px,12vw,100px);font-weight:1000;text-shadow:0 0 30px #eab30866}
+.result-badge{margin-bottom:25px;text-align:center;color:#a5b4fc;font-weight:800}
+@media(max-width:520px){body{padding:8px}.stage{min-height:600px;padding:14px;border-radius:22px}.card{padding:18px}.stats{gap:7px}.stat{padding:13px 4px}.answers{gap:10px}.answer{min-height:68px}.game-top{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="game-wrapper"><div class="stage"><div class="content">
+
+<section id="rulesScreen" class="screen active"><div class="card">
+<button id="closeRules" class="close">×</button>
+<div style="text-align:center;font-size:58px">🧠</div>
+<h2 class="logo" style="font-size:48px">HOW TO PLAY</h2>
+<p class="subtitle">গেম শুরু করার আগে নিয়মগুলো ভালোভাবে দেখে নিন।</p>
+<div class="rules-list">
+<div class="rule"><span class="rule-icon">➕</span><span>AI নিজে থেকে যোগ, বিয়োগ, গুণ ও ভাগের অঙ্ক তৈরি করবে।</span></div>
+<div class="rule"><span class="rule-icon">⏱️</span><span>প্রতিটি প্রশ্নের উত্তর দেওয়ার জন্য ৮ সেকেন্ড সময় থাকবে।</span></div>
+<div class="rule"><span class="rule-icon">⭐</span><span>সঠিক উত্তরের জন্য ১০ পয়েন্ট পাবেন। ভুল উত্তর বা সময় শেষ হলে পয়েন্ট পাবেন না।</span></div>
+<div class="rule"><span class="rule-icon">🎯</span><span>উত্তর দেওয়ার পর NEXT ROUND বাটনে ক্লিক করলে পরের প্রশ্ন আসবে।</span></div>
+</div>
+<button id="rulesOk" class="primary">ঠিক আছে →</button>
+</div></section>
+
+<section id="startScreen" class="screen"><div class="card" style="text-align:center">
+<div style="font-size:70px">⚡</div><h1 class="logo">MATH QUIZ</h1>
+<p class="subtitle">দ্রুত অঙ্ক করুন, সঠিক উত্তর দিন এবং সর্বোচ্চ স্কোর করার চেষ্টা করুন।</p>
+<div style="text-align:center;margin-bottom:25px">
+<span class="pill">➕ Addition</span><span class="pill">➖ Subtraction</span><span class="pill">✖️ Multiplication</span><span class="pill">➗ Division</span>
+</div>
+<button id="startGame" class="primary">খেলা শুরু করুন 🚀</button>
+</div></section>
+
+<section id="gameScreen" class="screen"><div class="card">
+<div class="game-top"><div class="game-name">⚡ MATH ARENA</div><div class="pill">10 ROUNDS</div></div>
+<div class="stats">
+<div class="stat"><small>SCORE</small><strong id="score">0</strong></div>
+<div class="stat"><small>ROUND</small><strong id="round">1</strong></div>
+<div class="stat"><small>TIME LEFT</small><strong id="time">8</strong></div>
+</div>
+<div class="progress-head"><span>TIME PROGRESS</span><span id="timeLabel">8 SECONDS</span></div>
+<div class="timer"><div id="timerBar" class="timer-bar"></div></div>
+<div class="question-card"><div class="question-label">SOLVE THE QUESTION</div><div id="question" class="question">2 + 2 = ?</div></div>
+<div id="answers" class="answers"></div>
+<div id="message" class="message"></div>
+<button id="nextRound" class="primary hidden">NEXT ROUND →</button>
+</div></section>
+
+<section id="resultScreen" class="screen"><div class="card" style="text-align:center">
+<div style="font-size:70px">🏆</div><h2 class="logo">GAME OVER</h2>
+<p class="subtitle">আপনি এই গেমটি শেষ করেছেন। আপনার মোট স্কোর:</p>
+<div id="finalScore" class="result-number">0</div>
+<div id="resultText" class="result-badge">দারুণ চেষ্টা করেছেন!</div>
+<button id="playAgain" class="primary">PLAY AGAIN 🔄</button>
+</div></section>
+
+</div></div></div>
+
+<script>
+const rulesScreen=document.getElementById("rulesScreen"),startScreen=document.getElementById("startScreen"),gameScreen=document.getElementById("gameScreen"),resultScreen=document.getElementById("resultScreen");
+const scoreElement=document.getElementById("score"),roundElement=document.getElementById("round"),timeElement=document.getElementById("time"),timeLabel=document.getElementById("timeLabel"),timerBar=document.getElementById("timerBar"),questionElement=document.getElementById("question"),answersElement=document.getElementById("answers"),messageElement=document.getElementById("message"),nextRoundButton=document.getElementById("nextRound"),finalScoreElement=document.getElementById("finalScore"),resultTextElement=document.getElementById("resultText");
+
+let score=0,round=1,timeLeft=8,correctAnswer=0,answered=false,timer=null,audioContext=null;
+
+function initAudio(){
+ if(!audioContext) audioContext=new(window.AudioContext||window.webkitAudioContext)();
+ if(audioContext.state==="suspended") audioContext.resume();
+}
+function tone(freq,start,duration,type="sine",volume=.18){
+ const o=audioContext.createOscillator(),g=audioContext.createGain();
+ o.type=type;o.frequency.setValueAtTime(freq,start);o.connect(g);g.connect(audioContext.destination);
+ g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(volume,start+.02);g.gain.exponentialRampToValueAtTime(.001,start+duration);
+ o.start(start);o.stop(start+duration);
+}
+function playSound(type){
+ initAudio();const n=audioContext.currentTime;
+ if(type==="correct"){tone(600,n,.12,"sine",.22);tone(900,n+.11,.2,"sine",.22)}
+ if(type==="wrong"){tone(300,n,.12,"sawtooth",.18);tone(120,n+.12,.22,"sawtooth",.16)}
+ if(type==="timeout"){tone(220,n,.15,"square",.16);tone(160,n+.15,.22,"square",.14)}
+ if(type==="gameover"){tone(700,n,.12,"sine",.2);tone(550,n+.13,.12,"sine",.2);tone(400,n+.26,.14,"sine",.2);tone(250,n+.41,.28,"sine",.2)}
+}
+function showScreen(screen){[rulesScreen,startScreen,gameScreen,resultScreen].forEach(s=>s.classList.remove("active"));screen.classList.add("active")}
+function stopTimer(){if(timer!==null){clearInterval(timer);timer=null}}
+function randomNumber(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function createQuestion(){
+ const operation=["+","-","×","÷"][randomNumber(0,3)];let a,b,answer;
+ if(operation==="+"){a=randomNumber(1,40);b=randomNumber(1,40);answer=a+b}
+ if(operation==="-"){a=randomNumber(10,60);b=randomNumber(1,a);answer=a-b}
+ if(operation==="×"){a=randomNumber(1,12);b=randomNumber(1,12);answer=a*b}
+ if(operation==="÷"){b=randomNumber(1,12);answer=randomNumber(1,12);a=b*answer}
+ correctAnswer=answer;questionElement.textContent=`${a} ${operation} ${b} = ?`;
+ const options=new Set([answer]);
+ while(options.size<4){const fake=answer+randomNumber(-12,12);if(fake>=0&&fake!==answer)options.add(fake)}
+ [...options].sort(()=>Math.random()-.5).forEach(value=>{const button=document.createElement("button");button.className="answer";button.textContent=value;button.addEventListener("click",()=>checkAnswer(value,button));answersElement.appendChild(button)})
+}
+function startTimer(){
+ stopTimer();timeLeft=8;timeElement.textContent=8;timeLabel.textContent="8 SECONDS";timerBar.style.width="100%";
+ timer=setInterval(()=>{if(answered)return;timeLeft--;timeElement.textContent=timeLeft;timeLabel.textContent=`${timeLeft} SECONDS`;timerBar.style.width=`${timeLeft/8*100}%`;if(timeLeft<=0)checkAnswer(null,null)},1000)
+}
+function checkAnswer(value,selectedButton){
+ if(answered)return;answered=true;stopTimer();
+ const buttons=answersElement.querySelectorAll("button");buttons.forEach(button=>{button.disabled=true;if(Number(button.textContent)===correctAnswer)button.classList.add("correct")});
+ if(value===correctAnswer){playSound("correct");score+=10;messageElement.textContent="সঠিক উত্তর! +১০ পয়েন্ট 🎉";messageElement.style.color="#4ade80";if(selectedButton)selectedButton.classList.add("correct")}
+ else{playSound(value===null?"timeout":"wrong");messageElement.textContent=value===null?"সময় শেষ! ⏰ সঠিক উত্তর: "+correctAnswer:"ভুল উত্তর! সঠিক উত্তর: "+correctAnswer;messageElement.style.color="#f87171";if(selectedButton)selectedButton.classList.add("wrong")}
+ scoreElement.textContent=score;nextRoundButton.classList.remove("hidden")
+}
+function startRound(){answered=false;messageElement.textContent="";nextRoundButton.classList.add("hidden");roundElement.textContent=round;answersElement.innerHTML="";createQuestion();startTimer()}
+function beginGame(){initAudio();score=0;round=1;scoreElement.textContent="0";showScreen(gameScreen);startRound()}
+
+document.getElementById("closeRules").addEventListener("click",()=>showScreen(startScreen));
+document.getElementById("rulesOk").addEventListener("click",()=>showScreen(startScreen));
+document.getElementById("startGame").addEventListener("click",beginGame);
+nextRoundButton.addEventListener("click",()=>{
+ round++;
+ if(round>10){stopTimer();playSound("gameover");finalScoreElement.textContent=score;resultTextElement.textContent=score>=80?"অসাধারণ! আপনি খুব ভালো করেছেন 🔥":score>=50?"খুব ভালো! আরও চেষ্টা করুন 💪":"ভালো চেষ্টা! আবার খেলুন 🚀";showScreen(resultScreen)}
+ else startRound()
+});
+document.getElementById("playAgain").addEventListener("click",beginGame);
+</script>
+</body>
+</html>
