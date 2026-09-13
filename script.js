@@ -272,7 +272,7 @@ function playGame(id) {
    PAGE NAVIGATION
    ========================= */
 
-function showPage(page) {
+function showPage(page, fromBrowserBack = false) {
   const pages = {
     home: "homePage",
     categories: "categoriesPage",
@@ -280,9 +280,12 @@ function showPage(page) {
     all: "allGamesPage"
   };
 
+  if (!fromBrowserBack) {
+    history.pushState({ page: page }, "", "#" + page);
+  }
+
   Object.values(pages).forEach(id => {
     const element = document.getElementById(id);
-
     if (element) {
       element.classList.add("hidden");
     }
@@ -301,22 +304,15 @@ function showPage(page) {
     });
 
   if (page === "home") {
-    document
-      .getElementById("navHome")
-      ?.classList.add("active");
+    document.getElementById("navHome")?.classList.add("active");
   }
 
   if (page === "categories") {
-    document
-      .getElementById("navCategories")
-      ?.classList.add("active");
+    document.getElementById("navCategories")?.classList.add("active");
   }
 
   if (page === "favorites") {
-    document
-      .getElementById("navFavorites")
-      ?.classList.add("active");
-
+    document.getElementById("navFavorites")?.classList.add("active");
     renderFavorites();
   }
 
@@ -325,6 +321,18 @@ function showPage(page) {
     behavior: "smooth"
   });
 }
+
+
+/* =========================
+   ANDROID BACK BUTTON
+   ========================= */
+
+history.replaceState({ page: "home" }, "", "#home");
+
+window.addEventListener("popstate", function(event) {
+  const page = event.state?.page || "home";
+  showPage(page, true);
+});
 
 
 /* =========================
