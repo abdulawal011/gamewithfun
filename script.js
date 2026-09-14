@@ -1,12 +1,12 @@
 const games = [
   {
     id: 8,
-    title: "fruit cut",
+    title: "Fruit Cut",
     category: "Puzzle",
     icon: "games/IMG-20260914-WA0051.jpg",
     url: "games/Fruit cutting game.html",
     newGame: true,
-    popular: true
+    popular: false
   },
   {
     id: 7,
@@ -32,7 +32,7 @@ const games = [
     category: "Puzzle",
     icon: "games/GUuhrKZZGsIRBscIOCGwbaYGs0M.jpg",
     url: "games/guesspepole.html",
-    newGame: true,
+    newGame: false,
     popular: true
   },
   {
