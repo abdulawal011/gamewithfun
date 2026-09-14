@@ -49,7 +49,7 @@ function changeHero(direction) {
 function startHeroTimer() {
   heroTimer = setInterval(() => {
     showHero(currentHero + 1);
-  }, 5000);
+  }, 3000);
 }
 
 function restartHeroTimer() {
