@@ -2,7 +2,7 @@ const games = [
   {
     id: 8,
     title: "Fruit Cut",
-    category: "Puzzle",
+    category: "",
     icon: "games/IMG-20260914-WA0051.jpg",
     url: "games/Fruit cutting game.html",
     newGame: true,
@@ -11,11 +11,11 @@ const games = [
   {
     id: 7,
     title: "Endless Runner",
-    category: "Puzzle",
+    category: "Recing",
     icon: "games/neon_runner_logo.jpg",
     url: "games/Endless Runner.html",
     newGame: true,
-    popular: true
+    popular: false
   },
   {
     id: 1,
@@ -24,7 +24,7 @@ const games = [
     icon: "games/logo.png",
     url: "games/neon_tic_tac_toe-1.html",
     newGame: true,
-    popular: true
+    popular: false
   },
   {
     id: 2,
@@ -47,7 +47,7 @@ const games = [
   {
     id: 4,
     title: "Math Quiz",
-    category: "Board",
+    category: "Quiz",
     icon: "games/file_00000000b20c81f59277a71fc4330a3a.png",
     url: "games/math_quiz_sound.html",
     newGame: false,
@@ -56,7 +56,7 @@ const games = [
   {
     id: 5,
     title: "Sliding Puzzle",
-    category: "Quiz",
+    category: "Puzzle",
     icon: "games/sliding-puzzle-logo.jpg",
     url: "games/puzzle-game.html",
     newGame: true,
@@ -65,11 +65,11 @@ const games = [
   {
     id: 6,
     title: "Car Racing",
-    category: "Board",
+    category: "Recing",
     icon: "games/file_00000000f2808208ae73d8b75c491ce3.png",
     url: "games/careering.html",
     newGame: true,
-    popular: true
+    popular: false
   },
   
 ];
@@ -77,10 +77,12 @@ const games = [
 const categories = [
   "Puzzle",
   "Quiz",
+  "Recing",
   "Board",
   "Arcade",
   "Sports",
   "Strategy"
+  
 ];
 
 let favorites = JSON.parse(
