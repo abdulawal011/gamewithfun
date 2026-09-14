@@ -1,5 +1,14 @@
 const games = [
   {
+    id: 8,
+    title: "fruit cut",
+    category: "Puzzle",
+    icon: "games/IMG-20260914-WA0051.jpg",
+    url: "games/Fruit cutting game.html",
+    newGame: true,
+    popular: true
+  },
+  {
     id: 7,
     title: "Endless Runner",
     category: "Puzzle",
