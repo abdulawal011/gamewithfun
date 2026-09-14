@@ -1,5 +1,14 @@
 const games = [
   {
+    id: 7,
+    title: "Endless Runner",
+    category: "Puzzle",
+    icon: "games/neon_runner_logo.jpg",
+    url: "games/Endless Runner.html",
+    newGame: true,
+    popular: true
+  },
+  {
     id: 1,
     title: "Neon Tic Tac Toe",
     category: "Puzzle",
@@ -50,7 +59,7 @@ const games = [
     category: "Board",
     icon: "games/file_00000000f2808208ae73d8b75c491ce3.png",
     url: "games/careering.html",
-    newGame: false,
+    newGame: true,
     popular: true
   },
   
