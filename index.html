@@ -86,8 +86,11 @@
 GameWithFun - Free Online Games | Play Games Online
 </title>
 
-<link rel="icon" type="image/png" href="/favicon.png">
-      
+<link rel="icon"
+      type="image/png"
+      href="/favicon.png">
+
+
 <!-- =========================
      HERO SLIDER JS
 ========================= -->
@@ -117,10 +120,148 @@ GameWithFun - Free Online Games | Play Games Online
 
 </script>
 
+
+<!-- =========================
+     LEADERBOARD BASIC STYLE
+========================= -->
+
+<style>
+
+.leaderboard-login {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  margin: 20px auto;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(16,41,87,.08);
+}
+
+.leaderboard-login h2 {
+  margin: 0 0 8px;
+  color: #102957;
+}
+
+.leaderboard-login p {
+  margin: 0 0 16px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.leaderboard-login-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 22px;
+  background: #0878f9;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.leaderboard-login-btn:active {
+  transform: scale(.97);
+}
+
+#userInfo {
+  margin: 12px 0;
+  color: #102957;
+  font-weight: 700;
+}
+
+#logoutBtn {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 18px;
+  background: #eef4ff;
+  color: #0878f9;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.leaderboard-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 20px auto 30px;
+  max-width: 900px;
+  box-shadow: 0 5px 20px rgba(16,41,87,.08);
+}
+
+.leaderboard-header {
+  padding: 18px;
+  font-size: 20px;
+  font-weight: 800;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.leaderboard-empty {
+  padding: 30px;
+  text-align: center;
+  color: #667085;
+}
+
+.leaderboard-player {
+  display: grid;
+  grid-template-columns: 55px 1fr 110px 110px;
+  gap: 10px;
+  align-items: center;
+  padding: 15px 18px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.leaderboard-player:last-child {
+  border-bottom: 0;
+}
+
+.leaderboard-rank {
+  font-size: 21px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.leaderboard-name {
+  font-weight: 700;
+}
+
+.leaderboard-games,
+.leaderboard-time {
+  text-align: right;
+  color: #52627a;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+
+  .leaderboard-player {
+    grid-template-columns: 42px 1fr;
+  }
+
+  .leaderboard-games,
+  .leaderboard-time {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .leaderboard-games::before {
+    content: "Games: ";
+    font-weight: 700;
+  }
+
+  .leaderboard-time::before {
+    content: "Time: ";
+    font-weight: 700;
+  }
+
+}
+
+</style>
+
 </head>
 
 
 <body>
+
 
 <!-- ==================================================
      HEADER
@@ -129,18 +270,21 @@ GameWithFun - Free Online Games | Play Games Online
 <header class="topbar">
 
   <!-- BRAND -->
-<a class="brand"
-   href="#"
-   onclick="showPage('home');return false;">
 
-  <img
-    src="logo.png"
-    alt="GameWithFun"
-    class="site-logo">
+  <a class="brand"
+     href="#"
+     onclick="showPage('home');return false;">
 
-</a>
+    <img
+      src="logo.png"
+      alt="GameWithFun"
+      class="site-logo">
+
+  </a>
+
 
   <!-- SEARCH -->
+
   <div class="search-wrap">
 
     <input
@@ -185,9 +329,7 @@ GameWithFun - Free Online Games | Play Games Online
      id="heroSlider">
 
 
-  <!-- =========================
-       HERO 1
-  ========================= -->
+  <!-- HERO 1 -->
 
   <div class="hero active">
 
@@ -219,10 +361,7 @@ GameWithFun - Free Online Games | Play Games Online
   </div>
 
 
-
-  <!-- =========================
-       HERO 2
-  ========================= -->
+  <!-- HERO 2 -->
 
   <div
     class="hero"
@@ -256,10 +395,7 @@ GameWithFun - Free Online Games | Play Games Online
   </div>
 
 
-
-  <!-- =========================
-       HERO 3
-  ========================= -->
+  <!-- HERO 3 -->
 
   <div
     class="hero"
@@ -293,10 +429,7 @@ GameWithFun - Free Online Games | Play Games Online
   </div>
 
 
-
-  <!-- =========================
-       HERO ARROWS
-  ========================= -->
+  <!-- HERO ARROWS -->
 
   <button
     class="hero-arrow prev"
@@ -318,10 +451,7 @@ GameWithFun - Free Online Games | Play Games Online
   </button>
 
 
-
-  <!-- =========================
-       HERO DOTS
-  ========================= -->
+  <!-- HERO DOTS -->
 
   <div class="hero-dots">
 
@@ -343,9 +473,7 @@ GameWithFun - Free Online Games | Play Games Online
 
   </div>
 
-
 </div>
-
 
 
 <!-- ==================================================
@@ -354,7 +482,6 @@ GameWithFun - Free Online Games | Play Games Online
 
 <section id="newGames"
          class="section">
-
 
   <div class="section-title">
 
@@ -371,14 +498,11 @@ GameWithFun - Free Online Games | Play Games Online
 
   </div>
 
-
   <div id="newGrid"
        class="game-grid">
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -387,7 +511,6 @@ GameWithFun - Free Online Games | Play Games Online
 
 <section id="popularGames"
          class="section">
-
 
   <div class="section-title">
 
@@ -404,14 +527,11 @@ GameWithFun - Free Online Games | Play Games Online
 
   </div>
 
-
   <div id="popularGrid"
        class="game-grid">
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -419,7 +539,6 @@ GameWithFun - Free Online Games | Play Games Online
 ================================================== -->
 
 <section class="section">
-
 
   <div class="section-title">
 
@@ -429,14 +548,11 @@ GameWithFun - Free Online Games | Play Games Online
 
   </div>
 
-
   <div id="categoryGrid"
        class="category-grid">
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -445,22 +561,17 @@ GameWithFun - Free Online Games | Play Games Online
 
 <section class="info-section">
 
-
   <div class="info-card">
-
 
     <div class="info-icon">
       🎮
     </div>
 
-
     <div class="info-content">
-
 
       <h2>
         About GameWithFun
       </h2>
-
 
       <p>
         GameWithFun is a free online gaming website where you can
@@ -470,15 +581,11 @@ GameWithFun - Free Online Games | Play Games Online
         additional software.
       </p>
 
-
     </div>
-
 
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -487,99 +594,52 @@ GameWithFun - Free Online Games | Play Games Online
 
 <section class="info-section">
 
-
   <div class="info-card">
-
 
     <div class="info-icon">
       🕹️
     </div>
 
-
     <div class="info-content">
-
 
       <h2>
         How to Play
       </h2>
-
 
       <p>
         Choose a game from GameWithFun, open the game page,
         follow the instructions, and start playing.
       </p>
 
-
-
       <div class="steps">
 
-
         <div class="step">
-
-          <span>
-            1
-          </span>
-
-          <strong>
-            Choose a Game
-          </strong>
-
+          <span>1</span>
+          <strong>Choose a Game</strong>
         </div>
 
-
-
         <div class="step">
-
-          <span>
-            2
-          </span>
-
-          <strong>
-            Open the Game
-          </strong>
-
+          <span>2</span>
+          <strong>Open the Game</strong>
         </div>
 
-
-
         <div class="step">
-
-          <span>
-            3
-          </span>
-
-          <strong>
-            Follow Instructions
-          </strong>
-
+          <span>3</span>
+          <strong>Follow Instructions</strong>
         </div>
 
-
-
         <div class="step">
-
-          <span>
-            4
-          </span>
-
-          <strong>
-            Have Fun!
-          </strong>
-
+          <span>4</span>
+          <strong>Have Fun!</strong>
         </div>
-
 
       </div>
 
-
     </div>
-
 
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -588,69 +648,52 @@ GameWithFun - Free Online Games | Play Games Online
 
 <section class="info-section">
 
-
   <div class="info-card">
-
 
     <div class="info-icon">
       ⭐
     </div>
 
-
     <div class="info-content">
-
 
       <h2>
         Why GameWithFun?
       </h2>
-
 
       <p>
         We aim to make online gaming simple and enjoyable.
         Browse our collection and find a game that you like.
       </p>
 
-
-
       <div class="features">
-
 
         <div>
           ✓ Free online games
         </div>
 
-
         <div>
           ✓ Mobile-friendly gameplay
         </div>
-
 
         <div>
           ✓ No download required
         </div>
 
-
         <div>
           ✓ Easy-to-play browser games
         </div>
 
-
       </div>
-
 
     </div>
 
-
   </div>
 
-
 </section>
-
 
 
 </section>
 <!-- END HOME PAGE -->
-
 
 
 <!-- ==================================================
@@ -661,32 +704,24 @@ GameWithFun - Free Online Games | Play Games Online
   id="categoriesPage"
   class="page hidden">
 
-
   <div class="page-heading">
-
 
     <h1>
       Categories
     </h1>
 
-
     <p>
       Choose a type of game and start playing.
     </p>
 
-
   </div>
-
-
 
   <div
     id="allCategoryGrid"
     class="category-large">
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -697,32 +732,24 @@ GameWithFun - Free Online Games | Play Games Online
   id="favoritesPage"
   class="page hidden">
 
-
   <div class="page-heading">
-
 
     <h1>
       ❤️ Favorites
     </h1>
 
-
     <p>
       Your saved games appear here.
     </p>
 
-
   </div>
-
-
 
   <div
     id="favoriteGrid"
     class="game-grid">
   </div>
 
-
 </section>
-
 
 
 <!-- ==================================================
@@ -733,36 +760,110 @@ GameWithFun - Free Online Games | Play Games Online
   id="allGamesPage"
   class="page hidden">
 
-
   <div class="page-heading">
-
 
     <h1 id="allTitle">
       All Games
     </h1>
 
-
     <p>
       Pick a game and have fun.
     </p>
 
-
   </div>
-
-
 
   <div
     id="allGrid"
     class="game-grid">
   </div>
 
+</section>
+
+
+<!-- ==================================================
+     LEADERBOARD PAGE
+================================================== -->
+
+<section
+  id="leaderboardPage"
+  class="page hidden">
+
+  <div class="page-heading">
+
+    <h1>
+      🏆 Leaderboard
+    </h1>
+
+    <p>
+      See the top GameWithFun players.
+    </p>
+
+  </div>
+
+
+  <!-- LOGIN BOX -->
+
+  <div class="leaderboard-login">
+
+    <h2>
+      🎮 Join the Leaderboard
+    </h2>
+
+    <p>
+      Login with Google to save your game activity
+      and appear on the leaderboard.
+    </p>
+
+
+    <button
+      id="loginBtn"
+      class="leaderboard-login-btn">
+
+      🔐 Login with Google
+
+    </button>
+
+
+    <div
+      id="userInfo"
+      style="display:none;">
+    </div>
+
+
+    <button
+      id="logoutBtn"
+      style="display:none;">
+
+      Logout
+
+    </button>
+
+  </div>
+
+
+  <!-- LEADERBOARD -->
+
+  <div class="leaderboard-card">
+
+    <div class="leaderboard-header">
+      🏆 Top Players
+    </div>
+
+
+    <div id="leaderboardList">
+
+      <div class="leaderboard-empty">
+        Login to join the leaderboard 🎮
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-
 </main>
-
 
 
 <!-- ==================================================
@@ -771,13 +872,17 @@ GameWithFun - Free Online Games | Play Games Online
 
 <nav class="bottom-nav">
 
+
   <!-- HOME -->
+
   <button
     id="navHome"
     class="nav-item active"
     onclick="showPage('home')">
 
-    <span class="nav-icon">⌂</span>
+    <span class="nav-icon">
+      ⌂
+    </span>
 
     <span>
       Home
@@ -787,12 +892,15 @@ GameWithFun - Free Online Games | Play Games Online
 
 
   <!-- CATEGORIES -->
+
   <button
     id="navCategories"
     class="nav-item"
     onclick="showPage('categories')">
 
-    <span class="nav-icon">▦</span>
+    <span class="nav-icon">
+      ▦
+    </span>
 
     <span>
       Categories
@@ -802,12 +910,15 @@ GameWithFun - Free Online Games | Play Games Online
 
 
   <!-- LEADERBOARD -->
+
   <button
     id="navLeaderboard"
     class="nav-item"
-    onclick="window.location.href='leaderboard.html'">
+    onclick="showPage('leaderboard')">
 
-    <span class="nav-icon">🏆</span>
+    <span class="nav-icon">
+      🏆
+    </span>
 
     <span>
       Leaderboard
@@ -817,12 +928,15 @@ GameWithFun - Free Online Games | Play Games Online
 
 
   <!-- FAVORITES -->
+
   <button
     id="navFavorites"
     class="nav-item"
     onclick="showPage('favorites')">
 
-    <span class="nav-icon">♡</span>
+    <span class="nav-icon">
+      ♡
+    </span>
 
     <span>
       Favorites
@@ -843,6 +957,43 @@ GameWithFun - Free Online Games | Play Games Online
 </div>
 
 
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="site-footer">
+
+  <div class="footer-links">
+
+    <a href="about.html">
+      About Us
+    </a>
+
+    <a href="contact.html">
+      Contact Us
+    </a>
+
+    <a href="privacy.html">
+      Privacy Policy
+    </a>
+
+    <a href="terms.html">
+      Terms
+    </a>
+
+    <a href="disclaimer.html">
+      Disclaimer
+    </a>
+
+  </div>
+
+
+  <p>
+    © 2026 GameWithFun. All rights reserved.
+  </p>
+
+</footer>
+
 
 <!-- ==================================================
      MAIN WEBSITE JAVASCRIPT
@@ -850,20 +1001,7 @@ GameWithFun - Free Online Games | Play Games Online
 
 <script src="script.js"></script>
 
-<footer class="site-footer">
 
-  <div class="footer-links">
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms</a>
-    <a href="disclaimer.html">Disclaimer</a>
-  </div>
-
-  <p>© 2026 GameWithFun. All rights reserved.</p>
-
-</footer>
-      
 </body>
 
-  </html>
+      </html>
