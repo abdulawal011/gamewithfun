@@ -25,7 +25,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBmsDEIWswcmxdDoJuDCMAh3J3OJQKkG9I",
+  apiKey: "AIzaSyBmsDEIWswcmxdDoJuDCaMhp3J0KkG9I",
   authDomain: "game-with-fun-58521.firebaseapp.com",
   projectId: "game-with-fun-58521",
   storageBucket: "game-with-fun-58521.firebasestorage.app",
