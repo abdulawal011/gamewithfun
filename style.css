@@ -1485,3 +1485,16 @@ body {
   }
 
 }
+.site-logo {
+  width: 125px !important;
+  height: 45px !important;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .site-logo {
+    width: 120px !important;
+    height: 43px !important;
+  }
+}
