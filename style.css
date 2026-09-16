@@ -1301,3 +1301,154 @@ body {
   }
 
 }
+/* ==================================================
+   COMPACT HEADER
+================================================== */
+
+.topbar {
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 14px;
+
+  background: #0878f9;
+
+  position: relative;
+  z-index: 100;
+}
+
+
+/* LOGO */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+  color: white;
+
+  gap: 6px;
+}
+
+
+.brand-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+
+.brand-name {
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+
+.brand-name b {
+  color: white;
+}
+
+
+.brand-name b span {
+  color: #38bdf8;
+}
+
+
+/* SEARCH */
+
+.search-wrap {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  height: 42px;
+
+  background: white;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  min-width: 0;
+}
+
+
+.search-wrap input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  padding: 0 12px;
+
+  font-size: 15px;
+
+  color: #111827;
+
+  background: transparent;
+}
+
+
+.search-wrap input::placeholder {
+  color: #6b7280;
+}
+
+
+.search-wrap button {
+  width: 45px;
+  height: 100%;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  color: #0878f9;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+  .topbar {
+    padding: 9px 10px;
+    gap: 8px;
+  }
+
+  .brand-icon {
+    font-size: 24px;
+  }
+
+  .brand-name {
+    font-size: 17px;
+  }
+
+  .search-wrap {
+    height: 38px;
+  }
+
+  .search-wrap input {
+    font-size: 14px;
+    padding: 0 9px;
+  }
+
+  .search-wrap button {
+    width: 38px;
+    font-size: 18px;
+  }
+
+}
