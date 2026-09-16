@@ -1,3 +1,7 @@
+/* ==================================================
+   GAME DATA
+================================================== */
+
 const games = [
   {
     id: 8,
@@ -8,6 +12,7 @@ const games = [
     newGame: true,
     popular: false
   },
+
   {
     id: 7,
     title: "Endless Runner",
@@ -17,6 +22,7 @@ const games = [
     newGame: true,
     popular: false
   },
+
   {
     id: 1,
     title: "Neon Tic Tac Toe",
@@ -26,6 +32,7 @@ const games = [
     newGame: true,
     popular: false
   },
+
   {
     id: 2,
     title: "Guess People",
@@ -35,6 +42,7 @@ const games = [
     newGame: false,
     popular: true
   },
+
   {
     id: 3,
     title: "Flag Guess",
@@ -44,6 +52,7 @@ const games = [
     newGame: true,
     popular: false
   },
+
   {
     id: 4,
     title: "Math Quiz",
@@ -53,6 +62,7 @@ const games = [
     newGame: false,
     popular: true
   },
+
   {
     id: 5,
     title: "Sliding Puzzle",
@@ -62,6 +72,7 @@ const games = [
     newGame: true,
     popular: false
   },
+
   {
     id: 6,
     title: "Car Racing",
@@ -70,9 +81,13 @@ const games = [
     url: "games/careering.html",
     newGame: true,
     popular: false
-  },
-  
+  }
 ];
+
+
+/* ==================================================
+   CATEGORIES
+================================================== */
 
 const categories = [
   "Puzzle",
@@ -82,19 +97,24 @@ const categories = [
   "Arcade",
   "Sports",
   "Strategy"
-  
 ];
+
+
+/* ==================================================
+   FAVORITES
+================================================== */
 
 let favorites = JSON.parse(
   localStorage.getItem("gameWithFunFavorites") || "[]"
 );
 
 
-/* =========================
-   GAME ITEM
-   ========================= */
+/* ==================================================
+   GAME CARD
+================================================== */
 
 function gameCard(game) {
+
   const isFavorite = favorites.includes(game.id);
 
   const isImage =
@@ -106,7 +126,10 @@ function gameCard(game) {
       game.icon.includes(".webp")
     );
 
-  const gameUrl = game.url && game.url !== "#" ? game.url : null;
+  const gameUrl =
+    game.url && game.url !== "#"
+      ? game.url
+      : null;
 
   return `
     <article class="game-item">
@@ -115,8 +138,11 @@ function gameCard(game) {
         class="favorite-btn ${isFavorite ? "active" : ""}"
         onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(${game.id})"
         aria-label="Favorite ${game.title}">
+
         ${isFavorite ? "♥" : "♡"}
+
       </button>
+
 
       ${
         gameUrl
@@ -135,15 +161,22 @@ function gameCard(game) {
         `
       }
 
+
           <div class="game-logo">
+
             ${
               isImage
                 ? `<img src="${game.icon}" alt="${game.title}">`
                 : `<span class="emoji-logo">${game.icon}</span>`
             }
+
           </div>
 
-          <h3>${game.title}</h3>
+
+          <h3>
+            ${game.title}
+          </h3>
+
 
         </a>
 
@@ -152,367 +185,858 @@ function gameCard(game) {
 }
 
 
-/* =========================
+/* ==================================================
    RENDER GAMES
-   ========================= */
+================================================== */
 
 function renderGames() {
-  const newGrid = document.getElementById("newGrid");
-  const popularGrid = document.getElementById("popularGrid");
+
+  const newGrid =
+    document.getElementById("newGrid");
+
+  const popularGrid =
+    document.getElementById("popularGrid");
+
 
   if (newGrid) {
+
     newGrid.innerHTML = games
       .filter(game => game.newGame)
       .map(gameCard)
       .join("");
+
   }
 
+
   if (popularGrid) {
+
     popularGrid.innerHTML = games
       .filter(game => game.popular)
       .map(gameCard)
       .join("");
+
   }
+
 }
 
 
-/* =========================
-   CATEGORIES
-   ========================= */
+/* ==================================================
+   RENDER CATEGORIES
+================================================== */
 
 function renderCategories() {
-  const categoryGrid = document.getElementById("categoryGrid");
-  const allCategoryGrid = document.getElementById("allCategoryGrid");
 
-  const html = categories.map(category => `
-    <button
-      class="category-card"
-      onclick="showCategory('${category}')">
+  const categoryGrid =
+    document.getElementById("categoryGrid");
 
-      <span>${categoryIcon(category)}</span>
-      <b>${category}</b>
+  const allCategoryGrid =
+    document.getElementById("allCategoryGrid");
 
-    </button>
-  `).join("");
+
+  const html = categories
+    .map(category => `
+
+      <button
+        class="category-card"
+        onclick="showCategory('${category}')">
+
+        <span>
+          ${categoryIcon(category)}
+        </span>
+
+        <b>
+          ${category}
+        </b>
+
+      </button>
+
+    `)
+    .join("");
+
 
   if (categoryGrid) {
     categoryGrid.innerHTML = html;
   }
 
+
   if (allCategoryGrid) {
     allCategoryGrid.innerHTML = html;
   }
+
 }
 
+
+/* ==================================================
+   CATEGORY ICON
+================================================== */
 
 function categoryIcon(category) {
+
   const icons = {
+
     Puzzle: "🧩",
+
     Quiz: "❓",
+
     Board: "♟️",
+
     Arcade: "🕹️",
+
     Sports: "⚽",
+
     Strategy: "🧠"
+
   };
 
+
   return icons[category] || "🎮";
+
 }
 
 
-/* =========================
-   FAVORITES
-   ========================= */
+/* ==================================================
+   FAVORITE
+================================================== */
 
 function toggleFavorite(id) {
+
   if (favorites.includes(id)) {
-    favorites = favorites.filter(item => item !== id);
+
+    favorites =
+      favorites.filter(item => item !== id);
+
   } else {
+
     favorites.push(id);
+
   }
+
 
   localStorage.setItem(
     "gameWithFunFavorites",
     JSON.stringify(favorites)
   );
 
+
   renderGames();
 
+
+  const favoritesPage =
+    document.getElementById("favoritesPage");
+
+
   if (
-    !document
-      .getElementById("favoritesPage")
-      .classList.contains("hidden")
+    favoritesPage &&
+    !favoritesPage.classList.contains("hidden")
   ) {
+
     renderFavorites();
+
   }
+
 
   showToast(
     favorites.includes(id)
       ? "Added to favorites ❤️"
       : "Removed from favorites"
   );
+
 }
 
 
+/* ==================================================
+   RENDER FAVORITES
+================================================== */
+
 function renderFavorites() {
-  const favoriteGrid = document.getElementById("favoriteGrid");
+
+  const favoriteGrid =
+    document.getElementById("favoriteGrid");
+
 
   if (!favoriteGrid) return;
 
-  const favoriteGames = games.filter(game =>
-    favorites.includes(game.id)
-  );
+
+  const favoriteGames =
+    games.filter(game =>
+      favorites.includes(game.id)
+    );
+
 
   if (favoriteGames.length === 0) {
+
     favoriteGrid.innerHTML = `
+
       <div class="empty-state">
+
         <div>♡</div>
-        <h3>No favorite games yet</h3>
-        <p>Tap the heart on a game to add it here.</p>
+
+        <h3>
+          No favorite games yet
+        </h3>
+
+        <p>
+          Tap the heart on a game to add it here.
+        </p>
+
       </div>
+
     `;
 
     return;
+
   }
 
-  favoriteGrid.innerHTML = favoriteGames
-    .map(gameCard)
-    .join("");
+
+  favoriteGrid.innerHTML =
+    favoriteGames
+      .map(gameCard)
+      .join("");
+
 }
 
 
-/* =========================
+/* ==================================================
    OPEN GAME
-   ========================= */
+================================================== */
 
 function playGame(id) {
-  const game = games.find(item => item.id === id);
+
+  const game =
+    games.find(item => item.id === id);
+
 
   if (!game) return;
 
+
   if (!game.url || game.url === "#") {
-    showToast("This game is coming soon 🎮");
+
+    showToast(
+      "This game is coming soon 🎮"
+    );
+
     return;
+
   }
 
-  window.location.href = game.url;
+
+  window.location.href =
+    game.url;
+
 }
 
 
-/* =========================
+/* ==================================================
    PAGE NAVIGATION
-   ========================= */
+================================================== */
 
-function showPage(page, fromBrowserBack = false) {
+function showPage(
+  page,
+  fromBrowserBack = false
+) {
+
   const pages = {
-    home: "homePage",
-    categories: "categoriesPage",
-    favorites: "favoritesPage",
-    all: "allGamesPage"
+
+    home:
+      "homePage",
+
+    categories:
+      "categoriesPage",
+
+    favorites:
+      "favoritesPage",
+
+    all:
+      "allGamesPage",
+
+    leaderboard:
+      "leaderboardPage"
+
   };
 
+
+  /* ------------------------------
+     Browser History
+  ------------------------------ */
+
   if (!fromBrowserBack) {
-    history.pushState({ page: page }, "", "#" + page);
+
+    history.pushState(
+      { page: page },
+      "",
+      "#" + page
+    );
+
   }
+
+
+  /* ------------------------------
+     Hide All Pages
+  ------------------------------ */
 
   Object.values(pages).forEach(id => {
-    const element = document.getElementById(id);
+
+    const element =
+      document.getElementById(id);
+
     if (element) {
+
       element.classList.add("hidden");
+
     }
+
   });
 
-  const target = document.getElementById(pages[page]);
+
+  /* ------------------------------
+     Show Selected Page
+  ------------------------------ */
+
+  const target =
+    document.getElementById(
+      pages[page]
+    );
+
 
   if (target) {
+
     target.classList.remove("hidden");
+
   }
+
+
+  /* ------------------------------
+     Remove Active Navigation
+  ------------------------------ */
 
   document
     .querySelectorAll(".bottom-nav button")
     .forEach(button => {
+
       button.classList.remove("active");
+
     });
 
+
+  /* ------------------------------
+     Active Home
+  ------------------------------ */
+
   if (page === "home") {
-    document.getElementById("navHome")?.classList.add("active");
+
+    document
+      .getElementById("navHome")
+      ?.classList.add("active");
+
   }
+
+
+  /* ------------------------------
+     Active Categories
+  ------------------------------ */
 
   if (page === "categories") {
-    document.getElementById("navCategories")?.classList.add("active");
+
+    document
+      .getElementById("navCategories")
+      ?.classList.add("active");
+
   }
 
-  if (page === "favorites") {
-    document.getElementById("navFavorites")?.classList.add("active");
-    renderFavorites();
+
+  /* ------------------------------
+     Active Leaderboard
+  ------------------------------ */
+
+  if (page === "leaderboard") {
+
+    document
+      .getElementById("navLeaderboard")
+      ?.classList.add("active");
+
+    loadLeaderboard();
+
   }
+
+
+  /* ------------------------------
+     Active Favorites
+  ------------------------------ */
+
+  if (page === "favorites") {
+
+    document
+      .getElementById("navFavorites")
+      ?.classList.add("active");
+
+    renderFavorites();
+
+  }
+
+
+  /* ------------------------------
+     Scroll Top
+  ------------------------------ */
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
-/* =========================
-   ANDROID BACK BUTTON
-   ========================= */
+/* ==================================================
+   ANDROID / BROWSER BACK BUTTON
+================================================== */
 
-history.replaceState({ page: "home" }, "", "#home");
+window.addEventListener(
+  "popstate",
+  function(event) {
 
-window.addEventListener("popstate", function(event) {
-  const page = event.state?.page || "home";
-  showPage(page, true);
-});
+    const page =
+      event.state?.page || "home";
+
+    showPage(
+      page,
+      true
+    );
+
+  }
+);
 
 
-/* =========================
+/* ==================================================
+   INITIAL HISTORY
+================================================== */
+
+if (!location.hash) {
+
+  history.replaceState(
+    { page: "home" },
+    "",
+    "#home"
+  );
+
+}
+
+
+/* ==================================================
+   LOAD PAGE FROM URL HASH
+================================================== */
+
+function loadInitialPage() {
+
+  const hash =
+    location.hash.replace("#", "");
+
+
+  const allowedPages = [
+    "home",
+    "categories",
+    "favorites",
+    "all",
+    "leaderboard"
+  ];
+
+
+  if (
+    allowedPages.includes(hash)
+  ) {
+
+    showPage(
+      hash,
+      true
+    );
+
+  } else {
+
+    showPage(
+      "home",
+      true
+    );
+
+  }
+
+}
+
+
+/* ==================================================
    VIEW ALL
-   ========================= */
+================================================== */
 
 function openAll(type) {
-  const title = document.getElementById("allTitle");
-  const grid = document.getElementById("allGrid");
+
+  const title =
+    document.getElementById("allTitle");
+
+  const grid =
+    document.getElementById("allGrid");
+
 
   if (!grid) return;
 
-  let selectedGames = games;
+
+  let selectedGames =
+    games;
+
 
   if (type === "new") {
-    selectedGames = games.filter(game => game.newGame);
+
+    selectedGames =
+      games.filter(
+        game => game.newGame
+      );
+
 
     if (title) {
-      title.textContent = "New Games";
+
+      title.textContent =
+        "New Games";
+
     }
+
   }
+
 
   if (type === "popular") {
-    selectedGames = games.filter(game => game.popular);
+
+    selectedGames =
+      games.filter(
+        game => game.popular
+      );
+
 
     if (title) {
-      title.textContent = "Popular Games";
+
+      title.textContent =
+        "Popular Games";
+
     }
+
   }
 
-  grid.innerHTML = selectedGames
-    .map(gameCard)
-    .join("");
+
+  grid.innerHTML =
+    selectedGames
+      .map(gameCard)
+      .join("");
+
 
   showPage("all");
+
 }
 
 
-/* =========================
+/* ==================================================
    CATEGORY
-   ========================= */
+================================================== */
 
 function showCategory(category) {
-  const title = document.getElementById("allTitle");
-  const grid = document.getElementById("allGrid");
 
-  const selectedGames = games.filter(
-    game => game.category === category
-  );
+  const title =
+    document.getElementById("allTitle");
+
+  const grid =
+    document.getElementById("allGrid");
+
+
+  const selectedGames =
+    games.filter(
+      game =>
+        game.category === category
+    );
+
 
   if (title) {
-    title.textContent = category + " Games";
+
+    title.textContent =
+      category + " Games";
+
   }
+
 
   if (grid) {
-    grid.innerHTML = selectedGames.length
-      ? selectedGames.map(gameCard).join("")
-      : `
-        <div class="empty-state">
-          <div>🎮</div>
-          <h3>No games yet</h3>
-          <p>More ${category} games are coming soon.</p>
-        </div>
-      `;
+
+    grid.innerHTML =
+      selectedGames.length
+
+        ? selectedGames
+            .map(gameCard)
+            .join("")
+
+        : `
+
+          <div class="empty-state">
+
+            <div>🎮</div>
+
+            <h3>
+              No games yet
+            </h3>
+
+            <p>
+              More ${category}
+              games are coming soon.
+            </p>
+
+          </div>
+
+        `;
+
   }
 
+
   showPage("all");
+
 }
 
 
-/* =========================
+/* ==================================================
    SEARCH
-   ========================= */
+================================================== */
 
 function searchGames() {
-  const input = document.getElementById("searchInput");
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
 
   if (!input) return;
 
-  const query = input.value.trim().toLowerCase();
+
+  const query =
+    input.value
+      .trim()
+      .toLowerCase();
+
 
   if (!query) {
+
     showPage("home");
+
     return;
+
   }
 
-  const results = games.filter(game =>
-    game.title.toLowerCase().includes(query) ||
-    game.category.toLowerCase().includes(query)
-  );
 
-  const title = document.getElementById("allTitle");
-  const grid = document.getElementById("allGrid");
+  const results =
+    games.filter(game =>
+
+      game.title
+        .toLowerCase()
+        .includes(query)
+
+      ||
+
+      game.category
+        .toLowerCase()
+        .includes(query)
+
+    );
+
+
+  const title =
+    document.getElementById(
+      "allTitle"
+    );
+
+
+  const grid =
+    document.getElementById(
+      "allGrid"
+    );
+
 
   if (title) {
+
     title.textContent =
       `Search results for "${input.value}"`;
+
   }
+
 
   if (grid) {
-    grid.innerHTML = results.length
-      ? results.map(gameCard).join("")
-      : `
-        <div class="empty-state">
-          <div>🔍</div>
-          <h3>No games found</h3>
-          <p>Try another game name or category.</p>
-        </div>
-      `;
+
+    grid.innerHTML =
+      results.length
+
+        ? results
+            .map(gameCard)
+            .join("")
+
+        : `
+
+          <div class="empty-state">
+
+            <div>🔍</div>
+
+            <h3>
+              No games found
+            </h3>
+
+            <p>
+              Try another game name
+              or category.
+            </p>
+
+          </div>
+
+        `;
+
   }
 
+
   showPage("all");
+
 }
 
 
-/* =========================
+/* ==================================================
    TOAST
-   ========================= */
+================================================== */
 
 function showToast(message) {
-  const toast = document.getElementById("toast");
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
 
   if (!toast) return;
 
-  toast.textContent = message;
 
-  toast.classList.add("show");
+  toast.textContent =
+    message;
+
+
+  toast.classList.add(
+    "show"
+  );
+
 
   setTimeout(() => {
-    toast.classList.remove("show");
+
+    toast.classList.remove(
+      "show"
+    );
+
   }, 2000);
+
 }
 
 
-/* =========================
-   START
-   ========================= */
+/* ==================================================
+   LEADERBOARD
+================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderGames();
-  renderCategories();
+/*
+   Firebase setup না হওয়া পর্যন্ত
+   demo leaderboard দেখাবে।
 
-  const searchInput =
-    document.getElementById("searchInput");
+   Firebase connect করার পরে এই
+   function-এ real online players
+   load করা হবে।
+*/
 
-  if (searchInput) {
-    searchInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        searchGames();
-      }
-    });
+function loadLeaderboard() {
+
+  const leaderboardList =
+    document.getElementById(
+      "leaderboardList"
+    );
+
+
+  if (!leaderboardList) return;
+
+
+  leaderboardList.innerHTML = `
+
+    <div class="leaderboard-player">
+
+      <div class="leaderboard-rank">
+        🥇
+      </div>
+
+      <div class="leaderboard-name">
+        Player
+      </div>
+
+      <div class="leaderboard-games">
+        0
+      </div>
+
+      <div class="leaderboard-time">
+        0m
+      </div>
+
+    </div>
+
+
+    <div class="leaderboard-empty">
+
+      Login to join the leaderboard 🎮
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==================================================
+   DOM READY
+================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    renderGames();
+
+    renderCategories();
+
+    renderFavorites();
+
+
+    /* ------------------------------
+       Search Enter
+    ------------------------------ */
+
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
+
+
+    if (searchInput) {
+
+      searchInput.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            searchGames();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* ------------------------------
+       Load Initial Page
+    ------------------------------ */
+
+    loadInitialPage();
+
   }
-});
+);
