@@ -92,7 +92,7 @@ GameWithFun - Free Online Games | Play Games Online
 
 
 <!-- =========================
-     HERO SLIDER JS
+     HERO SLIDER
 ========================= -->
 
 <script src="hero-slider.js"
@@ -104,7 +104,6 @@ GameWithFun - Free Online Games | Play Games Online
 ========================= -->
 
 <script type="application/ld+json">
-
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -117,12 +116,11 @@ GameWithFun - Free Online Games | Play Games Online
     "query-input": "required name=search_term_string"
   }
 }
-
 </script>
 
 
 <!-- =========================
-     LEADERBOARD BASIC STYLE
+     LEADERBOARD STYLE
 ========================= -->
 
 <style>
@@ -159,6 +157,10 @@ GameWithFun - Free Online Games | Play Games Online
   cursor: pointer;
 }
 
+.leaderboard-login-btn:hover {
+  opacity: .92;
+}
+
 .leaderboard-login-btn:active {
   transform: scale(.97);
 }
@@ -169,6 +171,15 @@ GameWithFun - Free Online Games | Play Games Online
   font-weight: 700;
 }
 
+#userInfo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 #logoutBtn {
   border: 0;
   border-radius: 10px;
@@ -177,6 +188,10 @@ GameWithFun - Free Online Games | Play Games Online
   color: #0878f9;
   font-weight: 700;
   cursor: pointer;
+}
+
+#logoutBtn:hover {
+  background: #e3edff;
 }
 
 .leaderboard-card {
@@ -220,6 +235,15 @@ GameWithFun - Free Online Games | Play Games Online
   text-align: center;
 }
 
+.leaderboard-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 .leaderboard-name {
   font-weight: 700;
 }
@@ -231,10 +255,20 @@ GameWithFun - Free Online Games | Play Games Online
   font-size: 14px;
 }
 
+.online-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
 @media (max-width: 600px) {
 
   .leaderboard-player {
     grid-template-columns: 42px 1fr;
+    gap: 8px;
   }
 
   .leaderboard-games,
@@ -268,8 +302,6 @@ GameWithFun - Free Online Games | Play Games Online
 ================================================== -->
 
 <header class="topbar">
-
-  <!-- BRAND -->
 
   <a class="brand"
      href="#"
@@ -824,9 +856,7 @@ GameWithFun - Free Online Games | Play Games Online
     </button>
 
 
-    <div
-      id="userInfo"
-      style="display:none;">
+    <div id="userInfo">
     </div>
 
 
@@ -1002,6 +1032,15 @@ GameWithFun - Free Online Games | Play Games Online
 <script src="script.js"></script>
 
 
+<!-- ==================================================
+     FIREBASE LEADERBOARD
+================================================== -->
+
+<script type="module"
+        src="leaderboard.js">
+</script>
+
+
 </body>
 
-      </html>
+</html>
