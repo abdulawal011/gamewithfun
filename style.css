@@ -1494,7 +1494,7 @@ body {
 
 @media (max-width: 480px) {
   .site-logo {
-    width: 120px !important;
-    height: 43px !important;
+    width: 125px !important;
+    height: 75px !important;
   }
 }
