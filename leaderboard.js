@@ -2,450 +2,313 @@ import {
   auth,
   db,
   googleProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
-
-  collection,
-  query,
-  orderBy,
-  limit,
-  getDocs,
-
   doc,
   getDoc,
   setDoc,
   updateDoc,
   increment,
-  serverTimestamp
+  serverTimestamp,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs
 } from "./firebase-config.js";
-
-
-// ======================================
-// ELEMENTS
-// ======================================
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const userInfo = document.getElementById("userInfo");
-const leaderboardList =
-  document.getElementById("leaderboardList");
-
-
-// ======================================
-// CURRENT USER
-// ======================================
+const leaderboardList = document.getElementById("leaderboardList");
 
 let currentUser = null;
+let gameStartTime = null;
+let timeInterval = null;
 
 
-// ======================================
-// TIME TRACKING
-// ======================================
-
-let timeTimer = null;
-
-let lastTimeSaved = Date.now();
-
-
-// ======================================
-// GOOGLE LOGIN
-// ======================================
+// ================================
+// GOOGLE LOGIN - MOBILE REDIRECT
+// ================================
 
 if (loginBtn) {
-
   loginBtn.addEventListener("click", async () => {
-
     try {
-
       loginBtn.disabled = true;
-      loginBtn.textContent = "Signing in...";
+      loginBtn.textContent = "Opening Google...";
 
-      await signInWithPopup(
-        auth,
-        googleProvider
-      );
+      await signInWithRedirect(auth, googleProvider);
 
     } catch (error) {
-
       console.error("Login error:", error);
 
-      alert(
-        "Google Login failed. Please try again."
-      );
-
-    } finally {
+      alert("Google Login failed: " + error.message);
 
       loginBtn.disabled = false;
-
-      if (!currentUser) {
-
-        loginBtn.textContent =
-          "🔐 Login with Google";
-
-      }
-
+      loginBtn.textContent = "🔐 Login with Google";
     }
-
   });
-
 }
 
 
-// ======================================
+// ================================
+// GET REDIRECT RESULT
+// ================================
+
+getRedirectResult(auth)
+  .then((result) => {
+    if (result && result.user) {
+      console.log("Google login successful:", result.user);
+    }
+  })
+  .catch((error) => {
+    console.error("Redirect login error:", error);
+
+    if (error.code !== "auth/popup-closed-by-user") {
+      console.log(error.message);
+    }
+  });
+
+
+// ================================
 // LOGOUT
-// ======================================
+// ================================
 
 if (logoutBtn) {
-
   logoutBtn.addEventListener("click", async () => {
-
     try {
-
       await saveTimeSpent();
-
       await signOut(auth);
-
     } catch (error) {
-
-      console.error(
-        "Logout error:",
-        error
-      );
-
+      console.error("Logout error:", error);
     }
-
   });
-
 }
 
 
-// ======================================
+// ================================
 // AUTH STATE
-// ======================================
+// ================================
 
-onAuthStateChanged(
-  auth,
-  async (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-    currentUser = user || null;
+  currentUser = user;
 
-    if (user) {
+  if (user) {
 
-      // -------------------------------
-      // LOGGED IN
-      // -------------------------------
+    console.log("Logged in:", user.displayName);
 
-      if (loginBtn) {
-
-        loginBtn.style.display = "none";
-
-      }
-
-      if (logoutBtn) {
-
-        logoutBtn.style.display =
-          "inline-block";
-
-      }
-
-      if (userInfo) {
-
-        userInfo.style.display = "block";
-
-        const photo = user.photoURL
-          ? `<img src="${escapeHTML(user.photoURL)}"
-                   alt="Profile">`
-          : "";
-
-        userInfo.innerHTML = `
-          ${photo}
-          👤 ${escapeHTML(
-            user.displayName || "Player"
-          )}
-        `;
-
-      }
-
-
-      // Save player
-      await savePlayer(user);
-
-
-      // Start time tracking
-      startTimeTracking();
-
-
-      // Load leaderboard
-      await loadLeaderboard();
-
-    } else {
-
-      // -------------------------------
-      // LOGGED OUT
-      // -------------------------------
-
-      stopTimeTracking();
-
-      if (loginBtn) {
-
-        loginBtn.style.display =
-          "inline-block";
-
-        loginBtn.textContent =
-          "🔐 Login with Google";
-
-      }
-
-      if (logoutBtn) {
-
-        logoutBtn.style.display =
-          "none";
-
-      }
-
-      if (userInfo) {
-
-        userInfo.style.display =
-          "none";
-
-        userInfo.innerHTML = "";
-
-      }
-
-      await loadLeaderboard();
-
+    if (loginBtn) {
+      loginBtn.style.display = "none";
     }
 
+    if (logoutBtn) {
+      logoutBtn.style.display = "inline-block";
+    }
+
+    if (userInfo) {
+      userInfo.style.display = "block";
+
+      userInfo.innerHTML = `
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:12px;
+          margin-top:15px;
+        ">
+          ${
+            user.photoURL
+              ? `<img src="${escapeHTML(user.photoURL)}"
+                   style="
+                     width:45px;
+                     height:45px;
+                     border-radius:50%;
+                     object-fit:cover;
+                   ">`
+              : ""
+          }
+
+          <div>
+            <strong>${escapeHTML(user.displayName || "Player")}</strong>
+            <div style="font-size:13px;opacity:.7;">
+              Logged in with Google
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    await createOrUpdatePlayer(user);
+
+    startTimeTracking();
+
+    await loadLeaderboard();
+
+  } else {
+
+    if (loginBtn) {
+      loginBtn.style.display = "inline-block";
+      loginBtn.disabled = false;
+      loginBtn.textContent = "🔐 Login with Google";
+    }
+
+    if (logoutBtn) {
+      logoutBtn.style.display = "none";
+    }
+
+    if (userInfo) {
+      userInfo.style.display = "none";
+      userInfo.innerHTML = "";
+    }
+
+    stopTimeTracking();
+
+    if (leaderboardList) {
+      leaderboardList.innerHTML = `
+        <div class="leaderboard-empty">
+          Login to join the leaderboard 🎮
+        </div>
+      `;
+    }
   }
-);
+});
 
 
-// ======================================
-// SAVE PLAYER
-// ======================================
+// ================================
+// CREATE / UPDATE PLAYER
+// ================================
 
-async function savePlayer(user) {
+async function createOrUpdatePlayer(user) {
+
+  const playerRef = doc(db, "players", user.uid);
 
   try {
 
-    const playerRef =
-      doc(db, "players", user.uid);
-
-    const playerSnap =
-      await getDoc(playerRef);
+    const playerSnap = await getDoc(playerRef);
 
     if (!playerSnap.exists()) {
 
       await setDoc(playerRef, {
-
-        name:
-          user.displayName || "Player",
-
-        photoURL:
-          user.photoURL || "",
-
+        name: user.displayName || "Player",
+        photoURL: user.photoURL || "",
         gamesPlayed: 0,
-
         totalTime: 0,
-
         online: true,
-
-        createdAt:
-          serverTimestamp(),
-
-        lastActive:
-          serverTimestamp()
-
+        createdAt: serverTimestamp(),
+        lastActive: serverTimestamp()
       });
 
     } else {
 
-      await updateDoc(
-        playerRef,
-        {
-
-          name:
-            user.displayName || "Player",
-
-          photoURL:
-            user.photoURL || "",
-
-          online: true,
-
-          lastActive:
-            serverTimestamp()
-
-        }
-      );
+      await updateDoc(playerRef, {
+        name: user.displayName || "Player",
+        photoURL: user.photoURL || "",
+        online: true,
+        lastActive: serverTimestamp()
+      });
 
     }
 
   } catch (error) {
-
-    console.error(
-      "Could not save player:",
-      error
-    );
-
+    console.error("Player update error:", error);
   }
-
 }
 
 
-// ======================================
-// GAME START TRACKING
-// ======================================
+// ================================
+// GAME START TRACKER
+// ================================
 
-window.trackGameStart =
-  async function (gameId) {
+window.trackGameStart = async function(gameId) {
 
-    if (!currentUser) {
+  if (!currentUser) {
+    return;
+  }
 
-      return;
+  try {
 
-    }
+    const playerRef = doc(
+      db,
+      "players",
+      currentUser.uid
+    );
 
-    try {
+    await updateDoc(playerRef, {
+      gamesPlayed: increment(1),
+      lastGame: gameId,
+      lastActive: serverTimestamp()
+    });
 
-      const playerRef =
-        doc(
-          db,
-          "players",
-          currentUser.uid
-        );
+  } catch (error) {
 
-      await setDoc(
-        playerRef,
-        {
-
-          gamesPlayed:
-            increment(1),
-
-          lastGame:
-            String(gameId || ""),
-
-          lastActive:
-            serverTimestamp(),
-
-          online: true
-
-        },
-
-        {
-          merge: true
-        }
-
-      );
-
-      console.log(
-        "Game started:",
-        gameId
-      );
-
-    } catch (error) {
-
-      console.error(
-        "Game tracking error:",
-        error
-      );
-
-    }
-
-  };
+    console.error(
+      "Game tracking error:",
+      error
+    );
+  }
+};
 
 
-// ======================================
-// TIME TRACKING START
-// ======================================
+// ================================
+// TIME TRACKING
+// ================================
 
 function startTimeTracking() {
 
   stopTimeTracking();
 
-  lastTimeSaved = Date.now();
+  gameStartTime = Date.now();
 
-  timeTimer =
-    setInterval(
-      saveTimeSpent,
-      30000
-    );
+  timeInterval = setInterval(async () => {
 
+    await saveTimeSpent();
+
+  }, 30000);
 }
 
-
-// ======================================
-// TIME TRACKING STOP
-// ======================================
 
 function stopTimeTracking() {
 
-  if (timeTimer) {
-
-    clearInterval(timeTimer);
-
-    timeTimer = null;
-
+  if (timeInterval) {
+    clearInterval(timeInterval);
+    timeInterval = null;
   }
 
+  gameStartTime = null;
 }
 
 
-// ======================================
-// SAVE TIME
-// ======================================
-
 async function saveTimeSpent() {
 
-  if (!currentUser) {
-
+  if (!currentUser || !gameStartTime) {
     return;
-
   }
 
-  const now = Date.now();
+  const elapsed = Math.floor(
+    (Date.now() - gameStartTime) / 1000
+  );
 
-  const elapsed =
-    Math.floor(
-      (now - lastTimeSaved) / 1000
-    );
-
-  if (elapsed < 1) {
-
+  if (elapsed <= 0) {
     return;
-
   }
 
-  lastTimeSaved = now;
+  gameStartTime = Date.now();
 
   try {
 
-    const playerRef =
-      doc(
-        db,
-        "players",
-        currentUser.uid
-      );
-
-    await setDoc(
-      playerRef,
-      {
-
-        totalTime:
-          increment(elapsed),
-
-        lastActive:
-          serverTimestamp(),
-
-        online: true
-
-      },
-
-      {
-        merge: true
-      }
-
+    const playerRef = doc(
+      db,
+      "players",
+      currentUser.uid
     );
+
+    await updateDoc(playerRef, {
+      totalTime: increment(elapsed),
+      lastActive: serverTimestamp(),
+      online: true
+    });
 
   } catch (error) {
 
@@ -453,79 +316,47 @@ async function saveTimeSpent() {
       "Time save error:",
       error
     );
-
   }
-
 }
 
 
-// ======================================
-// UPDATE ONLINE STATUS
-// ======================================
+// ================================
+// ONLINE / OFFLINE
+// ================================
 
 document.addEventListener(
   "visibilitychange",
   async () => {
 
     if (!currentUser) {
-
       return;
-
     }
 
-    const playerRef =
-      doc(
-        db,
-        "players",
-        currentUser.uid
-      );
+    const playerRef = doc(
+      db,
+      "players",
+      currentUser.uid
+    );
 
     try {
 
-      if (
-        document.visibilityState ===
-        "visible"
-      ) {
-
-        lastTimeSaved = Date.now();
-
-        await setDoc(
-          playerRef,
-          {
-
-            online: true,
-
-            lastActive:
-              serverTimestamp()
-
-          },
-
-          {
-            merge: true
-          }
-
-        );
-
-      } else {
+      if (document.hidden) {
 
         await saveTimeSpent();
 
-        await setDoc(
-          playerRef,
-          {
+        await updateDoc(playerRef, {
+          online: false,
+          lastActive: serverTimestamp()
+        });
 
-            online: false,
+      } else {
 
-            lastActive:
-              serverTimestamp()
+        gameStartTime = Date.now();
 
-          },
-
-          {
-            merge: true
-          }
-        );
-
+        await updateDoc(playerRef, {
+          online: true,
+          lastActive: serverTimestamp()
+        });
       }
 
     } catch (error) {
@@ -534,166 +365,157 @@ document.addEventListener(
         "Online status error:",
         error
       );
-
     }
-
   }
 );
 
 
-// ======================================
-// BEFORE LEAVING
-// ======================================
+// ================================
+// BEFORE LEAVING PAGE
+// ================================
 
 window.addEventListener(
   "pagehide",
   () => {
 
-    saveTimeSpent();
+    if (!currentUser) {
+      return;
+    }
 
+    saveTimeSpent();
   }
 );
 
 
-// ======================================
-// LOAD LEADERBOARD
-// ======================================
+// ================================
+// LEADERBOARD
+// ================================
 
 async function loadLeaderboard() {
 
   if (!leaderboardList) {
-
     return;
-
   }
 
   try {
 
-    const playersRef =
-      collection(
-        db,
-        "players"
-      );
+    leaderboardList.innerHTML = `
+      <div class="leaderboard-empty">
+        Loading leaderboard...
+      </div>
+    `;
 
-    const leaderboardQuery =
-      query(
-        playersRef,
+    const playersRef = collection(
+      db,
+      "players"
+    );
 
-        orderBy(
-          "totalTime",
-          "desc"
-        ),
+    const leaderboardQuery = query(
+      playersRef,
+      orderBy("totalTime", "desc"),
+      limit(100)
+    );
 
-        limit(100)
-      );
-
-    const snapshot =
-      await getDocs(
-        leaderboardQuery
-      );
-
-    leaderboardList.innerHTML = "";
+    const snapshot = await getDocs(
+      leaderboardQuery
+    );
 
     if (snapshot.empty) {
 
       leaderboardList.innerHTML = `
         <div class="leaderboard-empty">
-          No players yet. Be the first player! 🎮
+          No players yet 🎮
         </div>
       `;
 
       return;
-
     }
 
-
+    let html = "";
     let rank = 1;
 
+    snapshot.forEach((docSnap) => {
 
-    snapshot.forEach(
-      (playerDoc) => {
+      const player = docSnap.data();
 
-        const data =
-          playerDoc.data();
+      const name =
+        player.name || "Player";
 
-        const player =
-          document.createElement(
-            "div"
-          );
+      const photo =
+        player.photoURL || "";
 
-        player.className =
-          "leaderboard-player";
+      const games =
+        Number(player.gamesPlayed || 0);
 
+      const totalTime =
+        Number(player.totalTime || 0);
 
-        const online =
-          data.online === true
-            ? `<span class="online-dot"></span>`
-            : "";
+      const online =
+        player.online === true;
 
+      let rankIcon = rank;
 
-        player.innerHTML = `
+      if (rank === 1) {
+        rankIcon = "🥇";
+      }
+
+      if (rank === 2) {
+        rankIcon = "🥈";
+      }
+
+      if (rank === 3) {
+        rankIcon = "🥉";
+      }
+
+      html += `
+        <div class="leaderboard-player">
 
           <div class="leaderboard-rank">
-            ${getRankIcon(rank)}
+            ${rankIcon}
           </div>
 
-
-          <div class="leaderboard-name">
-
+          <div class="leaderboard-avatar">
             ${
-              data.photoURL
-                ? `
-                  <img
-                    class="leaderboard-avatar"
-                    src="${escapeHTML(
-                      data.photoURL
-                    )}"
-                    alt="Player">
-                `
-                : ""
+              photo
+                ? `<img src="${escapeHTML(photo)}"
+                     alt="Player">`
+                : "🎮"
             }
+          </div>
 
-            ${escapeHTML(
-              data.name || "Player"
-            )}
+          <div class="leaderboard-player-info">
 
-            ${online}
+            <div class="leaderboard-player-name">
+              ${escapeHTML(name)}
+            </div>
+
+            <div class="leaderboard-player-stats">
+
+              🎮 ${games} Games
+
+              &nbsp; • &nbsp;
+
+              ⏱️ ${formatTime(totalTime)}
+
+              &nbsp; • &nbsp;
+
+              ${
+                online
+                  ? `<span style="color:#20c997;">● Online</span>`
+                  : `<span style="opacity:.6;">● Offline</span>`
+              }
+
+            </div>
 
           </div>
 
+        </div>
+      `;
 
-          <div class="leaderboard-games">
+      rank++;
+    });
 
-            ${Number(
-              data.gamesPlayed || 0
-            )}
-
-          </div>
-
-
-          <div class="leaderboard-time">
-
-            ${formatTime(
-              Number(
-                data.totalTime || 0
-              )
-            )}
-
-          </div>
-
-        `;
-
-
-        leaderboardList.appendChild(
-          player
-        );
-
-
-        rank++;
-
-      }
-    );
-
+    leaderboardList.innerHTML = html;
 
   } catch (error) {
 
@@ -703,86 +525,33 @@ async function loadLeaderboard() {
     );
 
     leaderboardList.innerHTML = `
-
       <div class="leaderboard-empty">
-
-        Leaderboard is not available yet.
-
-        <br><br>
-
-        Please check your Firebase
-        Firestore Rules.
-
+        Unable to load leaderboard.
       </div>
-
     `;
-
   }
-
 }
 
 
-// ======================================
-// MAKE FUNCTION AVAILABLE TO script.js
-// ======================================
-
-window.loadLeaderboard =
-  loadLeaderboard;
-
-
-// ======================================
-// RANK ICON
-// ======================================
-
-function getRankIcon(rank) {
-
-  if (rank === 1) {
-
-    return "🥇";
-
-  }
-
-  if (rank === 2) {
-
-    return "🥈";
-
-  }
-
-  if (rank === 3) {
-
-    return "🥉";
-
-  }
-
-  return rank;
-
-}
-
-
-// ======================================
-// TIME FORMAT
-// ======================================
+// ================================
+// FORMAT TIME
+// ================================
 
 function formatTime(seconds) {
 
-  seconds =
-    Math.max(
-      0,
-      Number(seconds) || 0
-    );
-
+  seconds = Math.max(
+    0,
+    Number(seconds || 0)
+  );
 
   const hours =
-    Math.floor(
-      seconds / 3600
-    );
-
+    Math.floor(seconds / 3600);
 
   const minutes =
-    Math.floor(
-      (seconds % 3600) / 60
-    );
+    Math.floor((seconds % 3600) / 60);
 
+  const secs =
+    seconds % 60;
 
   if (hours > 0) {
 
@@ -790,60 +559,34 @@ function formatTime(seconds) {
 
   }
 
-
   if (minutes > 0) {
 
-    return `${minutes}m`;
+    return `${minutes}m ${secs}s`;
 
   }
 
-
-  return `${seconds}s`;
-
+  return `${secs}s`;
 }
 
 
-// ======================================
-// SECURITY: HTML ESCAPE
-// ======================================
+// ================================
+// ESCAPE HTML
+// ================================
 
 function escapeHTML(value) {
 
-  return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 
-// ======================================
-// REFRESH LEADERBOARD
-// ======================================
+// ================================
+// GLOBAL FUNCTION
+// ================================
 
-setInterval(
-  loadLeaderboard,
-  30000
-);
+window.loadLeaderboard =
+  loadLeaderboard;
