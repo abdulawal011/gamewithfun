@@ -771,15 +771,13 @@ GameWithFun - Free Online Games | Play Games Online
 
 <nav class="bottom-nav">
 
-
   <!-- HOME -->
-
   <button
     id="navHome"
-    class="active"
+    class="nav-item active"
     onclick="showPage('home')">
 
-    ⌂
+    <span class="nav-icon">⌂</span>
 
     <span>
       Home
@@ -788,14 +786,13 @@ GameWithFun - Free Online Games | Play Games Online
   </button>
 
 
-
   <!-- CATEGORIES -->
-
   <button
     id="navCategories"
+    class="nav-item"
     onclick="showPage('categories')">
 
-    ▦
+    <span class="nav-icon">▦</span>
 
     <span>
       Categories
@@ -803,20 +800,29 @@ GameWithFun - Free Online Games | Play Games Online
 
   </button>
 
-  <button onclick="window.location.href='leaderboard.html'">
-  🏆
-  <span>Leaderboard</span>
+
+  <!-- LEADERBOARD -->
+  <button
+    id="navLeaderboard"
+    class="nav-item"
+    onclick="window.location.href='leaderboard.html'">
+
+    <span class="nav-icon">🏆</span>
+
+    <span>
+      Leaderboard
+    </span>
+
   </button>
 
 
-
   <!-- FAVORITES -->
-
   <button
     id="navFavorites"
+    class="nav-item"
     onclick="showPage('favorites')">
 
-    ♡
+    <span class="nav-icon">♡</span>
 
     <span>
       Favorites
@@ -824,9 +830,7 @@ GameWithFun - Free Online Games | Play Games Online
 
   </button>
 
-
 </nav>
-
 
 
 <!-- ==================================================
