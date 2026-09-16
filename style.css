@@ -1452,3 +1452,36 @@ body {
   }
 
 }
+/* =========================
+   GAMEWITHFUN LOGO
+========================= */
+
+.site-logo {
+  width: 115px;
+  height: 42px;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+  .site-logo {
+    width: 105px;
+    height: 40px;
+  }
+
+}
