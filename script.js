@@ -137,12 +137,11 @@ function gameCard(game) {
       <button
         class="favorite-btn ${isFavorite ? "active" : ""}"
         onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(${game.id})"
-        aria-label="Favorite ${game.title}">
+        aria-label="Favorite ${escapeHTML(game.title)}">
 
         ${isFavorite ? "♥" : "♡"}
 
       </button>
-
 
       ${
         gameUrl
@@ -150,38 +149,79 @@ function gameCard(game) {
           <a
             class="game-link"
             href="${gameUrl}"
-            aria-label="Play ${game.title}">
+            onclick="openGameFromCard(event, ${game.id})"
+            aria-label="Play ${escapeHTML(game.title)}">
         `
         : `
           <a
             class="game-link"
             href="#"
             onclick="showToast('This game is coming soon 🎮'); return false;"
-            aria-label="${game.title} coming soon">
+            aria-label="${escapeHTML(game.title)} coming soon">
         `
       }
-
 
           <div class="game-logo">
 
             ${
               isImage
-                ? `<img src="${game.icon}" alt="${game.title}">`
+                ? `<img src="${game.icon}" alt="${escapeHTML(game.title)}">`
                 : `<span class="emoji-logo">${game.icon}</span>`
             }
 
           </div>
 
-
           <h3>
-            ${game.title}
+            ${escapeHTML(game.title)}
           </h3>
-
 
         </a>
 
     </article>
   `;
+}
+
+
+/* ==================================================
+   OPEN GAME FROM CARD
+   Firebase tracking happens before navigation
+================================================== */
+
+function openGameFromCard(event, id) {
+
+  event.preventDefault();
+
+  const game = games.find(item => item.id === id);
+
+  if (!game || !game.url || game.url === "#") {
+    showToast("This game is coming soon 🎮");
+    return false;
+  }
+
+  /*
+     Firebase tracking function comes from
+     leaderboard.js
+  */
+
+  if (typeof window.trackGameStart === "function") {
+
+    window.trackGameStart(id);
+
+  }
+
+  /*
+     Give Firebase a short moment to start
+     the database request before leaving
+     index.html.
+  */
+
+  setTimeout(() => {
+
+    window.location.href = game.url;
+
+  }, 250);
+
+  return false;
 }
 
 
@@ -275,22 +315,16 @@ function categoryIcon(category) {
   const icons = {
 
     Puzzle: "🧩",
-
     Quiz: "❓",
-
     Board: "♟️",
-
     Arcade: "🕹️",
-
     Sports: "⚽",
-
-    Strategy: "🧠"
+    Strategy: "🧠",
+    Recing: "🏎️"
 
   };
 
-
   return icons[category] || "🎮";
-
 }
 
 
@@ -420,8 +454,19 @@ function playGame(id) {
   }
 
 
-  window.location.href =
-    game.url;
+  if (typeof window.trackGameStart === "function") {
+
+    window.trackGameStart(id);
+
+  }
+
+
+  setTimeout(() => {
+
+    window.location.href =
+      game.url;
+
+  }, 250);
 
 }
 
@@ -437,22 +482,22 @@ function showPage(
 
   const pages = {
 
-    home:
-      "homePage",
+    home: "homePage",
 
-    categories:
-      "categoriesPage",
+    categories: "categoriesPage",
 
-    favorites:
-      "favoritesPage",
+    favorites: "favoritesPage",
 
-    all:
-      "allGamesPage",
+    all: "allGamesPage",
 
-    leaderboard:
-      "leaderboardPage"
+    leaderboard: "leaderboardPage"
 
   };
+
+
+  if (!pages[page]) {
+    page = "home";
+  }
 
 
   /* ------------------------------
@@ -554,7 +599,16 @@ function showPage(
       .getElementById("navLeaderboard")
       ?.classList.add("active");
 
-    loadLeaderboard();
+    /*
+       Real Firebase leaderboard
+       is loaded by leaderboard.js.
+    */
+
+    if (typeof window.loadLeaderboard === "function") {
+
+      window.loadLeaderboard();
+
+    }
 
   }
 
@@ -776,7 +830,7 @@ function showCategory(category) {
             </h3>
 
             <p>
-              More ${category}
+              More ${escapeHTML(category)}
               games are coming soon.
             </p>
 
@@ -823,19 +877,22 @@ function searchGames() {
 
 
   const results =
-    games.filter(game =>
+    games.filter(game => {
 
-      game.title
-        .toLowerCase()
-        .includes(query)
+      const title =
+        String(game.title || "")
+          .toLowerCase();
 
-      ||
+      const category =
+        String(game.category || "")
+          .toLowerCase();
 
-      game.category
-        .toLowerCase()
-        .includes(query)
+      return (
+        title.includes(query) ||
+        category.includes(query)
+      );
 
-    );
+    });
 
 
   const title =
@@ -930,59 +987,17 @@ function showToast(message) {
 
 
 /* ==================================================
-   LEADERBOARD
+   HTML ESCAPE
 ================================================== */
 
-/*
-   Firebase setup না হওয়া পর্যন্ত
-   demo leaderboard দেখাবে।
+function escapeHTML(value) {
 
-   Firebase connect করার পরে এই
-   function-এ real online players
-   load করা হবে।
-*/
-
-function loadLeaderboard() {
-
-  const leaderboardList =
-    document.getElementById(
-      "leaderboardList"
-    );
-
-
-  if (!leaderboardList) return;
-
-
-  leaderboardList.innerHTML = `
-
-    <div class="leaderboard-player">
-
-      <div class="leaderboard-rank">
-        🥇
-      </div>
-
-      <div class="leaderboard-name">
-        Player
-      </div>
-
-      <div class="leaderboard-games">
-        0
-      </div>
-
-      <div class="leaderboard-time">
-        0m
-      </div>
-
-    </div>
-
-
-    <div class="leaderboard-empty">
-
-      Login to join the leaderboard 🎮
-
-    </div>
-
-  `;
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
