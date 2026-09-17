@@ -13,6 +13,7 @@ import {
   onAuthStateChanged,
 
   doc,
+  getDoc,
   setDoc,
   updateDoc,
   increment,
@@ -30,10 +31,17 @@ import {
 // HTML ELEMENTS
 // ========================================
 
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const userInfo = document.getElementById("userInfo");
-const leaderboardList = document.getElementById("leaderboardList");
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const userInfo =
+  document.getElementById("userInfo");
+
+const leaderboardList =
+  document.getElementById("leaderboardList");
 
 
 // ========================================
@@ -62,40 +70,50 @@ console.log("================================");
 
 if (loginBtn) {
 
-  loginBtn.addEventListener("click", async () => {
+  loginBtn.addEventListener(
+    "click",
+    async () => {
 
-    try {
+      try {
 
-      loginBtn.disabled = true;
-      loginBtn.textContent = "Opening Google...";
+        loginBtn.disabled = true;
 
-      console.log("🔐 Starting Google Popup Login...");
+        loginBtn.textContent =
+          "Opening Google...";
 
-      const result = await signInWithPopup(
-        auth,
-        googleProvider
-      );
+        console.log(
+          "🔐 Starting Google Popup Login..."
+        );
 
-      console.log(
-        "✅ Google Login Successful:",
-        result.user.email
-      );
+        const result =
+          await signInWithPopup(
+            auth,
+            googleProvider
+          );
 
-    } catch (error) {
+        console.log(
+          "✅ Google Login Successful:",
+          result.user.email
+        );
 
-      console.error(
-        "❌ Google Login Error:",
-        error
-      );
+      } catch (error) {
 
-      showLoginError(error);
+        console.error(
+          "❌ Google Login Error:",
+          error
+        );
 
-      loginBtn.disabled = false;
-      loginBtn.textContent = "🔐 Login with Google";
+        showLoginError(error);
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent =
+          "🔐 Login with Google";
+
+      }
 
     }
-
-  });
+  );
 
 }
 
@@ -106,7 +124,8 @@ if (loginBtn) {
 
 function showLoginError(error) {
 
-  let message = "Google Login failed.";
+  let message =
+    "Google Login failed.";
 
   if (error && error.code) {
 
@@ -147,17 +166,19 @@ if (logoutBtn) {
 
           try {
 
-            const playerRef = doc(
-              db,
-              "players",
-              currentUser.uid
-            );
+            const playerRef =
+              doc(
+                db,
+                "players",
+                currentUser.uid
+              );
 
             await updateDoc(
               playerRef,
               {
                 online: false,
-                lastActive: serverTimestamp()
+                lastActive:
+                  serverTimestamp()
               }
             );
 
@@ -174,7 +195,9 @@ if (logoutBtn) {
 
         await signOut(auth);
 
-        console.log("✅ User logged out.");
+        console.log(
+          "✅ User logged out."
+        );
 
       } catch (error) {
 
@@ -185,7 +208,10 @@ if (logoutBtn) {
 
         alert(
           "Logout Error:\n\n" +
-          (error.message || "Unknown error")
+          (
+            error.message ||
+            "Unknown error"
+          )
         );
 
       }
@@ -206,49 +232,73 @@ onAuthStateChanged(
 
     currentUser = user;
 
+
     // ====================================
     // USER LOGGED IN
     // ====================================
 
     if (user) {
 
-      console.log("================================");
-      console.log("✅ AUTHENTICATED USER");
-      console.log("Name:", user.displayName);
-      console.log("Email:", user.email);
-      console.log("UID:", user.uid);
-      console.log("================================");
+      console.log(
+        "================================"
+      );
+
+      console.log(
+        "✅ AUTHENTICATED USER"
+      );
+
+      console.log(
+        "Name:",
+        user.displayName
+      );
+
+      console.log(
+        "Email:",
+        user.email
+      );
+
+      console.log(
+        "UID:",
+        user.uid
+      );
+
+      console.log(
+        "================================"
+      );
 
 
-      // ====================================
+      // ==================================
       // HIDE LOGIN
-      // ====================================
+      // ==================================
 
       if (loginBtn) {
 
-        loginBtn.style.display = "none";
+        loginBtn.style.display =
+          "none";
 
       }
 
 
-      // ====================================
+      // ==================================
       // SHOW LOGOUT
-      // ====================================
+      // ==================================
 
       if (logoutBtn) {
 
-        logoutBtn.style.display = "inline-block";
+        logoutBtn.style.display =
+          "inline-block";
 
       }
 
 
-      // ====================================
+      // ==================================
       // SHOW USER
-      // ====================================
+      // ==================================
 
       if (userInfo) {
 
-        userInfo.style.display = "block";
+        userInfo.style.display =
+          "block";
 
         const name =
           user.displayName ||
@@ -327,23 +377,23 @@ onAuthStateChanged(
       }
 
 
-      // ====================================
+      // ==================================
       // SAVE PLAYER
-      // ====================================
+      // ==================================
 
       await createOrUpdatePlayer(user);
 
 
-      // ====================================
+      // ==================================
       // START TIME TRACKING
-      // ====================================
+      // ==================================
 
       startTimeTracking();
 
 
-      // ====================================
+      // ==================================
       // LOAD LEADERBOARD
-      // ====================================
+      // ==================================
 
       await loadLeaderboard();
 
@@ -363,9 +413,11 @@ onAuthStateChanged(
 
       if (loginBtn) {
 
-        loginBtn.style.display = "inline-block";
+        loginBtn.style.display =
+          "inline-block";
 
-        loginBtn.disabled = false;
+        loginBtn.disabled =
+          false;
 
         loginBtn.textContent =
           "🔐 Login with Google";
@@ -375,16 +427,19 @@ onAuthStateChanged(
 
       if (logoutBtn) {
 
-        logoutBtn.style.display = "none";
+        logoutBtn.style.display =
+          "none";
 
       }
 
 
       if (userInfo) {
 
-        userInfo.style.display = "none";
+        userInfo.style.display =
+          "none";
 
-        userInfo.innerHTML = "";
+        userInfo.innerHTML =
+          "";
 
       }
 
@@ -418,18 +473,26 @@ onAuthStateChanged(
 
 async function createOrUpdatePlayer(user) {
 
-  console.log("🔥 FIRESTORE PLAYER SAVE START");
+  console.log(
+    "🔥 FIRESTORE PLAYER SAVE START"
+  );
 
   try {
 
-    const playerRef = doc(
-      db,
-      "players",
-      user.uid
-    );
+    const playerRef =
+      doc(
+        db,
+        "players",
+        user.uid
+      );
 
-    // Check if player already exists
-    const playerSnap = await getDoc(playerRef);
+
+    // ====================================
+    // CHECK EXISTING PLAYER
+    // ====================================
+
+    const playerSnap =
+      await getDoc(playerRef);
 
 
     // ====================================
@@ -438,7 +501,9 @@ async function createOrUpdatePlayer(user) {
 
     if (!playerSnap.exists()) {
 
-      console.log("🆕 Creating new player...");
+      console.log(
+        "🆕 Creating new player..."
+      );
 
       await setDoc(
         playerRef,
@@ -515,13 +580,22 @@ async function createOrUpdatePlayer(user) {
     }
 
 
-    console.log("================================");
-    console.log("🎮 PLAYER PROFILE READY");
+    console.log(
+      "================================"
+    );
+
+    console.log(
+      "🎮 PLAYER PROFILE READY"
+    );
+
     console.log(
       "Firestore: players/" +
       user.uid
     );
-    console.log("================================");
+
+    console.log(
+      "================================"
+    );
 
 
   } catch (error) {
@@ -533,45 +607,20 @@ async function createOrUpdatePlayer(user) {
 
     alert(
       "❌ FIRESTORE ERROR\n\n" +
-      "Code:\n" +
-      (error.code || "unknown") +
-      "\n\nMessage:\n" +
-      (error.message || "Unknown error")
-    );
-
-  }
-
-}
-
-    console.log("================================");
-    console.log("✅ PLAYER SAVED SUCCESSFULLY!");
-    console.log(
-      "Firestore: players/" +
-      user.uid
-    );
-    console.log("================================");
-
-
-  } catch (error) {
-
-    console.error("================================");
-    console.error("❌ FIRESTORE ERROR");
-    console.error("Code:", error.code);
-    console.error("Message:", error.message);
-    console.error("Full Error:", error);
-    console.error("================================");
-
-
-    alert(
-
-      "❌ FIRESTORE ERROR\n\n" +
 
       "Code:\n" +
-      (error.code || "unknown") +
+
+      (
+        error.code ||
+        "unknown"
+      ) +
 
       "\n\nMessage:\n" +
-      (error.message || "Unknown error")
 
+      (
+        error.message ||
+        "Unknown error"
+      )
     );
 
   }
@@ -583,63 +632,70 @@ async function createOrUpdatePlayer(user) {
 // GAME START TRACKING
 // ========================================
 
-window.trackGameStart = async function(gameId) {
+window.trackGameStart =
+  async function(gameId) {
 
-  if (!currentUser) {
+    if (!currentUser) {
 
-    console.log(
-      "🎮 Game tracking skipped - not logged in."
-    );
+      console.log(
+        "🎮 Game tracking skipped - not logged in."
+      );
 
-    return;
+      return;
 
-  }
-
-
-  try {
-
-    const playerRef = doc(
-      db,
-      "players",
-      currentUser.uid
-    );
+    }
 
 
-    await updateDoc(
-      playerRef,
-      {
+    try {
 
-        gamesPlayed:
-          increment(1),
-
-        lastGame:
-          gameId,
-
-        lastActive:
-          serverTimestamp(),
-
-        online:
-          true
-
-      }
-    );
+      const playerRef =
+        doc(
+          db,
+          "players",
+          currentUser.uid
+        );
 
 
-    console.log(
-      "🎮 Game started:",
-      gameId
-    );
+      await updateDoc(
+        playerRef,
+        {
 
-  } catch (error) {
+          gamesPlayed:
+            increment(1),
 
-    console.error(
-      "❌ Game tracking error:",
-      error
-    );
+          lastGame:
+            gameId,
 
-  }
+          lastActive:
+            serverTimestamp(),
 
-};
+          online:
+            true
+
+        }
+      );
+
+
+      console.log(
+        "🎮 Game started:",
+        gameId
+      );
+
+
+      // Refresh leaderboard
+      await loadLeaderboard();
+
+
+    } catch (error) {
+
+      console.error(
+        "❌ Game tracking error:",
+        error
+      );
+
+    }
+
+  };
 
 
 // ========================================
@@ -650,16 +706,19 @@ function startTimeTracking() {
 
   stopTimeTracking();
 
-  gameStartTime = Date.now();
+  gameStartTime =
+    Date.now();
 
-  timeInterval = setInterval(
-    async () => {
 
-      await saveTimeSpent();
+  timeInterval =
+    setInterval(
+      async () => {
 
-    },
-    30000
-  );
+        await saveTimeSpent();
+
+      },
+      30000
+    );
 
 }
 
@@ -672,13 +731,17 @@ function stopTimeTracking() {
 
   if (timeInterval) {
 
-    clearInterval(timeInterval);
+    clearInterval(
+      timeInterval
+    );
 
-    timeInterval = null;
+    timeInterval =
+      null;
 
   }
 
-  gameStartTime = null;
+  gameStartTime =
+    null;
 
 }
 
@@ -715,16 +778,18 @@ async function saveTimeSpent() {
   }
 
 
-  gameStartTime = Date.now();
+  gameStartTime =
+    Date.now();
 
 
   try {
 
-    const playerRef = doc(
-      db,
-      "players",
-      currentUser.uid
-    );
+    const playerRef =
+      doc(
+        db,
+        "players",
+        currentUser.uid
+      );
 
 
     await updateDoc(
@@ -749,6 +814,7 @@ async function saveTimeSpent() {
       elapsed,
       "seconds"
     );
+
 
   } catch (error) {
 
@@ -777,11 +843,12 @@ document.addEventListener(
     }
 
 
-    const playerRef = doc(
-      db,
-      "players",
-      currentUser.uid
-    );
+    const playerRef =
+      doc(
+        db,
+        "players",
+        currentUser.uid
+      );
 
 
     try {
@@ -795,7 +862,8 @@ document.addEventListener(
           playerRef,
           {
 
-            online: false,
+            online:
+              false,
 
             lastActive:
               serverTimestamp()
@@ -803,7 +871,10 @@ document.addEventListener(
           }
         );
 
-      } else {
+      }
+
+
+      else {
 
         gameStartTime =
           Date.now();
@@ -813,7 +884,8 @@ document.addEventListener(
           playerRef,
           {
 
-            online: true,
+            online:
+              true,
 
             lastActive:
               serverTimestamp()
@@ -923,8 +995,11 @@ async function loadLeaderboard() {
     }
 
 
-    let html = "";
-    let rank = 1;
+    let html =
+      "";
+
+    let rank =
+      1;
 
 
     snapshot.forEach(
@@ -962,20 +1037,28 @@ async function loadLeaderboard() {
           player.online === true;
 
 
-        let rankIcon = rank;
+        let rankIcon =
+          rank;
 
 
         if (rank === 1) {
 
-          rankIcon = "🥇";
+          rankIcon =
+            "🥇";
 
-        } else if (rank === 2) {
+        }
 
-          rankIcon = "🥈";
+        else if (rank === 2) {
 
-        } else if (rank === 3) {
+          rankIcon =
+            "🥈";
 
-          rankIcon = "🥉";
+        }
+
+        else if (rank === 3) {
+
+          rankIcon =
+            "🥉";
 
         }
 
@@ -985,8 +1068,11 @@ async function loadLeaderboard() {
           <div class="leaderboard-player">
 
             <div class="leaderboard-rank">
+
               ${rankIcon}
+
             </div>
+
 
             <div>
 
@@ -1015,7 +1101,9 @@ async function loadLeaderboard() {
                         font-size:22px;
                       "
                     >
+
                       🎮
+
                     </div>
 
                   `
@@ -1031,6 +1119,7 @@ async function loadLeaderboard() {
                 ${escapeHTML(name)}
 
               </div>
+
 
               <div
                 class="leaderboard-player-stats"
@@ -1050,7 +1139,9 @@ async function loadLeaderboard() {
                     ? `
 
                       <span style="color:#20c997;">
+
                         ● Online
+
                       </span>
 
                     `
@@ -1058,7 +1149,9 @@ async function loadLeaderboard() {
                     : `
 
                       <span style="opacity:.6;">
+
                         ● Offline
+
                       </span>
 
                     `
@@ -1124,7 +1217,9 @@ function formatTime(seconds) {
   seconds =
     Math.max(
       0,
-      Number(seconds || 0)
+      Number(
+        seconds || 0
+      )
     );
 
 
@@ -1136,7 +1231,9 @@ function formatTime(seconds) {
 
   const minutes =
     Math.floor(
-      (seconds % 3600) / 60
+      (
+        seconds % 3600
+      ) / 60
     );
 
 
@@ -1146,19 +1243,25 @@ function formatTime(seconds) {
 
   if (hours > 0) {
 
-    return `${hours}h ${minutes}m`;
+    return (
+      `${hours}h ${minutes}m`
+    );
 
   }
 
 
   if (minutes > 0) {
 
-    return `${minutes}m ${secs}s`;
+    return (
+      `${minutes}m ${secs}s`
+    );
 
   }
 
 
-  return `${secs}s`;
+  return (
+    `${secs}s`
+  );
 
 }
 
@@ -1169,17 +1272,34 @@ function formatTime(seconds) {
 
 function escapeHTML(value) {
 
-  return String(value || "")
+  return String(
+    value || ""
+  )
 
-    .replace(/&/g, "&amp;")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-    .replace(/</g, "&lt;")
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-    .replace(/>/g, "&gt;")
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-    .replace(/"/g, "&quot;")
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-    .replace(/'/g, "&#039;");
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
