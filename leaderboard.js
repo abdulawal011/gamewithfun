@@ -420,12 +420,6 @@ async function createOrUpdatePlayer(user) {
 
   console.log("🔥 FIRESTORE PLAYER SAVE START");
 
-  console.log("Project:", "gamewithfun-bc508");
-  console.log("UID:", user.uid);
-  console.log("Name:", user.displayName);
-  console.log("Email:", user.email);
-
-
   try {
 
     const playerRef = doc(
@@ -434,44 +428,120 @@ async function createOrUpdatePlayer(user) {
       user.uid
     );
 
+    // Check if player already exists
+    const playerSnap = await getDoc(playerRef);
 
-    await setDoc(
-      playerRef,
-      {
 
-        name:
-          user.displayName ||
-          "Player",
+    // ====================================
+    // NEW PLAYER
+    // ====================================
 
-        email:
-          user.email ||
-          "",
+    if (!playerSnap.exists()) {
 
-        photoURL:
-          user.photoURL ||
-          "",
+      console.log("🆕 Creating new player...");
 
-        gamesPlayed:
-          0,
+      await setDoc(
+        playerRef,
+        {
+          name:
+            user.displayName ||
+            "Player",
 
-        totalTime:
-          0,
+          email:
+            user.email ||
+            "",
 
-        online:
-          true,
+          photoURL:
+            user.photoURL ||
+            "",
 
-        lastActive:
-          serverTimestamp(),
+          gamesPlayed: 0,
 
-        createdAt:
-          serverTimestamp()
+          totalTime: 0,
 
-      },
-      {
-        merge: true
-      }
+          online: true,
+
+          lastActive:
+            serverTimestamp(),
+
+          createdAt:
+            serverTimestamp()
+        }
+      );
+
+      console.log(
+        "✅ New player created successfully!"
+      );
+
+    }
+
+
+    // ====================================
+    // EXISTING PLAYER
+    // ====================================
+
+    else {
+
+      console.log(
+        "👤 Existing player found — keeping stats."
+      );
+
+      await updateDoc(
+        playerRef,
+        {
+          name:
+            user.displayName ||
+            "Player",
+
+          email:
+            user.email ||
+            "",
+
+          photoURL:
+            user.photoURL ||
+            "",
+
+          online: true,
+
+          lastActive:
+            serverTimestamp()
+        }
+      );
+
+      console.log(
+        "✅ Existing player updated."
+      );
+
+    }
+
+
+    console.log("================================");
+    console.log("🎮 PLAYER PROFILE READY");
+    console.log(
+      "Firestore: players/" +
+      user.uid
+    );
+    console.log("================================");
+
+
+  } catch (error) {
+
+    console.error(
+      "❌ FIRESTORE PLAYER ERROR:",
+      error
     );
 
+    alert(
+      "❌ FIRESTORE ERROR\n\n" +
+      "Code:\n" +
+      (error.code || "unknown") +
+      "\n\nMessage:\n" +
+      (error.message || "Unknown error")
+    );
+
+  }
+
+}
 
     console.log("================================");
     console.log("✅ PLAYER SAVED SUCCESSFULLY!");
