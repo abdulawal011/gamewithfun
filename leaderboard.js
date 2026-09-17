@@ -48,6 +48,16 @@ let timeInterval = null;
 
 
 // ========================================
+// DEBUG
+// ========================================
+
+console.log("================================");
+console.log("🎮 GameWithFun Leaderboard Loaded");
+console.log("🔥 Firebase Project: gamewithfun-bc508");
+console.log("================================");
+
+
+// ========================================
 // GOOGLE LOGIN
 // ========================================
 
@@ -60,7 +70,7 @@ if (loginBtn) {
       loginBtn.disabled = true;
       loginBtn.textContent = "Opening Google...";
 
-      console.log("Starting Google Login...");
+      console.log("🔐 Starting Google Login...");
 
       await signInWithRedirect(
         auth,
@@ -70,7 +80,7 @@ if (loginBtn) {
     } catch (error) {
 
       console.error(
-        "Google Login Error:",
+        "❌ Google Login Error:",
         error
       );
 
@@ -98,7 +108,7 @@ getRedirectResult(auth)
     if (result && result.user) {
 
       console.log(
-        "Google Login Successful:",
+        "✅ Google Login Successful:",
         result.user
       );
 
@@ -115,7 +125,7 @@ getRedirectResult(auth)
   .catch((error) => {
 
     console.error(
-      "Google Redirect Error:",
+      "❌ Google Redirect Error:",
       error
     );
 
@@ -168,16 +178,45 @@ if (logoutBtn) {
 
         await saveTimeSpent();
 
+        if (currentUser) {
+
+          try {
+
+            const playerRef = doc(
+              db,
+              "players",
+              currentUser.uid
+            );
+
+            await updateDoc(
+              playerRef,
+              {
+                online: false,
+                lastActive: serverTimestamp()
+              }
+            );
+
+          } catch (error) {
+
+            console.error(
+              "Offline status error:",
+              error
+            );
+
+          }
+
+        }
+
         await signOut(auth);
 
         console.log(
-          "User logged out."
+          "✅ User logged out."
         );
 
       } catch (error) {
 
         console.error(
-          "Logout Error:",
+          "❌ Logout Error:",
           error
         );
 
@@ -212,8 +251,30 @@ onAuthStateChanged(
     if (user) {
 
       console.log(
-        "✅ Logged in:",
+        "================================"
+      );
+
+      console.log(
+        "✅ AUTHENTICATED USER"
+      );
+
+      console.log(
+        "Name:",
         user.displayName
+      );
+
+      console.log(
+        "Email:",
+        user.email
+      );
+
+      console.log(
+        "UID:",
+        user.uid
+      );
+
+      console.log(
+        "================================"
       );
 
 
@@ -250,16 +311,13 @@ onAuthStateChanged(
         userInfo.style.display =
           "block";
 
-
         const name =
           user.displayName ||
           "Player";
 
-
         const photo =
           user.photoURL ||
           "";
-
 
         userInfo.innerHTML = `
 
@@ -311,7 +369,6 @@ onAuthStateChanged(
               `
             }
 
-
             <div
               style="
                 text-align:left;
@@ -321,7 +378,6 @@ onAuthStateChanged(
               <strong>
                 ${escapeHTML(name)}
               </strong>
-
 
               <div
                 style="
@@ -439,7 +495,12 @@ onAuthStateChanged(
 async function createOrUpdatePlayer(user) {
 
   console.log(
-    "🔥 Starting Firestore player creation..."
+    "🔥 FIRESTORE PLAYER TEST START"
+  );
+
+  console.log(
+    "Firebase Project:",
+    "gamewithfun-bc508"
   );
 
   console.log(
@@ -460,6 +521,10 @@ async function createOrUpdatePlayer(user) {
 
   try {
 
+    // -------------------------------
+    // PLAYER DOCUMENT
+    // -------------------------------
+
     const playerRef =
       doc(
         db,
@@ -469,12 +534,22 @@ async function createOrUpdatePlayer(user) {
 
 
     console.log(
-      "📁 Checking player document..."
+      "📁 Checking Firestore document..."
     );
 
 
+    // -------------------------------
+    // GET PLAYER
+    // -------------------------------
+
     const playerSnap =
       await getDoc(playerRef);
+
+
+    console.log(
+      "Document exists:",
+      playerSnap.exists()
+    );
 
 
     // ====================================
@@ -484,7 +559,11 @@ async function createOrUpdatePlayer(user) {
     if (!playerSnap.exists()) {
 
       console.log(
-        "🆕 Player does not exist. Creating..."
+        "🆕 Player does not exist."
+      );
+
+      console.log(
+        "📝 Creating player document..."
       );
 
 
@@ -524,7 +603,37 @@ async function createOrUpdatePlayer(user) {
 
 
       console.log(
+        "================================"
+      );
+
+      console.log(
         "✅ PLAYER CREATED SUCCESSFULLY!"
+      );
+
+      console.log(
+        "Document:",
+        "players/" + user.uid
+      );
+
+      console.log(
+        "================================"
+      );
+
+
+      // TEST ALERT
+
+      alert(
+        "✅ Player Profile Created!\n\n" +
+
+        "Name: " +
+        (user.displayName || "Player") +
+
+        "\n\nEmail:\n" +
+        (user.email || "") +
+
+        "\n\nFirestore:\n" +
+        "players/" +
+        user.uid
       );
 
     }
@@ -537,7 +646,11 @@ async function createOrUpdatePlayer(user) {
     else {
 
       console.log(
-        "👤 Player already exists. Updating..."
+        "👤 Player already exists."
+      );
+
+      console.log(
+        "📝 Updating player..."
       );
 
 
@@ -568,7 +681,20 @@ async function createOrUpdatePlayer(user) {
 
 
       console.log(
+        "================================"
+      );
+
+      console.log(
         "✅ PLAYER UPDATED SUCCESSFULLY!"
+      );
+
+      console.log(
+        "================================"
+      );
+
+
+      alert(
+        "✅ Player Profile Updated!"
       );
 
     }
@@ -578,14 +704,36 @@ async function createOrUpdatePlayer(user) {
   catch (error) {
 
     console.error(
-      "❌ FIRESTORE ERROR:",
+      "================================"
+    );
+
+    console.error(
+      "❌ FIRESTORE ERROR"
+    );
+
+    console.error(
+      "Code:",
+      error.code
+    );
+
+    console.error(
+      "Message:",
+      error.message
+    );
+
+    console.error(
+      "Full Error:",
       error
+    );
+
+    console.error(
+      "================================"
     );
 
 
     alert(
 
-      "Firestore Error\n\n" +
+      "❌ FIRESTORE ERROR\n\n" +
 
       "Code:\n" +
       (error.code || "unknown") +
@@ -610,7 +758,11 @@ window.trackGameStart =
     if (!currentUser) {
 
       console.log(
-        "Game tracking skipped - user not logged in."
+        "🎮 Game tracking skipped."
+      );
+
+      console.log(
+        "User is not logged in."
       );
 
       return;
@@ -664,8 +816,11 @@ window.trackGameStart =
 
       alert(
         "Game Tracking Error:\n\n" +
+
         (error.code || "unknown") +
+
         "\n\n" +
+
         (error.message || "Unknown error")
       );
 
@@ -681,7 +836,6 @@ window.trackGameStart =
 function startTimeTracking() {
 
   stopTimeTracking();
-
 
   gameStartTime =
     Date.now();
@@ -716,7 +870,6 @@ function stopTimeTracking() {
       null;
 
   }
-
 
   gameStartTime =
     null;
@@ -783,7 +936,8 @@ async function saveTimeSpent() {
         online:
           true
 
-      }
+        }
+
     );
 
 
@@ -878,7 +1032,7 @@ document.addEventListener(
     catch (error) {
 
       console.error(
-        "Visibility error:",
+        "❌ Visibility error:",
         error
       );
 
@@ -1158,8 +1312,11 @@ async function loadLeaderboard() {
 
         <br><br>
 
-        Error: ${escapeHTML(
-          error.code || "unknown"
+        Error:
+
+        ${escapeHTML(
+          error.code ||
+          "unknown"
         )}
 
       </div>
