@@ -1,4 +1,3 @@
-alert("Leaderboard JS Loaded");
 // ========================================
 // GAMEWITHFUN LEADERBOARD
 // Google Login + Firestore
