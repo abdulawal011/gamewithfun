@@ -49,7 +49,6 @@ let timeInterval = null;
 
 // ========================================
 // GOOGLE LOGIN
-// REDIRECT METHOD
 // ========================================
 
 if (loginBtn) {
@@ -80,6 +79,7 @@ if (loginBtn) {
       loginBtn.disabled = false;
       loginBtn.textContent =
         "🔐 Login with Google";
+
     }
 
   });
@@ -136,7 +136,7 @@ function showLoginError(error) {
   if (error && error.code) {
 
     message +=
-      "\n\nError Code: " +
+      "\n\nError Code:\n" +
       error.code;
 
   }
@@ -144,7 +144,7 @@ function showLoginError(error) {
   if (error && error.message) {
 
     message +=
-      "\n\nMessage: " +
+      "\n\nMessage:\n" +
       error.message;
 
   }
@@ -181,6 +181,11 @@ if (logoutBtn) {
           error
         );
 
+        alert(
+          "Logout Error:\n\n" +
+          (error.message || "Unknown error")
+        );
+
       }
 
     }
@@ -207,7 +212,7 @@ onAuthStateChanged(
     if (user) {
 
       console.log(
-        "Logged in:",
+        "✅ Logged in:",
         user.displayName
       );
 
@@ -338,21 +343,21 @@ onAuthStateChanged(
 
 
       // -------------------------------
-      // Create / Update Player
+      // CREATE / UPDATE PLAYER
       // -------------------------------
 
       await createOrUpdatePlayer(user);
 
 
       // -------------------------------
-      // Start Time Tracking
+      // START TIME TRACKING
       // -------------------------------
 
       startTimeTracking();
 
 
       // -------------------------------
-      // Load Leaderboard
+      // LOAD LEADERBOARD
       // -------------------------------
 
       await loadLeaderboard();
@@ -371,10 +376,6 @@ onAuthStateChanged(
       );
 
 
-      // -------------------------------
-      // Show Login Button
-      // -------------------------------
-
       if (loginBtn) {
 
         loginBtn.style.display =
@@ -389,10 +390,6 @@ onAuthStateChanged(
       }
 
 
-      // -------------------------------
-      // Hide Logout
-      // -------------------------------
-
       if (logoutBtn) {
 
         logoutBtn.style.display =
@@ -400,10 +397,6 @@ onAuthStateChanged(
 
       }
 
-
-      // -------------------------------
-      // Hide User Info
-      // -------------------------------
 
       if (userInfo) {
 
@@ -416,16 +409,8 @@ onAuthStateChanged(
       }
 
 
-      // -------------------------------
-      // Stop Timer
-      // -------------------------------
-
       stopTimeTracking();
 
-
-      // -------------------------------
-      // Leaderboard Message
-      // -------------------------------
 
       if (leaderboardList) {
 
@@ -453,15 +438,40 @@ onAuthStateChanged(
 
 async function createOrUpdatePlayer(user) {
 
-  const playerRef =
-    doc(
-      db,
-      "players",
-      user.uid
-    );
+  console.log(
+    "🔥 Starting Firestore player creation..."
+  );
+
+  console.log(
+    "UID:",
+    user.uid
+  );
+
+  console.log(
+    "Name:",
+    user.displayName
+  );
+
+  console.log(
+    "Email:",
+    user.email
+  );
 
 
   try {
+
+    const playerRef =
+      doc(
+        db,
+        "players",
+        user.uid
+      );
+
+
+    console.log(
+      "📁 Checking player document..."
+    );
+
 
     const playerSnap =
       await getDoc(playerRef);
@@ -473,6 +483,11 @@ async function createOrUpdatePlayer(user) {
 
     if (!playerSnap.exists()) {
 
+      console.log(
+        "🆕 Player does not exist. Creating..."
+      );
+
+
       await setDoc(
         playerRef,
         {
@@ -480,6 +495,10 @@ async function createOrUpdatePlayer(user) {
           name:
             user.displayName ||
             "Player",
+
+          email:
+            user.email ||
+            "",
 
           photoURL:
             user.photoURL ||
@@ -505,7 +524,7 @@ async function createOrUpdatePlayer(user) {
 
 
       console.log(
-        "New player created."
+        "✅ PLAYER CREATED SUCCESSFULLY!"
       );
 
     }
@@ -517,6 +536,11 @@ async function createOrUpdatePlayer(user) {
 
     else {
 
+      console.log(
+        "👤 Player already exists. Updating..."
+      );
+
+
       await updateDoc(
         playerRef,
         {
@@ -524,6 +548,10 @@ async function createOrUpdatePlayer(user) {
           name:
             user.displayName ||
             "Player",
+
+          email:
+            user.email ||
+            "",
 
           photoURL:
             user.photoURL ||
@@ -540,7 +568,7 @@ async function createOrUpdatePlayer(user) {
 
 
       console.log(
-        "Player updated."
+        "✅ PLAYER UPDATED SUCCESSFULLY!"
       );
 
     }
@@ -550,8 +578,21 @@ async function createOrUpdatePlayer(user) {
   catch (error) {
 
     console.error(
-      "Player create/update error:",
+      "❌ FIRESTORE ERROR:",
       error
+    );
+
+
+    alert(
+
+      "Firestore Error\n\n" +
+
+      "Code:\n" +
+      (error.code || "unknown") +
+
+      "\n\nMessage:\n" +
+      (error.message || "Unknown error")
+
     );
 
   }
@@ -569,7 +610,7 @@ window.trackGameStart =
     if (!currentUser) {
 
       console.log(
-        "Game tracking skipped."
+        "Game tracking skipped - user not logged in."
       );
 
       return;
@@ -608,7 +649,7 @@ window.trackGameStart =
 
 
       console.log(
-        "Game started:",
+        "🎮 Game started:",
         gameId
       );
 
@@ -617,8 +658,15 @@ window.trackGameStart =
     catch (error) {
 
       console.error(
-        "Game tracking error:",
+        "❌ Game tracking error:",
         error
+      );
+
+      alert(
+        "Game Tracking Error:\n\n" +
+        (error.code || "unknown") +
+        "\n\n" +
+        (error.message || "Unknown error")
       );
 
     }
@@ -740,7 +788,7 @@ async function saveTimeSpent() {
 
 
     console.log(
-      "Saved time:",
+      "⏱️ Saved time:",
       elapsed,
       "seconds"
     );
@@ -750,7 +798,7 @@ async function saveTimeSpent() {
   catch (error) {
 
     console.error(
-      "Save time error:",
+      "❌ Save time error:",
       error
     );
 
@@ -784,10 +832,6 @@ document.addEventListener(
 
     try {
 
-      // -------------------------------
-      // PAGE HIDDEN
-      // -------------------------------
-
       if (document.hidden) {
 
         await saveTimeSpent();
@@ -807,11 +851,6 @@ document.addEventListener(
         );
 
       }
-
-
-      // -------------------------------
-      // PAGE VISIBLE
-      // -------------------------------
 
       else {
 
@@ -919,10 +958,6 @@ async function loadLeaderboard() {
       );
 
 
-    // ====================================
-    // EMPTY
-    // ====================================
-
     if (snapshot.empty) {
 
       leaderboardList.innerHTML = `
@@ -944,10 +979,6 @@ async function loadLeaderboard() {
 
     let rank = 1;
 
-
-    // ====================================
-    // PLAYERS
-    // ====================================
 
     snapshot.forEach(
       (docSnap) => {
@@ -984,48 +1015,39 @@ async function loadLeaderboard() {
           player.online === true;
 
 
-        // -------------------------------
-        // Rank
-        // -------------------------------
-
         let rankIcon =
           rank;
 
 
         if (rank === 1) {
 
-          rankIcon = "🥇";
+          rankIcon =
+            "🥇";
 
         }
 
         else if (rank === 2) {
 
-          rankIcon = "🥈";
+          rankIcon =
+            "🥈";
 
         }
 
         else if (rank === 3) {
 
-          rankIcon = "🥉";
+          rankIcon =
+            "🥉";
 
         }
 
-
-        // -------------------------------
-        // Player HTML
-        // -------------------------------
 
         html += `
 
           <div class="leaderboard-player">
 
-
-            <div
-              class="leaderboard-rank"
-            >
+            <div class="leaderboard-rank">
               ${rankIcon}
             </div>
-
 
             <div>
 
@@ -1062,23 +1084,15 @@ async function loadLeaderboard() {
 
             </div>
 
+            <div class="leaderboard-player-info">
 
-            <div
-              class="leaderboard-player-info"
-            >
-
-              <div
-                class="leaderboard-name"
-              >
+              <div class="leaderboard-name">
 
                 ${escapeHTML(name)}
 
               </div>
 
-
-              <div
-                class="leaderboard-player-stats"
-              >
+              <div class="leaderboard-player-stats">
 
                 🎮 ${games} Games
 
@@ -1093,11 +1107,7 @@ async function loadLeaderboard() {
 
                   ? `
 
-                    <span
-                      style="
-                        color:#20c997;
-                      "
-                    >
+                    <span style="color:#20c997;">
                       ● Online
                     </span>
 
@@ -1105,11 +1115,7 @@ async function loadLeaderboard() {
 
                   : `
 
-                    <span
-                      style="
-                        opacity:.6;
-                      "
-                    >
+                    <span style="opacity:.6;">
                       ● Offline
                     </span>
 
@@ -1119,7 +1125,6 @@ async function loadLeaderboard() {
               </div>
 
             </div>
-
 
           </div>
 
@@ -1140,7 +1145,7 @@ async function loadLeaderboard() {
   catch (error) {
 
     console.error(
-      "Leaderboard loading error:",
+      "❌ Leaderboard loading error:",
       error
     );
 
@@ -1153,7 +1158,9 @@ async function loadLeaderboard() {
 
         <br><br>
 
-        Please try again later.
+        Error: ${escapeHTML(
+          error.code || "unknown"
+        )}
 
       </div>
 
