@@ -5,10 +5,10 @@
 const games = [
   {
     id: 8,
-    title: "Fruit Cut",
+    title: "Bd Cut",
     category: "",
     icon: "games/IMG-20260914-WA0051.jpg",
-    url: "games/Fruit cutting game.html",
+    url: "games/bdcut.html",
     newGame: true,
     popular: false
   },
