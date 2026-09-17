@@ -1,6 +1,6 @@
 // ========================================
 // GAMEWITHFUN LEADERBOARD
-// Google Login + Firestore
+// Google Popup Login + Firestore
 // ========================================
 
 import {
@@ -8,8 +8,7 @@ import {
   db,
   googleProvider,
 
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
 
@@ -53,6 +52,7 @@ let timeInterval = null;
 console.log("================================");
 console.log("🎮 GameWithFun Leaderboard Loaded");
 console.log("🔥 Firebase Project: gamewithfun-bc508");
+console.log("🔐 Login Method: Google Popup");
 console.log("================================");
 
 
@@ -69,16 +69,24 @@ if (loginBtn) {
       loginBtn.disabled = true;
       loginBtn.textContent = "Opening Google...";
 
-      console.log("🔐 Starting Google Login...");
+      console.log("🔐 Starting Google Popup Login...");
 
-      await signInWithRedirect(
+      const result = await signInWithPopup(
         auth,
         googleProvider
       );
 
+      console.log(
+        "✅ Google Login Successful:",
+        result.user.email
+      );
+
     } catch (error) {
 
-      console.error("❌ Google Login Error:", error);
+      console.error(
+        "❌ Google Login Error:",
+        error
+      );
 
       showLoginError(error);
 
@@ -90,39 +98,6 @@ if (loginBtn) {
   });
 
 }
-
-
-// ========================================
-// GOOGLE REDIRECT RESULT
-// ========================================
-
-getRedirectResult(auth)
-  .then((result) => {
-
-    if (result && result.user) {
-
-      console.log(
-        "✅ Google Login Successful:",
-        result.user.email
-      );
-
-    } else {
-
-      console.log("No Google redirect result.");
-
-    }
-
-  })
-  .catch((error) => {
-
-    console.error(
-      "❌ Google Redirect Error:",
-      error
-    );
-
-    showLoginError(error);
-
-  });
 
 
 // ========================================
@@ -245,7 +220,9 @@ onAuthStateChanged(
       console.log("================================");
 
 
-      // Hide Login
+      // ====================================
+      // HIDE LOGIN
+      // ====================================
 
       if (loginBtn) {
 
@@ -254,7 +231,9 @@ onAuthStateChanged(
       }
 
 
-      // Show Logout
+      // ====================================
+      // SHOW LOGOUT
+      // ====================================
 
       if (logoutBtn) {
 
@@ -263,7 +242,9 @@ onAuthStateChanged(
       }
 
 
-      // Show User
+      // ====================================
+      // SHOW USER
+      // ====================================
 
       if (userInfo) {
 
@@ -347,7 +328,7 @@ onAuthStateChanged(
 
 
       // ====================================
-      // SAVE PLAYER TO FIRESTORE
+      // SAVE PLAYER
       // ====================================
 
       await createOrUpdatePlayer(user);
@@ -454,15 +435,6 @@ async function createOrUpdatePlayer(user) {
     );
 
 
-    console.log(
-      "📝 Saving player document..."
-    );
-
-
-    // ====================================
-    // DIRECT FIRESTORE WRITE
-    // ====================================
-
     await setDoc(
       playerRef,
       {
@@ -508,25 +480,6 @@ async function createOrUpdatePlayer(user) {
       user.uid
     );
     console.log("================================");
-
-
-    // ====================================
-    // SUCCESS MESSAGE
-    // ====================================
-
-    alert(
-      "✅ Player Profile Saved!\n\n" +
-
-      "Name: " +
-      (user.displayName || "Player") +
-
-      "\n\nEmail:\n" +
-      (user.email || "") +
-
-      "\n\nFirestore:\n" +
-      "players/" +
-      user.uid
-    );
 
 
   } catch (error) {
