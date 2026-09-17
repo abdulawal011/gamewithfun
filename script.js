@@ -35,12 +35,12 @@ const games = [
 
   {
     id: 2,
-    title: "Guess People",
+    title: "",
     category: "Puzzle",
-    icon: "games/GUuhrKZZGsIRBscIOCGwbaYGs0M.jpg",
-    url: "games/guesspepole.html",
+    icon: "",
+    url: "",
     newGame: false,
-    popular: true
+    popular: false
   },
 
   {
