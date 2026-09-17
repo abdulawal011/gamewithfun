@@ -1,117 +1,4 @@
 // ========================================
-// FIREBASE CONFIGURATION
-// GameWithFun
-// ========================================
-
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  increment,
-  serverTimestamp,
-  collection,
-  query,
-  orderBy,
-  limit,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-// ========================================
-// FIREBASE CONFIG
-// ========================================
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBmsDEIWswcmxdDoJuDCMAh3j3OJQKkG9I",
-  authDomain: "game-with-fun-58521.firebaseapp.com",
-  projectId: "game-with-fun-58521",
-  storageBucket: "game-with-fun-58521.firebasestorage.app",
-  messagingSenderId: "475244952455",
-  appId: "1:475244952455:web:1d6f18b335867c03037122",
-  measurementId: "G-CRHNTHH34B"
-};
-
-
-// ========================================
-// INITIALIZE FIREBASE
-// ========================================
-
-const app = initializeApp(firebaseConfig);
-
-
-// ========================================
-// AUTH
-// ========================================
-
-const auth = getAuth(app);
-
-
-// ========================================
-// FIRESTORE
-// ========================================
-
-const db = getFirestore(app);
-
-
-// ========================================
-// GOOGLE PROVIDER
-// ========================================
-
-const googleProvider = new GoogleAuthProvider();
-
-googleProvider.setCustomParameters({
-  prompt: "select_account"
-});
-
-
-// ========================================
-// EXPORT
-// ========================================
-
-export {
-  app,
-  auth,
-  db,
-  googleProvider,
-
-  // Authentication
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-
-  // Firestore
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  increment,
-  serverTimestamp,
-  collection,
-  query,
-  orderBy,
-  limit,
-  getDocs
-};
-
-2. "leaderboard.js"
-
-:::writing{variant="document" id="74106" title="leaderboard.js"}
-
-// ========================================
 // GAMEWITHFUN LEADERBOARD
 // Google Login + Firestore
 // ========================================
@@ -145,17 +32,10 @@ import {
 // HTML ELEMENTS
 // ========================================
 
-const loginBtn =
-  document.getElementById("loginBtn");
-
-const logoutBtn =
-  document.getElementById("logoutBtn");
-
-const userInfo =
-  document.getElementById("userInfo");
-
-const leaderboardList =
-  document.getElementById("leaderboardList");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const userInfo = document.getElementById("userInfo");
+const leaderboardList = document.getElementById("leaderboardList");
 
 
 // ========================================
@@ -163,10 +43,19 @@ const leaderboardList =
 // ========================================
 
 let currentUser = null;
-
 let gameStartTime = null;
-
 let timeInterval = null;
+
+
+// ========================================
+// CHECK LOGIN BUTTON
+// ========================================
+
+console.log("=================================");
+console.log("GameWithFun Leaderboard Loaded");
+console.log("Login Button:", loginBtn);
+console.log("Firebase Auth:", auth);
+console.log("=================================");
 
 
 // ========================================
@@ -175,71 +64,68 @@ let timeInterval = null;
 
 if (loginBtn) {
 
-  loginBtn.addEventListener(
-    "click",
-    async () => {
+  loginBtn.addEventListener("click", async function () {
 
-      try {
+    console.log("LOGIN BUTTON CLICKED");
 
-        loginBtn.disabled = true;
+    try {
 
-        loginBtn.textContent =
-          "Opening Google...";
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Opening Google...";
 
+      console.log("Opening Google Login...");
 
-        const result =
-          await signInWithPopup(
-            auth,
-            googleProvider
-          );
+      const result = await signInWithPopup(
+        auth,
+        googleProvider
+      );
 
+      console.log(
+        "Google login successful:",
+        result.user
+      );
 
-        console.log(
-          "Google login successful:",
-          result.user
-        );
+    } catch (error) {
 
+      console.error(
+        "GOOGLE LOGIN ERROR:",
+        error
+      );
 
-      } catch (error) {
+      let errorMessage =
+        "Google Login failed.";
 
-        console.error(
-          "Google Login Error:",
-          error
-        );
+      if (error.code) {
 
+        errorMessage +=
+          "\n\nError Code: " +
+          error.code;
 
-        let message =
-          "Google Login failed.";
-
-
-        if (error.code) {
-
-          message +=
-            "\n\nError: " +
-            error.code;
-
-        }
-
-
-        if (error.message) {
-
-          message +=
-            "\n" +
-            error.message;
-
-        }
-
-
-        alert(message);
-
-
-        loginBtn.disabled = false;
-
-        loginBtn.textContent =
-          "🔐 Login with Google";
       }
 
+      if (error.message) {
+
+        errorMessage +=
+          "\n\nMessage: " +
+          error.message;
+
+      }
+
+      alert(errorMessage);
+
+      loginBtn.disabled = false;
+
+      loginBtn.textContent =
+        "🔐 Login with Google";
+
     }
+
+  });
+
+} else {
+
+  console.error(
+    "ERROR: loginBtn was not found!"
   );
 
 }
@@ -253,7 +139,7 @@ if (logoutBtn) {
 
   logoutBtn.addEventListener(
     "click",
-    async () => {
+    async function () {
 
       try {
 
@@ -262,15 +148,19 @@ if (logoutBtn) {
         await signOut(auth);
 
         console.log(
-          "User logged out"
+          "User logged out successfully"
         );
-
 
       } catch (error) {
 
         console.error(
-          "Logout error:",
+          "Logout Error:",
           error
+        );
+
+        alert(
+          "Logout failed:\n\n" +
+          (error.message || error)
         );
 
       }
@@ -287,10 +177,9 @@ if (logoutBtn) {
 
 onAuthStateChanged(
   auth,
-  async (user) => {
+  async function (user) {
 
     currentUser = user;
-
 
     // ====================================
     // USER LOGGED IN
@@ -299,7 +188,7 @@ onAuthStateChanged(
     if (user) {
 
       console.log(
-        "Logged in:",
+        "USER LOGGED IN:",
         user.displayName
       );
 
@@ -324,22 +213,22 @@ onAuthStateChanged(
       }
 
 
-      // Show user information
+      // ==================================
+      // USER INFORMATION
+      // ==================================
 
       if (userInfo) {
 
         userInfo.style.display =
           "block";
 
-
-        const photo =
-          user.photoURL || "";
-
-
         const name =
           user.displayName ||
           "Player";
 
+        const photo =
+          user.photoURL ||
+          "";
 
         userInfo.innerHTML = `
 
@@ -353,7 +242,9 @@ onAuthStateChanged(
 
             ${
               photo
+
                 ? `
+
                   <img
                     src="${escapeHTML(photo)}"
                     alt="Profile"
@@ -364,8 +255,11 @@ onAuthStateChanged(
                       object-fit:cover;
                     "
                   >
+
                 `
+
                 : `
+
                   <div style="
                     width:45px;
                     height:45px;
@@ -378,9 +272,9 @@ onAuthStateChanged(
                   ">
                     🎮
                   </div>
+
                 `
             }
-
 
             <div style="text-align:left;">
 
@@ -405,19 +299,23 @@ onAuthStateChanged(
       }
 
 
-      // Create/update player
+      // ==================================
+      // CREATE / UPDATE PLAYER
+      // ==================================
 
-      await createOrUpdatePlayer(
-        user
-      );
+      await createOrUpdatePlayer(user);
 
 
-      // Start tracking
+      // ==================================
+      // START TIME TRACKING
+      // ==================================
 
       startTimeTracking();
 
 
-      // Load leaderboard
+      // ==================================
+      // LOAD LEADERBOARD
+      // ==================================
 
       await loadLeaderboard();
 
@@ -431,7 +329,7 @@ onAuthStateChanged(
     else {
 
       console.log(
-        "No user logged in"
+        "NO USER LOGGED IN"
       );
 
 
@@ -495,9 +393,7 @@ onAuthStateChanged(
 // CREATE / UPDATE PLAYER
 // ========================================
 
-async function createOrUpdatePlayer(
-  user
-) {
+async function createOrUpdatePlayer(user) {
 
   const playerRef =
     doc(
@@ -506,14 +402,15 @@ async function createOrUpdatePlayer(
       user.uid
     );
 
-
   try {
 
     const playerSnap =
       await getDoc(playerRef);
 
 
-    // New player
+    // ==================================
+    // NEW PLAYER
+    // ==================================
 
     if (!playerSnap.exists()) {
 
@@ -544,10 +441,16 @@ async function createOrUpdatePlayer(
         }
       );
 
+      console.log(
+        "New player created"
+      );
+
     }
 
 
-    // Existing player
+    // ==================================
+    // EXISTING PLAYER
+    // ==================================
 
     else {
 
@@ -571,12 +474,16 @@ async function createOrUpdatePlayer(
         }
       );
 
+      console.log(
+        "Player updated"
+      );
+
     }
 
   } catch (error) {
 
     console.error(
-      "Player update error:",
+      "PLAYER UPDATE ERROR:",
       error
     );
 
@@ -590,18 +497,17 @@ async function createOrUpdatePlayer(
 // ========================================
 
 window.trackGameStart =
-  async function(gameId) {
+  async function (gameId) {
 
     if (!currentUser) {
 
       console.log(
-        "Game tracking skipped: user not logged in"
+        "Game tracking skipped - user not logged in"
       );
 
       return;
 
     }
-
 
     try {
 
@@ -629,11 +535,15 @@ window.trackGameStart =
         }
       );
 
+      console.log(
+        "Game started:",
+        gameId
+      );
 
     } catch (error) {
 
       console.error(
-        "Game tracking error:",
+        "GAME TRACKING ERROR:",
         error
       );
 
@@ -650,14 +560,13 @@ function startTimeTracking() {
 
   stopTimeTracking();
 
-
   gameStartTime =
     Date.now();
 
 
   timeInterval =
     setInterval(
-      async () => {
+      async function () {
 
         await saveTimeSpent();
 
@@ -684,7 +593,6 @@ function stopTimeTracking() {
       null;
 
   }
-
 
   gameStartTime =
     null;
@@ -748,16 +656,16 @@ async function saveTimeSpent() {
         lastActive:
           serverTimestamp(),
 
-        online: true
+        online:
+          true
 
       }
     );
 
-
   } catch (error) {
 
     console.error(
-      "Time save error:",
+      "TIME SAVE ERROR:",
       error
     );
 
@@ -772,7 +680,7 @@ async function saveTimeSpent() {
 
 document.addEventListener(
   "visibilitychange",
-  async () => {
+  async function () {
 
     if (!currentUser) {
 
@@ -800,7 +708,8 @@ document.addEventListener(
           playerRef,
           {
 
-            online: false,
+            online:
+              false,
 
             lastActive:
               serverTimestamp()
@@ -809,7 +718,6 @@ document.addEventListener(
         );
 
       }
-
 
       else {
 
@@ -821,7 +729,8 @@ document.addEventListener(
           playerRef,
           {
 
-            online: true,
+            online:
+              true,
 
             lastActive:
               serverTimestamp()
@@ -834,7 +743,7 @@ document.addEventListener(
     } catch (error) {
 
       console.error(
-        "Online status error:",
+        "ONLINE STATUS ERROR:",
         error
       );
 
@@ -850,14 +759,13 @@ document.addEventListener(
 
 window.addEventListener(
   "pagehide",
-  () => {
+  function () {
 
     if (!currentUser) {
 
       return;
 
     }
-
 
     saveTimeSpent();
 
@@ -917,6 +825,10 @@ async function loadLeaderboard() {
       );
 
 
+    // ==================================
+    // NO PLAYERS
+    // ==================================
+
     if (snapshot.empty) {
 
       leaderboardList.innerHTML = `
@@ -934,13 +846,15 @@ async function loadLeaderboard() {
     }
 
 
-    let html = "";
+    let html =
+      "";
 
-    let rank = 1;
+    let rank =
+      1;
 
 
     snapshot.forEach(
-      (docSnap) => {
+      function (docSnap) {
 
         const player =
           docSnap.data();
@@ -985,14 +899,12 @@ async function loadLeaderboard() {
 
         }
 
-
         else if (rank === 2) {
 
           rankIcon =
             "🥈";
 
         }
-
 
         else if (rank === 3) {
 
@@ -1072,19 +984,19 @@ async function loadLeaderboard() {
                   online
 
                     ? `
-                      <span
-                        style="color:#20c997;"
-                      >
+
+                      <span style="color:#20c997;">
                         ● Online
                       </span>
+
                     `
 
                     : `
-                      <span
-                        style="opacity:.6;"
-                      >
+
+                      <span style="opacity:.6;">
                         ● Offline
                       </span>
+
                     `
                 }
 
@@ -1110,7 +1022,7 @@ async function loadLeaderboard() {
   } catch (error) {
 
     console.error(
-      "Leaderboard error:",
+      "LEADERBOARD ERROR:",
       error
     );
 
@@ -1234,3 +1146,8 @@ function escapeHTML(value) {
 
 window.loadLeaderboard =
   loadLeaderboard;
+
+
+console.log(
+  "GameWithFun leaderboard.js ready!"
+);
