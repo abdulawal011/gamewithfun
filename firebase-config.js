@@ -1,6 +1,5 @@
 // ========================================
-// FIREBASE CONFIGURATION
-// GameWithFun
+// GAMEWITHFUN FIREBASE CONFIG
 // ========================================
 
 import {
@@ -31,26 +30,14 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-
-// ========================================
-// FIREBASE CONFIG
-// ========================================
-
 const firebaseConfig = {
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBmsDEIWswcmxdDoJuDCaMhpJ3OJQKkG9I",
-  authDomain: "game-with-fun-58521.firebaseapp.com",
-  projectId: "game-with-fun-58521",
-  storageBucket: "game-with-fun-58521.firebasestorage.app",
-  messagingSenderId: "475244952455",
-  appId: "1:475244952455:web:1d6f18b335867c03037122",
-  measurementId: "G-CRHNTHH34B"
+  apiKey: "AIzaSyBX1dTH92fM5RPo4Hc6npiiR8-7fBr-GmY",
+  authDomain: "gamewithfun-bc508.firebaseapp.com",
+  projectId: "gamewithfun-bc508",
+  storageBucket: "gamewithfun-bc508.firebasestorage.app",
+  messagingSenderId: "470439578687",
+  appId: "1:470439578687:web:33da16c62fe4709b627c8a"
 };
-
-// ========================================
-// INITIALIZE FIREBASE
-// ========================================
 
 const app = initializeApp(firebaseConfig);
 
@@ -60,16 +47,9 @@ const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
 
-
-// Google account selection
 googleProvider.setCustomParameters({
   prompt: "select_account"
 });
-
-
-// ========================================
-// EXPORT
-// ========================================
 
 export {
   app,
