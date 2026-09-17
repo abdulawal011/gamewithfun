@@ -10,7 +10,8 @@ import {
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -52,27 +53,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-
-// ========================================
-// AUTH
-// ========================================
-
 const auth = getAuth(app);
-
-
-// ========================================
-// FIRESTORE
-// ========================================
 
 const db = getFirestore(app);
 
-
-// ========================================
-// GOOGLE PROVIDER
-// ========================================
-
 const googleProvider = new GoogleAuthProvider();
 
+
+// Google account selection
 googleProvider.setCustomParameters({
   prompt: "select_account"
 });
@@ -88,18 +76,18 @@ export {
   db,
   googleProvider,
 
-  // Authentication
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
 
-  // Firestore
   doc,
   getDoc,
   setDoc,
   updateDoc,
   increment,
   serverTimestamp,
+
   collection,
   query,
   orderBy,
