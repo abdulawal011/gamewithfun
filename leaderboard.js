@@ -1,6 +1,6 @@
 // ========================================
 // GAMEWITHFUN LEADERBOARD
-// Google Login + Firestore
+// Firebase Google Login + Firestore
 // ========================================
 
 import {
@@ -8,7 +8,8 @@ import {
   db,
   googleProvider,
 
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
 
@@ -24,7 +25,6 @@ import {
   orderBy,
   limit,
   getDocs
-
 } from "./firebase-config.js";
 
 
@@ -39,7 +39,7 @@ const leaderboardList = document.getElementById("leaderboardList");
 
 
 // ========================================
-// VARIABLES
+// GLOBAL VARIABLES
 // ========================================
 
 let currentUser = null;
@@ -48,56 +48,40 @@ let timeInterval = null;
 
 
 // ========================================
-// CHECK LOGIN BUTTON
-// ========================================
-
-console.log("=================================");
-console.log("GameWithFun Leaderboard Loaded");
-console.log("Login Button:", loginBtn);
-console.log("Firebase Auth:", auth);
-console.log("=================================");
-
-
-// ========================================
 // GOOGLE LOGIN
+// REDIRECT METHOD
 // ========================================
 
 if (loginBtn) {
 
-  loginBtn.addEventListener("click", async function () {
-
-    console.log("LOGIN BUTTON CLICKED");
+  loginBtn.addEventListener("click", async () => {
 
     try {
 
       loginBtn.disabled = true;
+
       loginBtn.textContent = "Opening Google...";
 
-      console.log("Opening Google Login...");
+      console.log("Starting Google login...");
 
-      const result = await signInWithPopup(
+      await signInWithRedirect(
         auth,
         googleProvider
-      );
-
-      console.log(
-        "Google login successful:",
-        result.user
       );
 
     } catch (error) {
 
       console.error(
-        "GOOGLE LOGIN ERROR:",
+        "Google Login Error:",
         error
       );
 
-      let errorMessage =
+      let message =
         "Google Login failed.";
 
       if (error.code) {
 
-        errorMessage +=
+        message +=
           "\n\nError Code: " +
           error.code;
 
@@ -105,13 +89,13 @@ if (loginBtn) {
 
       if (error.message) {
 
-        errorMessage +=
+        message +=
           "\n\nMessage: " +
           error.message;
 
       }
 
-      alert(errorMessage);
+      alert(message);
 
       loginBtn.disabled = false;
 
@@ -122,13 +106,63 @@ if (loginBtn) {
 
   });
 
-} else {
-
-  console.error(
-    "ERROR: loginBtn was not found!"
-  );
-
 }
+
+
+// ========================================
+// CHECK GOOGLE REDIRECT RESULT
+// ========================================
+
+getRedirectResult(auth)
+
+  .then((result) => {
+
+    if (result && result.user) {
+
+      console.log(
+        "Google redirect login successful:",
+        result.user
+      );
+
+    } else {
+
+      console.log(
+        "No redirect login result."
+      );
+
+    }
+
+  })
+
+  .catch((error) => {
+
+    console.error(
+      "Google redirect login error:",
+      error
+    );
+
+    let message =
+      "Google Login failed.";
+
+    if (error.code) {
+
+      message +=
+        "\n\nError Code: " +
+        error.code;
+
+    }
+
+    if (error.message) {
+
+      message +=
+        "\n\nMessage: " +
+        error.message;
+
+    }
+
+    alert(message);
+
+  });
 
 
 // ========================================
@@ -139,7 +173,7 @@ if (logoutBtn) {
 
   logoutBtn.addEventListener(
     "click",
-    async function () {
+    async () => {
 
       try {
 
@@ -148,19 +182,14 @@ if (logoutBtn) {
         await signOut(auth);
 
         console.log(
-          "User logged out successfully"
+          "User logged out."
         );
 
       } catch (error) {
 
         console.error(
-          "Logout Error:",
+          "Logout error:",
           error
-        );
-
-        alert(
-          "Logout failed:\n\n" +
-          (error.message || error)
         );
 
       }
@@ -177,23 +206,21 @@ if (logoutBtn) {
 
 onAuthStateChanged(
   auth,
-  async function (user) {
+  async (user) => {
 
     currentUser = user;
-
-    // ====================================
-    // USER LOGGED IN
-    // ====================================
 
     if (user) {
 
       console.log(
-        "USER LOGGED IN:",
-        user.displayName
+        "Logged in user:",
+        user
       );
 
 
-      // Hide login button
+      // -----------------------------
+      // LOGIN BUTTON
+      // -----------------------------
 
       if (loginBtn) {
 
@@ -203,7 +230,9 @@ onAuthStateChanged(
       }
 
 
-      // Show logout button
+      // -----------------------------
+      // LOGOUT BUTTON
+      // -----------------------------
 
       if (logoutBtn) {
 
@@ -213,32 +242,33 @@ onAuthStateChanged(
       }
 
 
-      // ==================================
+      // -----------------------------
       // USER INFORMATION
-      // ==================================
+      // -----------------------------
 
       if (userInfo) {
 
         userInfo.style.display =
           "block";
 
+        const photo =
+          user.photoURL || "";
+
         const name =
           user.displayName ||
           "Player";
 
-        const photo =
-          user.photoURL ||
-          "";
-
         userInfo.innerHTML = `
 
-          <div style="
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:12px;
-            margin-top:15px;
-          ">
+          <div
+            style="
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              gap:12px;
+              margin-top:15px;
+            "
+          >
 
             ${
               photo
@@ -260,16 +290,18 @@ onAuthStateChanged(
 
                 : `
 
-                  <div style="
-                    width:45px;
-                    height:45px;
-                    border-radius:50%;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    background:#eef4ff;
-                    font-size:22px;
-                  ">
+                  <div
+                    style="
+                      width:45px;
+                      height:45px;
+                      border-radius:50%;
+                      display:flex;
+                      align-items:center;
+                      justify-content:center;
+                      background:#eef4ff;
+                      font-size:22px;
+                    "
+                  >
                     🎮
                   </div>
 
@@ -282,11 +314,13 @@ onAuthStateChanged(
                 ${escapeHTML(name)}
               </strong>
 
-              <div style="
-                font-size:13px;
-                opacity:.7;
-                margin-top:3px;
-              ">
+              <div
+                style="
+                  font-size:13px;
+                  opacity:.7;
+                  margin-top:3px;
+                "
+              >
                 Logged in with Google
               </div>
 
@@ -299,39 +333,38 @@ onAuthStateChanged(
       }
 
 
-      // ==================================
+      // -----------------------------
       // CREATE / UPDATE PLAYER
-      // ==================================
+      // -----------------------------
 
       await createOrUpdatePlayer(user);
 
 
-      // ==================================
+      // -----------------------------
       // START TIME TRACKING
-      // ==================================
+      // -----------------------------
 
       startTimeTracking();
 
 
-      // ==================================
+      // -----------------------------
       // LOAD LEADERBOARD
-      // ==================================
+      // -----------------------------
 
       await loadLeaderboard();
 
     }
 
-
-    // ====================================
-    // USER LOGGED OUT
-    // ====================================
-
     else {
 
       console.log(
-        "NO USER LOGGED IN"
+        "No user logged in."
       );
 
+
+      // -----------------------------
+      // LOGIN BUTTON
+      // -----------------------------
 
       if (loginBtn) {
 
@@ -347,6 +380,10 @@ onAuthStateChanged(
       }
 
 
+      // -----------------------------
+      // LOGOUT BUTTON
+      // -----------------------------
+
       if (logoutBtn) {
 
         logoutBtn.style.display =
@@ -355,19 +392,30 @@ onAuthStateChanged(
       }
 
 
+      // -----------------------------
+      // USER INFO
+      // -----------------------------
+
       if (userInfo) {
 
         userInfo.style.display =
           "none";
 
-        userInfo.innerHTML =
-          "";
+        userInfo.innerHTML = "";
 
       }
 
 
+      // -----------------------------
+      // STOP TIMER
+      // -----------------------------
+
       stopTimeTracking();
 
+
+      // -----------------------------
+      // LEADERBOARD MESSAGE
+      // -----------------------------
 
       if (leaderboardList) {
 
@@ -390,7 +438,7 @@ onAuthStateChanged(
 
 
 // ========================================
-// CREATE / UPDATE PLAYER
+// CREATE OR UPDATE PLAYER
 // ========================================
 
 async function createOrUpdatePlayer(user) {
@@ -408,9 +456,9 @@ async function createOrUpdatePlayer(user) {
       await getDoc(playerRef);
 
 
-    // ==================================
+    // -----------------------------
     // NEW PLAYER
-    // ==================================
+    // -----------------------------
 
     if (!playerSnap.exists()) {
 
@@ -426,11 +474,14 @@ async function createOrUpdatePlayer(user) {
             user.photoURL ||
             "",
 
-          gamesPlayed: 0,
+          gamesPlayed:
+            0,
 
-          totalTime: 0,
+          totalTime:
+            0,
 
-          online: true,
+          online:
+            true,
 
           createdAt:
             serverTimestamp(),
@@ -442,15 +493,15 @@ async function createOrUpdatePlayer(user) {
       );
 
       console.log(
-        "New player created"
+        "New player created."
       );
 
     }
 
 
-    // ==================================
+    // -----------------------------
     // EXISTING PLAYER
-    // ==================================
+    // -----------------------------
 
     else {
 
@@ -466,7 +517,8 @@ async function createOrUpdatePlayer(user) {
             user.photoURL ||
             "",
 
-          online: true,
+          online:
+            true,
 
           lastActive:
             serverTimestamp()
@@ -475,15 +527,17 @@ async function createOrUpdatePlayer(user) {
       );
 
       console.log(
-        "Player updated"
+        "Player updated."
       );
 
     }
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
-      "PLAYER UPDATE ERROR:",
+      "Player update error:",
       error
     );
 
@@ -493,21 +547,22 @@ async function createOrUpdatePlayer(user) {
 
 
 // ========================================
-// GAME START TRACKING
+// TRACK GAME START
 // ========================================
 
 window.trackGameStart =
-  async function (gameId) {
+  async function(gameId) {
 
     if (!currentUser) {
 
       console.log(
-        "Game tracking skipped - user not logged in"
+        "Game tracking skipped: user not logged in."
       );
 
       return;
 
     }
+
 
     try {
 
@@ -535,15 +590,18 @@ window.trackGameStart =
         }
       );
 
+
       console.log(
         "Game started:",
         gameId
       );
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
-        "GAME TRACKING ERROR:",
+        "Game tracking error:",
         error
       );
 
@@ -566,7 +624,7 @@ function startTimeTracking() {
 
   timeInterval =
     setInterval(
-      async function () {
+      async () => {
 
         await saveTimeSpent();
 
@@ -594,6 +652,7 @@ function stopTimeTracking() {
 
   }
 
+
   gameStartTime =
     null;
 
@@ -601,7 +660,7 @@ function stopTimeTracking() {
 
 
 // ========================================
-// SAVE TIME
+// SAVE TIME SPENT
 // ========================================
 
 async function saveTimeSpent() {
@@ -662,10 +721,19 @@ async function saveTimeSpent() {
       }
     );
 
-  } catch (error) {
+
+    console.log(
+      "Time saved:",
+      elapsed,
+      "seconds"
+    );
+
+  }
+
+  catch (error) {
 
     console.error(
-      "TIME SAVE ERROR:",
+      "Time save error:",
       error
     );
 
@@ -675,12 +743,12 @@ async function saveTimeSpent() {
 
 
 // ========================================
-// ONLINE / OFFLINE
+// VISIBILITY CHANGE
 // ========================================
 
 document.addEventListener(
   "visibilitychange",
-  async function () {
+  async () => {
 
     if (!currentUser) {
 
@@ -698,6 +766,10 @@ document.addEventListener(
 
 
     try {
+
+      // -----------------------------
+      // PAGE HIDDEN
+      // -----------------------------
 
       if (document.hidden) {
 
@@ -718,6 +790,11 @@ document.addEventListener(
         );
 
       }
+
+
+      // -----------------------------
+      // PAGE VISIBLE
+      // -----------------------------
 
       else {
 
@@ -740,10 +817,12 @@ document.addEventListener(
 
       }
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
-        "ONLINE STATUS ERROR:",
+        "Online status error:",
         error
       );
 
@@ -754,12 +833,12 @@ document.addEventListener(
 
 
 // ========================================
-// PAGE LEAVE
+// PAGE HIDE
 // ========================================
 
 window.addEventListener(
   "pagehide",
-  function () {
+  () => {
 
     if (!currentUser) {
 
@@ -809,12 +888,10 @@ async function loadLeaderboard() {
     const leaderboardQuery =
       query(
         playersRef,
-
         orderBy(
           "totalTime",
           "desc"
         ),
-
         limit(100)
       );
 
@@ -825,9 +902,9 @@ async function loadLeaderboard() {
       );
 
 
-    // ==================================
+    // -----------------------------
     // NO PLAYERS
-    // ==================================
+    // -----------------------------
 
     if (snapshot.empty) {
 
@@ -846,15 +923,13 @@ async function loadLeaderboard() {
     }
 
 
-    let html =
-      "";
+    let html = "";
 
-    let rank =
-      1;
+    let rank = 1;
 
 
     snapshot.forEach(
-      function (docSnap) {
+      (docSnap) => {
 
         const player =
           docSnap.data();
@@ -888,31 +963,36 @@ async function loadLeaderboard() {
           player.online === true;
 
 
+        // -----------------------------
+        // RANK ICON
+        // -----------------------------
+
         let rankIcon =
           rank;
 
 
         if (rank === 1) {
 
-          rankIcon =
-            "🥇";
+          rankIcon = "🥇";
 
         }
 
         else if (rank === 2) {
 
-          rankIcon =
-            "🥈";
+          rankIcon = "🥈";
 
         }
 
         else if (rank === 3) {
 
-          rankIcon =
-            "🥉";
+          rankIcon = "🥉";
 
         }
 
+
+        // -----------------------------
+        // PLAYER HTML
+        // -----------------------------
 
         html += `
 
@@ -970,13 +1050,18 @@ async function loadLeaderboard() {
               </div>
 
 
-              <div class="leaderboard-player-stats">
+              <div
+                class="leaderboard-player-stats"
+              >
 
-                🎮 ${games} Games
+                🎮
+                ${games}
+                Games
 
                 &nbsp; • &nbsp;
 
-                ⏱️ ${formatTime(totalTime)}
+                ⏱️
+                ${formatTime(totalTime)}
 
                 &nbsp; • &nbsp;
 
@@ -985,7 +1070,9 @@ async function loadLeaderboard() {
 
                     ? `
 
-                      <span style="color:#20c997;">
+                      <span
+                        style="color:#20c997;"
+                      >
                         ● Online
                       </span>
 
@@ -993,7 +1080,9 @@ async function loadLeaderboard() {
 
                     : `
 
-                      <span style="opacity:.6;">
+                      <span
+                        style="opacity:.6;"
+                      >
                         ● Offline
                       </span>
 
@@ -1018,11 +1107,12 @@ async function loadLeaderboard() {
     leaderboardList.innerHTML =
       html;
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
-      "LEADERBOARD ERROR:",
+      "Leaderboard error:",
       error
     );
 
@@ -1033,7 +1123,8 @@ async function loadLeaderboard() {
 
         Unable to load leaderboard.
 
-        <br><br>
+        <br>
+        <br>
 
         Please try again later.
 
@@ -1141,13 +1232,8 @@ function escapeHTML(value) {
 
 
 // ========================================
-// GLOBAL LEADERBOARD FUNCTION
+// MAKE FUNCTION AVAILABLE GLOBALLY
 // ========================================
 
 window.loadLeaderboard =
   loadLeaderboard;
-
-
-console.log(
-  "GameWithFun leaderboard.js ready!"
-);
