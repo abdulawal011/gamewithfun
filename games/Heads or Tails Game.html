@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Heads or Tails Game - Free Online Coin Flip Game | Game With Fun</title>
+
+<meta name="description"
+content="Play Heads or Tails online for free. Choose Heads or Tails, flip the virtual coin, test your luck and build your winning streak. A smooth and fun browser game for mobile and desktop.">
+
+<meta name="keywords"
+content="heads or tails, heads or tails game, coin flip game, coin toss game, free online game, browser game, mobile game">
+
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#07111f">
+
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(36,112,255,.16),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(0,224,255,.12),transparent 30%),
+        #030914;
+    color:#fff;
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+.bg{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.bg-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.35;
+    animation:orbFloat 10s ease-in-out infinite alternate;
+}
+
+.orb1{
+    width:280px;
+    height:280px;
+    background:#1468ff;
+    left:-100px;
+    top:80px;
+}
+
+.orb2{
+    width:300px;
+    height:300px;
+    background:#00c8ff;
+    right:-120px;
+    top:380px;
+    animation-delay:2s;
+}
+
+.orb3{
+    width:240px;
+    height:240px;
+    background:#743cff;
+    left:35%;
+    bottom:-100px;
+    animation-delay:4s;
+}
+
+@keyframes orbFloat{
+    from{
+        transform:translate3d(0,0,0) scale(1);
+    }
+    to{
+        transform:translate3d(20px,-25px,0) scale(1.12);
+    }
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+.page{
+    width:min(1100px,94%);
+    margin:auto;
+}
+
+.site-header{
+    padding:20px 0 10px;
+    text-align:center;
+}
+
+.brand{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 15px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(14px);
+    border-radius:999px;
+    color:#dcecff;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:1.4px;
+}
+
+.brand-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#42dfff;
+    box-shadow:0 0 15px #42dfff;
+}
+
+/* =========================================================
+   GAME AREA
+========================================================= */
+.game-wrapper{
+    padding:10px 0 45px;
+}
+
+.game-card{
+    position:relative;
+    width:100%;
+    min-height:690px;
+    border-radius:34px;
+    overflow:hidden;
+    background:
+        linear-gradient(145deg,
+        rgba(16,34,62,.96),
+        rgba(4,13,28,.98));
+    border:1px solid rgba(255,255,255,.11);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.08);
+}
+
+/* =========================================================
+   SCREENS
+========================================================= */
+.screen{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:scale(.985) translateY(10px);
+    filter:blur(7px);
+    transition:
+        opacity .4s ease,
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        filter .4s ease,
+        visibility 0s linear .45s;
+}
+
+.screen.active{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:scale(1) translateY(0);
+    filter:blur(0);
+    transition-delay:0s;
+}
+
+/* =========================================================
+   HOW TO PLAY
+========================================================= */
+.how-box{
+    width:min(650px,100%);
+    text-align:center;
+    padding:35px;
+    border-radius:28px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 60px rgba(0,0,0,.28);
+}
+
+.mini-icon{
+    width:76px;
+    height:76px;
+    margin:0 auto 20px;
+    display:grid;
+    place-items:center;
+    border-radius:24px;
+    font-size:39px;
+    background:linear-gradient(145deg,#ffd86b,#ff9e22);
+    box-shadow:
+        0 15px 35px rgba(255,170,40,.28),
+        inset 0 2px rgba(255,255,255,.7);
+}
+
+h1{
+    font-size:clamp(30px,5vw,50px);
+    line-height:1.05;
+    letter-spacing:-1.5px;
+}
+
+.how-box h2{
+    font-size:14px;
+    letter-spacing:2px;
+    color:#63dcff;
+    margin-bottom:10px;
+}
+
+.how-box p{
+    color:#a9bad2;
+    margin:15px auto 25px;
+    max-width:510px;
+}
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:25px 0;
+}
+
+.step{
+    padding:17px 10px;
+    border-radius:18px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.step strong{
+    display:block;
+    font-size:24px;
+    margin-bottom:5px;
+}
+
+.step span{
+    font-size:12px;
+    color:#9fb0c8;
+}
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+.start-box{
+    text-align:center;
+}
+
+.coin-logo{
+    position:relative;
+    width:155px;
+    height:155px;
+    margin:0 auto 28px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:68px;
+    background:
+        radial-gradient(circle at 35% 28%,#fff2a9 0 5%,transparent 18%),
+        radial-gradient(circle,#ffd95c 0,#eaa42c 63%,#9d5c0b 100%);
+    border:8px solid #d48a19;
+    box-shadow:
+        0 0 0 5px rgba(255,211,85,.14),
+        0 25px 60px rgba(255,169,35,.25),
+        inset 0 5px 7px rgba(255,255,255,.5),
+        inset 0 -9px 12px rgba(102,52,0,.4);
+    animation:logoFloat 3.5s ease-in-out infinite;
+}
+
+.coin-logo::after{
+    content:"";
+    position:absolute;
+    inset:13px;
+    border:2px solid rgba(255,255,255,.35);
+    border-radius:50%;
+}
+
+@keyframes logoFloat{
+    0%,100%{transform:translateY(0) rotate(-2deg)}
+    50%{transform:translateY(-9px) rotate(2deg)}
+}
+
+.start-box h1{
+    font-weight:950;
+    text-transform:uppercase;
+}
+
+.start-box .subtitle{
+    color:#9db0c9;
+    margin:12px 0 30px;
+}
+
+.primary-btn{
+    position:relative;
+    border:0;
+    color:#03101d;
+    background:linear-gradient(135deg,#7cecff,#27b9ff);
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:.4px;
+    padding:15px 34px;
+    min-width:190px;
+    border-radius:17px;
+    cursor:pointer;
+    box-shadow:
+        0 12px 35px rgba(28,190,255,.25),
+        inset 0 1px rgba(255,255,255,.7);
+    transition:.22s ease;
+    overflow:hidden;
+}
+
+.primary-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:60%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.5),
+        transparent
+    );
+    transform:skewX(-20deg);
+    transition:.55s;
+}
+
+.primary-btn:hover::before{
+    left:130%;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 17px 40px rgba(28,190,255,.35);
+}
+
+.primary-btn:active{
+    transform:translateY(1px) scale(.98);
+}
+
+/* =========================================================
+   GAME SCREEN
+========================================================= */
+.game-inner{
+    width:min(720px,100%);
+    text-align:center;
+}
+
+.game-top{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.game-title{
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:1.5px;
+    color:#dbe9fa;
+}
+
+.sound-btn{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.06);
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+    transition:.2s;
+}
+
+.sound-btn:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateY(-2px);
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.stat{
+    padding:12px 8px;
+    border-radius:17px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat-label{
+    display:block;
+    color:#8499b5;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.stat-value{
+    display:block;
+    margin-top:2px;
+    font-size:23px;
+    font-weight:950;
+}
+
+.stat.pop .stat-value{
+    animation:statPop .35s ease;
+}
+
+@keyframes statPop{
+    50%{transform:scale(1.3);color:#62eaff}
+}
+
+/* COIN */
+.coin-area{
+    position:relative;
+    width:270px;
+    height:270px;
+    margin:0 auto 12px;
+    display:grid;
+    place-items:center;
+    perspective:1100px;
+}
+
+.coin-glow{
+    position:absolute;
+    width:210px;
+    height:210px;
+    border-radius:50%;
+    background:rgba(255,190,50,.18);
+    filter:blur(35px);
+    animation:glowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+    50%{
+        transform:scale(1.16);
+        opacity:.7;
+    }
+}
+
+.coin{
+    position:relative;
+    width:190px;
+    height:190px;
+    transform-style:preserve-3d;
+    border-radius:50%;
+    transition:transform .2s;
+    will-change:transform;
+    filter:drop-shadow(0 22px 22px rgba(0,0,0,.45));
+}
+
+.coin.flipping{
+    animation:coinFlip 2.8s cubic-bezier(.18,.72,.22,1);
+}
+
+@keyframes coinFlip{
+    0%{
+        transform:rotateY(0) rotateX(0);
+    }
+    20%{
+        transform:rotateY(650deg) rotateX(18deg);
+    }
+    45%{
+        transform:rotateY(1300deg) rotateX(-16deg);
+    }
+    70%{
+        transform:rotateY(1850deg) rotateX(12deg);
+    }
+    100%{
+        transform:rotateY(2160deg) rotateX(0);
+    }
+}
+
+.coin-face{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    backface-visibility:hidden;
+    background:
+        radial-gradient(
+            circle at 34% 27%,
+            #fff7bd 0 4%,
+            transparent 18%
+        ),
+        radial-gradient(
+            circle at 50% 45%,
+            #ffd968 0,
+            #efad2d 65%,
+            #9d5a0b 100%
+        );
+    border:8px solid #d18a19;
+    box-shadow:
+        inset 0 5px 8px rgba(255,255,255,.55),
+        inset 0 -10px 15px rgba(92,44,0,.38),
+        0 0 0 4px rgba(255,219,100,.13);
+}
+
+.coin-face::before{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.35);
+    box-shadow:inset 0 0 0 2px rgba(124,68,4,.15);
+}
+
+.coin-face::after{
+    content:"";
+    position:absolute;
+    width:45px;
+    height:13px;
+    top:29px;
+    left:43px;
+    border-radius:50%;
+    background:rgba(255,255,255,.28);
+    transform:rotate(-25deg);
+    filter:blur(2px);
+}
+
+.coin-back{
+    transform:rotateY(180deg);
+}
+
+.coin-symbol{
+    position:relative;
+    z-index:2;
+    font-size:70px;
+    font-weight:950;
+    color:#8b5007;
+    text-shadow:
+        1px 2px rgba(255,255,255,.35),
+        -1px -1px rgba(96,47,0,.3);
+}
+
+.status{
+    min-height:26px;
+    color:#8fa5c0;
+    font-size:13px;
+    font-weight:700;
+}
+
+.result{
+    min-height:48px;
+    margin:2px 0 12px;
+}
+
+.result-title{
+    opacity:0;
+    transform:translateY(8px) scale(.9);
+    transition:.3s;
+    font-size:30px;
+    font-weight:950;
+    letter-spacing:-.7px;
+}
+
+.result-title.show{
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+
+.win{
+    color:#55f0ad;
+    text-shadow:0 0 22px rgba(85,240,173,.25);
+}
+
+.lose{
+    color:#ff7187;
+    text-shadow:0 0 22px rgba(255,113,135,.25);
+}
+
+/* CHOICES */
+.choice-title{
+    color:#91a5bd;
+    font-size:12px;
+    margin-bottom:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+}
+
+.choices{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    max-width:470px;
+    margin:auto;
+}
+
+.choice{
+    min-height:64px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.1);
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.09),
+        rgba(255,255,255,.035)
+    );
+    color:#fff;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:900;
+    transition:.22s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.choice-icon{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    background:rgba(255,255,255,.08);
+    color:#69dcff;
+    font-weight:950;
+}
+
+.choice:hover:not(:disabled){
+    transform:translateY(-3px);
+    border-color:rgba(89,222,255,.5);
+    background:rgba(47,183,255,.1);
+    box-shadow:0 12px 30px rgba(0,174,255,.13);
+}
+
+.choice:active:not(:disabled){
+    transform:scale(.97);
+}
+
+.choice:disabled{
+    cursor:not-allowed;
+    opacity:.5;
+}
+
+.choice.selected{
+    border-color:#55dcff;
+    box-shadow:
+        0 0 0 2px rgba(85,220,255,.1),
+        0 12px 30px rgba(85,220,255,.15);
+}
+
+/* CONTROLS */
+.controls{
+    margin-top:14px;
+    display:flex;
+    justify-content:center;
+    gap:9px;
+}
+
+.secondary-btn{
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.045);
+    color:#9db0c9;
+    padding:9px 15px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:800;
+    transition:.2s;
+}
+
+.secondary-btn:hover{
+    color:white;
+    background:rgba(255,255,255,.09);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+.content{
+    padding-bottom:60px;
+}
+
+.content-section{
+    margin:18px 0;
+    padding:32px;
+    border-radius:25px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13,28,51,.9),
+            rgba(6,16,31,.9)
+        );
+    border:1px solid rgba(255,255,255,.075);
+    box-shadow:0 20px 50px rgba(0,0,0,.2);
+}
+
+.content-section h2{
+    font-size:clamp(22px,4vw,30px);
+    margin-bottom:14px;
+    letter-spacing:-.5px;
+}
+
+.content-section h3{
+    font-size:18px;
+    margin:18px 0 7px;
+    color:#dcecff;
+}
+
+.content-section p{
+    color:#a8b8ce;
+    margin-bottom:12px;
+}
+
+.content-section ul{
+    padding-left:20px;
+    color:#a8b8ce;
+}
+
+.content-section li{
+    margin:7px 0;
+}
+
+.section-tag{
+    display:inline-block;
+    color:#56dfff;
+    font-size:11px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:8px;
+}
+
+/* =========================================================
+   FAQ
+========================================================= */
+.faq{
+    display:grid;
+    gap:10px;
+}
+
+.faq-item{
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:16px;
+    background:rgba(255,255,255,.035);
+}
+
+.faq-question{
+    width:100%;
+    border:0;
+    background:none;
+    color:white;
+    text-align:left;
+    padding:18px 20px;
+    font-size:15px;
+    font-weight:850;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.faq-plus{
+    flex:none;
+    width:27px;
+    height:27px;
+    display:grid;
+    place-items:center;
+    border-radius:9px;
+    background:rgba(75,213,255,.1);
+    color:#5ce2ff;
+    font-size:20px;
+    transition:.25s;
+}
+
+.faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+}
+
+.faq-answer-inner{
+    padding:0 20px 18px;
+    color:#9fb0c6;
+    font-size:14px;
+}
+
+.faq-item.open .faq-plus{
+    transform:rotate(45deg);
+}
+
+.faq-item.open .faq-answer{
+    max-height:300px;
+}
+
+/* =========================================================
+   INFO GRID
+========================================================= */
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+.contact-box{
+    text-align:center;
+}
+
+.contact-email{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 20px;
+    border-radius:13px;
+    background:rgba(74,213,255,.08);
+    border:1px solid rgba(74,213,255,.15);
+    color:#63ddff;
+    text-decoration:none;
+    font-weight:800;
+}
+
+/* =========================================================
+   ADSENSE
+========================================================= */
+.ad-section{
+    margin:25px 0 45px;
+    padding:18px;
+    border-radius:22px;
+    background:#07101e;
+    border:1px dashed rgba(255,255,255,.16);
+    text-align:center;
+}
+
+.ad-label{
+    display:block;
+    color:#667a94;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:12px;
+}
+
+/*
+   Replace the inside of .adsense-box with your
+   Google AdSense code after your site is approved.
+*/
+.adsense-box{
+    min-height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:15px;
+    background:rgba(255,255,255,.025);
+    color:#53657d;
+    font-size:12px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+footer{
+    padding:0 0 35px;
+    text-align:center;
+    color:#667a93;
+    font-size:12px;
+}
+
+.footer-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:12px;
+}
+
+.footer-links a{
+    color:#8498b2;
+    text-decoration:none;
+}
+
+.footer-links a:hover{
+    color:#5edfff;
+}
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+.confetti{
+    position:fixed;
+    width:8px;
+    height:13px;
+    top:50%;
+    left:50%;
+    z-index:999;
+    pointer-events:none;
+    animation:confettiFly 1.1s ease-out forwards;
+}
+
+@keyframes confettiFly{
+    from{
+        transform:translate(-50%,-50%) rotate(0);
+        opacity:1;
+    }
+    to{
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            rotate(var(--r));
+        opacity:0;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+@media(max-width:700px){
+
+    .page{
+        width:min(96%,1100px);
+    }
+
+    .game-wrapper{
+        padding-top:5px;
+    }
+
+    .game-card{
+        min-height:650px;
+        border-radius:26px;
+    }
+
+    .screen{
+        padding:18px;
+    }
+
+    .how-box{
+        padding:25px 18px;
+        border-radius:22px;
+    }
+
+    .steps{
+        gap:7px;
+    }
+
+    .step{
+        padding:13px 5px;
+    }
+
+    .step strong{
+        font-size:20px;
+    }
+
+    .coin-logo{
+        width:125px;
+        height:125px;
+        font-size:55px;
+    }
+
+    .coin-area{
+        width:235px;
+        height:235px;
+    }
+
+    .coin{
+        width:165px;
+        height:165px;
+    }
+
+    .coin-symbol{
+        font-size:60px;
+    }
+
+    .coin-glow{
+        width:180px;
+        height:180px;
+    }
+
+    .result-title{
+        font-size:26px;
+    }
+
+    .content-section{
+        padding:24px 19px;
+        border-radius:21px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:430px){
+
+    .game-card{
+        min-height:620px;
+    }
+
+    .game-top{
+        margin-bottom:15px;
+    }
+
+    .stats{
+        margin-bottom:10px;
+    }
+
+    .stat{
+        padding:9px 5px;
+    }
+
+    .stat-value{
+        font-size:20px;
+    }
+
+    .coin-area{
+        width:210px;
+        height:210px;
+    }
+
+    .coin{
+        width:145px;
+        height:145px;
+    }
+
+    .coin-symbol{
+        font-size:52px;
+    }
+
+    .choices{
+        gap:8px;
+    }
+
+    .choice{
+        min-height:58px;
+        font-size:14px;
+    }
+
+    .choice-icon{
+        width:29px;
+        height:29px;
+    }
+
+    .controls{
+        margin-top:9px;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+    <div class="bg-orb orb3"></div>
+</div>
+
+<div class="page">
+
+<header class="site-header">
+    <div class="brand">
+        <span class="brand-dot"></span>
+        GAME WITH FUN
+    </div>
+</header>
+
+<!-- =====================================================
+     GAME
+===================================================== -->
+
+<main class="game-wrapper">
+
+<div class="game-card">
+
+    <!-- HOW TO PLAY -->
+    <section class="screen active" id="howScreen">
+
+        <div class="how-box">
+
+            <div class="mini-icon">🪙</div>
+
+            <h2>QUICK GUIDE</h2>
+
+            <h1>HOW TO PLAY</h1>
+
+            <p>
+                Heads or Tails is a simple coin flip game.
+                Pick one side of the coin and see if your prediction
+                matches the result.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <strong>1</strong>
+                    <span>Choose Heads or Tails</span>
+                </div>
+
+                <div class="step">
+                    <strong>2</strong>
+                    <span>Flip the virtual coin</span>
+                </div>
+
+                <div class="step">
+                    <strong>3</strong>
+                    <span>Match the result and win</span>
+                </div>
+
+            </div>
+
+            <button class="primary-btn" id="continueBtn">
+                CONTINUE
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- START -->
+    <section class="screen" id="startScreen">
+
+        <div class="start-box">
+
+            <div class="coin-logo">🪙</div>
+
+            <h1>HEADS OR TAILS</h1>
+
+            <p class="subtitle">
+                Flip the coin. Test your luck. Build your streak.
+            </p>
+
+            <button class="primary-btn" id="startBtn">
+                START GAME
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- GAME -->
+    <section class="screen" id="gameScreen">
+
+        <div class="game-inner">
+
+            <div class="game-top">
+
+                <div class="game-title">
+                    🪙 HEADS OR TAILS
+                </div>
+
+                <button
+                    class="sound-btn"
+                    id="soundBtn"
+                    aria-label="Toggle sound">
+                    🔊
+                </button>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat" id="winStat">
+                    <span class="stat-label">Wins</span>
+                    <span class="stat-value" id="wins">0</span>
+                </div>
+
+                <div class="stat" id="lossStat">
+                    <span class="stat-label">Losses</span>
+                    <span class="stat-value" id="losses">0</span>
+                </div>
+
+                <div class="stat" id="streakStat">
+                    <span class="stat-label">Streak</span>
+                    <span class="stat-value" id="streak">0</span>
+                </div>
+
+            </div>
+
+
+            <div class="coin-area">
+
+                <div class="coin-glow"></div>
+
+                <div class="coin" id="coin">
+
+                    <div class="coin-face coin-front">
+                        <span class="coin-symbol">H</span>
+                    </div>
+
+                    <div class="coin-face coin-back">
+                        <span class="coin-symbol">T</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="status" id="status">
+                Choose a side to flip the coin
+            </div>
+
+
+            <div class="result">
+
+                <div
+                    class="result-title"
+                    id="resultTitle"
+                    aria-live="polite">
+                </div>
+
+            </div>
+
+
+            <div class="choice-title">
+                Make your prediction
+            </div>
+
+
+            <div class="choices">
+
+                <button
+                    class="choice"
+                    id="headsBtn"
+                    data-choice="heads">
+
+                    <span class="choice-icon">H</span>
+                    HEADS
+
+                </button>
+
+                <button
+                    class="choice"
+                    id="tailsBtn"
+                    data-choice="tails">
+
+                    <span class="choice-icon">T</span>
+                    TAILS
+
+                </button>
+
+            </div>
+
+
+            <div class="controls">
+
+                <button
+                    class="secondary-btn"
+                    id="resetBtn">
+                    ↻ Reset
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    id="homeBtn">
+                    ← Home
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<!-- =====================================================
+     SEO CONTENT
+===================================================== -->
+
+<div class="content">
+
+<section class="content-section">
+
+    <span class="section-tag">Online Coin Flip Game</span>
+
+    <h2>Play Heads or Tails Online</h2>
+
+    <p>
+        Welcome to Heads or Tails, a free online coin flip game
+        designed for quick and simple browser gameplay. Choose
+        Heads or Tails, flip the virtual coin and check whether
+        your prediction matches the result.
+    </p>
+
+    <p>
+        The game is designed to work smoothly on mobile phones,
+        tablets and desktop browsers. No download or installation
+        is required. Simply open the game, select a side and
+        start flipping.
+    </p>
+
+    <p>
+        Heads or Tails is based on the familiar idea of a coin
+        toss. Each round produces a random result, giving you a
+        simple way to test your luck and try to create a longer
+        winning streak.
+    </p>
+
+</section>
+
+
+<section class="content-section">
+
+    <span class="section-tag">How It Works</span>
+
+    <h2>How to Play Heads or Tails</h2>
+
+    <p>
+        Playing the game is easy. First, choose either Heads or
+        Tails. The virtual coin will then flip and reveal the
+        result.
+    </p>
+
+    <h3>Choose Heads or Tails</h3>
+
+    <p>
+        Select the side you think will appear after the coin flip.
+        You can make a new prediction for every round.
+    </p>
+
+    <h3>Flip the Coin</h3>
+
+    <p>
+        After making your choice, the coin performs an animated
+        flip before showing the final result.
+    </p>
+
+    <h3>Build Your Streak</h3>
+
+    <p>
+        If your prediction matches the result, your win count and
+        current streak increase. A wrong prediction ends the
+        current winning streak.
+    </p>
+
+</section>
+
+
+<section class="content-section">
+
+    <span class="section-tag">Game Features</span>
+
+    <h2>Heads or Tails Game Features</h2>
+
+    <ul>
+        <li>Free browser-based coin flip game</li>
+        <li>Simple Heads and Tails gameplay</li>
+        <li>Smooth animated coin flipping</li>
+        <li>Win, loss and streak tracking</li>
+        <li>Sound effects with a sound toggle</li>
+        <li>Mobile-friendly responsive design</li>
+        <li>Works without downloading an app</li>
+        <li>Quick rounds for casual gameplay</li>
+    </ul>
+
+</section>
+
+
+<!-- =====================================================
+     FAQ
+===================================================== -->
+
+<section class="content-section">
+
+    <span class="section-tag">FAQ</span>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq">
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                <span>How do I play Heads or Tails?</span>
+                <span class="faq-plus">+</span>
+            </button>
+
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Choose either Heads or Tails and start the
+                    coin flip. The game reveals the result after
+                    the animation finishes. If your choice matches
+                    the result, you win the round.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                <span>Is Heads or Tails free to play?</span>
+                <span class="faq-plus">+</span>
+            </button>
+
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Yes. This browser game is designed for free
+                    casual gameplay and does not require a game
+                    download or installation.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                <span>Can I play on my mobile phone?</span>
+                <span class="faq-plus">+</span>
+            </button>
+
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Yes. The game interface is responsive and
+                    designed for modern mobile phones, tablets
+                    and desktop browsers.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                <span>Does the game require a download?</span>
+                <span class="faq-plus">+</span>
+            </button>
+
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    No. Heads or Tails runs directly in a modern
+                    web browser. You can play it without installing
+                    additional game software.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                <span>How does the winning streak work?</span>
+                <span class="faq-plus">+</span>
+            </button>
+
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Your streak increases when your selected side
+                    matches the coin result. When your prediction
+                    does not match, the current streak returns to
+                    zero.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                <span>Is this a real physical coin toss?</span>
+                <span class="faq-plus">+</span>
+            </button>
+
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    No. This is a browser-based virtual coin flip
+                    game. The result is generated digitally for
+                    gameplay.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT + PRIVACY
+===================================================== -->
+
+<div class="info-grid">
+
+<section class="content-section">
+
+    <span class="section-tag">About</span>
+
+    <h2>About Game With Fun</h2>
+
+    <p>
+        Game With Fun is an online gaming website created to
+        provide simple, accessible and enjoyable browser games.
+        Our goal is to make casual games easy to play on both
+        mobile and desktop devices.
+    </p>
+
+    <p>
+        Heads or Tails is one of our simple interactive games,
+        created for players who enjoy quick rounds and classic
+        coin-flip gameplay.
+    </p>
+
+</section>
+
+
+<section class="content-section">
+
+    <span class="section-tag">Privacy</span>
+
+    <h2>Privacy Policy</h2>
+
+    <p>
+        We respect your privacy. This game does not require you
+        to create an account or provide personal information to
+        play the basic game.
+    </p>
+
+    <p>
+        Our website may use advertising, analytics or other
+        third-party services. These services may use cookies or
+        similar technologies according to their own privacy
+        policies.
+    </p>
+
+    <p>
+        If advertising services are enabled, visitors should
+        review the applicable third-party privacy information
+        provided by those services.
+    </p>
+
+</section>
+
+</div>
+
+
+<!-- =====================================================
+     DISCLAIMER + CONTACT
+===================================================== -->
+
+<div class="info-grid">
+
+<section class="content-section">
+
+    <span class="section-tag">Disclaimer</span>
+
+    <h2>Disclaimer</h2>
+
+    <p>
+        Heads or Tails is provided for entertainment and casual
+        gaming purposes only. The digital coin result is intended
+        for gameplay and should not be treated as a guarantee or
+        prediction of real-world events.
+    </p>
+
+    <p>
+        Game With Fun does not guarantee uninterrupted availability
+        of the website or game. Game features may be updated,
+        modified or improved over time.
+    </p>
+
+</section>
+
+
+<section class="content-section contact-box">
+
+    <span class="section-tag">Contact</span>
+
+    <h2>Contact Us</h2>
+
+    <p>
+        If you have questions, suggestions, feedback or need to
+        report an issue with the game, you can contact us by email.
+    </p>
+
+    <!-- Change this email to your real website email -->
+    <a
+        class="contact-email"
+        href="mailto:contact@gamewithfun.com">
+        contact@gamewithfun.com
+    </a>
+
+</section>
+
+</div>
+
+
+<!-- =====================================================
+     ADSENSE PLACEHOLDER
+===================================================== -->
+
+<section class="ad-section">
+
+    <span class="ad-label">
+        Advertisement
+    </span>
+
+    <div class="adsense-box">
+
+        <!--
+        GOOGLE ADSENSE PLACEHOLDER
+
+        After AdSense approval, replace this area with
+        the official AdSense ad code supplied by Google.
+
+        Example structure:
+
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+
+        Do NOT use someone else's AdSense publisher ID.
+        -->
+
+        AdSense Advertisement Area
+
+    </div>
+
+</section>
+
+</div>
+
+
+<footer>
+
+    <div class="footer-links">
+
+        <a href="#howScreen">Game</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#contact">Contact</a>
+
+    </div>
+
+    <p>
+        © <span id="year"></span> Game With Fun. All rights reserved.
+    </p>
+
+</footer>
+
+</div>
+
+
+<script>
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
+
+let wins = 0;
+let losses = 0;
+let streak = 0;
+let flipping = false;
+let soundOn = true;
+
+const howScreen = document.getElementById("howScreen");
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
+
+const continueBtn = document.getElementById("continueBtn");
+const startBtn = document.getElementById("startBtn");
+
+const headsBtn = document.getElementById("headsBtn");
+const tailsBtn = document.getElementById("tailsBtn");
+
+const resetBtn = document.getElementById("resetBtn");
+const homeBtn = document.getElementById("homeBtn");
+const soundBtn = document.getElementById("soundBtn");
+
+const coin = document.getElementById("coin");
+const statusText = document.getElementById("status");
+const resultTitle = document.getElementById("resultTitle");
+
+const winsEl = document.getElementById("wins");
+const lossesEl = document.getElementById("losses");
+const streakEl = document.getElementById("streak");
+
+const winStat = document.getElementById("winStat");
+const lossStat = document.getElementById("lossStat");
+const streakStat = document.getElementById("streakStat");
+
+
+/* =========================================================
+   SCREEN CHANGE
+========================================================= */
+
+function changeScreen(screen){
+
+    [howScreen,startScreen,gameScreen].forEach(item=>{
+        item.classList.remove("active");
+    });
+
+    setTimeout(()=>{
+        screen.classList.add("active");
+    },40);
+}
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+let audioContext = null;
+
+function getAudio(){
+
+    if(!audioContext){
+
+        audioContext =
+            new (window.AudioContext ||
+            window.webkitAudioContext)();
+
+    }
+
+    if(audioContext.state === "suspended"){
+        audioContext.resume();
+    }
+
+    return audioContext;
+}
+
+function playTone(
+    frequency,
+    duration = .12,
+    type = "sine",
+    volume = .04
+){
+
+    if(!soundOn) return;
+
+    try{
+
+        const ctx = getAudio();
+
+        const oscillator =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.value = frequency;
+
+        gain.gain.setValueAtTime(
+            .0001,
+            ctx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            volume,
+            ctx.currentTime + .015
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            ctx.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(ctx.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            ctx.currentTime + duration + .02
+        );
+
+    }catch(e){}
+}
+
+
+function playSound(type){
+
+    if(!soundOn) return;
+
+    if(type === "click"){
+        playTone(520,.07,"sine",.035);
+    }
+
+    if(type === "start"){
+        playTone(480,.08,"sine",.04);
+
+        setTimeout(()=>{
+            playTone(720,.13,"sine",.045);
+        },90);
+    }
+
+    if(type === "flip"){
+        playTone(250,.06,"triangle",.025);
+
+        setTimeout(()=>{
+            playTone(330,.06,"triangle",.025);
+        },100);
+    }
+
+    if(type === "win"){
+        playTone(520,.08,"sine",.04);
+
+        setTimeout(()=>{
+            playTone(680,.08,"sine",.04);
+        },80);
+
+        setTimeout(()=>{
+            playTone(850,.16,"sine",.05);
+        },160);
+    }
+
+    if(type === "lose"){
+        playTone(280,.12,"sawtooth",.025);
+
+        setTimeout(()=>{
+            playTone(190,.18,"sawtooth",.02);
+        },100);
+    }
+}
+
+
+/* =========================================================
+   HAPTIC
+========================================================= */
+
+function vibrate(pattern){
+
+    if(
+        "vibrate" in navigator
+    ){
+
+        try{
+            navigator.vibrate(pattern);
+        }catch(e){}
+
+    }
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+continueBtn.addEventListener("click",()=>{
+
+    playSound("click");
+    changeScreen(startScreen);
+
+});
+
+
+startBtn.addEventListener("click",()=>{
+
+    playSound("start");
+
+    resetGame(false);
+
+    changeScreen(gameScreen);
+
+});
+
+
+homeBtn.addEventListener("click",()=>{
+
+    playSound("click");
+
+    resetGame(false);
+
+    changeScreen(startScreen);
+
+});
+
+
+resetBtn.addEventListener("click",()=>{
+
+    playSound("click");
+
+    resetGame(true);
+
+});
+
+
+soundBtn.addEventListener("click",()=>{
+
+    soundOn = !soundOn;
+
+    soundBtn.textContent =
+        soundOn ? "🔊" : "🔇";
+
+    if(soundOn){
+        playSound("click");
+    }
+
+});
+
+
+/* =========================================================
+   CHOICE BUTTONS
+========================================================= */
+
+headsBtn.addEventListener("click",()=>{
+    flipCoin("heads");
+});
+
+tailsBtn.addEventListener("click",()=>{
+    flipCoin("tails");
+});
+
+
+/* =========================================================
+   FLIP GAME
+========================================================= */
+
+function flipCoin(playerChoice){
+
+    if(flipping) return;
+
+    flipping = true;
+
+    headsBtn.disabled = true;
+    tailsBtn.disabled = true;
+
+    headsBtn.classList.remove("selected");
+    tailsBtn.classList.remove("selected");
+
+    if(playerChoice === "heads"){
+        headsBtn.classList.add("selected");
+    }else{
+        tailsBtn.classList.add("selected");
+    }
+
+    resultTitle.classList.remove("show");
+    resultTitle.textContent = "";
+
+    statusText.textContent =
+        "Flipping the coin...";
+
+    coin.classList.remove("flipping");
+
+    /*
+       Force browser reflow so repeated flips
+       always restart the animation.
+    */
+    void coin.offsetWidth;
+
+    coin.classList.add("flipping");
+
+    playSound("flip");
+    vibrate(15);
+
+    const result =
+        Math.random() < .5
+        ? "heads"
+        : "tails";
+
+    setTimeout(()=>{
+
+        coin.classList.remove("flipping");
+
+        /*
+           H = front
+           T = back
+        */
+        coin.style.transform =
+            result === "heads"
+            ? "rotateY(0deg)"
+            : "rotateY(180deg)";
+
+        showResult(
+            playerChoice,
+            result
+        );
+
+    },2800);
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showResult(
+    playerChoice,
+    result
+){
+
+    const won =
+        playerChoice === result;
+
+    if(won){
+
+        wins++;
+        streak++;
+
+        resultTitle.textContent =
+            "YOU WIN!";
+
+        resultTitle.className =
+            "result-title show win";
+
+        statusText.textContent =
+            "The coin landed on " +
+            result.toUpperCase() +
+            " — great prediction!";
+
+        playSound("win");
+        vibrate([20,40,20]);
+
+        celebrate();
+
+        animateStat(winStat);
+        animateStat(streakStat);
+
+    }else{
+
+        losses++;
+        streak = 0;
+
+        resultTitle.textContent =
+            "TRY AGAIN";
+
+        resultTitle.className =
+            "result-title show lose";
+
+        statusText.textContent =
+            "The coin landed on " +
+            result.toUpperCase() +
+            ". Better luck next flip!";
+
+        playSound("lose");
+        vibrate(35);
+
+        animateStat(lossStat);
+        animateStat(streakStat);
+    }
+
+    updateStats();
+
+    setTimeout(()=>{
+
+        headsBtn.disabled = false;
+        tailsBtn.disabled = false;
+
+        headsBtn.classList.remove("selected");
+        tailsBtn.classList.remove("selected");
+
+        statusText.textContent =
+            "Choose Heads or Tails for the next round";
+
+        flipping = false;
+
+    },700);
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    winsEl.textContent = wins;
+    lossesEl.textContent = losses;
+    streakEl.textContent = streak;
+}
+
+
+function animateStat(element){
+
+    element.classList.remove("pop");
+
+    void element.offsetWidth;
+
+    element.classList.add("pop");
+
+    setTimeout(()=>{
+        element.classList.remove("pop");
+    },400);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetGame(showMessage = true){
+
+    wins = 0;
+    losses = 0;
+    streak = 0;
+    flipping = false;
+
+    coin.classList.remove("flipping");
+
+    coin.style.transform =
+        "rotateY(0deg)";
+
+    headsBtn.disabled = false;
+    tailsBtn.disabled = false;
+
+    headsBtn.classList.remove("selected");
+    tailsBtn.classList.remove("selected");
+
+    resultTitle.className =
+        "result-title";
+
+    resultTitle.textContent = "";
+
+    statusText.textContent =
+        "Choose a side to flip the coin";
+
+    updateStats();
+
+    if(showMessage){
+        vibrate(10);
+    }
+}
+
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+function celebrate(){
+
+    const pieces = 32;
+
+    for(let i=0;i<pieces;i++){
+
+        const piece =
+            document.createElement("span");
+
+        piece.className = "confetti";
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            100 + Math.random() * 240;
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance;
+
+        const rotation =
+            Math.random() * 720 - 360;
+
+        piece.style.setProperty(
+            "--x",
+            x + "px"
+        );
+
+        piece.style.setProperty(
+            "--y",
+            y + "px"
+        );
+
+        piece.style.setProperty(
+            "--r",
+            rotation + "deg"
+        );
+
+        piece.style.borderRadius =
+            Math.random() > .5
+            ? "50%"
+            : "2px";
+
+        document.body.appendChild(piece);
+
+        setTimeout(()=>{
+            piece.remove();
+        },1200);
+    }
+}
+
+
+/* =========================================================
+   FAQ ACCORDION
+========================================================= */
+
+document.querySelectorAll(".faq-question")
+.forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        const item =
+            button.parentElement;
+
+        const currentlyOpen =
+            item.classList.contains("open");
+
+        document.querySelectorAll(".faq-item")
+        .forEach(other=>{
+            other.classList.remove("open");
+        });
+
+        if(!currentlyOpen){
+            item.classList.add("open");
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   YEAR
+========================================================= */
+
+document.getElementById("year")
+.textContent =
+    new Date().getFullYear();
+
+</script>
+
+</body>
+</html>
