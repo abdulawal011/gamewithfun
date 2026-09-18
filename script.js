@@ -12,6 +12,16 @@ const games = [
     newGame: false,
     popular: true
   },
+   {
+    id: 10,
+    title: "Game With Fun Crush",
+    category: "Puzzle",
+    icon: "games/file_00000000cb94820baabbf485ed45e9bc.png",
+    url: "games/Game With Fun Crush.html",
+    newGame: false,
+    popular: true
+  },
+
   {
     id: 8,
     title: "Fruit Cut",
@@ -21,7 +31,51 @@ const games = [
     newGame: true,
     popular: false
   },
-
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
   {
     id: 7,
     title: "Endless Runner",
