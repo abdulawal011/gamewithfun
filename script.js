@@ -4,6 +4,15 @@
 
 const games = [
    {
+    id: 16,
+    title: "Bubble Shooter",
+    category: "Puzzle",
+    icon: "games/file_0000000050f0820b9874f8a8962b1ec4.png",
+    url: "games/Bubble Shooter.html",
+    newGame: false,
+    popular: true
+  },
+   {
     id: 9,
     title: "Carrom Board",
     category: "Board",
