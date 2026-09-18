@@ -1,0 +1,4075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+<title>Game With Fun Carrom Board - Free Online Carrom Game</title>
+
+<meta name="description"
+content="Play Game With Fun Carrom Board online for free. Enjoy a mobile-friendly carrom game with touch controls, VS Bot and 2 Player modes.">
+
+<meta name="keywords"
+content="carrom board game, online carrom game, free carrom game, carrom game online, carrom board online, mobile carrom game, Game With Fun Carrom Board">
+
+<meta name="author"
+content="Game With Fun">
+
+<meta name="robots"
+content="index, follow">
+
+<link rel="canonical"
+      href="https://gamewithfun.com/games/game-with-fun-carrom-board.html">
+
+<meta property="og:title"
+content="Game With Fun Carrom Board">
+
+<meta property="og:description"
+content="Play a free mobile-friendly online carrom board game with touch controls.">
+
+<meta property="og:type"
+content="website">
+
+<meta property="og:url"
+content="https://gamewithfun.com/games/game-with-fun-carrom-board.html">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#07131e;
+  color:#fff;
+}
+
+/* =================================
+   GAME APP
+================================= */
+
+.game-app{
+  width:min(700px,100%);
+  height:100dvh;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      #173b52,
+      #07131e 48%,
+      #03080d
+    );
+}
+
+.header{
+  height:64px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  background:
+    linear-gradient(
+      180deg,
+      #102d3e,
+      #071721
+    );
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#f4d27c;
+  white-space:nowrap;
+}
+
+.logo span{
+  color:#72ddff;
+}
+
+.stats{
+  display:flex;
+  gap:5px;
+}
+
+.stat{
+  min-width:55px;
+  padding:5px 6px;
+  text-align:center;
+  border-radius:10px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.stat b{
+  display:block;
+  font-size:13px;
+}
+
+.stat small{
+  font-size:7px;
+  color:#91a8b5;
+  letter-spacing:1px;
+}
+
+.players{
+  height:60px;
+  flex-shrink:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:9px;
+}
+
+.player{
+  width:145px;
+  height:45px;
+  padding:5px 10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-radius:13px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.03)
+    );
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.player.active{
+  border-color:#72ddff;
+  box-shadow:
+    0 0 18px
+    rgba(64,210,255,.18);
+}
+
+.name{
+  font-size:9px;
+  color:#a9c0cb;
+  letter-spacing:1px;
+}
+
+.player .score{
+  font-size:18px;
+  font-weight:900;
+}
+
+.vs{
+  font-size:10px;
+  color:#e4c873;
+  font-weight:900;
+}
+
+.boardArea{
+  flex:1;
+  min-height:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:4px 10px;
+}
+
+.boardStage{
+  width:min(
+    94vw,
+    calc(100dvh - 190px),
+    650px
+  );
+  aspect-ratio:1;
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:24px;
+  touch-action:none;
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.55),
+    0 0 0 2px rgba(255,255,255,.05);
+}
+
+.controls{
+  height:66px;
+  flex-shrink:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  background:
+    linear-gradient(
+      180deg,
+      #081722,
+      #050c12
+    );
+  border-top:1px solid rgba(255,255,255,.07);
+}
+
+button{
+  border:0;
+  color:white;
+  font-size:10px;
+  font-weight:800;
+  padding:11px 14px;
+  border-radius:12px;
+  background:
+    linear-gradient(
+      145deg,
+      #153c50,
+      #0b2634
+    );
+  border:1px solid rgba(114,221,255,.16);
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+.primary{
+  background:
+    linear-gradient(
+      145deg,
+      #1c91b8,
+      #12617d
+    );
+}
+
+/* =================================
+   OVERLAYS
+================================= */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:22px;
+  background:rgba(2,8,13,.85);
+  backdrop-filter:blur(12px);
+}
+
+.startCard{
+  width:min(440px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:28px 22px;
+  text-align:center;
+  border-radius:25px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(22,56,72,.98),
+      rgba(5,18,27,.98)
+    );
+  border:1px solid rgba(114,221,255,.2);
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.65);
+}
+
+.startLogo{
+  font-size:21px;
+  font-weight:1000;
+  letter-spacing:1.5px;
+  color:#f4d27c;
+}
+
+.startLogo span{
+  color:#72ddff;
+}
+
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+}
+
+.step h2{
+  margin:15px 0 9px;
+}
+
+.step p{
+  color:#aec2cb;
+  line-height:1.55;
+  font-size:13px;
+}
+
+.noticeBox{
+  margin:17px 0;
+  padding:15px;
+  text-align:left;
+  border-radius:16px;
+  background:rgba(0,0,0,.2);
+}
+
+.noticeBox div{
+  margin:9px 0;
+  font-size:12px;
+}
+
+.noticeBox b,
+.tip b{
+  color:#72ddff;
+}
+
+.tip{
+  margin:9px 0;
+  padding:11px;
+  border-radius:12px;
+  text-align:left;
+  font-size:12px;
+  line-height:1.5;
+  background:rgba(255,255,255,.045);
+}
+
+.startButtons{
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  margin-top:20px;
+}
+
+#winner{
+  display:none;
+}
+
+#winner.show{
+  display:flex;
+}
+
+/* =================================
+   SEO CONTENT
+================================= */
+
+.content-wrapper{
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+  background:#f7f9fc;
+  color:#172331;
+}
+
+.content{
+  padding:35px 20px 50px;
+}
+
+.content h1{
+  margin:0 0 14px;
+  font-size:30px;
+  line-height:1.25;
+  color:#102957;
+}
+
+.content h2{
+  margin:32px 0 12px;
+  font-size:23px;
+  color:#102957;
+}
+
+.content h3{
+  margin:22px 0 8px;
+  color:#163b63;
+}
+
+.content p{
+  font-size:15px;
+  line-height:1.75;
+  color:#435364;
+  margin:9px 0;
+}
+
+.content ul{
+  padding-left:22px;
+  color:#435364;
+  line-height:1.8;
+}
+
+.content li{
+  margin:5px 0;
+}
+
+.info-card{
+  margin-top:18px;
+  padding:20px;
+  border-radius:16px;
+  background:#fff;
+  border:1px solid #e1e7ee;
+  box-shadow:0 5px 20px rgba(20,40,60,.05);
+}
+
+/* =================================
+   FAQ
+================================= */
+
+.faq-item{
+  margin:10px 0;
+  border:1px solid #dfe6ee;
+  border-radius:12px;
+  background:#fff;
+  overflow:hidden;
+}
+
+.faq-item summary{
+  cursor:pointer;
+  padding:16px;
+  font-weight:700;
+  color:#173a5e;
+}
+
+.faq-answer{
+  padding:0 16px 16px;
+  color:#526273;
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* =================================
+   FOOTER LINKS
+================================= */
+
+.site-links{
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap:12px;
+  margin-top:30px;
+}
+
+.site-link{
+  display:block;
+  padding:15px;
+  text-align:center;
+  text-decoration:none;
+  color:#164b72;
+  font-weight:700;
+  background:#fff;
+  border:1px solid #dfe6ee;
+  border-radius:12px;
+}
+
+.site-link:hover{
+  background:#edf7ff;
+}
+
+/* =================================
+   ADSENSE AREA
+================================= */
+
+.adsense-section{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  padding:25px 20px 40px;
+  background:#fff;
+}
+
+.ad-label{
+  text-align:center;
+  font-size:10px;
+  color:#8a96a3;
+  letter-spacing:1px;
+  margin-bottom:8px;
+}
+
+.ad-box{
+  min-height:120px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#fafafa;
+  border:1px solid #eceff2;
+  border-radius:8px;
+  color:#9aa3ad;
+  font-size:12px;
+}
+
+/*
+  Replace the content inside .ad-box
+  with your approved Google AdSense code.
+*/
+
+/* =================================
+   FOOTER
+================================= */
+
+.footer{
+  padding:25px 20px;
+  text-align:center;
+  background:#07131e;
+  color:#91a8b5;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.footer strong{
+  color:#72ddff;
+}
+
+/* =================================
+   MOBILE
+================================= */
+
+@media(max-width:520px){
+
+  .header{
+    height:58px;
+    padding:0 8px;
+  }
+
+  .logo{
+    font-size:9px;
+    letter-spacing:.6px;
+  }
+
+  .stat{
+    min-width:43px;
+    padding:4px;
+  }
+
+  .stat b{
+    font-size:11px;
+  }
+
+  .stat small{
+    font-size:6px;
+  }
+
+  .players{
+    height:52px;
+    gap:5px;
+  }
+
+  .player{
+    width:125px;
+    height:40px;
+    padding:4px 8px;
+  }
+
+  .player .score{
+    font-size:16px;
+  }
+
+  .boardArea{
+    padding:2px 7px;
+  }
+
+  .boardStage{
+    width:min(
+      96vw,
+      calc(100dvh - 176px)
+    );
+  }
+
+  .controls{
+    height:62px;
+    gap:5px;
+  }
+
+  button{
+    font-size:9px;
+    padding:10px 9px;
+  }
+
+  .startCard{
+    padding:24px 17px;
+  }
+
+  .startLogo{
+    font-size:17px;
+  }
+
+  .content{
+    padding:28px 16px 40px;
+  }
+
+  .content h1{
+    font-size:25px;
+  }
+
+  .content h2{
+    font-size:21px;
+  }
+
+  .content p{
+    font-size:14px;
+  }
+
+  .site-links{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
+
+/* =================================
+   EXTRA SMALL
+================================= */
+
+@media(max-width:360px){
+
+  .logo{
+    font-size:8px;
+  }
+
+  .stat{
+    min-width:38px;
+  }
+
+  .player{
+    width:112px;
+  }
+
+  .controls button{
+    padding:9px 7px;
+    font-size:8px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     GAME AREA
+===================================================== -->
+
+<div class="game-app">
+
+<header class="header">
+
+  <div class="logo">
+    GAME WITH FUN
+    <span>CARROM BOARD</span>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <b id="score">0</b>
+      <small>SCORE</small>
+    </div>
+
+    <div class="stat">
+      <b id="pocketed">0</b>
+      <small>POCKETED</small>
+    </div>
+
+    <div class="stat">
+      <b id="left">19</b>
+      <small>LEFT</small>
+    </div>
+
+  </div>
+
+</header>
+
+
+<div class="players">
+
+  <div class="player" id="p2">
+
+    <div>
+      <div class="name" id="p2name">
+        BOT
+      </div>
+
+      <div class="score" id="botScore">
+        0
+      </div>
+    </div>
+
+    <div>⬆</div>
+
+  </div>
+
+
+  <div class="vs">
+    VS
+  </div>
+
+
+  <div class="player active" id="p1">
+
+    <div>
+      <div class="name">
+        YOU
+      </div>
+
+      <div class="score" id="youScore">
+        0
+      </div>
+    </div>
+
+    <div>⬇</div>
+
+  </div>
+
+</div>
+
+
+<div class="boardArea">
+
+  <div class="boardStage">
+
+    <canvas id="game"></canvas>
+
+  </div>
+
+</div>
+
+
+<div class="controls">
+
+  <button id="modeBtn">
+    VS BOT
+  </button>
+
+  <button id="helpBtn" class="primary">
+    HOW TO PLAY
+  </button>
+
+  <button id="newBtn">
+    NEW GAME
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<div class="overlay" id="intro">
+
+  <div class="startCard">
+
+    <div class="startLogo">
+      GAME WITH FUN
+      <span>CARROM BOARD</span>
+    </div>
+
+
+    <div class="step active" id="step1">
+
+      <h2>📢 Notice</h2>
+
+      <div class="noticeBox">
+
+        <div>
+          🎯 <b>Objective:</b>
+          Pocket the carrom coins.
+        </div>
+
+        <div>
+          👑 <b>Queen:</b>
+          Red queen gives bonus points.
+        </div>
+
+        <div>
+          🔄 <b>Turns:</b>
+          Pocket a coin and continue your turn.
+        </div>
+
+        <div>
+          🏆 <b>Winner:</b>
+          Highest score wins.
+        </div>
+
+      </div>
+
+      <p>
+        Welcome to Game With Fun Carrom Board.
+        Enjoy smooth touch controls and a
+        simple mobile-friendly carrom experience.
+      </p>
+
+      <div class="startButtons">
+
+        <button class="primary"
+                id="noticeNext">
+          NEXT →
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="step" id="step2">
+
+      <h2>🎮 How To Play</h2>
+
+      <div class="tip">
+        <b>1. Position</b><br>
+        Touch the striker and move left or right
+        to change its position.
+      </div>
+
+      <div class="tip">
+        <b>2. Aim</b><br>
+        Pull your finger in the opposite direction
+        of where you want the striker to go.
+      </div>
+
+      <div class="tip">
+        <b>3. Diagonal Shot</b><br>
+        Pull diagonally to shoot diagonally.
+      </div>
+
+      <div class="tip">
+        <b>4. Power</b><br>
+        Pull farther for more shooting power.
+      </div>
+
+      <div class="tip">
+        <b>5. Extra Turn</b><br>
+        If you pocket a coin, you get another turn.
+        If the bot pockets a coin, the bot gets another turn.
+      </div>
+
+      <div class="tip">
+        <b>6. Shoot</b><br>
+        Release your finger to shoot.
+      </div>
+
+      <div class="startButtons">
+
+        <button id="backIntro">
+          ← BACK
+        </button>
+
+        <button class="primary"
+                id="startBtn">
+          START GAME 🚀
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     WINNER
+===================================================== -->
+
+<div class="overlay" id="winner">
+
+  <div class="startCard">
+
+    <div class="startLogo">
+      GAME <span>OVER</span>
+    </div>
+
+    <h2 id="winnerText"></h2>
+
+    <p id="winnerSub"></p>
+
+    <div class="startButtons">
+
+      <button class="primary"
+              id="againBtn">
+        PLAY AGAIN
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SEO CONTENT
+===================================================== -->
+
+<main class="content-wrapper">
+
+<section class="content">
+
+<h1>
+  Game With Fun Carrom Board - Free Online Carrom Game
+</h1>
+
+<p>
+  Welcome to Game With Fun Carrom Board, a free online
+  carrom board game designed for players who enjoy
+  simple and entertaining browser games. You can play
+  directly in your browser without downloading a separate
+  application.
+</p>
+
+<p>
+  The game is designed with touch-friendly controls so
+  you can play comfortably on mobile phones and tablets.
+  Choose the VS Bot mode to play against the computer,
+  or switch to 2 Player mode for a local multiplayer match.
+</p>
+
+
+<div class="info-card">
+
+<h2>
+  About Game With Fun Carrom Board
+</h2>
+
+<p>
+  Game With Fun Carrom Board is an original browser-based
+  carrom game created for the Game With Fun gaming website.
+  The game focuses on easy controls, smooth gameplay and
+  a clean interface.
+</p>
+
+<p>
+  Players can position the striker, aim their shots,
+  control shooting power and try to pocket the coins.
+  Successful shots can give the current player another
+  turn, making every shot important.
+</p>
+
+</div>
+
+
+<h2>
+  How to Play Carrom Board Online
+</h2>
+
+<p>
+  Start the game and select your preferred game mode.
+  During your turn, touch the striker and move it along
+  the baseline to select its position.
+</p>
+
+<p>
+  To aim, pull your finger away from the direction in
+  which you want the striker to travel. Pull farther to
+  increase the shooting power, then release your finger
+  to take the shot.
+</p>
+
+<p>
+  Try to use the carrom board angles and the side walls
+  to reach coins that are not directly in front of the
+  striker.
+</p>
+
+
+<h2>
+  Game Features
+</h2>
+
+<ul>
+  <li>Free browser-based carrom board gameplay.</li>
+  <li>Touch-friendly controls for mobile devices.</li>
+  <li>VS Bot mode for single-player games.</li>
+  <li>2 Player mode for local multiplayer.</li>
+  <li>Adjustable striker position.</li>
+  <li>Diagonal aiming and shooting.</li>
+  <li>Power-based shooting system.</li>
+  <li>Queen coin with bonus points.</li>
+  <li>Extra turn after successfully pocketing a coin.</li>
+  <li>Responsive design for phones and tablets.</li>
+</ul>
+
+
+<h2>
+  Carrom Game Tips
+</h2>
+
+<p>
+  Take your time before shooting. Positioning the striker
+  carefully can help you create better angles. Use
+  controlled shooting power for nearby coins and stronger
+  power when a longer shot is needed.
+</p>
+
+<p>
+  Bank shots can also be useful when a coin is positioned
+  close to the side of the board. Practice different
+  angles to improve your accuracy.
+</p>
+
+
+<!-- =====================================================
+     FAQ
+===================================================== -->
+
+<h2>
+  Frequently Asked Questions
+</h2>
+
+
+<details class="faq-item">
+
+<summary>
+  How do I play Game With Fun Carrom Board?
+</summary>
+
+<div class="faq-answer">
+  Touch the striker, move it to the desired position,
+  pull your finger in the opposite direction of your
+  intended shot and release to shoot.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  Is Game With Fun Carrom Board free?
+</summary>
+
+<div class="faq-answer">
+  Yes. The browser game is designed to be played online
+  without requiring a separate game download.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  Can I play the game on a mobile phone?
+</summary>
+
+<div class="faq-answer">
+  Yes. The game uses touch-friendly controls and a
+  responsive layout designed for mobile browsers.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  Can I play against a Bot?
+</summary>
+
+<div class="faq-answer">
+  Yes. Select VS BOT to play against the computer.
+  The Bot automatically takes its shots when it is
+  the Bot's turn.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  Can two people play the game?
+</summary>
+
+<div class="faq-answer">
+  Yes. Select 2 PLAYER mode to play a local two-player
+  game on the same device.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  What happens when I pocket a coin?
+</summary>
+
+<div class="faq-answer">
+  When a player successfully pockets a coin, that player
+  receives another turn. If the player misses, the turn
+  moves to the other player.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  What happens when the Bot pockets a coin?
+</summary>
+
+<div class="faq-answer">
+  When the Bot successfully pockets a coin, the Bot gets
+  another turn. If the Bot misses, the turn returns to you.
+</div>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+  Does the Queen give bonus points?
+</summary>
+
+<div class="faq-answer">
+  Yes. The red Queen gives bonus points in the current
+  version of the game.
+</div>
+
+</details>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<h2 id="about">
+  About Game With Fun
+</h2>
+
+<div class="info-card">
+
+<p>
+  Game With Fun is an online gaming website focused on
+  providing simple browser games that can be played
+  directly from supported web browsers.
+</p>
+
+<p>
+  Our goal is to create an easy-to-use gaming experience
+  for visitors on mobile phones, tablets and desktop
+  devices.
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     PRIVACY
+===================================================== -->
+
+<h2 id="privacy">
+  Privacy Policy
+</h2>
+
+<div class="info-card">
+
+<p>
+  Your privacy is important to us. This page explains
+  general information about how this website may handle
+  information.
+</p>
+
+<p>
+  Game With Fun may use standard web technologies such
+  as cookies, local storage or similar technologies to
+  remember preferences and improve website functionality.
+</p>
+
+<p>
+  Third-party advertising services, including Google
+  AdSense if enabled, may use cookies or similar
+  technologies to display advertisements based on
+  applicable policies and settings.
+</p>
+
+<p>
+  We do not intentionally request sensitive personal
+  information through this game page.
+</p>
+
+<p>
+  If you have questions about this privacy information,
+  please contact us using the contact information below.
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     DISCLAIMER
+===================================================== -->
+
+<h2 id="disclaimer">
+  Disclaimer
+</h2>
+
+<div class="info-card">
+
+<p>
+  Game With Fun Carrom Board is provided for entertainment
+  purposes. While reasonable efforts may be made to keep
+  the game functional and available, we do not guarantee
+  that the game will always operate without interruptions
+  or technical issues.
+</p>
+
+<p>
+  Game features, scoring, graphics and gameplay mechanics
+  may be changed or updated in future versions.
+</p>
+
+<p>
+  Any third-party trademarks or names referenced on the
+  website belong to their respective owners.
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<h2 id="contact">
+  Contact Us
+</h2>
+
+<div class="info-card">
+
+<p>
+  If you have a question, suggestion, bug report or
+  feedback about Game With Fun Carrom Board, you can
+  contact the Game With Fun team.
+</p>
+
+<p>
+  Email:
+  <strong>your-email@example.com</strong>
+</p>
+
+<p>
+  Please replace the email address above with your real
+  contact email before publishing the page.
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     INTERNAL LINKS
+===================================================== -->
+
+<div class="site-links">
+
+<a class="site-link"
+   href="/about.html">
+  About
+</a>
+
+<a class="site-link"
+   href="/privacy.html">
+  Privacy Policy
+</a>
+
+<a class="site-link"
+   href="/disclaimer.html">
+  Disclaimer
+</a>
+
+<a class="site-link"
+   href="/contact.html">
+  Contact
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ADSENSE AREA
+===================================================== -->
+
+<section class="adsense-section">
+
+  <div class="ad-label">
+    ADVERTISEMENT
+  </div>
+
+  <div class="ad-box">
+
+    <!--
+      GOOGLE ADSENSE CODE GOES HERE
+
+      Example:
+
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true">
+      </ins>
+
+      <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      Replace this placeholder with your actual
+      Google AdSense ad unit code after approval.
+    -->
+
+    Ad Space
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+  © 2026
+  <strong>Game With Fun</strong>.
+  All rights reserved.
+
+  <br>
+
+  Game With Fun Carrom Board is an original
+  browser-based game.
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   GAME VARIABLES
+========================================= */
+
+const canvas =
+  document.getElementById("game");
+
+const ctx =
+  canvas.getContext("2d");
+
+const scoreEl =
+  document.getElementById("score");
+
+const pocketedEl =
+  document.getElementById("pocketed");
+
+const leftEl =
+  document.getElementById("left");
+
+const youScoreEl =
+  document.getElementById("youScore");
+
+const botScoreEl =
+  document.getElementById("botScore");
+
+const p1El =
+  document.getElementById("p1");
+
+const p2El =
+  document.getElementById("p2");
+
+const p2name =
+  document.getElementById("p2name");
+
+const modeBtn =
+  document.getElementById("modeBtn");
+
+const helpBtn =
+  document.getElementById("helpBtn");
+
+const newBtn =
+  document.getElementById("newBtn");
+
+const intro =
+  document.getElementById("intro");
+
+const winner =
+  document.getElementById("winner");
+
+const W=600;
+
+
+/* =========================================
+   POCKETS
+========================================= */
+
+const pockets=[
+  {x:65,y:65},
+  {x:535,y:65},
+  {x:65,y:535},
+  {x:535,y:535}
+];
+
+
+let pieces=[];
+
+
+/* =========================================
+   STRIKER
+========================================= */
+
+let striker={
+  x:300,
+  y:505,
+  vx:0,
+  vy:0,
+  r:15,
+  active:true
+};
+
+
+/* =========================================
+   SCORE
+========================================= */
+
+let score=0;
+let youScore=0;
+let botScore=0;
+let pocketed=0;
+
+
+/* =========================================
+   GAME STATE
+========================================= */
+
+let turn=1;
+
+let mode="bot";
+
+let moving=false;
+
+let pointerDown=false;
+
+let pointerId=null;
+
+let aimPull=0;
+
+let aimAngle=-Math.PI/2;
+
+let dragMode="";
+
+let gameOver=false;
+
+let botThinking=false;
+
+
+/*
+  TRUE when the current player
+  has pocketed at least one coin
+  during the current turn.
+*/
+
+let coinPocketedThisTurn=false;
+
+
+let lastTime=
+  performance.now();
+
+
+/* =========================================
+   RESIZE
+========================================= */
+
+function resizeBoard(){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  const size =
+    Math.min(
+      rect.width,
+      rect.height
+    );
+
+  const dpr =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+  canvas.width=size*dpr;
+
+  canvas.height=size*dpr;
+
+  ctx.setTransform(
+    dpr*size/600,
+    0,
+    0,
+    dpr*size/600,
+    0,
+    0
+  );
+}
+
+window.addEventListener(
+  "resize",
+  resizeBoard
+);
+
+
+/* =========================================
+   NEW GAME
+========================================= */
+
+function newGame(){
+
+  pieces=[];
+
+  score=0;
+
+  youScore=0;
+
+  botScore=0;
+
+  pocketed=0;
+
+  turn=1;
+
+  moving=false;
+
+  pointerDown=false;
+
+  pointerId=null;
+
+  aimPull=0;
+
+  aimAngle=-Math.PI/2;
+
+  dragMode="";
+
+  gameOver=false;
+
+  botThinking=false;
+
+  coinPocketedThisTurn=false;
+
+  striker.active=true;
+
+  striker.vx=0;
+
+  striker.vy=0;
+
+  resetStriker();
+
+
+  /*
+    Queen
+  */
+
+  pieces.push({
+    x:300,
+    y:300,
+    vx:0,
+    vy:0,
+    r:12,
+    color:"queen",
+    active:true
+  });
+
+
+  /*
+    Coins
+  */
+
+  const rings=[
+    {
+      radius:25,
+      count:6
+    },
+    {
+      radius:52,
+      count:6
+    },
+    {
+      radius:78,
+      count:6
+    }
+  ];
+
+
+  let index=0;
+
+
+  for(
+    const ring of rings
+  ){
+
+    for(
+      let i=0;
+      i<ring.count;
+      i++
+    ){
+
+      const a =
+        Math.PI*2/
+        ring.count*i;
+
+
+      pieces.push({
+
+        x:
+          300+
+          Math.cos(a)*
+          ring.radius,
+
+        y:
+          300+
+          Math.sin(a)*
+          ring.radius,
+
+        vx:0,
+
+        vy:0,
+
+        r:11,
+
+        color:
+          index%2===0
+          ?"white"
+          :"black",
+
+        active:true
+
+      });
+
+
+      index++;
+
+    }
+
+  }
+
+
+  updateUI();
+
+}
+
+
+/* =========================================
+   STRIKER RESET
+========================================= */
+
+function resetStriker(){
+
+  striker.x=300;
+
+  striker.y =
+    turn===1
+    ?505
+    :95;
+
+  striker.vx=0;
+
+  striker.vy=0;
+
+  striker.active=true;
+
+  aimPull=0;
+
+  aimAngle =
+    turn===1
+    ?-Math.PI/2
+    :Math.PI/2;
+
+}
+
+
+/* =========================================
+   BOARD
+========================================= */
+
+function drawBoard(){
+
+  ctx.clearRect(
+    0,
+    0,
+    W,
+    W
+  );
+
+
+  ctx.fillStyle="#080e12";
+
+  roundRect(
+    7,
+    7,
+    586,
+    586,
+    28
+  );
+
+  ctx.fill();
+
+
+  const wood =
+    ctx.createLinearGradient(
+      0,
+      0,
+      W,
+      W
+    );
+
+
+  wood.addColorStop(
+    0,
+    "#f0cf83"
+  );
+
+  wood.addColorStop(
+    .16,
+    "#9d6b32"
+  );
+
+  wood.addColorStop(
+    .35,
+    "#d7a957"
+  );
+
+  wood.addColorStop(
+    .52,
+    "#754a22"
+  );
+
+  wood.addColorStop(
+    .72,
+    "#c79243"
+  );
+
+  wood.addColorStop(
+    1,
+    "#68401d"
+  );
+
+
+  ctx.fillStyle=wood;
+
+
+  roundRect(
+    14,
+    14,
+    572,
+    572,
+    25
+  );
+
+  ctx.fill();
+
+
+  ctx.strokeStyle =
+    "rgba(255,246,192,.55)";
+
+  ctx.lineWidth=3;
+
+
+  roundRect(
+    24,
+    24,
+    552,
+    552,
+    21
+  );
+
+  ctx.stroke();
+
+
+  ctx.strokeStyle =
+    "rgba(52,27,8,.65)";
+
+  ctx.lineWidth=7;
+
+
+  roundRect(
+    30,
+    30,
+    540,
+    540,
+    18
+  );
+
+  ctx.stroke();
+
+
+  const boardGrad =
+    ctx.createLinearGradient(
+      60,
+      60,
+      540,
+      540
+    );
+
+
+  boardGrad.addColorStop(
+    0,
+    "#f4e7bd"
+  );
+
+  boardGrad.addColorStop(
+    .5,
+    "#ead7a3"
+  );
+
+  boardGrad.addColorStop(
+    1,
+    "#d8bf82"
+  );
+
+
+  ctx.fillStyle=boardGrad;
+
+
+  roundRect(
+    48,
+    48,
+    504,
+    504,
+    14
+  );
+
+  ctx.fill();
+
+
+  ctx.save();
+
+  ctx.globalAlpha=.08;
+
+  ctx.strokeStyle="#694719";
+
+
+  for(
+    let i=0;
+    i<60;
+    i++
+  ){
+
+    const y=55+i*8;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      50,
+      y
+    );
+
+    ctx.lineTo(
+      550,
+      y+Math.sin(i)*2
+    );
+
+    ctx.stroke();
+
+  }
+
+  ctx.restore();
+
+
+  ctx.fillStyle =
+    "rgba(255,250,225,.22)";
+
+  ctx.fillRect(
+    65,
+    65,
+    470,
+    470
+  );
+
+
+  ctx.save();
+
+  ctx.strokeStyle =
+    "rgba(102,64,22,.22)";
+
+  ctx.lineWidth=1.5;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    75,
+    75
+  );
+
+  ctx.lineTo(
+    525,
+    525
+  );
+
+  ctx.moveTo(
+    525,
+    75
+  );
+
+  ctx.lineTo(
+    75,
+    525
+  );
+
+  ctx.stroke();
+
+  ctx.restore();
+
+
+  drawBaseline(95);
+
+  drawBaseline(505);
+
+  drawSideMarks();
+
+  drawCenter();
+
+
+  for(
+    const p of pockets
+  ){
+
+    drawPocket(
+      p.x,
+      p.y
+    );
+
+  }
+
+
+  for(
+    const p of pieces
+  ){
+
+    if(p.active){
+
+      drawPiece(p);
+
+    }
+
+  }
+
+
+  if(striker.active){
+
+    drawStriker();
+
+  }
+
+
+  drawAim();
+
+}
+
+
+/* =========================================
+   BASELINE
+========================================= */
+
+function drawBaseline(y){
+
+  ctx.save();
+
+  ctx.strokeStyle="#744617";
+
+  ctx.lineWidth=3;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    135,
+    y
+  );
+
+  ctx.lineTo(
+    465,
+    y
+  );
+
+  ctx.stroke();
+
+
+  ctx.strokeStyle =
+    "rgba(255,250,214,.65)";
+
+  ctx.lineWidth=1;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    145,
+    y-4
+  );
+
+  ctx.lineTo(
+    455,
+    y-4
+  );
+
+  ctx.stroke();
+
+
+  ctx.fillStyle="#9a6025";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    145,
+    y,
+    7,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.beginPath();
+
+  ctx.arc(
+    455,
+    y,
+    7,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   SIDE MARKS
+========================================= */
+
+function drawSideMarks(){
+
+  ctx.save();
+
+  ctx.strokeStyle="#855426";
+
+  ctx.lineWidth=2;
+
+
+  const marks=[
+    [95,145,95,190],
+    [95,410,95,455],
+    [505,145,505,190],
+    [505,410,505,455]
+  ];
+
+
+  for(
+    const m of marks
+  ){
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      m[0],
+      m[1]
+    );
+
+    ctx.lineTo(
+      m[2],
+      m[3]
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   CENTER
+========================================= */
+
+function drawCenter(){
+
+  ctx.save();
+
+  ctx.fillStyle =
+    "rgba(180,55,35,.08)";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    300,
+    300,
+    70,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.strokeStyle="#93402d";
+
+  ctx.lineWidth=3;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    300,
+    300,
+    62,
+    0,
+    Math.PI*2
+  );
+
+  ctx.stroke();
+
+
+  ctx.strokeStyle =
+    "rgba(122,57,33,.55)";
+
+  ctx.lineWidth=2;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    300,
+    300,
+    30,
+    0,
+    Math.PI*2
+  );
+
+  ctx.stroke();
+
+
+  ctx.fillStyle="#b9362d";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    300,
+    300,
+    9,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   POCKET
+========================================= */
+
+function drawPocket(x,y){
+
+  ctx.save();
+
+  ctx.shadowColor =
+    "rgba(0,0,0,.55)";
+
+  ctx.shadowBlur=13;
+
+
+  const g =
+    ctx.createRadialGradient(
+      x,
+      y,
+      5,
+      x,
+      y,
+      25
+    );
+
+
+  g.addColorStop(
+    0,
+    "#010203"
+  );
+
+  g.addColorStop(
+    .7,
+    "#070707"
+  );
+
+  g.addColorStop(
+    1,
+    "#513516"
+  );
+
+
+  ctx.fillStyle=g;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    25,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.shadowBlur=0;
+
+  ctx.strokeStyle="#c08a3c";
+
+  ctx.lineWidth=3;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    25,
+    0,
+    Math.PI*2
+  );
+
+  ctx.stroke();
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   PIECE
+========================================= */
+
+function drawPiece(p){
+
+  ctx.save();
+
+  ctx.shadowColor =
+    "rgba(0,0,0,.45)";
+
+  ctx.shadowBlur=8;
+
+  ctx.shadowOffsetY=4;
+
+
+  let grad;
+
+
+  if(
+    p.color==="white"
+  ){
+
+    grad =
+      ctx.createRadialGradient(
+        p.x-4,
+        p.y-5,
+        2,
+        p.x,
+        p.y,
+        p.r
+      );
+
+    grad.addColorStop(
+      0,
+      "#fffdf4"
+    );
+
+    grad.addColorStop(
+      .55,
+      "#e8e1ce"
+    );
+
+    grad.addColorStop(
+      1,
+      "#a79d87"
+    );
+
+
+  }else if(
+    p.color==="black"
+  ){
+
+    grad =
+      ctx.createRadialGradient(
+        p.x-4,
+        p.y-5,
+        2,
+        p.x,
+        p.y,
+        p.r
+      );
+
+    grad.addColorStop(
+      0,
+      "#6b7478"
+    );
+
+    grad.addColorStop(
+      .45,
+      "#20272a"
+    );
+
+    grad.addColorStop(
+      1,
+      "#030405"
+    );
+
+
+  }else{
+
+    grad =
+      ctx.createRadialGradient(
+        p.x-4,
+        p.y-5,
+        2,
+        p.x,
+        p.y,
+        p.r
+      );
+
+    grad.addColorStop(
+      0,
+      "#ff8b77"
+    );
+
+    grad.addColorStop(
+      .5,
+      "#d33e32"
+    );
+
+    grad.addColorStop(
+      1,
+      "#761d20"
+    );
+
+  }
+
+
+  ctx.fillStyle=grad;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    p.x,
+    p.y,
+    p.r,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.shadowBlur=0;
+
+  ctx.shadowOffsetY=0;
+
+
+  ctx.strokeStyle =
+    p.color==="queen"
+    ?"#ffd17c"
+    :"rgba(255,255,255,.28)";
+
+
+  ctx.lineWidth=1.3;
+
+  ctx.stroke();
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   STRIKER
+========================================= */
+
+function drawStriker(){
+
+  ctx.save();
+
+
+  ctx.strokeStyle =
+    "rgba(37,159,194,.22)";
+
+  ctx.lineWidth=2;
+
+
+  ctx.beginPath();
+
+  ctx.arc(
+    striker.x,
+    striker.y,
+    24,
+    0,
+    Math.PI*2
+  );
+
+  ctx.stroke();
+
+
+  if(
+    pointerDown &&
+    aimPull>3
+  ){
+
+    const power =
+      Math.min(
+        aimPull/150,
+        1
+      );
+
+
+    ctx.strokeStyle =
+      "rgba(214,66,47,.9)";
+
+    ctx.lineWidth=4;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+      striker.x,
+      striker.y,
+      22,
+      -Math.PI/2,
+      -Math.PI/2+
+      Math.PI*2*power
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  ctx.shadowColor =
+    "rgba(0,0,0,.55)";
+
+  ctx.shadowBlur=12;
+
+  ctx.shadowOffsetY=5;
+
+
+  const g =
+    ctx.createRadialGradient(
+      striker.x-5,
+      striker.y-6,
+      2,
+      striker.x,
+      striker.y,
+      16
+    );
+
+
+  g.addColorStop(
+    0,
+    "#ffffff"
+  );
+
+  g.addColorStop(
+    .5,
+    "#d9f4fa"
+  );
+
+  g.addColorStop(
+    1,
+    "#5a9bad"
+  );
+
+
+  ctx.fillStyle=g;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    striker.x,
+    striker.y,
+    15,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.shadowBlur=0;
+
+  ctx.strokeStyle="#164f62";
+
+  ctx.lineWidth=2;
+
+  ctx.stroke();
+
+
+  ctx.fillStyle="#7de4ff";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    striker.x-4,
+    striker.y-5,
+    3,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   AIM
+========================================= */
+
+function drawAim(){
+
+  if(
+    moving ||
+    gameOver ||
+    !striker.active
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    mode==="bot" &&
+    turn===2
+  ){
+
+    return;
+
+  }
+
+
+  const power =
+    Math.min(
+      aimPull/150,
+      1
+    );
+
+
+  const len =
+    100+
+    power*180;
+
+
+  const endX =
+    striker.x+
+    Math.cos(aimAngle)*
+    len;
+
+
+  const endY =
+    striker.y+
+    Math.sin(aimAngle)*
+    len;
+
+
+  ctx.save();
+
+
+  ctx.setLineDash([
+    7,
+    8
+  ]);
+
+
+  ctx.strokeStyle =
+    power>.7
+    ?"rgba(214,66,47,.9)"
+    :"rgba(31,131,163,.8)";
+
+
+  ctx.lineWidth=2;
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    striker.x+
+    Math.cos(aimAngle)*18,
+
+    striker.y+
+    Math.sin(aimAngle)*18
+  );
+
+  ctx.lineTo(
+    endX,
+    endY
+  );
+
+  ctx.stroke();
+
+
+  ctx.setLineDash([]);
+
+
+  ctx.fillStyle =
+    power>.7
+    ?"rgba(214,66,47,.9)"
+    :"rgba(31,131,163,.9)";
+
+
+  ctx.beginPath();
+
+  ctx.arc(
+    endX,
+    endY,
+    4,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  if(pointerDown){
+
+    const barW=120;
+
+    const barX=240;
+
+    const barY =
+      turn===1
+      ?530
+      :70;
+
+
+    ctx.fillStyle =
+      "rgba(0,0,0,.25)";
+
+
+    roundRect(
+      barX,
+      barY,
+      barW,
+      6,
+      3
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle="#329fc1";
+
+
+    roundRect(
+      barX,
+      barY,
+      barW*power,
+      6,
+      3
+    );
+
+    ctx.fill();
+
+  }
+
+
+  ctx.restore();
+
+}
+
+
+/* =========================================
+   ROUND RECT
+========================================= */
+
+function roundRect(
+  x,
+  y,
+  w,
+  h,
+  r
+){
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x+r,
+    y
+  );
+
+  ctx.arcTo(
+    x+w,
+    y,
+    x+w,
+    y+h,
+    r
+  );
+
+  ctx.arcTo(
+    x+w,
+    y+h,
+    x,
+    y+h,
+    r
+  );
+
+  ctx.arcTo(
+    x,
+    y+h,
+    x,
+    y,
+    r
+  );
+
+  ctx.arcTo(
+    x,
+    y,
+    x+w,
+    y,
+    r
+  );
+
+  ctx.closePath();
+
+}
+
+
+/* =========================================
+   POINTER
+========================================= */
+
+function getPointer(e){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  return {
+
+    x:
+      (e.clientX-rect.left)
+      *600/
+      rect.width,
+
+    y:
+      (e.clientY-rect.top)
+      *600/
+      rect.height
+
+  };
+
+}
+
+
+/* =========================================
+   POINTER DOWN
+========================================= */
+
+canvas.addEventListener(
+  "pointerdown",
+  e=>{
+
+    if(
+      mode==="bot" &&
+      turn===2
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      moving ||
+      gameOver ||
+      !striker.active ||
+      botThinking
+    ){
+
+      return;
+
+    }
+
+
+    const p =
+      getPointer(e);
+
+
+    const distance =
+      Math.hypot(
+        p.x-striker.x,
+        p.y-striker.y
+      );
+
+
+    if(distance>55){
+
+      return;
+
+    }
+
+
+    pointerDown=true;
+
+    pointerId=e.pointerId;
+
+
+    canvas.setPointerCapture(
+      e.pointerId
+    );
+
+
+    aimPull=0;
+
+    dragMode="aim";
+
+  }
+);
+
+
+/* =========================================
+   POINTER MOVE
+========================================= */
+
+canvas.addEventListener(
+  "pointermove",
+  e=>{
+
+    if(!pointerDown){
+
+      return;
+
+    }
+
+
+    if(
+      e.pointerId!==pointerId
+    ){
+
+      return;
+
+    }
+
+
+    const p =
+      getPointer(e);
+
+
+    const dx =
+      p.x-striker.x;
+
+
+    const dy =
+      p.y-striker.y;
+
+
+    const distance =
+      Math.hypot(
+        dx,
+        dy
+      );
+
+
+    if(distance<8){
+
+      return;
+
+    }
+
+
+    /*
+      Position striker horizontally.
+    */
+
+    if(
+      Math.abs(dy)<22 &&
+      Math.abs(dx)>8
+    ){
+
+      striker.x =
+        Math.max(
+          150,
+          Math.min(
+            450,
+            p.x
+          )
+        );
+
+
+      aimPull=0;
+
+      dragMode="position";
+
+      return;
+
+    }
+
+
+    /*
+      Aim and power.
+    */
+
+    if(distance>15){
+
+      aimAngle =
+        Math.atan2(
+          -dy,
+          -dx
+        );
+
+
+      aimPull =
+        Math.min(
+          distance,
+          150
+        );
+
+
+      dragMode="power";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   POINTER UP
+========================================= */
+
+canvas.addEventListener(
+  "pointerup",
+  e=>{
+
+    if(!pointerDown){
+
+      return;
+
+    }
+
+
+    if(
+      e.pointerId!==pointerId
+    ){
+
+      return;
+
+    }
+
+
+    pointerDown=false;
+
+
+    if(
+      dragMode!=="power" ||
+      aimPull<10
+    ){
+
+      aimPull=0;
+
+      dragMode="";
+
+      pointerId=null;
+
+      return;
+
+    }
+
+
+    shootPlayer();
+
+    dragMode="";
+
+    pointerId=null;
+
+  }
+);
+
+
+/* =========================================
+   POINTER CANCEL
+========================================= */
+
+canvas.addEventListener(
+  "pointercancel",
+  ()=>{
+    pointerDown=false;
+    aimPull=0;
+    dragMode="";
+    pointerId=null;
+  }
+);
+
+
+/* =========================================
+   SHOOT
+========================================= */
+
+function shootPlayer(){
+
+  const power =
+    Math.min(
+      aimPull/150,
+      1
+    );
+
+
+  const speed =
+    280+
+    power*920;
+
+
+  striker.vx =
+    Math.cos(
+      aimAngle
+    )*speed;
+
+
+  striker.vy =
+    Math.sin(
+      aimAngle
+    )*speed;
+
+
+  moving=true;
+
+  aimPull=0;
+
+}
+
+
+/* =========================================
+   BOT SHOOT
+========================================= */
+
+function botShoot(){
+
+  if(gameOver){
+
+    return;
+
+  }
+
+
+  botThinking=true;
+
+
+  setTimeout(()=>{
+
+    if(gameOver){
+
+      return;
+
+    }
+
+
+    resetStriker();
+
+
+    const targets =
+      pieces.filter(
+        p=>p.active
+      );
+
+
+    if(!targets.length){
+
+      botThinking=false;
+
+      return;
+
+    }
+
+
+    let target =
+      targets[
+        Math.floor(
+          Math.random()*
+          targets.length
+        )
+      ];
+
+
+    const queen =
+      pieces.find(
+        p=>
+          p.active &&
+          p.color==="queen"
+      );
+
+
+    if(
+      queen &&
+      Math.random()<.25
+    ){
+
+      target=queen;
+
+    }
+
+
+    striker.x =
+      Math.max(
+        150,
+        Math.min(
+          450,
+          target.x+
+          (
+            Math.random()*45-22
+          )
+        )
+      );
+
+
+    const dx =
+      target.x-striker.x;
+
+
+    const dy =
+      target.y-striker.y;
+
+
+    const len =
+      Math.hypot(
+        dx,
+        dy
+      )||1;
+
+
+    const speed =
+      420+
+      Math.random()*180;
+
+
+    striker.vx =
+      dx/len*speed;
+
+
+    striker.vy =
+      dy/len*speed;
+
+
+    moving=true;
+
+    botThinking=false;
+
+  },700);
+
+}
+
+
+/* =========================================
+   PHYSICS
+========================================= */
+
+function update(dt){
+
+  if(!moving){
+
+    return;
+
+  }
+
+
+  const friction=.985;
+
+
+  const allObjects=[
+    striker,
+    ...pieces
+  ];
+
+
+  for(
+    const o of allObjects
+  ){
+
+    if(!o.active){
+
+      continue;
+
+    }
+
+
+    o.x+=o.vx*dt;
+
+    o.y+=o.vy*dt;
+
+
+    o.vx*=
+      Math.pow(
+        friction,
+        dt*60
+      );
+
+
+    o.vy*=
+      Math.pow(
+        friction,
+        dt*60
+      );
+
+
+    const min=
+      65+o.r;
+
+
+    const max=
+      535-o.r;
+
+
+    if(o.x<min){
+
+      o.x=min;
+
+      o.vx=
+        Math.abs(o.vx)*.82;
+
+    }
+
+
+    if(o.x>max){
+
+      o.x=max;
+
+      o.vx=
+        -Math.abs(o.vx)*.82;
+
+    }
+
+
+    if(o.y<min){
+
+      o.y=min;
+
+      o.vy=
+        Math.abs(o.vy)*.82;
+
+    }
+
+
+    if(o.y>max){
+
+      o.y=max;
+
+      o.vy=
+        -Math.abs(o.vy)*.82;
+
+    }
+
+  }
+
+
+  /*
+    Striker ↔ coins
+  */
+
+  for(
+    const p of pieces
+  ){
+
+    if(
+      !p.active ||
+      !striker.active
+    ){
+
+      continue;
+
+    }
+
+
+    collide(
+      striker,
+      p
+    );
+
+  }
+
+
+  /*
+    Coins ↔ coins
+  */
+
+  for(
+    let i=0;
+    i<pieces.length;
+    i++
+  ){
+
+    const a=
+      pieces[i];
+
+
+    if(!a.active){
+
+      continue;
+
+    }
+
+
+    for(
+      let j=i+1;
+      j<pieces.length;
+      j++
+    ){
+
+      const b=
+        pieces[j];
+
+
+      if(!b.active){
+
+        continue;
+
+      }
+
+
+      collide(
+        a,
+        b
+      );
+
+    }
+
+  }
+
+
+  /*
+    Pockets
+  */
+
+  for(
+    const o of allObjects
+  ){
+
+    if(!o.active){
+
+      continue;
+
+    }
+
+
+    for(
+      const pocket of pockets
+    ){
+
+      const d=
+        Math.hypot(
+          o.x-pocket.x,
+          o.y-pocket.y
+        );
+
+
+      if(d<25){
+
+        pocketObject(o);
+
+        break;
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    Stop check
+  */
+
+  let stillMoving=false;
+
+
+  for(
+    const o of allObjects
+  ){
+
+    if(!o.active){
+
+      continue;
+
+    }
+
+
+    if(
+      Math.abs(o.vx)>18 ||
+      Math.abs(o.vy)>18
+    ){
+
+      stillMoving=true;
+
+      break;
+
+    }
+
+  }
+
+
+  if(!stillMoving){
+
+    for(
+      const o of allObjects
+    ){
+
+      if(o.active){
+
+        o.vx=0;
+
+        o.vy=0;
+
+      }
+
+    }
+
+
+    finishTurn();
+
+  }
+
+}
+
+
+/* =========================================
+   COLLISION
+========================================= */
+
+function collide(a,b){
+
+  const dx=
+    b.x-a.x;
+
+  const dy=
+    b.y-a.y;
+
+
+  const dist=
+    Math.hypot(
+      dx,
+      dy
+    );
+
+
+  const minDist=
+    a.r+b.r;
+
+
+  if(
+    dist<=0 ||
+    dist>=minDist
+  ){
+
+    return;
+
+  }
+
+
+  const nx=
+    dx/dist;
+
+  const ny=
+    dy/dist;
+
+
+  const overlap=
+    minDist-dist;
+
+
+  a.x-=
+    nx*overlap/2;
+
+  a.y-=
+    ny*overlap/2;
+
+
+  b.x+=
+    nx*overlap/2;
+
+  b.y+=
+    ny*overlap/2;
+
+
+  const rvx=
+    b.vx-a.vx;
+
+  const rvy=
+    b.vy-a.vy;
+
+
+  const vel=
+    rvx*nx+
+    rvy*ny;
+
+
+  if(vel>0){
+
+    return;
+
+  }
+
+
+  const impulse=
+    -vel*.92;
+
+
+  a.vx-=
+    impulse*nx;
+
+  a.vy-=
+    impulse*ny;
+
+
+  b.vx+=
+    impulse*nx;
+
+  b.vy+=
+    impulse*ny;
+
+}
+
+
+/* =========================================
+   POCKET OBJECT
+========================================= */
+
+function pocketObject(o){
+
+  if(!o.active){
+
+    return;
+
+  }
+
+
+  o.active=false;
+
+  o.vx=0;
+
+  o.vy=0;
+
+
+  /*
+    Striker pocketed.
+    It does NOT count as a coin.
+  */
+
+  if(o===striker){
+
+    setTimeout(()=>{
+
+      if(!gameOver){
+
+        resetStriker();
+
+      }
+
+    },300);
+
+
+    return;
+
+  }
+
+
+  /*
+    A real coin was pocketed.
+  */
+
+  pocketed++;
+
+
+  /*
+    IMPORTANT:
+    Current player gets another turn.
+  */
+
+  coinPocketedThisTurn=true;
+
+
+  /*
+    Queen bonus.
+  */
+
+  if(
+    o.color==="queen"
+  ){
+
+    if(turn===1){
+
+      youScore+=5;
+
+    }else{
+
+      botScore+=5;
+
+    }
+
+  }else{
+
+    if(turn===1){
+
+      youScore+=1;
+
+    }else{
+
+      botScore+=1;
+
+    }
+
+  }
+
+
+  score=youScore;
+
+
+  updateUI();
+
+
+  const remaining =
+    pieces.filter(
+      p=>p.active
+    ).length;
+
+
+  if(remaining===0){
+
+    gameOver=true;
+
+    setTimeout(
+      showWinner,
+      500
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   CORRECT TURN SYSTEM
+========================================= */
+
+function finishTurn(){
+
+  if(gameOver){
+
+    return;
+
+  }
+
+
+  moving=false;
+
+
+  /*
+    YOU:
+      Coin pocketed → YOU again
+      Missed → BOT
+
+    BOT:
+      Coin pocketed → BOT again
+      Missed → YOU
+  */
+
+  if(turn===1){
+
+    if(
+      coinPocketedThisTurn
+    ){
+
+      turn=1;
+
+    }else{
+
+      turn=2;
+
+    }
+
+  }else{
+
+    if(
+      coinPocketedThisTurn
+    ){
+
+      turn=2;
+
+    }else{
+
+      turn=1;
+
+    }
+
+  }
+
+
+  /*
+    Clear the current-turn flag
+    AFTER deciding the next turn.
+  */
+
+  coinPocketedThisTurn=false;
+
+
+  resetStriker();
+
+  updateUI();
+
+
+  /*
+    Automatically make Bot shoot.
+  */
+
+  if(
+    mode==="bot" &&
+    turn===2 &&
+    !gameOver
+  ){
+
+    botShoot();
+
+  }
+
+}
+
+
+/* =========================================
+   UI
+========================================= */
+
+function updateUI(){
+
+  scoreEl.textContent=
+    youScore;
+
+
+  pocketedEl.textContent=
+    pocketed;
+
+
+  leftEl.textContent=
+    pieces.filter(
+      p=>p.active
+    ).length;
+
+
+  youScoreEl.textContent=
+    youScore;
+
+
+  botScoreEl.textContent=
+    botScore;
+
+
+  p1El.classList.toggle(
+    "active",
+    turn===1
+  );
+
+
+  p2El.classList.toggle(
+    "active",
+    turn===2
+  );
+
+
+  p2name.textContent=
+    mode==="bot"
+    ?"BOT"
+    :"PLAYER 2";
+
+}
+
+
+/* =========================================
+   WINNER
+========================================= */
+
+function showWinner(){
+
+  let text;
+
+
+  if(
+    youScore>botScore
+  ){
+
+    text="YOU WIN! 🏆";
+
+  }else if(
+    youScore<botScore
+  ){
+
+    text=
+      mode==="bot"
+      ?"BOT WINS! 🏆"
+      :"PLAYER 2 WINS! 🏆";
+
+  }else{
+
+    text="MATCH DRAW 🤝";
+
+  }
+
+
+  document.getElementById(
+    "winnerText"
+  ).textContent=text;
+
+
+  document.getElementById(
+    "winnerSub"
+  ).textContent=
+    `YOU ${youScore} • ${
+      mode==="bot"
+      ?"BOT"
+      :"PLAYER 2"
+    } ${botScore}`;
+
+
+  winner.classList.add(
+    "show"
+  );
+
+}
+
+
+/* =========================================
+   MODE
+========================================= */
+
+modeBtn.addEventListener(
+  "click",
+  ()=>{
+
+    mode=
+      mode==="bot"
+      ?"2player"
+      :"bot";
+
+
+    modeBtn.textContent=
+      mode==="bot"
+      ?"VS BOT"
+      :"2 PLAYER";
+
+
+    winner.classList.remove(
+      "show"
+    );
+
+
+    newGame();
+
+  }
+);
+
+
+/* =========================================
+   HELP
+========================================= */
+
+helpBtn.addEventListener(
+  "click",
+  ()=>{
+
+    intro.style.display="flex";
+
+
+    document.getElementById(
+      "step1"
+    ).classList.remove(
+      "active"
+    );
+
+
+    document.getElementById(
+      "step2"
+    ).classList.add(
+      "active"
+    );
+
+  }
+);
+
+
+/* =========================================
+   NEW GAME
+========================================= */
+
+newBtn.addEventListener(
+  "click",
+  ()=>{
+
+    winner.classList.remove(
+      "show"
+    );
+
+
+    newGame();
+
+  }
+);
+
+
+/* =========================================
+   INTRO NEXT
+========================================= */
+
+document.getElementById(
+  "noticeNext"
+).addEventListener(
+  "click",
+  ()=>{
+
+    document.getElementById(
+      "step1"
+    ).classList.remove(
+      "active"
+    );
+
+
+    document.getElementById(
+      "step2"
+    ).classList.add(
+      "active"
+    );
+
+  }
+);
+
+
+/* =========================================
+   INTRO BACK
+========================================= */
+
+document.getElementById(
+  "backIntro"
+).addEventListener(
+  "click",
+  ()=>{
+
+    document.getElementById(
+      "step2"
+    ).classList.remove(
+      "active"
+    );
+
+
+    document.getElementById(
+      "step1"
+    ).classList.add(
+      "active"
+    );
+
+  }
+);
+
+
+/* =========================================
+   START
+========================================= */
+
+document.getElementById(
+  "startBtn"
+).addEventListener(
+  "click",
+  ()=>{
+
+    intro.style.display="none";
+
+    newGame();
+
+  }
+);
+
+
+/* =========================================
+   PLAY AGAIN
+========================================= */
+
+document.getElementById(
+  "againBtn"
+).addEventListener(
+  "click",
+  ()=>{
+
+    winner.classList.remove(
+      "show"
+    );
+
+    newGame();
+
+  }
+);
+
+
+/* =========================================
+   GAME LOOP
+========================================= */
+
+function loop(now){
+
+  const dt=
+    Math.min(
+      .025,
+      (now-lastTime)/1000
+    );
+
+
+  lastTime=now;
+
+
+  update(dt);
+
+  drawBoard();
+
+
+  requestAnimationFrame(
+    loop
+  );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+resizeBoard();
+
+newGame();
+
+requestAnimationFrame(
+  loop
+);
+
+</script>
+
+</body>
+</html>
