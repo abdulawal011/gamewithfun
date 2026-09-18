@@ -1,0 +1,3930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>Game With Fun Crush - Free Match 3 Puzzle Game</title>
+
+<meta name="description"
+content="Play Game With Fun Crush, a free online match 3 puzzle game. Match colorful candies, create combos, earn points and complete fun levels on mobile or desktop.">
+
+<meta name="keywords"
+content="Game With Fun Crush, match 3 game, puzzle game, candy puzzle game, free online games, mobile puzzle game, HTML5 game">
+
+<meta name="author"
+content="Game With Fun">
+
+
+<style>
+
+/* =========================================================
+   BASIC
+========================================================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    width:100%;
+    min-height:100%;
+    scroll-behavior:smooth;
+}
+
+body{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+    overflow-y:auto;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            #3949ab 0%,
+            #171b4b 45%,
+            #07091d 100%
+        );
+
+    color:#fff;
+}
+
+button{
+    border:0;
+    outline:0;
+    font-family:inherit;
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   GAME AREA
+========================================================= */
+
+#gameArea{
+
+    position:relative;
+
+    width:100%;
+
+    height:100dvh;
+
+    min-height:560px;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   GAME SCREENS
+
+   IMPORTANT:
+   absolute instead of fixed.
+   This keeps popup inside Game Area.
+========================================================= */
+
+.screen{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:18px;
+
+    z-index:20;
+}
+
+.screen.active{
+    display:flex;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
+
+    width:min(92vw,430px);
+
+    padding:28px 20px;
+
+    border-radius:28px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.20),
+            rgba(255,255,255,.06)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.25);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55),
+        inset 0 1px 0
+        rgba(255,255,255,.25);
+
+    backdrop-filter:blur(18px);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo{
+
+    font-size:42px;
+
+    font-weight:900;
+
+    line-height:.95;
+
+    letter-spacing:-2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #ffd54f,
+            #ff80ab,
+            #80d8ff,
+            #ffffff
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+}
+
+
+.subtitle{
+
+    margin:10px 0 22px;
+
+    color:#e1e4ff;
+
+    font-size:14px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   BIG CANDY
+========================================================= */
+
+.bigCandy{
+
+    width:90px;
+    height:90px;
+
+    margin:
+        0 auto 18px;
+
+    border-radius:30px;
+
+    position:relative;
+
+    background:
+        radial-gradient(
+            circle at 28% 20%,
+            #ffffff 0 8%,
+            transparent 9%
+        ),
+        linear-gradient(
+            145deg,
+            #ff7aa9,
+            #ff1744 55%,
+            #a9002d
+        );
+
+    box-shadow:
+        inset -8px -10px 15px
+        rgba(80,0,30,.3),
+
+        inset 8px 8px 15px
+        rgba(255,255,255,.35),
+
+        0 15px 35px
+        rgba(255,0,80,.4);
+
+    transform:rotate(-8deg);
+}
+
+.bigCandy::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:32px;
+    height:12px;
+
+    border-radius:50%;
+
+    left:16px;
+    top:13px;
+
+    background:
+        rgba(255,255,255,.6);
+
+    transform:rotate(-15deg);
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.btn{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:10px;
+
+    border-radius:18px;
+
+    color:#ffffff;
+
+    font-size:17px;
+
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c4dff,
+            #536dfe,
+            #00b0ff
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(61,81,255,.35),
+
+        inset 0 1px 0
+        rgba(255,255,255,.35);
+
+    transition:
+        transform .15s ease;
+}
+
+.btn:active{
+    transform:scale(.96);
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.closeBtn{
+
+    position:absolute;
+
+    right:18px;
+    top:18px;
+
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    color:#ffffff;
+
+    background:
+        rgba(255,255,255,.14);
+
+    font-size:22px;
+
+    z-index:5;
+}
+
+
+/* =========================================================
+   HOW TO PLAY
+========================================================= */
+
+.howCard{
+
+    position:relative;
+
+    max-height:
+        calc(100% - 30px);
+
+    overflow-y:auto;
+
+    scrollbar-width:none;
+}
+
+.howCard::-webkit-scrollbar{
+    display:none;
+}
+
+.rules{
+
+    list-style:none;
+
+    margin:15px 0;
+
+    padding:0;
+
+    text-align:left;
+}
+
+.rules li{
+
+    padding:11px 10px;
+
+    margin:7px 0;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:#eef0ff;
+
+    font-size:14px;
+
+    line-height:1.45;
+}
+
+
+/* =========================================================
+   GAME SCREEN
+========================================================= */
+
+#game{
+
+    flex-direction:column;
+
+    justify-content:flex-start;
+
+    padding:
+        10px
+        10px
+        15px;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   TOP STATS
+========================================================= */
+
+.gameTop{
+
+    width:min(96vw,500px);
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap:7px;
+
+    margin-bottom:8px;
+}
+
+.stat{
+
+    padding:8px 5px;
+
+    text-align:center;
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.11);
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.15);
+}
+
+.stat span{
+
+    display:block;
+
+    font-size:10px;
+
+    color:#c9ceff;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+}
+
+.stat b{
+
+    display:block;
+
+    margin-top:2px;
+
+    font-size:17px;
+}
+
+
+/* =========================================================
+   TASK BAR
+========================================================= */
+
+.taskBar{
+
+    width:min(96vw,500px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
+
+    margin-bottom:8px;
+}
+
+.task{
+
+    flex:1;
+
+    padding:9px 12px;
+
+    border-radius:14px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    font-size:13px;
+}
+
+.sound{
+
+    width:44px;
+    height:38px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    color:#ffffff;
+
+    font-size:18px;
+}
+
+
+/* =========================================================
+   BOARD
+========================================================= */
+
+.boardWrap{
+
+    width:min(94vw,500px);
+
+    aspect-ratio:1;
+
+    padding:8px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #6b55dc,
+            #28246d
+        );
+
+    box-shadow:
+        0 20px 55px
+        rgba(0,0,0,.55),
+
+        inset 0 2px 0
+        rgba(255,255,255,.25),
+
+        inset 0 -5px 12px
+        rgba(0,0,0,.3);
+}
+
+#board{
+
+    width:100%;
+    height:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(8,1fr);
+
+    grid-template-rows:
+        repeat(8,1fr);
+
+    gap:4px;
+
+    padding:4px;
+
+    border-radius:18px;
+
+    background:
+        radial-gradient(
+            circle,
+            #312e78,
+            #171640
+        );
+
+    touch-action:none;
+
+    user-select:none;
+}
+
+.cell{
+
+    position:relative;
+
+    min-width:0;
+    min-height:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.045);
+}
+
+
+/* =========================================================
+   CANDIES
+========================================================= */
+
+.candy{
+
+    width:82%;
+    height:82%;
+
+    border-radius:30%;
+
+    position:relative;
+
+    transform:
+        translate3d(0,0,0)
+        scale(1);
+
+    transition:
+        transform .13s
+        cubic-bezier(.2,.8,.2,1),
+
+        opacity .12s ease;
+
+    box-shadow:
+
+        inset -5px -7px 8px
+        rgba(0,0,0,.28),
+
+        inset 5px 5px 9px
+        rgba(255,255,255,.36),
+
+        0 5px 8px
+        rgba(0,0,0,.28);
+
+    will-change:
+        transform,
+        opacity;
+}
+
+.candy::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:43%;
+    height:20%;
+
+    left:17%;
+    top:10%;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.72);
+
+    transform:rotate(-25deg);
+}
+
+.candy::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:20%;
+    height:9%;
+
+    right:13%;
+    bottom:17%;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.20);
+}
+
+
+/* Candy colors */
+
+.red{
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff789c,
+            #ff1744 60%,
+            #b4002e
+        );
+}
+
+.yellow{
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff176,
+            #ffc400 60%,
+            #e08a00
+        );
+}
+
+.green{
+
+    background:
+        linear-gradient(
+            145deg,
+            #8affb5,
+            #00c853 60%,
+            #00883a
+        );
+}
+
+.blue{
+
+    background:
+        linear-gradient(
+            145deg,
+            #80d8ff,
+            #2979ff 60%,
+            #1242a5
+        );
+}
+
+.purple{
+
+    background:
+        linear-gradient(
+            145deg,
+            #ea80fc,
+            #9c27b0 60%,
+            #58116a
+        );
+}
+
+.orange{
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffb36b,
+            #ff6d00 60%,
+            #b93600
+        );
+}
+
+.candy.selected{
+
+    transform:
+        scale(1.08);
+
+    filter:
+        brightness(1.15);
+}
+
+
+/* =========================================================
+   CANDY ANIMATIONS
+========================================================= */
+
+.candy.pop{
+
+    animation:
+        candyPop .22s ease forwards;
+}
+
+@keyframes candyPop{
+
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    45%{
+        transform:
+            scale(1.25)
+            rotate(8deg);
+    }
+
+    100%{
+        transform:
+            scale(.05)
+            rotate(-15deg);
+
+        opacity:0;
+    }
+}
+
+
+.candy.drop{
+
+    animation:
+        dropCandy .25s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes dropCandy{
+
+    0%{
+        transform:
+            translateY(-30px)
+            scale(.9);
+
+        opacity:.4;
+    }
+
+    70%{
+        transform:
+            translateY(5px)
+            scale(1.03);
+    }
+
+    100%{
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+   COMBO
+========================================================= */
+
+#combo{
+
+    position:absolute;
+
+    left:50%;
+    top:45%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.6);
+
+    pointer-events:none;
+
+    opacity:0;
+
+    font-size:34px;
+
+    font-weight:900;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 3px 0 #4b32a8,
+        0 0 20px #ffffff;
+}
+
+#combo.show{
+
+    animation:
+        comboPop .65s ease;
+}
+
+@keyframes comboPop{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.5);
+    }
+
+    35%{
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.25);
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-75%)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particle{
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    background:#ffffff;
+
+    animation:
+        particleFly .55s
+        ease-out forwards;
+}
+
+@keyframes particleFly{
+
+    from{
+
+        transform:
+            translate(0,0)
+            scale(1);
+
+        opacity:1;
+    }
+
+    to{
+
+        transform:
+            translate(
+                var(--x),
+                var(--y)
+            )
+            scale(0);
+
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.resultTitle{
+
+    font-size:34px;
+
+    font-weight:900;
+
+    margin-bottom:8px;
+}
+
+.resultScore{
+
+    font-size:18px;
+
+    color:#dfe2ff;
+
+    margin-bottom:18px;
+}
+
+
+/* =========================================================
+   MOBILE HEIGHT
+========================================================= */
+
+@media(max-height:700px){
+
+    .boardWrap{
+
+        width:
+            min(88vh,94vw);
+    }
+
+    .gameTop{
+        margin-bottom:5px;
+    }
+
+    .taskBar{
+        margin-bottom:5px;
+    }
+}
+
+
+@media(max-height:600px){
+
+    #gameArea{
+        min-height:520px;
+    }
+
+    .boardWrap{
+
+        width:
+            min(78vh,92vw);
+    }
+
+    .stat{
+        padding:5px;
+    }
+
+    .stat b{
+        font-size:14px;
+    }
+
+    .task{
+        padding:6px 9px;
+    }
+}
+
+
+/* =========================================================
+   WEBSITE CONTENT BELOW GAME
+========================================================= */
+
+#belowGame{
+
+    position:relative;
+
+    z-index:1;
+
+    width:100%;
+
+    max-width:1000px;
+
+    margin:0 auto;
+
+    padding:
+        25px
+        15px
+        0;
+}
+
+
+/* =========================================================
+   INFORMATION CARDS
+========================================================= */
+
+.infoCard{
+
+    background:#ffffff;
+
+    color:#252941;
+
+    border-radius:22px;
+
+    padding:25px 22px;
+
+    margin-bottom:18px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.20);
+}
+
+.infoCard h1{
+
+    margin-top:0;
+
+    margin-bottom:15px;
+
+    color:#29246f;
+
+    font-size:28px;
+
+    line-height:1.2;
+}
+
+.infoCard h2{
+
+    margin-top:0;
+
+    margin-bottom:13px;
+
+    color:#29246f;
+
+    font-size:23px;
+
+    line-height:1.3;
+}
+
+.infoCard p{
+
+    color:#555b70;
+
+    font-size:15px;
+
+    line-height:1.75;
+
+    margin-bottom:14px;
+}
+
+.infoCard p:last-child{
+    margin-bottom:0;
+}
+
+.infoCard ul{
+
+    padding-left:22px;
+
+    margin-bottom:15px;
+}
+
+.infoCard li{
+
+    color:#555b70;
+
+    font-size:15px;
+
+    line-height:1.75;
+
+    margin-bottom:4px;
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq{
+
+    border-bottom:
+        1px solid #e1e1e1;
+
+    padding:15px 0;
+}
+
+.faq:last-child{
+    border-bottom:0;
+}
+
+.faq strong{
+
+    display:block;
+
+    color:#29246f;
+
+    margin-bottom:7px;
+
+    font-size:16px;
+}
+
+.faq p{
+    margin-bottom:0;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contactBox{
+
+    background:#f3f3ff;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    margin-top:12px;
+}
+
+.contactBox strong{
+
+    color:#29246f;
+
+    font-size:16px;
+}
+
+.contactBox p{
+
+    margin-top:7px;
+
+    margin-bottom:0;
+
+    color:#555b70;
+}
+
+
+/* =========================================================
+   ADSENSE AREA
+========================================================= */
+
+.adSenseArea{
+
+    width:100%;
+
+    min-height:140px;
+
+    margin:
+        25px 0
+        40px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        rgba(255,255,255,.96);
+
+    border:
+        1px dashed #aaa;
+
+    border-radius:16px;
+
+    color:#777;
+
+    font-size:13px;
+
+    text-align:center;
+}
+
+.adSenseArea strong{
+    color:#555;
+}
+
+
+/* =========================================================
+   MOBILE CONTENT
+========================================================= */
+
+@media(max-width:600px){
+
+    #belowGame{
+
+        padding:
+            20px
+            11px
+            0;
+    }
+
+    .infoCard{
+
+        padding:
+            20px
+            16px;
+
+        border-radius:18px;
+    }
+
+    .infoCard h1{
+        font-size:24px;
+    }
+
+    .infoCard h2{
+        font-size:20px;
+    }
+
+    .infoCard p,
+    .infoCard li{
+
+        font-size:14px;
+
+        line-height:1.7;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     GAME AREA
+===================================================== -->
+
+<div id="gameArea">
+
+
+    <!-- =================================================
+         NOTICE SCREEN
+    ================================================== -->
+
+    <section id="notice" class="screen active">
+
+        <div class="card">
+
+            <div class="bigCandy"></div>
+
+            <div class="logo">
+                GAME WITH<br>
+                FUN CRUSH
+            </div>
+
+            <div class="subtitle">
+                Sweet Match • Smooth Touch • Fun Combos
+            </div>
+
+            <button
+                id="noticeBtn"
+                class="btn">
+
+                HOW TO PLAY
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         HOW TO PLAY
+    ================================================== -->
+
+    <section id="howto" class="screen">
+
+        <div class="card howCard">
+
+            <button
+                id="closeHow"
+                class="closeBtn">
+
+                ×
+
+            </button>
+
+            <div
+                class="logo"
+                style="font-size:30px">
+
+                HOW TO PLAY
+
+            </div>
+
+
+            <ul class="rules">
+
+                <li>
+                    🍬 Match 3 or more same candies.
+                </li>
+
+                <li>
+                    👆 Swipe a candy toward another candy.
+                </li>
+
+                <li>
+                    ✨ 4 candies create bigger combos.
+                </li>
+
+                <li>
+                    💥 Matches disappear with smooth animation.
+                </li>
+
+                <li>
+                    ⬇️ New candies fall down automatically.
+                </li>
+
+                <li>
+                    🎯 Complete the level task before moves run out.
+                </li>
+
+                <li>
+                    🔥 Chain matches give combo bonuses.
+                </li>
+
+            </ul>
+
+
+            <button
+                id="startBtn"
+                class="btn">
+
+                START GAME
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         GAME SCREEN
+    ================================================== -->
+
+    <section id="game" class="screen">
+
+
+        <div class="gameTop">
+
+            <div class="stat">
+
+                <span>
+                    Score
+                </span>
+
+                <b id="score">
+                    0
+                </b>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    Moves
+                </span>
+
+                <b id="moves">
+                    0
+                </b>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    Level
+                </span>
+
+                <b id="level">
+                    1
+                </b>
+
+            </div>
+
+        </div>
+
+
+        <div class="taskBar">
+
+            <div class="task">
+
+                🎯
+
+                <span id="task">
+                    Match 15 candies
+                </span>
+
+            </div>
+
+
+            <button
+                id="soundButton"
+                class="sound">
+
+                🔊
+
+            </button>
+
+        </div>
+
+
+        <div class="boardWrap">
+
+            <div id="board"></div>
+
+        </div>
+
+
+        <div id="combo"></div>
+
+    </section>
+
+
+    <!-- =================================================
+         RESULT SCREEN
+    ================================================== -->
+
+    <section id="result" class="screen">
+
+        <div class="card">
+
+            <div
+                id="resultTitle"
+                class="resultTitle">
+
+                LEVEL COMPLETE!
+
+            </div>
+
+
+            <div
+                id="resultScore"
+                class="resultScore">
+
+                Score: 0
+
+            </div>
+
+
+            <button
+                id="nextBtn"
+                class="btn">
+
+                NEXT LEVEL
+
+            </button>
+
+
+            <button
+                id="restartBtn"
+                class="btn">
+
+                RESTART
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- =====================================================
+     CONTENT BELOW GAME
+===================================================== -->
+
+<main id="belowGame">
+
+
+    <!-- =================================================
+         SEO CONTENT
+    ================================================== -->
+
+    <article class="infoCard">
+
+        <h1>
+            Game With Fun Crush -
+            Free Match 3 Puzzle Game
+        </h1>
+
+
+        <p>
+            Welcome to <strong>Game With Fun Crush</strong>,
+            a colorful and entertaining free online match 3
+            puzzle game. Match three or more candies of the
+            same color, create exciting combinations, earn
+            points and complete level goals.
+        </p>
+
+
+        <p>
+            Game With Fun Crush is designed for players who
+            enjoy simple puzzle gameplay and short casual
+            gaming sessions. The game can be played directly
+            in a modern web browser on compatible mobile
+            phones, tablets and desktop devices.
+        </p>
+
+
+        <h2>
+            How to Play Game With Fun Crush
+        </h2>
+
+
+        <p>
+            To play Game With Fun Crush, swipe a candy
+            horizontally or vertically toward a neighboring
+            candy. When three or more matching candies are
+            connected, they disappear from the board and new
+            candies fall into the empty spaces.
+        </p>
+
+
+        <p>
+            Try to plan your moves carefully. Consecutive
+            matches can create combos and increase your
+            score. Your goal is to complete the level task
+            before your available moves run out.
+        </p>
+
+
+        <h2>
+            Game With Fun Crush Features
+        </h2>
+
+
+        <ul>
+
+            <li>
+                Free online match 3 puzzle gameplay
+            </li>
+
+            <li>
+                Simple touch and swipe controls
+            </li>
+
+            <li>
+                Mobile-friendly game board
+            </li>
+
+            <li>
+                Colorful candy-style graphics
+            </li>
+
+            <li>
+                Score and move tracking
+            </li>
+
+            <li>
+                Multiple levels
+            </li>
+
+            <li>
+                Combo scoring
+            </li>
+
+            <li>
+                Smooth animations and effects
+            </li>
+
+            <li>
+                Built-in sound control
+            </li>
+
+            <li>
+                No separate game download required
+            </li>
+
+        </ul>
+
+    </article>
+
+
+    <!-- =================================================
+         FAQ
+    ================================================== -->
+
+    <section class="infoCard">
+
+        <h2>
+            Frequently Asked Questions
+        </h2>
+
+
+        <div class="faq">
+
+            <strong>
+                What is Game With Fun Crush?
+            </strong>
+
+            <p>
+                Game With Fun Crush is a free browser-based
+                match 3 puzzle game. Players match three or
+                more candies of the same color to earn points
+                and complete level objectives.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <strong>
+                Is Game With Fun Crush free to play?
+            </strong>
+
+            <p>
+                Yes. Game With Fun Crush is designed as a
+                free online browser game.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <strong>
+                Can I play Game With Fun Crush on mobile?
+            </strong>
+
+            <p>
+                Yes. The game includes touch and swipe
+                controls for compatible mobile browsers.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <strong>
+                How can I get a higher score?
+            </strong>
+
+            <p>
+                Try to create larger matches and consecutive
+                combinations. Chain matches can increase
+                your score through combo bonuses.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <strong>
+                Do I need to download the game?
+            </strong>
+
+            <p>
+                No. The game is designed to run directly
+                inside a compatible web browser.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <strong>
+                Can I turn the game sound off?
+            </strong>
+
+            <p>
+                Yes. Use the sound button displayed above
+                the game board to turn game sounds on or off.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         ABOUT
+    ================================================== -->
+
+    <section class="infoCard">
+
+        <h2>
+            About Game With Fun
+        </h2>
+
+
+        <p>
+            Game With Fun is an online gaming website
+            created to provide simple, entertaining and
+            browser-friendly games for casual players.
+        </p>
+
+
+        <p>
+            The website is designed to make online games
+            easy to access from mobile phones, tablets and
+            desktop computers.
+        </p>
+
+
+        <p>
+            Game With Fun Crush is one of the casual puzzle
+            games available for players who enjoy colorful
+            matching gameplay and quick gaming sessions.
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         PRIVACY POLICY
+    ================================================== -->
+
+    <section class="infoCard">
+
+        <h2>
+            Privacy Policy
+        </h2>
+
+
+        <p>
+            We respect the privacy of our visitors.
+            Game With Fun aims to provide a simple and
+            safe browsing experience.
+        </p>
+
+
+        <p>
+            Game With Fun Crush does not require players
+            to create an account or provide personal
+            information simply to play the game.
+        </p>
+
+
+        <p>
+            Depending on the services used by the website,
+            standard technologies such as cookies, analytics
+            and advertising services may be used.
+        </p>
+
+
+        <p>
+            Third-party advertising providers may use
+            cookies or similar technologies to display,
+            measure or personalize advertisements according
+            to their own policies.
+        </p>
+
+
+        <p>
+            Visitors should review the applicable privacy
+            information provided by third-party services
+            when using those services.
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         DISCLAIMER
+    ================================================== -->
+
+    <section class="infoCard">
+
+        <h2>
+            Disclaimer
+        </h2>
+
+
+        <p>
+            Game With Fun Crush is provided for entertainment
+            purposes. We make reasonable efforts to keep the
+            game available and working, but we cannot guarantee
+            uninterrupted access or that the game will always
+            be free from technical errors.
+        </p>
+
+
+        <p>
+            Game features, design and content may be updated,
+            modified or improved in the future.
+        </p>
+
+
+        <p>
+            Users should use the website according to applicable
+            laws and regulations in their location.
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         CONTACT
+    ================================================== -->
+
+    <section class="infoCard">
+
+        <h2>
+            Contact Game With Fun
+        </h2>
+
+
+        <p>
+            If you have feedback, suggestions, questions or
+            notice a problem with Game With Fun Crush, you
+            can contact the Game With Fun team.
+        </p>
+
+
+        <div class="contactBox">
+
+            <strong>
+                Email
+            </strong>
+
+
+            <p>
+                contact@gamewithfun.com
+            </p>
+
+        </div>
+
+
+        <p style="margin-top:15px">
+
+            Please replace the email address above with
+            your real active contact email address before
+            publishing the page.
+
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         ADSENSE AREA - VERY BOTTOM
+    ================================================== -->
+
+    <section class="adSenseArea">
+
+        <div>
+
+            <strong>
+                Advertisement
+            </strong>
+
+
+            <br><br>
+
+
+            <!--
+            =================================================
+            GOOGLE ADSENSE CODE
+
+            After AdSense approval, paste your own
+            Google AdSense ad code here.
+
+            Example structure:
+
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true">
+            </ins>
+
+            <script>
+                (adsbygoogle =
+                    window.adsbygoogle || [])
+                    .push({});
+            </script>
+
+            =================================================
+            -->
+
+
+            AdSense Advertisement Space
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
+
+const noticeScreen =
+    document.getElementById("notice");
+
+const howtoScreen =
+    document.getElementById("howto");
+
+const gameScreen =
+    document.getElementById("game");
+
+const resultScreen =
+    document.getElementById("result");
+
+
+const noticeBtn =
+    document.getElementById("noticeBtn");
+
+const closeHow =
+    document.getElementById("closeHow");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+
+const board =
+    document.getElementById("board");
+
+
+const scoreEl =
+    document.getElementById("score");
+
+const movesEl =
+    document.getElementById("moves");
+
+const levelEl =
+    document.getElementById("level");
+
+const taskEl =
+    document.getElementById("task");
+
+
+const soundButton =
+    document.getElementById("soundButton");
+
+
+const comboEl =
+    document.getElementById("combo");
+
+
+const resultTitle =
+    document.getElementById("resultTitle");
+
+const resultScore =
+    document.getElementById("resultScore");
+
+
+const nextBtn =
+    document.getElementById("nextBtn");
+
+const restartBtn =
+    document.getElementById("restartBtn");
+
+
+/* =========================================================
+   GAME SETTINGS
+========================================================= */
+
+const SIZE = 8;
+
+const COLORS = [
+    "red",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "orange"
+];
+
+
+let grid = [];
+
+let cells = [];
+
+let score = 0;
+
+let moves = 0;
+
+let level = 1;
+
+let target = 15;
+
+let matchedTotal = 0;
+
+let combo = 0;
+
+let busy = false;
+
+let pointerStart = null;
+
+let selected = null;
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+let audioContext = null;
+
+let soundEnabled = true;
+
+
+function initAudio(){
+
+    if(!audioContext){
+
+        const AudioCtx =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if(AudioCtx){
+
+            audioContext =
+                new AudioCtx();
+        }
+    }
+
+
+    if(
+        audioContext &&
+        audioContext.state ===
+        "suspended"
+    ){
+
+        audioContext
+            .resume()
+            .catch(()=>{});
+    }
+}
+
+
+function playTone(
+    frequency,
+    duration,
+    type="sine",
+    volume=.05,
+    delay=0
+){
+
+    if(!soundEnabled) return;
+
+    initAudio();
+
+    if(!audioContext) return;
+
+
+    try{
+
+        const oscillator =
+            audioContext
+                .createOscillator();
+
+        const gain =
+            audioContext
+                .createGain();
+
+
+        oscillator.type =
+            type;
+
+        oscillator.frequency.value =
+            frequency;
+
+
+        gain.gain.setValueAtTime(
+            0,
+            audioContext.currentTime +
+            delay
+        );
+
+
+        gain.gain.linearRampToValueAtTime(
+            volume,
+            audioContext.currentTime +
+            delay +
+            .01
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audioContext.currentTime +
+            delay +
+            duration
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start(
+            audioContext.currentTime +
+            delay
+        );
+
+
+        oscillator.stop(
+            audioContext.currentTime +
+            delay +
+            duration +
+            .03
+        );
+
+
+    }catch(e){}
+}
+
+
+function buttonSound(){
+
+    playTone(
+        520,
+        .07,
+        "sine",
+        .045
+    );
+
+    playTone(
+        760,
+        .09,
+        "sine",
+        .035,
+        .04
+    );
+}
+
+
+function swipeSound(){
+
+    playTone(
+        240,
+        .06,
+        "triangle",
+        .025
+    );
+}
+
+
+function matchSound(count){
+
+    playTone(
+        420,
+        .09,
+        "sine",
+        .045
+    );
+
+
+    if(count >= 4){
+
+        playTone(
+            650,
+            .10,
+            "sine",
+            .05,
+            .05
+        );
+    }
+
+
+    if(count >= 5){
+
+        playTone(
+            900,
+            .12,
+            "sine",
+            .055,
+            .10
+        );
+    }
+}
+
+
+function comboSound(n){
+
+    playTone(
+        500 + n * 90,
+        .12,
+        "sine",
+        .055
+    );
+
+    playTone(
+        800 + n * 100,
+        .14,
+        "triangle",
+        .04,
+        .08
+    );
+}
+
+
+function levelCompleteSound(){
+
+    playTone(
+        523,
+        .13,
+        "sine",
+        .06
+    );
+
+    playTone(
+        659,
+        .13,
+        "sine",
+        .06,
+        .12
+    );
+
+    playTone(
+        784,
+        .20,
+        "sine",
+        .07,
+        .24
+    );
+}
+
+
+function failedSound(){
+
+    playTone(
+        260,
+        .18,
+        "sawtooth",
+        .035
+    );
+
+    playTone(
+        190,
+        .25,
+        "sawtooth",
+        .03,
+        .15
+    );
+}
+
+
+function startSound(){
+
+    playTone(
+        392,
+        .12,
+        "sine",
+        .05
+    );
+
+    playTone(
+        523,
+        .12,
+        "sine",
+        .05,
+        .10
+    );
+
+    playTone(
+        659,
+        .20,
+        "sine",
+        .06,
+        .20
+    );
+}
+
+
+function toggleSound(){
+
+    soundEnabled =
+        !soundEnabled;
+
+
+    soundButton.textContent =
+        soundEnabled
+            ? "🔊"
+            : "🔇";
+
+
+    if(soundEnabled){
+
+        initAudio();
+
+        buttonSound();
+    }
+}
+
+
+/* =========================================================
+   SCREEN CONTROL
+========================================================= */
+
+function showScreen(screen){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(s =>
+            s.classList.remove("active")
+        );
+
+
+    screen.classList.add("active");
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
+
+noticeBtn.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        buttonSound();
+
+        showScreen(
+            howtoScreen
+        );
+    }
+);
+
+
+closeHow.addEventListener(
+    "click",
+    ()=>{
+
+        buttonSound();
+
+        showScreen(
+            noticeScreen
+        );
+    }
+);
+
+
+startBtn.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        startSound();
+
+        startGame();
+    }
+);
+
+
+soundButton.addEventListener(
+    "click",
+    toggleSound
+);
+
+
+nextBtn.addEventListener(
+    "click",
+    ()=>{
+
+        buttonSound();
+
+        level++;
+
+        startLevel();
+    }
+);
+
+
+restartBtn.addEventListener(
+    "click",
+    ()=>{
+
+        buttonSound();
+
+        startLevel();
+    }
+);
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+    score = 0;
+
+    level = 1;
+
+    startLevel();
+}
+
+
+function startLevel(){
+
+    showScreen(
+        gameScreen
+    );
+
+
+    busy = false;
+
+    selected = null;
+
+    pointerStart = null;
+
+    matchedTotal = 0;
+
+    combo = 0;
+
+
+    target =
+        15 +
+        (level - 1) * 8;
+
+
+    moves =
+        Math.max(
+            16,
+            25 -
+            (level - 1) * 2
+        );
+
+
+    scoreEl.textContent =
+        score;
+
+    movesEl.textContent =
+        moves;
+
+    levelEl.textContent =
+        level;
+
+
+    taskEl.textContent =
+        "Match " +
+        target +
+        " candies";
+
+
+    createBoard();
+
+
+    requestAnimationFrame(
+        ()=>{
+            renderBoard(false);
+        }
+    );
+}
+
+
+/* =========================================================
+   BOARD CREATION
+========================================================= */
+
+function createEmptyGrid(){
+
+    grid = [];
+
+
+    for(
+        let r = 0;
+        r < SIZE;
+        r++
+    ){
+
+        grid[r] = [];
+
+
+        for(
+            let c = 0;
+            c < SIZE;
+            c++
+        ){
+
+            grid[r][c] =
+                null;
+        }
+    }
+}
+
+
+function randomColor(){
+
+    return COLORS[
+        Math.floor(
+            Math.random() *
+            COLORS.length
+        )
+    ];
+}
+
+
+function wouldCreateMatch(
+    r,
+    c,
+    color
+){
+
+    if(
+        c >= 2 &&
+        grid[r][c-1] === color &&
+        grid[r][c-2] === color
+    ){
+
+        return true;
+    }
+
+
+    if(
+        r >= 2 &&
+        grid[r-1][c] === color &&
+        grid[r-2][c] === color
+    ){
+
+        return true;
+    }
+
+
+    return false;
+}
+
+
+function fillInitialGrid(){
+
+    createEmptyGrid();
+
+
+    for(
+        let r = 0;
+        r < SIZE;
+        r++
+    ){
+
+        for(
+            let c = 0;
+            c < SIZE;
+            c++
+        ){
+
+            let color;
+
+            let attempts = 0;
+
+
+            do{
+
+                color =
+                    randomColor();
+
+                attempts++;
+
+            }while(
+                wouldCreateMatch(
+                    r,
+                    c,
+                    color
+                ) &&
+                attempts < 20
+            );
+
+
+            grid[r][c] =
+                color;
+        }
+    }
+}
+
+
+function createBoard(){
+
+    board.innerHTML = "";
+
+    cells = [];
+
+
+    fillInitialGrid();
+
+
+    for(
+        let r = 0;
+        r < SIZE;
+        r++
+    ){
+
+        cells[r] = [];
+
+
+        for(
+            let c = 0;
+            c < SIZE;
+            c++
+        ){
+
+            const cell =
+                document.createElement(
+                    "div"
+                );
+
+
+            cell.className =
+                "cell";
+
+
+            cell.dataset.row =
+                r;
+
+            cell.dataset.col =
+                c;
+
+
+            board.appendChild(
+                cell
+            );
+
+
+            cells[r][c] =
+                cell;
+        }
+    }
+
+
+    setupPointerControls();
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderBoard(
+    animateDrop = true
+){
+
+    for(
+        let r = 0;
+        r < SIZE;
+        r++
+    ){
+
+        for(
+            let c = 0;
+            c < SIZE;
+            c++
+        ){
+
+            const cell =
+                cells[r][c];
+
+            const color =
+                grid[r][c];
+
+
+            let candy =
+                cell.querySelector(
+                    ".candy"
+                );
+
+
+            if(!color){
+
+                if(candy){
+
+                    candy.remove();
+                }
+
+                continue;
+            }
+
+
+            if(!candy){
+
+                candy =
+                    document.createElement(
+                        "div"
+                    );
+
+                cell.appendChild(
+                    candy
+                );
+            }
+
+
+            candy.className =
+                "candy " +
+                color;
+
+
+            candy.dataset.row =
+                r;
+
+            candy.dataset.col =
+                c;
+
+
+            candy.style.transform =
+                "translate3d(0,0,0) scale(1)";
+
+            candy.style.opacity =
+                "1";
+
+
+            if(animateDrop){
+
+                candy.classList.remove(
+                    "drop"
+                );
+
+
+                requestAnimationFrame(
+                    ()=>{
+                        candy.classList.add(
+                            "drop"
+                        );
+                    }
+                );
+            }
+        }
+    }
+}
+
+
+/* =========================================================
+   FIND MATCHES
+========================================================= */
+
+function findMatches(){
+
+    const matched =
+        new Set();
+
+
+    for(
+        let r = 0;
+        r < SIZE;
+        r++
+    ){
+
+        let start = 0;
+
+
+        for(
+            let c = 1;
+            c <= SIZE;
+            c++
+        ){
+
+            const current =
+                c < SIZE
+                    ? grid[r][c]
+                    : null;
+
+
+            const previous =
+                grid[r][c-1];
+
+
+            if(
+                current !== previous ||
+                current === null
+            ){
+
+                const length =
+                    c - start;
+
+
+                if(
+                    previous !== null &&
+                    length >= 3
+                ){
+
+                    for(
+                        let x = start;
+                        x < c;
+                        x++
+                    ){
+
+                        matched.add(
+                            r + "," + x
+                        );
+                    }
+                }
+
+
+                start = c;
+            }
+        }
+    }
+
+
+    for(
+        let c = 0;
+        c < SIZE;
+        c++
+    ){
+
+        let start = 0;
+
+
+        for(
+            let r = 1;
+            r <= SIZE;
+            r++
+        ){
+
+            const current =
+                r < SIZE
+                    ? grid[r][c]
+                    : null;
+
+
+            const previous =
+                grid[r-1][c];
+
+
+            if(
+                current !== previous ||
+                current === null
+            ){
+
+                const length =
+                    r - start;
+
+
+                if(
+                    previous !== null &&
+                    length >= 3
+                ){
+
+                    for(
+                        let x = start;
+                        x < r;
+                        x++
+                    ){
+
+                        matched.add(
+                            x + "," + c
+                        );
+                    }
+                }
+
+
+                start = r;
+            }
+        }
+    }
+
+
+    return [...matched]
+        .map(key=>{
+
+            const parts =
+                key.split(",");
+
+
+            return {
+                r:Number(parts[0]),
+                c:Number(parts[1])
+            };
+        });
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createParticles(cell){
+
+    const rect =
+        cell.getBoundingClientRect();
+
+
+    const cx =
+        rect.left +
+        rect.width / 2;
+
+
+    const cy =
+        rect.top +
+        rect.height / 2;
+
+
+    for(
+        let i = 0;
+        i < 8;
+        i++
+    ){
+
+        const p =
+            document.createElement(
+                "div"
+            );
+
+
+        p.className =
+            "particle";
+
+
+        p.style.left =
+            cx + "px";
+
+        p.style.top =
+            cy + "px";
+
+
+        p.style.setProperty(
+            "--x",
+            (
+                (Math.random() - .5) *
+                100
+            ) + "px"
+        );
+
+
+        p.style.setProperty(
+            "--y",
+            (
+                (Math.random() - .5) *
+                100
+            ) + "px"
+        );
+
+
+        board.appendChild(
+            p
+        );
+
+
+        setTimeout(
+            ()=>{
+                p.remove();
+            },
+            600
+        );
+    }
+}
+
+
+/* =========================================================
+   COMBO
+========================================================= */
+
+function showCombo(n){
+
+    comboEl.textContent =
+        n > 1
+            ? "COMBO ×" + n
+            : "MATCH!";
+
+
+    comboEl.classList.remove(
+        "show"
+    );
+
+
+    void comboEl.offsetWidth;
+
+
+    comboEl.classList.add(
+        "show"
+    );
+}
+
+
+/* =========================================================
+   POSITION
+========================================================= */
+
+function validPosition(
+    r,
+    c
+){
+
+    return (
+        r >= 0 &&
+        r < SIZE &&
+        c >= 0 &&
+        c < SIZE
+    );
+}
+
+
+/* =========================================================
+   SWAP
+========================================================= */
+
+function swapGrid(a,b){
+
+    const temp =
+        grid[a.r][a.c];
+
+
+    grid[a.r][a.c] =
+        grid[b.r][b.c];
+
+
+    grid[b.r][b.c] =
+        temp;
+}
+
+
+function animateSwap(a,b){
+
+    const cellA =
+        cells[a.r][a.c];
+
+
+    const cellB =
+        cells[b.r][b.c];
+
+
+    const candyA =
+        cellA.querySelector(
+            ".candy"
+        );
+
+
+    const candyB =
+        cellB.querySelector(
+            ".candy"
+        );
+
+
+    if(
+        !candyA ||
+        !candyB
+    ){
+        return;
+    }
+
+
+    const dx =
+        (b.c - a.c) * 100;
+
+
+    const dy =
+        (b.r - a.r) * 100;
+
+
+    candyA.style.transform =
+        `translate3d(
+            ${dx}%,
+            ${dy}%,
+            0
+        )`;
+
+
+    candyB.style.transform =
+        `translate3d(
+            ${-dx}%,
+            ${-dy}%,
+            0
+        )`;
+}
+
+
+async function performSwap(a,b){
+
+    if(busy) return;
+
+
+    if(
+        !validPosition(a.r,a.c) ||
+        !validPosition(b.r,b.c)
+    ){
+
+        return;
+    }
+
+
+    busy = true;
+
+
+    swipeSound();
+
+
+    animateSwap(
+        a,
+        b
+    );
+
+
+    await wait(135);
+
+
+    swapGrid(
+        a,
+        b
+    );
+
+
+    renderBoard(false);
+
+
+    await wait(35);
+
+
+    const matches =
+        findMatches();
+
+
+    if(
+        matches.length === 0
+    ){
+
+        animateSwap(
+            a,
+            b
+        );
+
+
+        await wait(135);
+
+
+        swapGrid(
+            a,
+            b
+        );
+
+
+        renderBoard(false);
+
+
+        busy = false;
+
+        return;
+    }
+
+
+    moves--;
+
+
+    movesEl.textContent =
+        moves;
+
+
+    await resolveMatches();
+
+
+    checkLevel();
+}
+
+
+/* =========================================================
+   RESOLVE MATCHES
+========================================================= */
+
+async function resolveMatches(){
+
+    combo = 0;
+
+
+    while(true){
+
+        const matches =
+            findMatches();
+
+
+        if(
+            matches.length === 0
+        ){
+
+            break;
+        }
+
+
+        combo++;
+
+
+        matchedTotal +=
+            matches.length;
+
+
+        score +=
+            matches.length *
+            10 *
+            combo;
+
+
+        scoreEl.textContent =
+            score;
+
+
+        matchSound(
+            matches.length
+        );
+
+
+        if(combo > 1){
+
+            comboSound(
+                combo
+            );
+        }
+
+
+        showCombo(
+            combo
+        );
+
+
+        for(
+            const pos of matches
+        ){
+
+            const cell =
+                cells[pos.r][pos.c];
+
+
+            const candy =
+                cell.querySelector(
+                    ".candy"
+                );
+
+
+            if(candy){
+
+                createParticles(
+                    cell
+                );
+
+
+                candy.classList.add(
+                    "pop"
+                );
+            }
+        }
+
+
+        await wait(220);
+
+
+        for(
+            const pos of matches
+        ){
+
+            grid[pos.r][pos.c] =
+                null;
+        }
+
+
+        renderBoard(false);
+
+
+        await wait(60);
+
+
+        applyGravity();
+
+
+        renderBoard(true);
+
+
+        await wait(270);
+    }
+}
+
+
+/* =========================================================
+   GRAVITY
+========================================================= */
+
+function applyGravity(){
+
+    for(
+        let c = 0;
+        c < SIZE;
+        c++
+    ){
+
+        let writeRow =
+            SIZE - 1;
+
+
+        for(
+            let r = SIZE - 1;
+            r >= 0;
+            r--
+        ){
+
+            if(
+                grid[r][c] !== null
+            ){
+
+                grid[writeRow][c] =
+                    grid[r][c];
+
+
+                if(
+                    writeRow !== r
+                ){
+
+                    grid[r][c] =
+                        null;
+                }
+
+
+                writeRow--;
+            }
+        }
+
+
+        while(
+            writeRow >= 0
+        ){
+
+            grid[writeRow][c] =
+                randomColor();
+
+
+            writeRow--;
+        }
+    }
+}
+
+
+/* =========================================================
+   LEVEL CHECK
+========================================================= */
+
+function checkLevel(){
+
+    if(
+        matchedTotal >= target
+    ){
+
+        busy = true;
+
+
+        levelCompleteSound();
+
+
+        showResult(
+            true
+        );
+
+
+        return;
+    }
+
+
+    if(
+        moves <= 0
+    ){
+
+        busy = true;
+
+
+        failedSound();
+
+
+        showResult(
+            false
+        );
+
+
+        return;
+    }
+
+
+    busy = false;
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showResult(
+    success
+){
+
+    showScreen(
+        resultScreen
+    );
+
+
+    if(success){
+
+        resultTitle.textContent =
+            "LEVEL COMPLETE! 🎉";
+
+
+        resultScore.textContent =
+            "Score: " + score;
+
+
+        nextBtn.style.display =
+            "block";
+
+    }else{
+
+        resultTitle.textContent =
+            "LEVEL FAILED";
+
+
+        resultScore.textContent =
+            "Try again! Score: " +
+            score;
+
+
+        nextBtn.style.display =
+            "none";
+    }
+}
+
+
+/* =========================================================
+   POINTER / TOUCH CONTROL
+========================================================= */
+
+function setupPointerControls(){
+
+    board.onpointerdown =
+        null;
+
+    board.onpointermove =
+        null;
+
+    board.onpointerup =
+        null;
+
+    board.onpointercancel =
+        null;
+
+
+    board.addEventListener(
+        "pointerdown",
+        onPointerDown
+    );
+
+
+    board.addEventListener(
+        "pointermove",
+        onPointerMove
+    );
+
+
+    board.addEventListener(
+        "pointerup",
+        onPointerUp
+    );
+
+
+    board.addEventListener(
+        "pointercancel",
+        onPointerCancel
+    );
+}
+
+
+/* =========================================================
+   BOARD POSITION
+========================================================= */
+
+function getBoardPosition(
+    event
+){
+
+    const rect =
+        board.getBoundingClientRect();
+
+
+    const x =
+        event.clientX -
+        rect.left;
+
+
+    const y =
+        event.clientY -
+        rect.top;
+
+
+    const col =
+        Math.floor(
+            x /
+            (rect.width / SIZE)
+        );
+
+
+    const row =
+        Math.floor(
+            y /
+            (rect.height / SIZE)
+        );
+
+
+    if(
+        !validPosition(
+            row,
+            col
+        )
+    ){
+
+        return null;
+    }
+
+
+    return {
+        r:row,
+        c:col
+    };
+}
+
+
+/* =========================================================
+   POINTER DOWN
+========================================================= */
+
+function onPointerDown(
+    event
+){
+
+    if(busy) return;
+
+
+    initAudio();
+
+
+    const pos =
+        getBoardPosition(
+            event
+        );
+
+
+    if(!pos) return;
+
+
+    pointerStart = {
+
+        x:event.clientX,
+
+        y:event.clientY,
+
+        r:pos.r,
+
+        c:pos.c
+    };
+
+
+    selected = {
+
+        r:pos.r,
+
+        c:pos.c
+    };
+
+
+    const candy =
+        cells[pos.r][pos.c]
+            .querySelector(
+                ".candy"
+            );
+
+
+    if(candy){
+
+        candy.classList.add(
+            "selected"
+        );
+    }
+
+
+    try{
+
+        board.setPointerCapture(
+            event.pointerId
+        );
+
+    }catch(e){}
+}
+
+
+/* =========================================================
+   CLEAR SELECTION
+========================================================= */
+
+function clearSelection(){
+
+    if(!selected) return;
+
+
+    const candy =
+        cells[selected.r][selected.c]
+            ?.querySelector(
+                ".candy"
+            );
+
+
+    if(candy){
+
+        candy.classList.remove(
+            "selected"
+        );
+    }
+
+
+    selected = null;
+}
+
+
+/* =========================================================
+   POINTER MOVE
+========================================================= */
+
+function onPointerMove(
+    event
+){
+
+    if(
+        !pointerStart ||
+        busy
+    ){
+
+        return;
+    }
+
+
+    const dx =
+        event.clientX -
+        pointerStart.x;
+
+
+    const dy =
+        event.clientY -
+        pointerStart.y;
+
+
+    const distance =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
+
+
+    if(
+        distance < 8
+    ){
+
+        return;
+    }
+
+
+    const candy =
+        cells[
+            pointerStart.r
+        ][
+            pointerStart.c
+        ]?.querySelector(
+            ".candy"
+        );
+
+
+    if(!candy) return;
+
+
+    const maxPreview =
+        34;
+
+
+    let px = dx;
+
+    let py = dy;
+
+
+    if(
+        Math.abs(px) >
+        Math.abs(py)
+    ){
+
+        py = 0;
+
+
+        px =
+            Math.max(
+                -maxPreview,
+                Math.min(
+                    maxPreview,
+                    px
+                )
+            );
+
+    }else{
+
+        px = 0;
+
+
+        py =
+            Math.max(
+                -maxPreview,
+                Math.min(
+                    maxPreview,
+                    py
+                )
+            );
+    }
+
+
+    candy.style.transform =
+        `translate3d(
+            ${px}px,
+            ${py}px,
+            0
+        )
+        scale(1.08)`;
+}
+
+
+/* =========================================================
+   POINTER UP
+========================================================= */
+
+function onPointerUp(
+    event
+){
+
+    if(!pointerStart){
+
+        return;
+    }
+
+
+    if(busy){
+
+        clearSelection();
+
+        pointerStart = null;
+
+        return;
+    }
+
+
+    const start = {
+
+        r:pointerStart.r,
+
+        c:pointerStart.c
+    };
+
+
+    const dx =
+        event.clientX -
+        pointerStart.x;
+
+
+    const dy =
+        event.clientY -
+        pointerStart.y;
+
+
+    const absX =
+        Math.abs(dx);
+
+
+    const absY =
+        Math.abs(dy);
+
+
+    const threshold =
+        24;
+
+
+    let targetPos =
+        null;
+
+
+    if(
+        Math.max(
+            absX,
+            absY
+        ) >= threshold
+    ){
+
+        if(
+            absX > absY
+        ){
+
+            targetPos = {
+
+                r:start.r,
+
+                c:
+                    start.c +
+                    (dx > 0
+                        ? 1
+                        : -1)
+            };
+
+        }else{
+
+            targetPos = {
+
+                r:
+                    start.r +
+                    (dy > 0
+                        ? 1
+                        : -1),
+
+                c:start.c
+            };
+        }
+    }
+
+
+    clearSelection();
+
+    pointerStart = null;
+
+
+    if(
+        targetPos &&
+        validPosition(
+            targetPos.r,
+            targetPos.c
+        )
+    ){
+
+        performSwap(
+            start,
+            targetPos
+        );
+    }
+}
+
+
+/* =========================================================
+   POINTER CANCEL
+========================================================= */
+
+function onPointerCancel(){
+
+    clearSelection();
+
+    pointerStart = null;
+}
+
+
+/* =========================================================
+   WAIT
+========================================================= */
+
+function wait(ms){
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
+}
+
+
+/* =========================================================
+   MOBILE GESTURE CONTROL
+========================================================= */
+
+document.addEventListener(
+    "gesturestart",
+    e => e.preventDefault(),
+    {
+        passive:false
+    }
+);
+
+
+document.addEventListener(
+    "touchmove",
+    e => {
+
+        if(
+            gameScreen.classList
+                .contains("active")
+        ){
+
+            e.preventDefault();
+        }
+
+    },
+    {
+        passive:false
+    }
+);
+
+</script>
+
+</body>
+</html>
