@@ -6,7 +6,7 @@ const games = [
    {
     id: 9,
     title: "Carrom Board",
-    category: "",
+    category: "Board",
     icon: "games/file_00000000d8dc820ba98dd0aa7d484503.png",
     url: "games/Carrom Board.html",
     newGame: false,
@@ -14,7 +14,7 @@ const games = [
   },
   {
     id: 8,
-    title: "fruit Cut",
+    title: "Fruit Cut",
     category: "",
     icon: "games/IMG-20260914-WA0051.jpg",
     url: "games/bdcut.html",
