@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Game With Fun Flying Bird - Free Online Flying Bird Game</title>
+
+<meta name="description"
+content="Play Game With Fun Flying Bird, a free online flying bird game. Tap to fly, avoid pipes, collect points and beat your best score on mobile or desktop.">
+
+<meta name="keywords"
+content="Game With Fun Flying Bird, flying bird game, free online bird game, HTML5 bird game, tap to fly game, browser game, mobile game, free games">
+
+<meta name="author" content="Game With Fun">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:title"
+content="Game With Fun Flying Bird - Free Online Game">
+
+<meta property="og:description"
+content="Play Game With Fun Flying Bird online for free. Fly through the pipes and beat your best score.">
+
+<meta property="og:type" content="website">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 5%,#35216c,transparent 30%),
+        radial-gradient(circle at 90% 20%,#004f68,transparent 30%),
+        #060914;
+    color:#fff;
+    font-family:'Baloo Da 2',Arial,sans-serif;
+    overflow-x:hidden;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    color:#fff;
+    font-family:inherit;
+    font-weight:800;
+}
+
+button:active{
+    transform:scale(.96);
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    width:min(100%,1100px);
+    margin:auto;
+    padding:18px 14px 50px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.brand-icon{
+    width:45px;
+    height:45px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    background:linear-gradient(145deg,#795cff,#00c7e8);
+    box-shadow:0 10px 30px #00c8e833;
+}
+
+.brand-text{
+    line-height:1.05;
+}
+
+.brand-name{
+    font-size:25px;
+    font-weight:800;
+    background:linear-gradient(90deg,#fff,#62edff,#a98cff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.brand-sub{
+    color:#9caaca;
+    font-size:12px;
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+.game-section{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+
+.game-card{
+    width:min(100%,470px);
+}
+
+.game-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.game-name{
+    font-size:28px;
+    font-weight:800;
+    line-height:1.05;
+    background:linear-gradient(90deg,#fff,#5deaff,#a889ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.game-subtitle{
+    color:#a5b2ce;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.score-box{
+    min-width:82px;
+    text-align:center;
+    padding:7px 12px;
+    border-radius:15px;
+    background:linear-gradient(145deg,#243452,#11182c);
+    border:1px solid #ffffff18;
+    box-shadow:0 8px 25px #0006;
+}
+
+.score-box small{
+    display:block;
+    color:#aebbd7;
+    font-size:11px;
+}
+
+.score-box b{
+    font-size:25px;
+}
+
+/* SOUND */
+
+.sound-btn{
+    position:absolute;
+    top:12px;
+    right:12px;
+    z-index:8;
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:#071525cc;
+    border:1px solid #ffffff2c;
+    backdrop-filter:blur(10px);
+    font-size:19px;
+    box-shadow:0 8px 20px #0005;
+}
+
+/* STAGE */
+
+.stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:430/650;
+    overflow:hidden;
+    border-radius:28px;
+    border:2px solid #ffffff22;
+    background:#75d9f3;
+    box-shadow:
+        0 25px 70px #000b,
+        0 0 50px #00d9ff14;
+    touch-action:manipulation;
+}
+
+canvas{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    border-radius:26px;
+    background:#06101ee8;
+    backdrop-filter:blur(12px);
+}
+
+.overlay.hidden{
+    display:none;
+}
+
+.modal{
+    width:100%;
+    padding:28px 20px;
+    text-align:center;
+    border-radius:24px;
+    background:
+        linear-gradient(145deg,#26385b,#10172b);
+    border:1px solid #ffffff20;
+    box-shadow:0 25px 70px #0009;
+}
+
+.modal-icon{
+    font-size:50px;
+    margin-bottom:4px;
+    filter:drop-shadow(0 8px 15px #0006);
+}
+
+.modal h1{
+    font-size:32px;
+    line-height:1.1;
+    margin-bottom:9px;
+    background:linear-gradient(90deg,#fff,#5cecff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.modal p{
+    color:#b7c4dc;
+    line-height:1.65;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+.start-btn{
+    width:100%;
+    padding:14px;
+    border-radius:16px;
+    background:linear-gradient(90deg,#765cff,#00b6db);
+    font-size:18px;
+    box-shadow:0 10px 30px #6658e955;
+}
+
+.best{
+    color:#ffd45e;
+    font-size:14px;
+    margin-top:12px;
+}
+
+.hint{
+    margin-top:10px;
+    text-align:center;
+    color:#aebbd8;
+    font-size:14px;
+}
+
+.restart-btn{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border-radius:15px;
+    background:linear-gradient(90deg,#252e49,#172039);
+    border:1px solid #ffffff16;
+    font-size:16px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    margin-top:45px;
+}
+
+.content-section{
+    margin-bottom:24px;
+    padding:25px 22px;
+    border-radius:22px;
+    background:linear-gradient(145deg,#111a30,#0b1222);
+    border:1px solid #ffffff12;
+    box-shadow:0 15px 45px #0004;
+}
+
+.content-section h2{
+    font-size:25px;
+    margin-bottom:12px;
+    background:linear-gradient(90deg,#fff,#61eaff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.content-section h3{
+    font-size:19px;
+    margin:18px 0 7px;
+    color:#e8f5ff;
+}
+
+.content-section p{
+    color:#b6c2d9;
+    font-size:15px;
+    line-height:1.8;
+    margin-bottom:10px;
+}
+
+.content-section ul{
+    padding-left:20px;
+    color:#b6c2d9;
+}
+
+.content-section li{
+    margin:8px 0;
+    line-height:1.6;
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.faq-item{
+    border:1px solid #ffffff12;
+    border-radius:15px;
+    overflow:hidden;
+    margin-bottom:10px;
+    background:#0d1629;
+}
+
+.faq-question{
+    width:100%;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    text-align:left;
+    background:transparent;
+    color:#fff;
+    font-size:16px;
+}
+
+.faq-icon{
+    font-size:20px;
+    transition:.25s;
+    color:#6eeaff;
+}
+
+.faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+}
+
+.faq-answer p{
+    padding:0 16px 16px;
+    margin:0;
+}
+
+.faq-item.active .faq-answer{
+    max-height:300px;
+}
+
+.faq-item.active .faq-icon{
+    transform:rotate(45deg);
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+
+.quick-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:12px;
+}
+
+.quick-links a{
+    text-decoration:none;
+    color:#ccefff;
+    background:#16223a;
+    border:1px solid #ffffff12;
+    padding:8px 13px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+/* =========================
+   ADSENSE
+========================= */
+
+.adsense-area{
+    margin-top:35px;
+    padding:20px;
+    min-height:170px;
+    border-radius:20px;
+    border:1px dashed #ffffff25;
+    background:#0a1020;
+    text-align:center;
+}
+
+.adsense-title{
+    color:#7e8ba7;
+    font-size:12px;
+    letter-spacing:.5px;
+    margin-bottom:12px;
+}
+
+.adsense-placeholder{
+    min-height:110px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#56627a;
+    font-size:13px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:30px;
+    padding-top:22px;
+    border-top:1px solid #ffffff10;
+    text-align:center;
+    color:#69758d;
+    font-size:13px;
+}
+
+.footer a{
+    color:#8ba8c7;
+    text-decoration:none;
+    margin:0 5px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .page{
+        padding:12px 10px 40px;
+    }
+
+    .site-header{
+        margin-bottom:14px;
+    }
+
+    .brand-icon{
+        width:40px;
+        height:40px;
+        font-size:22px;
+    }
+
+    .brand-name{
+        font-size:22px;
+    }
+
+    .game-name{
+        font-size:24px;
+    }
+
+    .content{
+        margin-top:35px;
+    }
+
+    .content-section{
+        padding:21px 17px;
+        border-radius:19px;
+    }
+
+    .content-section h2{
+        font-size:22px;
+    }
+
+    .content-section p,
+    .content-section li{
+        font-size:14px;
+    }
+
+    .modal{
+        padding:24px 17px;
+    }
+
+    .modal h1{
+        font-size:28px;
+    }
+
+    .sound-btn{
+        width:40px;
+        height:40px;
+        top:10px;
+        right:10px;
+    }
+}
+
+@media(max-width:350px){
+
+    .brand-name{
+        font-size:19px;
+    }
+
+    .game-name{
+        font-size:21px;
+    }
+
+    .score-box{
+        min-width:68px;
+    }
+
+    .score-box b{
+        font-size:21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="site-header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🎮
+            </div>
+
+            <div class="brand-text">
+                <div class="brand-name">GAME WITH FUN</div>
+                <div class="brand-sub">
+                    Free Online Games
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         GAME AREA
+    ========================== -->
+
+    <main class="game-section">
+
+        <div class="game-card">
+
+            <div class="game-top">
+
+                <div>
+                    <div class="game-name">
+                        Flying Bird
+                    </div>
+
+                    <div class="game-subtitle">
+                        পাখিটিকে উড়িয়ে বাধা পার করুন
+                    </div>
+                </div>
+
+                <div class="score-box">
+                    <small>স্কোর</small>
+                    <b id="score">0</b>
+                </div>
+
+            </div>
+
+
+            <div class="stage" id="stage">
+
+                <canvas
+                    id="canvas"
+                    width="430"
+                    height="650">
+                </canvas>
+
+
+                <!-- SOUND BUTTON -->
+
+                <button
+                    class="sound-btn"
+                    id="soundBtn"
+                    aria-label="Toggle sound">
+                    🔊
+                </button>
+
+
+                <!-- START / GAME OVER -->
+
+                <div class="overlay" id="overlay">
+
+                    <div class="modal">
+
+                        <div class="modal-icon">
+                            🐦
+                        </div>
+
+                        <h1 id="title">
+                            GAME WITH FUN FLYING BIRD
+                        </h1>
+
+                        <p id="text">
+                            স্ক্রিনে ট্যাপ করলে পাখি উপরে উঠবে।
+                            পাইপের ফাঁক দিয়ে পাখিকে পার করুন।
+                            যত বেশি দূর যাবেন, স্কোর তত বাড়বে!
+                        </p>
+
+                        <button
+                            class="start-btn"
+                            id="start">
+                            গেম শুরু করুন 🚀
+                        </button>
+
+                        <div class="best">
+                            🏆 সেরা স্কোর:
+                            <span id="best">0</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hint">
+                🖱️ ক্লিক করুন অথবা 📱 স্ক্রিনে ট্যাপ করুন
+            </div>
+
+
+            <button
+                class="restart-btn"
+                id="restart">
+                ↻ নতুন গেম
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         SEO CONTENT
+    ========================== -->
+
+    <div class="content">
+
+
+        <section class="content-section">
+
+            <h2>
+                Game With Fun Flying Bird
+            </h2>
+
+            <p>
+                Game With Fun Flying Bird is a free online browser game
+                where you control a flying bird and try to pass through
+                challenging obstacles. The game is designed for quick,
+                simple and entertaining gameplay on both mobile phones
+                and desktop browsers.
+            </p>
+
+            <p>
+                Tap or click the screen to make the bird fly upward.
+                Carefully control the bird and pass through the gaps
+                between the pipes. Your score increases every time you
+                successfully pass an obstacle.
+            </p>
+
+            <p>
+                The goal is simple: survive as long as possible and
+                create your highest score. You can play the game directly
+                in your browser without downloading or installing a
+                separate application.
+            </p>
+
+        </section>
+
+
+        <section class="content-section">
+
+            <h2>
+                How to Play Flying Bird
+            </h2>
+
+            <h3>
+                🐦 Control the Bird
+            </h3>
+
+            <p>
+                Tap the game screen on a mobile device or click the game
+                area on desktop to make the bird move upward.
+            </p>
+
+            <h3>
+                🚧 Avoid the Pipes
+            </h3>
+
+            <p>
+                Guide the bird through the empty spaces between the
+                pipes. Touching an obstacle ends the game.
+            </p>
+
+            <h3>
+                🏆 Beat Your Best Score
+            </h3>
+
+            <p>
+                Every successful pipe you pass gives you another point.
+                Try to beat your previous high score and improve your
+                flying skills.
+            </p>
+
+        </section>
+
+
+        <section class="content-section">
+
+            <h2>
+                Flying Bird Game Features
+            </h2>
+
+            <ul>
+                <li>Free online browser gameplay</li>
+                <li>Mobile and desktop friendly</li>
+                <li>Simple tap and click controls</li>
+                <li>Fast and lightweight HTML5 game</li>
+                <li>Automatic best score saving</li>
+                <li>Original browser-generated sound effects</li>
+                <li>No external game files required</li>
+                <li>Easy-to-play arcade gameplay</li>
+            </ul>
+
+        </section>
+
+
+        <section class="content-section">
+
+            <h2>
+                Play Free Online Games
+            </h2>
+
+            <p>
+                Game With Fun provides simple browser games that can be
+                played directly online. Our goal is to create lightweight
+                games that are easy to understand and enjoyable on
+                smartphones, tablets and computers.
+            </p>
+
+            <p>
+                Game With Fun Flying Bird is made for casual gaming.
+                You can play a quick round whenever you have a few free
+                minutes and try to improve your personal high score.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             FAQ
+        ========================== -->
+
+        <section class="content-section" id="faq">
+
+            <h2>
+                Frequently Asked Questions
+            </h2>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    <span>
+                        How do I play Flying Bird?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Tap the screen on mobile or click the game area
+                        on desktop to make the bird fly upward. Avoid the
+                        pipes and try to get the highest score.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    <span>
+                        Is Game With Fun Flying Bird free?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. The game is designed to be played online
+                        directly in your web browser.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    <span>
+                        Can I play on my mobile phone?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. The game interface is responsive and supports
+                        touch controls on compatible mobile browsers.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    <span>
+                        Is my best score saved?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. Your highest score is stored locally in your
+                        browser using localStorage.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    <span>
+                        Does the game have sound?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. The game uses browser-generated sound effects
+                        for actions such as flying, scoring and game over.
+                        You can turn the sound on or off using the sound
+                        button.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABOUT
+        ========================== -->
+
+        <section class="content-section" id="about">
+
+            <h2>
+                About Game With Fun
+            </h2>
+
+            <p>
+                Game With Fun is an online gaming website created to
+                provide simple, enjoyable and browser-friendly games.
+                Visitors can play games directly from their browser
+                without needing complicated installation processes.
+            </p>
+
+            <p>
+                Our games are designed with a focus on simple controls,
+                responsive layouts and enjoyable casual gameplay.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             PRIVACY
+        ========================== -->
+
+        <section class="content-section" id="privacy">
+
+            <h2>
+                Privacy Policy
+            </h2>
+
+            <p>
+                Game With Fun respects your privacy. This game itself
+                does not require you to create an account or provide
+                personal information to play.
+            </p>
+
+            <p>
+                The Flying Bird game may use your browser's local storage
+                to save your best score. This information remains stored
+                locally in your browser.
+            </p>
+
+            <p>
+                If advertising or analytics services are used on the
+                website, those services may collect information according
+                to their own privacy policies. Visitors should review
+                the relevant third-party policies when applicable.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             DISCLAIMER
+        ========================== -->
+
+        <section class="content-section" id="disclaimer">
+
+            <h2>
+                Disclaimer
+            </h2>
+
+            <p>
+                The information and games available on Game With Fun are
+                provided for general entertainment purposes.
+            </p>
+
+            <p>
+                Game availability, features and website content may be
+                changed or updated at any time. We do not guarantee that
+                the website or individual games will always be available
+                without interruption or errors.
+            </p>
+
+            <p>
+                Third-party services, advertisements or external websites
+                may have their own terms and policies. Game With Fun is
+                not responsible for the policies or content of external
+                services.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             CONTACT
+        ========================== -->
+
+        <section class="content-section" id="contact">
+
+            <h2>
+                Contact Game With Fun
+            </h2>
+
+            <p>
+                If you have questions, suggestions, feedback or notice an
+                issue with a game, you can contact us by email.
+            </p>
+
+            <p>
+                📧 Email:
+                <strong>contact@gamewithfun.com</strong>
+            </p>
+
+            <p>
+                Please replace this email address with your real official
+                Game With Fun contact email before publishing.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             QUICK LINKS
+        ========================== -->
+
+        <section class="content-section">
+
+            <h2>
+                Game With Fun Information
+            </h2>
+
+            <div class="quick-links">
+
+                <a href="#about">
+                    About
+                </a>
+
+                <a href="#privacy">
+                    Privacy Policy
+                </a>
+
+                <a href="#disclaimer">
+                    Disclaimer
+                </a>
+
+                <a href="#contact">
+                    Contact
+                </a>
+
+                <a href="#faq">
+                    FAQ
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ADSENSE AREA
+        ========================== -->
+
+        <section class="adsense-area">
+
+            <div class="adsense-title">
+                ADVERTISEMENT
+            </div>
+
+            <div class="adsense-placeholder">
+
+                <!--
+                Replace this area with your official
+                Google AdSense ad code after AdSense approval.
+
+                Example:
+
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                -->
+
+                Google AdSense Area
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div>
+            © 2026 Game With Fun. All rights reserved.
+        </div>
+
+        <div style="margin-top:8px;">
+
+            <a href="#about">
+                About
+            </a>
+
+            <a href="#privacy">
+                Privacy
+            </a>
+
+            <a href="#disclaimer">
+                Disclaimer
+            </a>
+
+            <a href="#contact">
+                Contact
+            </a>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GAME
+===================================================== */
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const W = canvas.width;
+const H = canvas.height;
+
+const stage = document.getElementById("stage");
+const overlay = document.getElementById("overlay");
+
+const titleEl = document.getElementById("title");
+const textEl = document.getElementById("text");
+
+const startBtn = document.getElementById("start");
+const restartBtn = document.getElementById("restart");
+
+const scoreEl = document.getElementById("score");
+const bestEl = document.getElementById("best");
+
+const soundBtn = document.getElementById("soundBtn");
+
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
+
+let best = Number(
+    localStorage.getItem("gameWithFunFlyingBirdBest") || 0
+);
+
+let score = 0;
+
+let running = false;
+let gameOver = false;
+
+let lastTime = 0;
+let pipeTimer = 0;
+
+let particles = [];
+
+let pipes = [];
+
+
+/* =====================================================
+   SOUND SYSTEM
+   Generated with Web Audio API
+===================================================== */
+
+let audioContext = null;
+
+let soundEnabled =
+    localStorage.getItem("gameWithFunBirdSound") !== "off";
+
+
+function initAudio(){
+
+    if(!audioContext){
+
+        const AudioCtx =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if(AudioCtx){
+            audioContext = new AudioCtx();
+        }
+
+    }
+
+    if(audioContext &&
+       audioContext.state === "suspended"){
+
+        audioContext.resume();
+
+    }
+}
+
+
+function playTone(
+    frequency,
+    duration,
+    type="sine",
+    volume=.06,
+    slide=0
+){
+
+    if(!soundEnabled) return;
+
+    initAudio();
+
+    if(!audioContext) return;
+
+    const now = audioContext.currentTime;
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.type = type;
+
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        now
+    );
+
+    if(slide !== 0){
+
+        oscillator.frequency.linearRampToValueAtTime(
+            frequency + slide,
+            now + duration
+        );
+
+    }
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        volume,
+        now + .015
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + duration + .02);
+}
+
+
+/* FLAP */
+
+function flapSound(){
+
+    playTone(
+        520,
+        .09,
+        "triangle",
+        .055,
+        180
+    );
+}
+
+
+/* SCORE */
+
+function scoreSound(){
+
+    playTone(
+        700,
+        .08,
+        "sine",
+        .06,
+        120
+    );
+
+    setTimeout(()=>{
+
+        playTone(
+            920,
+            .10,
+            "sine",
+            .055,
+            100
+        );
+
+    },60);
+}
+
+
+/* GAME OVER */
+
+function gameOverSound(){
+
+    playTone(
+        220,
+        .18,
+        "sawtooth",
+        .055,
+        -100
+    );
+
+    setTimeout(()=>{
+
+        playTone(
+            130,
+            .25,
+            "sawtooth",
+            .045,
+            -40
+        );
+
+    },130);
+}
+
+
+/* START */
+
+function startSound(){
+
+    playTone(
+        480,
+        .08,
+        "sine",
+        .045,
+        100
+    );
+
+    setTimeout(()=>{
+
+        playTone(
+            680,
+            .10,
+            "sine",
+            .05,
+            100
+        );
+
+    },80);
+}
+
+
+/* BUTTON */
+
+function clickSound(){
+
+    playTone(
+        360,
+        .055,
+        "square",
+        .025,
+        60
+    );
+}
+
+
+/* =====================================================
+   SOUND BUTTON
+===================================================== */
+
+function updateSoundButton(){
+
+    soundBtn.textContent =
+        soundEnabled ? "🔊" : "🔇";
+
+    soundBtn.setAttribute(
+        "aria-label",
+        soundEnabled
+            ? "Turn sound off"
+            : "Turn sound on"
+    );
+}
+
+
+soundBtn.addEventListener("click",function(event){
+
+    event.stopPropagation();
+
+    soundEnabled = !soundEnabled;
+
+    localStorage.setItem(
+        "gameWithFunBirdSound",
+        soundEnabled ? "on" : "off"
+    );
+
+    if(soundEnabled){
+        initAudio();
+        clickSound();
+    }
+
+    updateSoundButton();
+
+});
+
+
+updateSoundButton();
+
+
+/* =====================================================
+   BIRD
+===================================================== */
+
+const bird = {
+
+    x:95,
+    y:280,
+    r:17,
+
+    velocity:0,
+    rotation:0
+
+};
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetGame(){
+
+    score = 0;
+
+    pipes = [];
+    particles = [];
+
+    pipeTimer = 0;
+
+    bird.x = 95;
+    bird.y = 280;
+    bird.velocity = 0;
+    bird.rotation = 0;
+
+    scoreEl.textContent = score;
+
+    draw();
+
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame(){
+
+    initAudio();
+
+    resetGame();
+
+    running = true;
+    gameOver = false;
+
+    overlay.classList.add("hidden");
+
+    titleEl.textContent =
+        "GAME WITH FUN FLYING BIRD";
+
+    textEl.textContent =
+        "স্ক্রিনে ট্যাপ করলে পাখি উপরে উঠবে। পাইপের ফাঁক দিয়ে পাখিকে পার করুন। যত বেশি দূর যাবেন, স্কোর তত বাড়বে!";
+
+    startBtn.textContent =
+        "গেম শুরু করুন 🚀";
+
+    bestEl.textContent = best;
+
+    lastTime = performance.now();
+
+    startSound();
+
+    requestAnimationFrame(loop);
+
+}
+
+
+/* =====================================================
+   FLAP
+===================================================== */
+
+function flap(){
+
+    if(!running) return;
+
+    bird.velocity = -390;
+
+    flapSound();
+
+    for(let i=0;i<6;i++){
+
+        particles.push({
+
+            x:bird.x-10,
+
+            y:bird.y+8,
+
+            vx:-Math.random()*70,
+
+            vy:(Math.random()-.5)*70,
+
+            life:.5,
+
+            size:3+Math.random()*4
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   PIPE
+===================================================== */
+
+function createPipe(){
+
+    const gap =
+        Math.max(
+            135,
+            165-score*1.2
+        );
+
+    const minTop = 75;
+
+    const maxTop =
+        H-145-gap;
+
+    const top =
+        minTop +
+        Math.random() *
+        Math.max(
+            20,
+            maxTop-minTop
+        );
+
+
+    pipes.push({
+
+        x:W+35,
+
+        width:68,
+
+        top:top,
+
+        gap:gap,
+
+        passed:false
+
+    });
+
+}
+
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function endGame(){
+
+    if(!running) return;
+
+    running = false;
+
+    gameOver = true;
+
+    gameOverSound();
+
+
+    if(score > best){
+
+        best = score;
+
+        localStorage.setItem(
+            "gameWithFunFlyingBirdBest",
+            best
+        );
+
+    }
+
+
+    titleEl.textContent =
+        "গেম ওভার 💥";
+
+    textEl.textContent =
+        "আপনার স্কোর " +
+        score +
+        "। আবার চেষ্টা করুন এবং নিজের সেরা স্কোর ভেঙে ফেলুন!";
+
+    startBtn.textContent =
+        "আবার খেলুন 🚀";
+
+    bestEl.textContent = best;
+
+    overlay.classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   UPDATE
+===================================================== */
+
+function update(dt){
+
+    /* GRAVITY */
+
+    bird.velocity += 1050 * dt;
+
+    bird.y += bird.velocity * dt;
+
+    bird.rotation =
+        Math.max(
+            -.5,
+            Math.min(
+                1.1,
+                bird.velocity / 500
+            )
+        );
+
+
+    /* PIPE TIMER */
+
+    pipeTimer += dt;
+
+    if(pipeTimer > 1.55){
+
+        pipeTimer = 0;
+
+        createPipe();
+
+    }
+
+
+    /* MOVE PIPES */
+
+    for(const pipe of pipes){
+
+        pipe.x -=
+            (185 + score*2.3) * dt;
+
+
+        /* SCORE */
+
+        if(
+            !pipe.passed &&
+            pipe.x + pipe.width < bird.x
+        ){
+
+            pipe.passed = true;
+
+            score++;
+
+            scoreEl.textContent = score;
+
+            scoreSound();
+
+
+            for(let i=0;i<8;i++){
+
+                particles.push({
+
+                    x:bird.x,
+
+                    y:bird.y,
+
+                    vx:(Math.random()-.5)*100,
+
+                    vy:(Math.random()-.5)*100,
+
+                    life:.7,
+
+                    size:3+Math.random()*3
+
+                });
+
+            }
+
+        }
+
+    }
+
+
+    pipes =
+        pipes.filter(
+            pipe =>
+                pipe.x + pipe.width > -20
+        );
+
+
+    /* PARTICLES */
+
+    particles.forEach(p=>{
+
+        p.x += p.vx * dt;
+
+        p.y += p.vy * dt;
+
+        p.life -= dt;
+
+    });
+
+
+    particles =
+        particles.filter(
+            p=>p.life > 0
+        );
+
+
+    /* TOP / GROUND */
+
+    if(
+        bird.y-bird.r < 0 ||
+        bird.y+bird.r > H-35
+    ){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    /* PIPE COLLISION */
+
+    for(const pipe of pipes){
+
+        const hitX =
+            bird.x+bird.r > pipe.x &&
+            bird.x-bird.r <
+            pipe.x+pipe.width;
+
+
+        const hitY =
+            bird.y-bird.r < pipe.top ||
+            bird.y+bird.r >
+            pipe.top+pipe.gap;
+
+
+        if(hitX && hitY){
+
+            endGame();
+
+            return;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   ROUNDED RECT
+===================================================== */
+
+function roundedRect(
+    x,
+    y,
+    w,
+    h,
+    r
+){
+
+    const radius =
+        Math.min(
+            r,
+            w/2,
+            h/2
+        );
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+radius,
+        y
+    );
+
+    ctx.lineTo(
+        x+w-radius,
+        y
+    );
+
+    ctx.quadraticCurveTo(
+        x+w,
+        y,
+        x+w,
+        y+radius
+    );
+
+    ctx.lineTo(
+        x+w,
+        y+h-radius
+    );
+
+    ctx.quadraticCurveTo(
+        x+w,
+        y+h,
+        x+w-radius,
+        y+h
+    );
+
+    ctx.lineTo(
+        x+radius,
+        y+h
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y+h,
+        x,
+        y+h-radius
+    );
+
+    ctx.lineTo(
+        x,
+        y+radius
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y,
+        x+radius,
+        y
+    );
+
+    ctx.closePath();
+
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+function drawBackground(){
+
+    const sky =
+        ctx.createLinearGradient(
+            0,0,0,H
+        );
+
+    sky.addColorStop(
+        0,
+        "#67dff5"
+    );
+
+    sky.addColorStop(
+        .58,
+        "#a2eff2"
+    );
+
+    sky.addColorStop(
+        1,
+        "#d6f7bd"
+    );
+
+
+    ctx.fillStyle = sky;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* SUN */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        350,
+        90,
+        42,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fillStyle =
+        "#fff4a8";
+
+    ctx.shadowColor =
+        "#fff5a0";
+
+    ctx.shadowBlur = 30;
+
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+
+
+    /* CLOUDS */
+
+    drawCloud(70,110,1);
+
+    drawCloud(275,190,.8);
+
+    drawCloud(170,45,.65);
+
+
+    /* MOUNTAINS */
+
+    ctx.fillStyle =
+        "#8bc9bb";
+
+    ctx.beginPath();
+
+    ctx.moveTo(0,475);
+
+    ctx.lineTo(80,365);
+
+    ctx.lineTo(145,440);
+
+    ctx.lineTo(235,330);
+
+    ctx.lineTo(330,430);
+
+    ctx.lineTo(430,350);
+
+    ctx.lineTo(430,650);
+
+    ctx.lineTo(0,650);
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* GROUND */
+
+    ctx.fillStyle =
+        "#8ed45b";
+
+    ctx.fillRect(
+        0,
+        H-35,
+        W,
+        35
+    );
+
+
+    ctx.fillStyle =
+        "#c6ef77";
+
+    for(
+        let x=0;
+        x<W;
+        x+=28
+    ){
+
+        ctx.fillRect(
+            x,
+            H-35,
+            16,
+            5
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOUD
+===================================================== */
+
+function drawCloud(x,y,s){
+
+    ctx.save();
+
+    ctx.translate(x,y);
+
+    ctx.scale(s,s);
+
+    ctx.fillStyle =
+        "#ffffffaa";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        10,
+        22,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        25,
+        0,
+        30,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        55,
+        12,
+        22,
+        0,
+        Math.PI*2
+    );
+
+    roundedRect(
+        -18,
+        10,
+        92,
+        25,
+        14
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   PIPES
+===================================================== */
+
+function drawPipes(){
+
+    for(const pipe of pipes){
+
+        const bottomY =
+            pipe.top + pipe.gap;
+
+
+        const pipeGradient =
+            ctx.createLinearGradient(
+                pipe.x,
+                0,
+                pipe.x+pipe.width,
+                0
+            );
+
+
+        pipeGradient.addColorStop(
+            0,
+            "#087d75"
+        );
+
+        pipeGradient.addColorStop(
+            .45,
+            "#20d3a0"
+        );
+
+        pipeGradient.addColorStop(
+            1,
+            "#075b62"
+        );
+
+
+        ctx.fillStyle =
+            pipeGradient;
+
+        ctx.strokeStyle =
+            "#064d55";
+
+        ctx.lineWidth = 3;
+
+
+        /* TOP PIPE */
+
+        ctx.fillRect(
+            pipe.x,
+            0,
+            pipe.width,
+            pipe.top
+        );
+
+        ctx.strokeRect(
+            pipe.x,
+            0,
+            pipe.width,
+            pipe.top
+        );
+
+
+        /* BOTTOM PIPE */
+
+        ctx.fillRect(
+            pipe.x,
+            bottomY,
+            pipe.width,
+            H-35-bottomY
+        );
+
+        ctx.strokeRect(
+            pipe.x,
+            bottomY,
+            pipe.width,
+            H-35-bottomY
+        );
+
+
+        /* PIPE CAPS */
+
+        ctx.fillStyle =
+            "#36e6b4";
+
+
+        ctx.fillRect(
+            pipe.x-7,
+            pipe.top-20,
+            pipe.width+14,
+            20
+        );
+
+        ctx.strokeRect(
+            pipe.x-7,
+            pipe.top-20,
+            pipe.width+14,
+            20
+        );
+
+
+        ctx.fillRect(
+            pipe.x-7,
+            bottomY,
+            pipe.width+14,
+            20
+        );
+
+        ctx.strokeRect(
+            pipe.x-7,
+            bottomY,
+            pipe.width+14,
+            20
+        );
+
+
+        /* HIGHLIGHT */
+
+        ctx.fillStyle =
+            "#ffffff30";
+
+        ctx.fillRect(
+            pipe.x+10,
+            0,
+            9,
+            pipe.top
+        );
+
+        ctx.fillRect(
+            pipe.x+10,
+            bottomY+20,
+            9,
+            H-bottomY-55
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   BIRD
+===================================================== */
+
+function drawBird(){
+
+    ctx.save();
+
+    ctx.translate(
+        bird.x,
+        bird.y
+    );
+
+    ctx.rotate(
+        bird.rotation
+    );
+
+
+    /* SHADOW */
+
+    ctx.shadowColor =
+        "#0005";
+
+    ctx.shadowBlur = 12;
+
+    ctx.shadowOffsetY = 6;
+
+
+    /* BODY */
+
+    const body =
+        ctx.createLinearGradient(
+            -18,
+            -18,
+            20,
+            20
+        );
+
+
+    body.addColorStop(
+        0,
+        "#fff56a"
+    );
+
+    body.addColorStop(
+        .55,
+        "#ffc928"
+    );
+
+    body.addColorStop(
+        1,
+        "#f28a19"
+    );
+
+
+    ctx.fillStyle = body;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        bird.r,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+
+    /* WING */
+
+    ctx.fillStyle =
+        "#ff9d1c";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        -7,
+        7,
+        13,
+        7,
+        -.5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* EYE */
+
+    ctx.fillStyle =
+        "white";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        7,
+        -7,
+        7,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        "#17233d";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        9,
+        -7,
+        3,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* BEAK */
+
+    ctx.fillStyle =
+        "#ff5e45";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        13,
+        -1
+    );
+
+    ctx.lineTo(
+        30,
+        4
+    );
+
+    ctx.lineTo(
+        13,
+        9
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+function drawParticles(){
+
+    for(const p of particles){
+
+        ctx.globalAlpha =
+            Math.max(
+                0,
+                p.life
+            );
+
+        ctx.fillStyle =
+            "#fff5a1";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+    ctx.globalAlpha = 1;
+
+}
+
+
+/* =====================================================
+   DRAW
+===================================================== */
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+    drawBackground();
+
+    drawPipes();
+
+    drawParticles();
+
+    drawBird();
+
+}
+
+
+/* =====================================================
+   GAME LOOP
+===================================================== */
+
+function loop(time){
+
+    if(!running) return;
+
+    const dt =
+        Math.min(
+            .035,
+            (time-lastTime)/1000
+        );
+
+    lastTime = time;
+
+    update(dt);
+
+    draw();
+
+
+    if(running){
+
+        requestAnimationFrame(loop);
+
+    }
+
+}
+
+
+/* =====================================================
+   PLAYER ACTION
+===================================================== */
+
+function handleAction(){
+
+    initAudio();
+
+    if(!running){
+
+        startGame();
+
+    }else{
+
+        flap();
+
+    }
+
+}
+
+
+/* =====================================================
+   TOUCH / CLICK
+===================================================== */
+
+stage.addEventListener(
+    "pointerdown",
+    event => {
+
+        if(
+            event.target === soundBtn
+        ){
+            return;
+        }
+
+        event.preventDefault();
+
+        handleAction();
+
+    },
+    {passive:false}
+);
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.code === "Space" ||
+            event.code === "ArrowUp"
+        ){
+
+            event.preventDefault();
+
+            handleAction();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+startBtn.addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+        startGame();
+
+    }
+);
+
+
+restartBtn.addEventListener(
+    "click",
+    function(){
+
+        clickSound();
+
+        startGame();
+
+    }
+);
+
+
+/* =====================================================
+   FAQ
+===================================================== */
+
+document
+.querySelectorAll(".faq-question")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        function(){
+
+            const item =
+                this.parentElement;
+
+            const all =
+                document.querySelectorAll(
+                    ".faq-item"
+                );
+
+
+            all.forEach(other => {
+
+                if(other !== item){
+
+                    other.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            });
+
+
+            item.classList.toggle(
+                "active"
+            );
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+bestEl.textContent = best;
+
+resetGame();
+
+</script>
+
+</body>
+</html>
