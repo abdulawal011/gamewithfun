@@ -42,18 +42,18 @@ const games = [
   },
    {
     id: 12,
-    title: "",
+    title: "Ghost House",
     category: "",
-    icon: "",
+    icon: "games/file_00000000b7f8820899dd27132b05151a.png",
     url: "games/Ghost House.html",
     newGame: false,
     popular: true
   },
    {
     id: 13,
-    title: "",
+    title: "flaying bird",
     category: "",
-    icon: "",
+    icon: "games/file_00000000b7f8820899dd27132b05151a.png",
     url: "games/gamewithfun flaying bird.html",
     newGame: false,
     popular: true
