@@ -41,20 +41,20 @@ const games = [
     popular: false
   },
    {
-    id: 10,
+    id: 12,
     title: "",
     category: "",
     icon: "",
-    url: "",
+    url: "games/Ghost House.html",
     newGame: false,
     popular: true
   },
    {
-    id: 10,
+    id: 13,
     title: "",
     category: "",
     icon: "",
-    url: "",
+    url: "games/gamewithfun flaying bird.html",
     newGame: false,
     popular: true
   },
