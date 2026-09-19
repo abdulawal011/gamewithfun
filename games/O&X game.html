@@ -2,18 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>O&X Game - Free Online Tic Tac Toe Game</title>
 
-<meta name="description" content="Play O&X Game, a free online Tic Tac Toe game with AI and two-player modes. Choose your side, select difficulty and enjoy a fun strategy game on mobile or desktop.">
+<meta name="description"
+content="Play O&X Game, a free online Tic Tac Toe game with AI and two-player modes. Choose X or O, select difficulty and enjoy a fun strategy game on mobile or desktop.">
 
-<meta name="keywords" content="O&X Game, O and X game, tic tac toe, tic tac toe game, free online games, online puzzle game, AI tic tac toe, two player game">
+<meta name="keywords"
+content="O&X Game, O and X game, tic tac toe, tic tac toe game, free online games, AI tic tac toe, two player game, browser games">
 
 <meta name="robots" content="index, follow">
 
 <style>
-*{box-sizing:border-box}
+*{
+ box-sizing:border-box;
+}
 
 html,body{
  margin:0;
@@ -28,7 +34,8 @@ body{
  overflow-x:hidden;
 }
 
-button,select{
+button,
+select{
  font:inherit;
 }
 
@@ -41,30 +48,10 @@ button,select{
  padding-bottom:30px;
 }
 
-.topbar{
- height:72px;
- background:#f7f5fa;
- color:#17151d;
- display:flex;
- align-items:center;
- padding:0 18px;
- gap:18px;
- box-shadow:0 2px 10px #0002;
-}
 
-.back{
- font-size:38px;
- border:0;
- background:none;
- color:#24222a;
- line-height:1;
- cursor:pointer;
-}
-
-.title{
- font-size:24px;
- font-weight:800;
-}
+/* =========================
+   GAME AREA
+========================= */
 
 .container{
  width:min(680px,100%);
@@ -94,6 +81,9 @@ button,select{
  -webkit-text-stroke:1px #ff5b00;
 }
 
+
+/* SCORE */
+
 .cards{
  display:grid;
  grid-template-columns:1fr 1fr 1fr;
@@ -109,9 +99,17 @@ button,select{
  box-shadow:0 8px 22px #0005;
 }
 
-.card.you{border-color:#008cff}
-.card.draw{border-color:#6230cf}
-.card.ai{border-color:#df1684}
+.card.you{
+ border-color:#008cff;
+}
+
+.card.draw{
+ border-color:#6230cf;
+}
+
+.card.ai{
+ border-color:#df1684;
+}
 
 .card .label{
  font-size:20px;
@@ -125,8 +123,16 @@ button,select{
  margin-top:5px;
 }
 
-.you .score{color:#16dfff}
-.ai .score{color:#ff3b98}
+.you .score{
+ color:#16dfff;
+}
+
+.ai .score{
+ color:#ff3b98;
+}
+
+
+/* SETTINGS */
 
 .settings{
  display:grid;
@@ -166,6 +172,9 @@ button,select{
  outline:none;
 }
 
+
+/* TURN */
+
 .turn{
  width:max-content;
  margin:10px auto 18px;
@@ -182,13 +191,25 @@ button,select{
  color:#16dfff;
 }
 
+
+/* TIMER */
+
 .timer{
  height:10px;
- background:linear-gradient(90deg,#14d9ff,#8050ff,#ff2995);
+ background:linear-gradient(
+  90deg,
+  #14d9ff,
+  #8050ff,
+  #ff2995
+ );
  border-radius:20px;
  margin:0 0 18px;
  box-shadow:0 0 12px #4d57ff;
+ transition:width .1s linear;
 }
+
+
+/* BOARD */
 
 .board{
  width:min(100%,500px);
@@ -207,7 +228,11 @@ button,select{
  aspect-ratio:1;
  border:2px solid #392279;
  border-radius:18px;
- background:linear-gradient(145deg,#17104e,#0f0a39);
+ background:linear-gradient(
+  145deg,
+  #17104e,
+  #0f0a39
+ );
  color:#fff;
  font-size:clamp(48px,15vw,82px);
  font-weight:1000;
@@ -236,7 +261,20 @@ button,select{
  background:#24165c;
  border-color:#fff;
  box-shadow:0 0 25px #b550ff;
+ animation:winPulse .6s infinite alternate;
 }
+
+@keyframes winPulse{
+ from{
+  transform:scale(1);
+ }
+ to{
+  transform:scale(1.04);
+ }
+}
+
+
+/* ACTION BUTTONS */
 
 .actions{
  display:grid;
@@ -256,15 +294,27 @@ button,select{
 }
 
 .new{
- background:linear-gradient(145deg,#287bff,#1254d7);
+ background:linear-gradient(
+  145deg,
+  #287bff,
+  #1254d7
+ );
 }
 
 .reset{
- background:linear-gradient(145deg,#28e76b,#0ab648);
+ background:linear-gradient(
+  145deg,
+  #28e76b,
+  #0ab648
+ );
 }
 
 .undo{
- background:linear-gradient(145deg,#8247f4,#5920cf);
+ background:linear-gradient(
+  145deg,
+  #8247f4,
+  #5920cf
+ );
 }
 
 .action:active{
@@ -283,6 +333,11 @@ button,select{
 .message strong{
  color:#fff;
 }
+
+
+/* =========================
+   RESULT MODAL
+========================= */
 
 .modal{
  position:fixed;
@@ -329,9 +384,10 @@ button,select{
  cursor:pointer;
 }
 
-/* ================================
+
+/* =========================
    SEO CONTENT
-================================ */
+========================= */
 
 .content-area{
  width:min(900px,100%);
@@ -340,7 +396,11 @@ button,select{
 }
 
 .info-card{
- background:linear-gradient(145deg,#10083a,#0b072b);
+ background:linear-gradient(
+  145deg,
+  #10083a,
+  #0b072b
+ );
  border:1px solid #3d2183;
  border-radius:24px;
  padding:25px;
@@ -370,6 +430,7 @@ button,select{
  padding-left:22px;
 }
 
+
 /* FAQ */
 
 .faq-item{
@@ -392,7 +453,10 @@ button,select{
  margin:0;
 }
 
-/* AdSense */
+
+/* =========================
+   ADSENSE
+========================= */
 
 .adsense-area{
  width:min(900px,100%);
@@ -411,7 +475,8 @@ button,select{
  margin-bottom:10px;
 }
 
-/* Footer */
+
+/* FOOTER */
 
 .footer{
  width:min(900px,100%);
@@ -438,6 +503,9 @@ button,select{
 .footer a:hover{
  color:#16dfff;
 }
+
+
+/* MOBILE */
 
 @media(max-width:480px){
 
@@ -516,38 +584,26 @@ button,select{
   font-size:15px;
  }
 
- .topbar{
-  height:64px;
-  padding:0 12px;
-  gap:10px;
- }
-
- .title{
-  font-size:19px;
- }
-
- .back{
-  font-size:34px;
- }
 }
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-<header class="topbar">
-<button class="back" onclick="history.back()" aria-label="Back">‹</button>
-<div class="title">O&X Game</div>
-</header>
-
 <main class="container">
+
+<!-- GAME LOGO -->
 
 <div class="logo">
 <span class="ox">O & X</span>
 <span class="game">GAME</span>
 </div>
+
+
+<!-- SCORE -->
 
 <section class="cards">
 
@@ -568,48 +624,91 @@ button,select{
 
 </section>
 
+
+<!-- SETTINGS -->
+
 <section class="settings">
 
 <div class="setting">
+
 <label>GAME MODE</label>
 
 <select id="mode">
-<option value="ai" selected>🤖 PLAY WITH AI</option>
-<option value="friend">👥 PLAY WITH FRIEND</option>
+
+<option value="ai" selected>
+🤖 PLAY WITH AI
+</option>
+
+<option value="friend">
+👥 PLAY WITH FRIEND
+</option>
+
 </select>
 
 </div>
+
 
 <div class="setting">
 
-<label id="symbolLabel">YOU ARE</label>
+<label id="symbolLabel">
+YOU ARE
+</label>
 
 <select id="symbol">
-<option value="X">❌ X</option>
-<option value="O">⭕ O</option>
+
+<option value="X">
+❌ X
+</option>
+
+<option value="O">
+⭕ O
+</option>
+
 </select>
 
 </div>
 
+
 <div class="setting" id="difficultyBox">
 
-<label>DIFFICULTY</label>
+<label>
+DIFFICULTY
+</label>
 
 <select id="difficulty">
-<option value="easy">EASY</option>
-<option value="medium" selected>MEDIUM</option>
-<option value="hard">HARD</option>
+
+<option value="easy">
+EASY
+</option>
+
+<option value="medium" selected>
+MEDIUM
+</option>
+
+<option value="hard">
+HARD
+</option>
+
 </select>
 
 </div>
 
 </section>
 
+
+<!-- TURN -->
+
 <div class="turn" id="turn">
 YOU <span>(X)</span> TURN
 </div>
 
+
+<!-- TIMER -->
+
 <div class="timer" id="timer"></div>
+
+
+<!-- BOARD -->
 
 <div class="board" id="board">
 
@@ -627,6 +726,9 @@ YOU <span>(X)</span> TURN
 
 </div>
 
+
+<!-- BUTTONS -->
+
 <div class="actions">
 
 <button class="action new" id="newRound">
@@ -638,10 +740,11 @@ YOU <span>(X)</span> TURN
 </button>
 
 <button class="action undo" id="undo">
-💡 UNDO
+↩ UNDO
 </button>
 
 </div>
+
 
 <div class="message" id="message">
 ♟ <strong>PLAY O&X GAME AND HAVE FUN!</strong>
@@ -656,31 +759,61 @@ YOU <span>(X)</span> TURN
 
 <section class="content-area">
 
+
 <div class="info-card">
 
-<h2>O&X Game - Free Online Tic Tac Toe Game</h2>
+<h2>
+O&X Game - Free Online Tic Tac Toe Game
+</h2>
 
 <p>
 Welcome to O&X Game, a simple and fun online strategy game inspired by the classic O and X board game. Play directly in your browser without downloading or installing anything. You can challenge the AI or play with a friend on the same device.
 </p>
 
 <p>
-O&X Game is designed for quick and enjoyable gameplay on both mobile phones and desktop computers. Choose X or O, select your preferred difficulty level and try to complete three matching symbols in a row before your opponent.
+O&X Game is designed for quick and enjoyable gameplay on mobile phones and desktop computers. Choose X or O, select your preferred difficulty level and try to complete three matching symbols in a row before your opponent.
 </p>
 
-<h3>How to Play O&X Game</h3>
+<h3>
+How to Play O&X Game
+</h3>
 
 <ul>
-<li>Choose Play With AI to challenge the computer.</li>
-<li>Choose Play With Friend for two-player gameplay.</li>
-<li>Select X or O when playing against the AI.</li>
-<li>Tap an empty square to place your symbol.</li>
-<li>Try to create three matching symbols in a horizontal, vertical or diagonal line.</li>
-<li>Use the New Round button to start another game.</li>
-<li>Use Undo when you want to take back your previous move.</li>
+
+<li>
+Choose Play With AI to challenge the computer.
+</li>
+
+<li>
+Choose Play With Friend for two-player gameplay.
+</li>
+
+<li>
+Select X or O when playing against the AI.
+</li>
+
+<li>
+Tap an empty square to place your symbol.
+</li>
+
+<li>
+Try to create three matching symbols in a horizontal, vertical or diagonal line.
+</li>
+
+<li>
+Use the New Round button to start another game.
+</li>
+
+<li>
+Use Undo to take back your previous move.
+</li>
+
 </ul>
 
-<h3>Play O&X Game Online</h3>
+
+<h3>
+Play O&X Game Online
+</h3>
 
 <p>
 O&X Game is a browser-based HTML5 game created for casual entertainment. The game works on modern mobile and desktop browsers and is designed with a responsive interface for different screen sizes.
@@ -691,50 +824,88 @@ O&X Game is a browser-based HTML5 game created for casual entertainment. The gam
 
 <!-- FAQ -->
 
-<div class="info-card">
+<div class="info-card" id="faq">
 
-<h2>Frequently Asked Questions</h2>
+<h2>
+Frequently Asked Questions
+</h2>
+
 
 <details class="faq-item">
-<summary>What is O&X Game?</summary>
+
+<summary>
+What is O&X Game?
+</summary>
+
 <p>
 O&X Game is a free online Tic Tac Toe style game where players use O and X symbols to create a line of three matching symbols.
 </p>
+
 </details>
 
+
 <details class="faq-item">
-<summary>Can I play O&X Game on mobile?</summary>
+
+<summary>
+Can I play O&X Game on mobile?
+</summary>
+
 <p>
 Yes. O&X Game has a responsive design and can be played on compatible mobile browsers, tablets and desktop computers.
 </p>
+
 </details>
 
+
 <details class="faq-item">
-<summary>Can I play against AI?</summary>
+
+<summary>
+Can I play against AI?
+</summary>
+
 <p>
-Yes. You can select Play With AI and choose between Easy, Medium and Hard difficulty levels.
+Yes. Select Play With AI and choose Easy, Medium or Hard difficulty.
 </p>
+
 </details>
 
+
 <details class="faq-item">
-<summary>Can two people play O&X Game?</summary>
+
+<summary>
+Can two people play O&X Game?
+</summary>
+
 <p>
 Yes. Select Play With Friend to play a two-player game on the same device.
 </p>
+
 </details>
 
+
 <details class="faq-item">
-<summary>Is O&X Game free?</summary>
+
+<summary>
+Is O&X Game free?
+</summary>
+
 <p>
 Yes. O&X Game is provided as a free browser game for casual entertainment.
 </p>
+
 </details>
 
+
 <details class="faq-item">
-<summary>Do I need to download an app?</summary>
+
+<summary>
+Do I need to download an app?
+</summary>
+
 <p>
 No. The game can be played directly in a supported web browser without installing a separate application.
 </p>
+
 </details>
 
 </div>
@@ -742,9 +913,11 @@ No. The game can be played directly in a supported web browser without installin
 
 <!-- ABOUT -->
 
-<div class="info-card">
+<div class="info-card" id="about">
 
-<h2>About O&X Game</h2>
+<h2>
+About O&X Game
+</h2>
 
 <p>
 O&X Game is a browser-based casual puzzle and strategy game created for people who enjoy quick board games. The game provides both AI and local two-player modes so players can enjoy different styles of gameplay.
@@ -759,9 +932,11 @@ Our goal is to provide simple, accessible and enjoyable browser games that can b
 
 <!-- PRIVACY -->
 
-<div class="info-card">
+<div class="info-card" id="privacy">
 
-<h2>Privacy Policy</h2>
+<h2>
+Privacy Policy
+</h2>
 
 <p>
 Your privacy is important to us. O&X Game itself does not require you to create an account to play the game.
@@ -780,9 +955,11 @@ If advertisements, analytics or other third-party services are used on this webs
 
 <!-- DISCLAIMER -->
 
-<div class="info-card">
+<div class="info-card" id="disclaimer">
 
-<h2>Disclaimer</h2>
+<h2>
+Disclaimer
+</h2>
 
 <p>
 O&X Game is provided for entertainment purposes. While we aim to keep the game functional and enjoyable, we cannot guarantee that the website will always be available on every browser, device or network.
@@ -797,9 +974,11 @@ Third-party advertisements or external links, if displayed, may be operated by i
 
 <!-- CONTACT -->
 
-<div class="info-card">
+<div class="info-card" id="contact">
 
-<h2>Contact</h2>
+<h2>
+Contact
+</h2>
 
 <p>
 If you have questions, suggestions, feedback or notice an issue with O&X Game, you can contact the website owner through the contact information provided on the main website.
@@ -820,35 +999,56 @@ We welcome feedback that can help improve the gaming experience and website qual
 
 <div class="adsense-area">
 
-<small>ADVERTISEMENT</small>
+<small>
+ADVERTISEMENT
+</small>
 
 <!--
-     Paste your approved Google AdSense ad code here.
+PASTE YOUR APPROVED GOOGLE ADSENSE CODE HERE.
 
-     Example:
+Example:
 
-     <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-XXXXXXXXXXXX"
-          data-ad-slot="XXXXXXXXXX"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXX"
+     data-ad-slot="XXXXXXXXXX"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
 
-     <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-     </script>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 -->
 
 </div>
 
 
+<!-- FOOTER -->
+
 <footer class="footer">
 
 <div class="footer-links">
-<a href="#about">About</a>
-<a href="#privacy">Privacy</a>
-<a href="#disclaimer">Disclaimer</a>
-<a href="#contact">Contact</a>
+
+<a href="#about">
+About
+</a>
+
+<a href="#privacy">
+Privacy
+</a>
+
+<a href="#disclaimer">
+Disclaimer
+</a>
+
+<a href="#contact">
+Contact
+</a>
+
+<a href="#faq">
+FAQ
+</a>
+
 </div>
 
 <div>
@@ -860,13 +1060,17 @@ We welcome feedback that can help improve the gaming experience and website qual
 </div>
 
 
-<!-- RESULT MODAL -->
+<!-- =========================
+     RESULT MODAL
+========================= -->
 
 <div class="modal" id="modal">
 
 <div class="modal-box">
 
-<h2 id="resultTitle">You Win!</h2>
+<h2 id="resultTitle">
+You Win!
+</h2>
 
 <p id="resultText"></p>
 
@@ -881,28 +1085,56 @@ PLAY AGAIN
 
 <script>
 
-const cells=[...document.querySelectorAll('.cell')];
+/* ==================================================
+   GAME ELEMENTS
+================================================== */
 
-const modeEl=document.getElementById('mode');
-const symbolEl=document.getElementById('symbol');
-const difficultyEl=document.getElementById('difficulty');
+const cells=[
+ ...document.querySelectorAll('.cell')
+];
 
-const difficultyBox=document.getElementById('difficultyBox');
-const symbolLabel=document.getElementById('symbolLabel');
+const modeEl=
+ document.getElementById('mode');
 
-const turnEl=document.getElementById('turn');
-const timerEl=document.getElementById('timer');
+const symbolEl=
+ document.getElementById('symbol');
 
-const messageEl=document.getElementById('message');
+const difficultyEl=
+ document.getElementById('difficulty');
 
-const modal=document.getElementById('modal');
-const resultTitle=document.getElementById('resultTitle');
-const resultText=document.getElementById('resultText');
+const difficultyBox=
+ document.getElementById('difficultyBox');
 
+const symbolLabel=
+ document.getElementById('symbolLabel');
+
+const turnEl=
+ document.getElementById('turn');
+
+const timerEl=
+ document.getElementById('timer');
+
+const messageEl=
+ document.getElementById('message');
+
+const modal=
+ document.getElementById('modal');
+
+const resultTitle=
+ document.getElementById('resultTitle');
+
+const resultText=
+ document.getElementById('resultText');
+
+
+/* ==================================================
+   GAME VARIABLES
+================================================== */
 
 let board=Array(9).fill('');
 
 let player='X';
+
 let ai='O';
 
 let turn='X';
@@ -920,8 +1152,13 @@ let scores={
 };
 
 let timer=100;
+
 let timerId=null;
 
+
+/* ==================================================
+   WINNING COMBINATIONS
+================================================== */
 
 const wins=[
  [0,1,2],
@@ -935,10 +1172,218 @@ const wins=[
 ];
 
 
+/* ==================================================
+   COPYRIGHT-FREE SOUND SYSTEM
+   Generated locally with Web Audio API.
+   No external audio files are used.
+================================================== */
+
+let audioContext=null;
+
+
+/* Initialize audio after user interaction */
+
+function initAudio(){
+
+ try{
+
+  if(!audioContext){
+
+   const AudioCtx=
+    window.AudioContext ||
+    window.webkitAudioContext;
+
+   if(AudioCtx){
+    audioContext=new AudioCtx();
+   }
+
+  }
+
+  if(
+   audioContext &&
+   audioContext.state==='suspended'
+  ){
+   audioContext.resume();
+  }
+
+ }catch(e){
+
+  console.log('Audio unavailable');
+
+ }
+
+}
+
+
+/* Create short original beep */
+
+function playTone(
+ frequency,
+ duration,
+ type='sine',
+ volume=0.045
+){
+
+ if(!audioContext)return;
+
+ try{
+
+  const oscillator=
+   audioContext.createOscillator();
+
+  const gain=
+   audioContext.createGain();
+
+  oscillator.type=type;
+
+  oscillator.frequency.setValueAtTime(
+   frequency,
+   audioContext.currentTime
+  );
+
+  gain.gain.setValueAtTime(
+   0.0001,
+   audioContext.currentTime
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+   volume,
+   audioContext.currentTime+0.01
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+   0.0001,
+   audioContext.currentTime+duration
+  );
+
+  oscillator.connect(gain);
+
+  gain.connect(audioContext.destination);
+
+  oscillator.start();
+
+  oscillator.stop(
+   audioContext.currentTime+duration+0.02
+  );
+
+ }catch(e){}
+
+}
+
+
+/* Player move */
+
+function soundMove(){
+
+ playTone(
+  520,
+  0.09,
+  'sine',
+  0.055
+ );
+
+}
+
+
+/* AI move */
+
+function soundAIMove(){
+
+ playTone(
+  330,
+  0.10,
+  'triangle',
+  0.045
+ );
+
+}
+
+
+/* Button sound */
+
+function soundButton(){
+
+ playTone(
+  260,
+  0.06,
+  'square',
+  0.025
+ );
+
+}
+
+
+/* Win sound */
+
+function soundWin(){
+
+ if(!audioContext)return;
+
+ playTone(523,0.12,'sine',0.05);
+
+ setTimeout(()=>{
+  playTone(659,0.12,'sine',0.05);
+ },100);
+
+ setTimeout(()=>{
+  playTone(784,0.20,'sine',0.055);
+ },200);
+
+}
+
+
+/* Lose sound */
+
+function soundLose(){
+
+ if(!audioContext)return;
+
+ playTone(330,0.14,'triangle',0.045);
+
+ setTimeout(()=>{
+  playTone(247,0.22,'triangle',0.045);
+ },130);
+
+}
+
+
+/* Draw sound */
+
+function soundDraw(){
+
+ if(!audioContext)return;
+
+ playTone(440,0.12,'sine',0.04);
+
+ setTimeout(()=>{
+  playTone(440,0.12,'sine',0.04);
+ },140);
+
+}
+
+
+/* Start audio when user first interacts */
+
+document.addEventListener(
+ 'pointerdown',
+ initAudio,
+ {once:false}
+);
+
+
+/* ==================================================
+   SCORE SYSTEM
+================================================== */
+
 function loadScores(){
 
  try{
-  scores=JSON.parse(localStorage.getItem('oxGameScores'))||scores;
+
+  scores=
+   JSON.parse(
+    localStorage.getItem('oxGameScores')
+   ) || scores;
+
  }catch(e){}
 
  updateScores();
@@ -948,30 +1393,56 @@ function loadScores(){
 
 function saveScores(){
 
- localStorage.setItem(
-  'oxGameScores',
-  JSON.stringify(scores)
- );
+ try{
+
+  localStorage.setItem(
+   'oxGameScores',
+   JSON.stringify(scores)
+  );
+
+ }catch(e){}
 
 }
 
 
 function updateScores(){
 
- document.getElementById('youScore').textContent=scores.you;
- document.getElementById('drawScore').textContent=scores.draw;
- document.getElementById('aiScore').textContent=scores.ai;
+ document.getElementById(
+  'youScore'
+ ).textContent=scores.you;
 
- const labels=document.querySelectorAll('.card .label');
+ document.getElementById(
+  'drawScore'
+ ).textContent=scores.draw;
+
+ document.getElementById(
+  'aiScore'
+ ).textContent=scores.ai;
+
+
+ const labels=
+  document.querySelectorAll(
+   '.card .label'
+  );
+
 
  labels[0].textContent=
-  mode==='friend'?'PLAYER 1':'YOU';
+  mode==='friend'
+  ?'PLAYER 1'
+  :'YOU';
+
 
  labels[2].textContent=
-  mode==='friend'?'PLAYER 2':'AI 🤖';
+  mode==='friend'
+  ?'PLAYER 2'
+  :'AI 🤖';
 
 }
 
+
+/* ==================================================
+   WINNER CHECK
+================================================== */
 
 function checkWinner(b=board){
 
@@ -982,25 +1453,33 @@ function checkWinner(b=board){
    b[w[0]]===b[w[1]] &&
    b[w[1]]===b[w[2]]
   ){
-   return {
+
+   return{
     winner:b[w[0]],
     line:w
    };
+
   }
 
  }
 
  if(b.every(Boolean)){
-  return {
+
+  return{
    winner:'draw',
    line:[]
   };
+
  }
 
  return null;
 
 }
 
+
+/* ==================================================
+   RENDER
+================================================== */
 
 function render(){
 
@@ -1025,6 +1504,10 @@ function render(){
 }
 
 
+/* ==================================================
+   TURN DISPLAY
+================================================== */
+
 function updateTurn(){
 
  if(gameOver)return;
@@ -1048,6 +1531,10 @@ function updateTurn(){
 }
 
 
+/* ==================================================
+   TIMER
+================================================== */
+
 function startTimer(){
 
  clearInterval(timerId);
@@ -1060,7 +1547,9 @@ function startTimer(){
   mode!=='ai' ||
   turn!==player ||
   gameOver
- )return;
+ ){
+  return;
+ }
 
  timerId=setInterval(()=>{
 
@@ -1069,14 +1558,18 @@ function startTimer(){
    mode!=='ai' ||
    turn!==player
   ){
+
    clearInterval(timerId);
+
    return;
+
   }
 
   timer-=2;
 
   timerEl.style.width=
    Math.max(0,timer)+'%';
+
 
   if(timer<=0){
 
@@ -1091,7 +1584,13 @@ function startTimer(){
 }
 
 
+/* ==================================================
+   NEW ROUND
+================================================== */
+
 function newRound(){
+
+ initAudio();
 
  board=Array(9).fill('');
 
@@ -1108,31 +1607,49 @@ function newRound(){
 
  messageEl.innerHTML=
   mode==='friend'
-  ?'👥 <strong>PASS THE PHONE — PLAYER 1 STARTS!</strong>'
-  :'♟ <strong>PLAY O&X GAME AND HAVE FUN!</strong>';
+  ?
+  '👥 <strong>PASS THE PHONE — PLAYER 1 STARTS!</strong>'
+  :
+  '♟ <strong>PLAY O&X GAME AND HAVE FUN!</strong>';
 
  render();
+
 
  if(
   mode==='ai' &&
   turn!==player
  ){
-  setTimeout(aiMove,450);
+
+  setTimeout(
+   aiMove,
+   450
+  );
+
  }else{
+
   startTimer();
+
  }
 
 }
 
+
+/* ==================================================
+   MAKE MOVE
+================================================== */
 
 function makeMove(i,p){
 
  if(
   board[i] ||
   gameOver
- )return false;
+ ){
+  return false;
+ }
 
- history.push(board.slice());
+ history.push(
+  board.slice()
+ );
 
  board[i]=p;
 
@@ -1143,20 +1660,29 @@ function makeMove(i,p){
 }
 
 
+/* ==================================================
+   END GAME
+================================================== */
+
 function endGame(result){
 
  gameOver=true;
 
  clearInterval(timerId);
 
+
  if(result.winner==='draw'){
 
   scores.draw++;
 
-  resultTitle.textContent='Draw!';
+  resultTitle.textContent=
+   '🤝 Draw!';
 
   resultText.textContent=
    'Nobody wins this round.';
+
+  soundDraw();
+
 
  }else if(mode==='friend'){
 
@@ -1170,6 +1696,8 @@ function endGame(result){
    resultText.textContent=
     'Player 1 got three in a row!';
 
+   soundWin();
+
   }else{
 
    scores.ai++;
@@ -1180,7 +1708,10 @@ function endGame(result){
    resultText.textContent=
     'Player 2 got three in a row!';
 
+   soundWin();
+
   }
+
 
  }else if(result.winner===player){
 
@@ -1192,6 +1723,9 @@ function endGame(result){
   resultText.textContent=
    'Amazing! You beat the AI.';
 
+  soundWin();
+
+
  }else{
 
   scores.ai++;
@@ -1202,22 +1736,35 @@ function endGame(result){
   resultText.textContent=
    'The AI got you this time. Try again!';
 
+  soundLose();
+
  }
+
 
  saveScores();
 
  updateScores();
 
+
  result.line.forEach(i=>{
+
   cells[i].classList.add('win');
+
  });
 
+
  setTimeout(()=>{
+
   modal.classList.add('show');
- },250);
+
+ },300);
 
 }
 
+
+/* ==================================================
+   AFTER MOVE
+================================================== */
 
 function afterMove(){
 
@@ -1230,6 +1777,7 @@ function afterMove(){
   return true;
 
  }
+
 
  if(mode==='friend'){
 
@@ -1244,6 +1792,7 @@ function afterMove(){
 
  }
 
+
  turn=
   turn===player
   ?ai
@@ -1251,13 +1800,17 @@ function afterMove(){
 
  render();
 
+
  if(turn===player){
 
   startTimer();
 
  }else{
 
-  setTimeout(aiMove,350);
+  setTimeout(
+   aiMove,
+   350
+  );
 
  }
 
@@ -1266,22 +1819,40 @@ function afterMove(){
 }
 
 
+/* ==================================================
+   HUMAN MOVE
+================================================== */
+
 function humanMove(i){
+
+ initAudio();
 
  if(gameOver)return;
 
+
  if(mode==='friend'){
 
-  if(!makeMove(i,turn))return;
+  if(
+   !makeMove(i,turn)
+  ){
+   return;
+  }
+
+  soundMove();
 
   afterMove();
+
 
  }else{
 
   if(
    turn!==player ||
    !makeMove(i,player)
-  )return;
+  ){
+   return;
+  }
+
+  soundMove();
 
   afterMove();
 
@@ -1289,6 +1860,10 @@ function humanMove(i){
 
 }
 
+
+/* ==================================================
+   AVAILABLE MOVES
+================================================== */
 
 function available(b=board){
 
@@ -1299,16 +1874,30 @@ function available(b=board){
 }
 
 
+/* ==================================================
+   RANDOM AI
+================================================== */
+
 function randomMove(){
 
  const a=available();
 
+ if(!a.length){
+  return null;
+ }
+
  return a[
-  Math.floor(Math.random()*a.length)
+  Math.floor(
+   Math.random()*a.length
+  )
  ];
 
 }
 
+
+/* ==================================================
+   WINNING MOVE
+================================================== */
 
 function findWinningMove(p){
 
@@ -1324,7 +1913,9 @@ function findWinningMove(p){
    r &&
    r.winner===p
   ){
+
    return i;
+
   }
 
  }
@@ -1334,23 +1925,31 @@ function findWinningMove(p){
 }
 
 
+/* ==================================================
+   MINIMAX
+================================================== */
+
 function minimax(b,maximizing){
 
  const r=checkWinner(b);
 
  if(r){
 
-  if(r.winner===ai)return 10;
+  if(r.winner===ai)
+   return 10;
 
-  if(r.winner===player)return -10;
+  if(r.winner===player)
+   return -10;
 
   return 0;
 
  }
 
+
  const moves=b
   .map((v,i)=>v?null:i)
   .filter(i=>i!==null);
+
 
  if(maximizing){
 
@@ -1370,6 +1969,7 @@ function minimax(b,maximizing){
   }
 
   return best;
+
 
  }else{
 
@@ -1395,6 +1995,10 @@ function minimax(b,maximizing){
 }
 
 
+/* ==================================================
+   HARD AI
+================================================== */
+
 function hardMove(){
 
  let best=-Infinity;
@@ -1405,7 +2009,7 @@ function hardMove(){
 
   board[i]=ai;
 
-  let score=
+  const score=
    minimax(board,false);
 
   board[i]='';
@@ -1425,39 +2029,61 @@ function hardMove(){
 }
 
 
+/* ==================================================
+   AI MOVE
+================================================== */
+
 function aiMove(){
 
  if(
   gameOver ||
   turn!==ai
- )return;
+ ){
+  return;
+ }
+
+ initAudio();
 
  clearInterval(timerId);
 
  let move;
 
- const d=difficultyEl.value;
+ const d=
+  difficultyEl.value;
+
 
  if(d==='easy'){
 
   move=randomMove();
 
+
  }else if(d==='medium'){
 
-  move=findWinningMove(ai);
+  move=
+   findWinningMove(ai);
 
-  if(move===null)
-   move=findWinningMove(player);
+  if(move===null){
+
+   move=
+    findWinningMove(player);
+
+  }
 
   if(
    move===null &&
    board[4]===''
   ){
+
    move=4;
+
   }
 
-  if(move===null)
+  if(move===null){
+
    move=randomMove();
+
+  }
+
 
  }else{
 
@@ -1465,43 +2091,89 @@ function aiMove(){
 
  }
 
+
  if(
   move!==undefined &&
   move!==null
  ){
+
   makeMove(move,ai);
+
+  soundAIMove();
+
  }
+
 
  afterMove();
 
 }
 
 
+/* ==================================================
+   CELL EVENTS
+================================================== */
+
 cells.forEach(c=>{
 
  c.addEventListener(
   'click',
   ()=>{
-   humanMove(+c.dataset.i);
+
+   humanMove(
+    +c.dataset.i
+   );
+
   }
  );
 
 });
 
 
+/* ==================================================
+   NEW ROUND BUTTON
+================================================== */
+
 document.getElementById(
  'newRound'
-).onclick=newRound;
+).onclick=()=>{
 
+ initAudio();
+
+ soundButton();
+
+ newRound();
+
+};
+
+
+/* ==================================================
+   MODAL PLAY AGAIN
+================================================== */
 
 document.getElementById(
  'modalBtn'
-).onclick=newRound;
+).onclick=()=>{
 
+ initAudio();
+
+ soundButton();
+
+ newRound();
+
+};
+
+
+/* ==================================================
+   RESET SCORES
+================================================== */
 
 document.getElementById(
  'reset'
 ).onclick=()=>{
+
+ initAudio();
+
+ soundButton();
 
  scores={
   you:0,
@@ -1518,16 +2190,32 @@ document.getElementById(
 };
 
 
+/* ==================================================
+   UNDO
+================================================== */
+
 document.getElementById(
  'undo'
 ).onclick=()=>{
 
+ initAudio();
+
+ soundButton();
+
+
  if(
   gameOver ||
   history.length===0
- )return;
+ ){
 
- board=history.pop();
+  return;
+
+ }
+
+
+ board=
+  history.pop();
+
 
  if(mode==='friend'){
 
@@ -1539,11 +2227,13 @@ document.getElementById(
    ?'X'
    :'O';
 
+
  }else{
 
   turn=player;
 
  }
+
 
  render();
 
@@ -1555,51 +2245,75 @@ document.getElementById(
 };
 
 
+/* ==================================================
+   MODE CHANGE
+================================================== */
+
 modeEl.onchange=()=>{
+
+ initAudio();
+
+ soundButton();
 
  mode=modeEl.value;
 
- document.body.classList.toggle(
-  'friend-mode',
-  mode==='friend'
- );
 
  difficultyBox.style.display=
   mode==='friend'
   ?'none'
   :'block';
 
+
  symbolLabel.textContent=
   mode==='friend'
   ?'PLAYER 1'
   :'YOU ARE';
 
+
  updateScores();
 
- symbolEl.innerHTML=
-  mode==='friend'
-  ?
-  '<option value="X">❌ PLAYER 1 — X</option>'+
-  '<option value="O">⭕ PLAYER 1 — O</option>'
-  :
-  '<option value="X">❌ X</option>'+
-  '<option value="O">⭕ O</option>';
 
- player=symbolEl.value;
+ if(mode==='friend'){
+
+  symbolEl.innerHTML=
+   '<option value="X">❌ PLAYER 1 — X</option>'+
+   '<option value="O">⭕ PLAYER 1 — O</option>';
+
+ }else{
+
+  symbolEl.innerHTML=
+   '<option value="X">❌ X</option>'+
+   '<option value="O">⭕ O</option>';
+
+ }
+
+
+ player=
+  symbolEl.value;
 
  ai=
   player==='X'
   ?'O'
   :'X';
 
+
  newRound();
 
 };
 
+
+/* ==================================================
+   SYMBOL CHANGE
+================================================== */
 
 symbolEl.onchange=()=>{
 
- player=symbolEl.value;
+ initAudio();
+
+ soundButton();
+
+ player=
+  symbolEl.value;
 
  ai=
   player==='X'
@@ -1611,7 +2325,16 @@ symbolEl.onchange=()=>{
 };
 
 
+/* ==================================================
+   DIFFICULTY CHANGE
+================================================== */
+
 difficultyEl.onchange=()=>{
+
+ initAudio();
+
+ soundButton();
+
 
  if(!gameOver){
 
@@ -1626,6 +2349,10 @@ difficultyEl.onchange=()=>{
 
 };
 
+
+/* ==================================================
+   START
+================================================== */
 
 loadScores();
 
