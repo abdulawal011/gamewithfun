@@ -13,7 +13,7 @@ const games = [
     popular: true
   },
    {
-    id: 9,
+    id: 15,
     title: "Carrom Board",
     category: "Board",
     icon: "games/file_00000000d8dc820ba98dd0aa7d484503.png",
@@ -22,7 +22,7 @@ const games = [
     popular: true
   },
    {
-    id: 10,
+    id: 14,
     title: "Game With Fun Crush",
     category: "Puzzle",
     icon: "games/file_00000000cb94820baabbf485ed45e9bc.png",
@@ -32,7 +32,7 @@ const games = [
   },
 
   {
-    id: 8,
+    id: 13,
     title: "Fruit Cut",
     category: "",
     icon: "games/IMG-20260914-WA0051.jpg",
@@ -50,7 +50,7 @@ const games = [
     popular: true
   },
    {
-    id: 13,
+    id: 11,
     title: "flaying bird",
     category: "",
     icon: "games/file_0000000036d88211912b32513b8a13b4.png",
@@ -68,7 +68,7 @@ const games = [
     popular: true
   },
    {
-    id: 10,
+    id: 9,
     title: "",
     category: "",
     icon: "",
@@ -77,7 +77,7 @@ const games = [
     popular: true
   },
    {
-    id: 11,
+    id: 8,
     title: "Traffic Jam",
     category: "Puzzle",
     icon: "games/file_00000000e84481fa8f401de9375a9cde.png",
@@ -96,7 +96,7 @@ const games = [
   },
 
   {
-    id: 1,
+    id: 6,
     title: "O&X Game",
     category: "Puzzle",
     icon: "games/logo.png",
@@ -106,7 +106,7 @@ const games = [
   },
 
   {
-    id: 2,
+    id: 5,
     title: "",
     category: "Puzzle",
     icon: "",
@@ -116,7 +116,7 @@ const games = [
   },
 
   {
-    id: 3,
+    id: 4,
     title: "Flag Guess",
     category: "Quiz",
     icon: "games/flag_guess_logo.jpg",
@@ -126,7 +126,7 @@ const games = [
   },
 
   {
-    id: 4,
+    id: 3,
     title: "Math Quiz",
     category: "Quiz",
     icon: "games/file_00000000f14c81faaea391eed9adbaa0.png",
@@ -136,7 +136,7 @@ const games = [
   },
 
   {
-    id: 5,
+    id: 2,
     title: "Sliding Puzzle",
     category: "Puzzle",
     icon: "games/file_00000000c49881faa999d08efc9fe34b.png",
@@ -146,7 +146,7 @@ const games = [
   },
 
   {
-    id: 6,
+    id: 1,
     title: "Car Racing",
     category: "Recing",
     icon: "games/file_00000000275881f4ac08aa9459aa2519.png",
