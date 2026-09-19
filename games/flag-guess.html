@@ -2,358 +2,1149 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Flag Guess Game — Neon Edition</title>
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>Game With Fun Flag Guess - Free Online Flag Quiz Game</title>
 
 <meta name="description"
-content="Guess country flags in a colorful free online quiz game with sound effects.">
+content="Play Game With Fun Flag Guess, a free online country flag quiz game. Identify flags, answer 10 questions, earn points and test your world geography knowledge.">
+
+<meta name="keywords"
+content="flag guess game, country flag quiz, world flags game, geography quiz, free online quiz, flag game, Game With Fun">
+
+<meta name="author" content="Game With Fun">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical"
+      href="https://www.gamewithfun.com/games/flag-guess.html">
+
+<meta property="og:title"
+      content="Game With Fun Flag Guess - Free Flag Quiz">
+
+<meta property="og:description"
+      content="Test your knowledge of country flags in this free online flag guessing game.">
+
+<meta property="og:type"
+      content="website">
+
+<meta property="og:url"
+      content="https://www.gamewithfun.com/games/flag-guess.html">
 
 <style>
+
 *{
   box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
   margin:0;
   min-height:100vh;
+
   background:
-    radial-gradient(circle at 50% 10%,#25135c,#080b1b 55%,#03040b);
+    radial-gradient(
+      circle at 50% 0%,
+      #29166a 0,
+      #0a1025 42%,
+      #03050d 100%
+    );
+
   color:#fff;
-  font-family:Arial,sans-serif;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  line-height:1.6;
+}
+
+button,
+a{
+  -webkit-tap-highlight-color:transparent;
+}
+
+button{
+  font-family:inherit;
 }
 
 .wrap{
-  width:min(760px,94%);
+  width:min(780px,94%);
   margin:auto;
-  padding:14px 0;
+  padding:10px 0 35px;
 }
 
+/* =========================
+   TOP BAR
+========================= */
+
 .top{
+  min-height:58px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 0;
-  border-bottom:1px solid #343a62;
+
   gap:10px;
+
+  border-bottom:1px solid #343b63;
+
+  padding:8px 0;
 }
 
-.top a{
-  color:#6ff;
+.brand{
+  color:#fff;
   text-decoration:none;
+
+  font-size:15px;
   font-weight:900;
+
+  white-space:nowrap;
+}
+
+.brand span{
+  color:#67f6ff;
+}
+
+.game-title{
+  font-size:14px;
+  font-weight:900;
+  color:#dfe8ff;
+  text-align:center;
 }
 
 .tools{
   display:flex;
-  gap:5px;
+  gap:6px;
 }
 
 .tools button{
-  background:#19144b;
+  width:42px;
+  height:40px;
+
+  border:1px solid #8e5cff;
+  border-radius:11px;
+
+  background:#17143e;
   color:#fff;
-  border:1px solid #9b5cff;
-  border-radius:10px;
-  padding:8px 10px;
-  cursor:pointer;
+
   font-size:18px;
+
+  cursor:pointer;
 }
 
-.ad{
-  height:64px;
-  border:1px dashed #445071;
-  color:#7785a6;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:10px;
-  margin:14px 0;
+.tools button:active{
+  transform:scale(.94);
 }
 
-.card{
-  background:#0d1226ef;
-  border:2px solid #6d35ff;
-  border-radius:24px;
-  padding:20px;
-  box-shadow:0 0 40px #662cff44;
+/* =========================
+   GAME AREA
+========================= */
+
+.game-card{
+  margin-top:14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,24,52,.98),
+      rgba(7,10,25,.98)
+    );
+
+  border:2px solid #713bff;
+
+  border-radius:26px;
+
+  padding:18px;
+
+  box-shadow:
+    0 0 35px #713bff35,
+    0 20px 70px #0008;
+
   text-align:center;
 }
 
-h1{
-  font-size:clamp(30px,8vw,48px);
-  margin:4px 0;
-  background:linear-gradient(
-    90deg,
-    #54f,
-    #0ff,
-    #ff4db8,
-    #ffcf32
-  );
+.game-heading{
+  margin:0;
+
+  font-size:clamp(28px,8vw,48px);
+
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      90deg,
+      #6355ff,
+      #00eaff,
+      #ff54c8,
+      #ffd329
+    );
+
   -webkit-background-clip:text;
   background-clip:text;
+
   color:transparent;
 }
 
-.sub{
-  color:#b7c0d8;
-  font-size:18px;
+.game-subtitle{
+  margin:4px 0 14px;
+
+  color:#aebbd5;
+
+  font-size:16px;
 }
 
+/* =========================
+   STATS
+========================= */
+
 .stats{
-  display:flex;
-  justify-content:space-around;
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
   gap:8px;
-  flex-wrap:wrap;
-  color:#fff;
-  margin:15px 0;
+
+  margin:12px 0;
 }
 
 .pill{
-  padding:8px 12px;
-  border-radius:10px;
-  background:#171d39;
-  border:1px solid #35416b;
+  padding:9px 5px;
+
+  border-radius:12px;
+
+  background:#161d3b;
+
+  border:1px solid #35416d;
+
+  color:#dbe5ff;
+
+  font-size:13px;
+}
+
+.pill b{
+  color:#fff;
+  font-size:17px;
 }
 
 .timer{
   color:#5dff91;
-  font-weight:900;
 }
 
-.flag{
-  width:min(400px,92%);
-  height:220px;
-  margin:18px auto;
-  border-radius:16px;
-  border:4px solid #fff;
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:110px;
-  box-shadow:0 0 35px #00eaff77;
-  overflow:hidden;
-}
-
-.answers{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  max-width:560px;
-  margin:auto;
-}
-
-.answers button{
-  min-height:60px;
-  border:2px solid #fff;
-  border-radius:13px;
-  color:#fff;
-  font-weight:900;
-  font-size:16px;
-  cursor:pointer;
-  transition:.15s;
-  padding:10px;
-}
-
-.answers button:nth-child(1){
-  background:linear-gradient(135deg,#ff185d,#b600ff);
-}
-
-.answers button:nth-child(2){
-  background:linear-gradient(135deg,#008cff,#00d9ff);
-}
-
-.answers button:nth-child(3){
-  background:linear-gradient(135deg,#00b95d,#00e68a);
-}
-
-.answers button:nth-child(4){
-  background:linear-gradient(135deg,#ff7a00,#ffd000);
-}
-
-.answers button:hover{
-  transform:translateY(-3px);
-  filter:brightness(1.15);
-}
-
-.answers button:disabled{
-  opacity:.7;
-  cursor:not-allowed;
-}
-
-.result{
-  min-height:30px;
-  font-size:21px;
-  font-weight:bold;
-  margin:15px;
-}
-
-.btn{
-  padding:12px 22px;
-  border:1px solid #6ff;
-  border-radius:11px;
-  background:#152846;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.hidden{
-  display:none;
-}
+/* =========================
+   PROGRESS
+========================= */
 
 .progress{
   height:9px;
-  background:#202842;
+
+  background:#1d2541;
+
   border-radius:20px;
+
   overflow:hidden;
-  margin:10px 0;
+
+  margin:10px 0 15px;
 }
 
 .bar{
   height:100%;
+
   width:10%;
-  background:linear-gradient(
-    90deg,
-    #00e5ff,
-    #ff3dce,
-    #ffd000
-  );
-  transition:.3s;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00e5ff,
+      #ff3dce,
+      #ffd000
+    );
+
+  transition:width .3s ease;
 }
 
-@media(max-width:500px){
+/* =========================
+   FLAG
+========================= */
 
-  .top{
+.flag{
+  width:min(420px,94%);
+  height:220px;
+
+  margin:18px auto;
+
+  border-radius:17px;
+
+  border:4px solid #fff;
+
+  background:#0b1021;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:110px;
+
+  overflow:hidden;
+
+  box-shadow:
+    0 0 35px #00eaff66;
+
+  user-select:none;
+}
+
+/* =========================
+   ANSWERS
+========================= */
+
+.answers{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
+
+  width:min(580px,100%);
+
+  margin:auto;
+}
+
+.answers button{
+  min-height:62px;
+
+  border:2px solid rgba(255,255,255,.9);
+
+  border-radius:14px;
+
+  color:#fff;
+
+  font-weight:900;
+
+  font-size:15px;
+
+  cursor:pointer;
+
+  padding:10px;
+
+  transition:
+    transform .15s,
+    filter .15s,
+    opacity .15s;
+}
+
+.answers button:nth-child(1){
+  background:
+    linear-gradient(
+      135deg,
+      #ff185d,
+      #b600ff
+    );
+}
+
+.answers button:nth-child(2){
+  background:
+    linear-gradient(
+      135deg,
+      #008cff,
+      #00d9ff
+    );
+}
+
+.answers button:nth-child(3){
+  background:
+    linear-gradient(
+      135deg,
+      #00a85a,
+      #00e68a
+    );
+}
+
+.answers button:nth-child(4){
+  background:
+    linear-gradient(
+      135deg,
+      #ff7900,
+      #ffd000
+    );
+}
+
+.answers button:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.13);
+}
+
+.answers button:active{
+  transform:scale(.97);
+}
+
+.answers button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.result{
+  min-height:34px;
+
+  margin:14px 5px;
+
+  font-size:19px;
+
+  font-weight:900;
+
+  color:#fff;
+}
+
+.correct{
+  color:#58ffad;
+}
+
+.wrong{
+  color:#ff6c89;
+}
+
+.btn{
+  padding:13px 24px;
+
+  border:1px solid #6ff;
+
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #12405d,
+      #29265c
+    );
+
+  color:#fff;
+
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+.btn:active{
+  transform:scale(.97);
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =========================
+   SEO CONTENT
+========================= */
+
+.content{
+  margin-top:22px;
+
+  padding:22px 18px;
+
+  background:#0b1125eF;
+
+  border:1px solid #2d3b68;
+
+  border-radius:20px;
+
+  box-shadow:0 10px 35px #0005;
+}
+
+.content h2{
+  margin:0 0 10px;
+
+  color:#62edff;
+
+  font-size:25px;
+}
+
+.content h3{
+  margin-top:20px;
+
+  color:#c5a5ff;
+
+  font-size:20px;
+}
+
+.content p{
+  margin:9px 0;
+
+  color:#b9c6dd;
+
+  font-size:15px;
+}
+
+.content ul{
+  color:#b9c6dd;
+
+  padding-left:22px;
+}
+
+.content li{
+  margin:7px 0;
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.faq{
+  margin-top:22px;
+}
+
+.faq details{
+  background:#0d1530;
+
+  border:1px solid #303e68;
+
+  border-radius:13px;
+
+  margin:10px 0;
+
+  padding:0 14px;
+}
+
+.faq summary{
+  cursor:pointer;
+
+  padding:14px 4px;
+
+  color:#fff;
+
+  font-weight:900;
+}
+
+.faq details p{
+  color:#afbdd6;
+
+  padding:0 4px 12px;
+
+  margin:0;
+}
+
+/* =========================
+   INFO BOXES
+========================= */
+
+.info-box{
+  margin-top:22px;
+
+  padding:20px 18px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #101936,
+      #090e20
+    );
+
+  border:1px solid #30416d;
+}
+
+.info-box h2{
+  margin-top:0;
+
+  color:#66eaff;
+
+  font-size:23px;
+}
+
+.info-box p{
+  color:#b8c4dc;
+
+  font-size:15px;
+}
+
+.contact-email{
+  color:#69efff;
+
+  font-weight:bold;
+
+  text-decoration:none;
+}
+
+/* =========================
+   ADSENSE AREA
+========================= */
+
+.adsense-area{
+  margin-top:25px;
+
+  min-height:120px;
+
+  border:1px dashed #465374;
+
+  border-radius:16px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  color:#73819e;
+
+  font-size:11px;
+
+  background:#070b18;
+}
+
+.adsense-area small{
+  opacity:.8;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  text-align:center;
+
+  color:#71809f;
+
+  font-size:12px;
+
+  padding:20px 5px 0;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:560px){
+
+  .wrap{
+    width:95%;
+  }
+
+  .game-card{
+    padding:14px;
+    border-radius:21px;
+  }
+
+  .game-title{
+    display:none;
+  }
+
+  .brand{
     font-size:14px;
+  }
+
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
   .flag{
-    height:170px;
+    height:175px;
     font-size:85px;
+    margin:15px auto;
+  }
+
+  .answers{
+    grid-template-columns:1fr;
+    gap:9px;
   }
 
   .answers button{
-    font-size:14px;
+    min-height:55px;
   }
 
-  .card{
-    padding:15px;
-  }
-
-  .sub{
-    font-size:16px;
+  .content,
+  .info-box{
+    padding:17px 14px;
   }
 
 }
+
+@media(max-width:350px){
+
+  .tools button{
+    width:37px;
+    height:36px;
+  }
+
+  .flag{
+    height:150px;
+    font-size:72px;
+  }
+
+}
+
 </style>
+
+<!-- =========================
+     STRUCTURED DATA
+========================= -->
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"VideoGame",
+  "name":"Game With Fun Flag Guess",
+  "description":"A free online country flag guessing quiz game.",
+  "genre":"Quiz",
+  "gamePlatform":"Web Browser",
+  "applicationCategory":"Game",
+  "url":"https://www.gamewithfun.com/games/flag-guess.html",
+  "author":{
+    "@type":"Organization",
+    "name":"Game With Fun"
+  }
+}
+</script>
+
 </head>
 
 <body>
 
 <div class="wrap">
 
-  <div class="top">
+<!-- =========================
+     TOP
+========================= -->
 
-    <a href="../index.html">
-      ← NEON ARCADE
-    </a>
+<header class="top">
 
-    <strong>
-      🌍 FLAG GUESS
-    </strong>
+  <a class="brand" href="../index.html">
+    ← <span>GAME WITH FUN</span>
+  </a>
 
-    <div class="tools">
-
-      <button id="sound" title="Toggle sound">
-        🔊
-      </button>
-
-      <button id="music" title="Toggle music">
-        🎵
-      </button>
-
-    </div>
-
+  <div class="game-title">
+    🌍 FLAG GUESS
   </div>
 
+  <div class="tools">
 
-  <div class="ad">
-    ADVERTISEMENT
-  </div>
+    <button
+      id="sound"
+      type="button"
+      title="Toggle sound"
+      aria-label="Toggle sound">
+      🔊
+    </button>
 
-
-  <div class="card">
-
-    <h1>
-      FLAG GUESS
-    </h1>
-
-    <p class="sub">
-      Can you identify the country?
-    </p>
-
-
-    <div class="stats">
-
-      <span class="pill">
-        🏆 Score
-        <b id="score">0</b>
-      </span>
-
-      <span class="pill">
-        ❓
-        <b id="round">1</b>/10
-      </span>
-
-      <span class="pill">
-        ❤️
-        <b id="lives">3</b>
-      </span>
-
-      <span class="pill">
-        ⏱️
-        <b id="time">15</b>s
-      </span>
-
-    </div>
-
-
-    <div class="progress">
-      <div id="bar" class="bar"></div>
-    </div>
-
-
-    <div id="flag" class="flag">
-      🌍
-    </div>
-
-
-    <div id="answers" class="answers"></div>
-
-
-    <div id="result" class="result"></div>
-
-
-    <button id="restart" class="btn hidden">
-      PLAY AGAIN
+    <button
+      id="music"
+      type="button"
+      title="Toggle music"
+      aria-label="Toggle music">
+      🎵
     </button>
 
   </div>
 
+</header>
 
-  <div class="ad">
-    ADVERTISEMENT
+
+<!-- =========================
+     GAME AREA
+========================= -->
+
+<main>
+
+<section class="game-card"
+         aria-label="Game With Fun Flag Guess game">
+
+  <h1 class="game-heading">
+    GAME WITH FUN
+  </h1>
+
+  <p class="game-subtitle">
+    🌍 Flag Guess Challenge
+  </p>
+
+
+  <div class="stats">
+
+    <div class="pill">
+      🏆 Score<br>
+      <b id="score">0</b>
+    </div>
+
+    <div class="pill">
+      ❓ Round<br>
+      <b id="round">1</b>/10
+    </div>
+
+    <div class="pill">
+      ❤️ Lives<br>
+      <b id="lives">3</b>
+    </div>
+
+    <div class="pill">
+      ⏱️ Time<br>
+      <b id="time" class="timer">15</b>s
+    </div>
+
   </div>
+
+
+  <div class="progress"
+       aria-label="Game progress">
+
+    <div
+      id="bar"
+      class="bar">
+    </div>
+
+  </div>
+
+
+  <div
+    id="flag"
+    class="flag"
+    aria-label="Country flag">
+    🌍
+  </div>
+
+
+  <div
+    id="answers"
+    class="answers">
+  </div>
+
+
+  <div
+    id="result"
+    class="result"
+    aria-live="polite">
+  </div>
+
+
+  <button
+    id="restart"
+    class="btn hidden"
+    type="button">
+    PLAY AGAIN 🔄
+  </button>
+
+</section>
+
+
+<!-- =========================
+     SEO CONTENT
+========================= -->
+
+<section class="content">
+
+  <h2>
+    Game With Fun Flag Guess – Free Online Flag Quiz
+  </h2>
+
+  <p>
+    Welcome to <strong>Game With Fun Flag Guess</strong>, a free
+    browser-based country flag quiz designed for players who enjoy
+    geography, world cultures and quick challenges. Look at the flag,
+    choose the correct country and try to complete all ten rounds.
+  </p>
+
+  <p>
+    Each question gives you four possible answers. You have limited
+    time to identify the flag, so the game combines geography knowledge
+    with a fast decision-making challenge. Correct answers increase your
+    score, while mistakes reduce your available lives.
+  </p>
+
+  <h3>
+    How to Play Flag Guess
+  </h3>
+
+  <ul>
+    <li>Look carefully at the country flag shown on the screen.</li>
+    <li>Choose one of the four country names.</li>
+    <li>Earn points when your answer is correct.</li>
+    <li>Watch the countdown timer during every question.</li>
+    <li>Try to complete all 10 rounds with your lives remaining.</li>
+  </ul>
+
+  <h3>
+    Why Play a Country Flag Quiz?
+  </h3>
+
+  <p>
+    Flag quizzes are a simple way to practise recognizing national
+    symbols while having fun. This game can help players become more
+    familiar with different country names and flag designs through
+    repeated short quiz rounds.
+  </p>
+
+  <p>
+    Game With Fun Flag Guess works directly in a modern web browser.
+    No separate game installation is required. The layout is designed
+    for both mobile phones and desktop screens.
+  </p>
+
+  <h3>
+    Game Features
+  </h3>
+
+  <ul>
+    <li>10-question flag guessing challenge</li>
+    <li>Four multiple-choice answers</li>
+    <li>Score and lives system</li>
+    <li>15-second countdown for each question</li>
+    <li>Responsive mobile-friendly interface</li>
+    <li>Browser-generated sound effects</li>
+    <li>No external audio files required</li>
+    <li>Free to play in a web browser</li>
+  </ul>
+
+</section>
+
+
+<!-- =========================
+     FAQ
+========================= -->
+
+<section class="content faq">
+
+  <h2>
+    Frequently Asked Questions
+  </h2>
+
+
+  <details>
+    <summary>
+      Is Game With Fun Flag Guess free to play?
+    </summary>
+
+    <p>
+      Yes. The game is designed as a free browser game that can be
+      played directly from the Game With Fun website.
+    </p>
+  </details>
+
+
+  <details>
+    <summary>
+      How many questions are in one game?
+    </summary>
+
+    <p>
+      Each game contains 10 rounds. Try to answer as many questions
+      correctly as possible before losing all three lives.
+    </p>
+  </details>
+
+
+  <details>
+    <summary>
+      How much time do I get for each question?
+    </summary>
+
+    <p>
+      You normally have 15 seconds to select an answer for each flag.
+      If the timer reaches zero, the question counts as a missed answer.
+    </p>
+  </details>
+
+
+  <details>
+    <summary>
+      Does the game work on mobile phones?
+    </summary>
+
+    <p>
+      Yes. The interface is responsive and designed to work on modern
+      mobile browsers, tablets and desktop browsers.
+    </p>
+  </details>
+
+
+  <details>
+    <summary>
+      Does the game use copyrighted sound files?
+    </summary>
+
+    <p>
+      The sound effects in this version are generated in real time by
+      the browser using the Web Audio API. No external music or sound
+      file is included in the game.
+    </p>
+  </details>
+
+
+  <details>
+    <summary>
+      Can I play the game without installing an app?
+    </summary>
+
+    <p>
+      Yes. Game With Fun Flag Guess is an HTML5 browser game and does
+      not require a separate application installation.
+    </p>
+  </details>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="info-box">
+
+  <h2>
+    About Game With Fun
+  </h2>
+
+  <p>
+    Game With Fun is an online gaming website focused on simple,
+    entertaining browser games that can be played on phones, tablets
+    and computers.
+  </p>
+
+  <p>
+    Our goal is to provide easy-to-access games across different
+    categories such as quiz, puzzle, racing, arcade and casual games.
+    Game With Fun Flag Guess is one of our browser-based quiz games.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     PRIVACY
+========================= -->
+
+<section class="info-box">
+
+  <h2>
+    Privacy
+  </h2>
+
+  <p>
+    Game With Fun respects visitor privacy. This game itself does not
+    require players to create an account or provide personal
+    information in order to play.
+  </p>
+
+  <p>
+    The website may use standard technologies such as cookies,
+    analytics tools or advertising services where applicable. These
+    services may process information according to their own privacy
+    policies.
+  </p>
+
+  <p>
+    If advertising services such as Google AdSense are enabled on the
+    website, advertising providers may use cookies or similar
+    technologies to deliver and measure advertisements according to
+    their policies and applicable laws.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     DISCLAIMER
+========================= -->
+
+<section class="info-box">
+
+  <h2>
+    Disclaimer
+  </h2>
+
+  <p>
+    Game With Fun Flag Guess is provided for entertainment and
+    educational purposes. While we try to keep the country names and
+    quiz information accurate, users should not treat the game as an
+    official geographical or governmental reference.
+  </p>
+
+  <p>
+    Game availability, features and website content may change over
+    time. Game With Fun does not guarantee that the service will
+    always be available without interruption.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section class="info-box">
+
+  <h2>
+    Contact
+  </h2>
+
+  <p>
+    If you have a question, suggestion, bug report or other feedback
+    about Game With Fun, you can contact us by email.
+  </p>
+
+  <p>
+    Email:
+    <a
+      class="contact-email"
+      href="mailto:contact@gamewithfun.com">
+      contact@gamewithfun.com
+    </a>
+  </p>
+
+</section>
+
+
+<!-- =========================
+     ADSENSE
+========================= -->
+
+<section class="adsense-area"
+         aria-label="Advertisement">
+
+  <div>
+    <strong>ADVERTISEMENT</strong><br>
+    <small>
+      AdSense advertisement space
+    </small>
+  </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+  © 2026 Game With Fun. All rights reserved.
+
+</footer>
+
+</main>
 
 </div>
 
 
 <script>
 
-/* =========================
-   COUNTRIES
-========================= */
+"use strict";
+
+/* =====================================================
+   COUNTRY DATA
+===================================================== */
 
 const countries = [
 
@@ -362,7 +1153,6 @@ const countries = [
   {name:"Algeria",code:"DZ"},
   {name:"Andorra",code:"AD"},
   {name:"Angola",code:"AO"},
-  {name:"Antigua and Barbuda",code:"AG"},
   {name:"Argentina",code:"AR"},
   {name:"Armenia",code:"AM"},
   {name:"Australia",code:"AU"},
@@ -397,10 +1187,7 @@ const countries = [
   {name:"China",code:"CN"},
   {name:"Colombia",code:"CO"},
   {name:"Comoros",code:"KM"},
-  {name:"Congo, Democratic Republic of the",code:"CD"},
-  {name:"Congo, Republic of the",code:"CG"},
   {name:"Costa Rica",code:"CR"},
-  {name:"Côte d'Ivoire",code:"CI"},
   {name:"Croatia",code:"HR"},
   {name:"Cuba",code:"CU"},
   {name:"Cyprus",code:"CY"},
@@ -414,8 +1201,6 @@ const countries = [
   {name:"Ecuador",code:"EC"},
   {name:"Egypt",code:"EG"},
   {name:"El Salvador",code:"SV"},
-  {name:"Equatorial Guinea",code:"GQ"},
-  {name:"Eritrea",code:"ER"},
   {name:"Estonia",code:"EE"},
   {name:"Eswatini",code:"SZ"},
   {name:"Ethiopia",code:"ET"},
@@ -433,7 +1218,6 @@ const countries = [
   {name:"Grenada",code:"GD"},
   {name:"Guatemala",code:"GT"},
   {name:"Guinea",code:"GN"},
-  {name:"Guinea-Bissau",code:"GW"},
   {name:"Guyana",code:"GY"},
 
   {name:"Haiti",code:"HT"},
@@ -454,7 +1238,6 @@ const countries = [
 
   {name:"Kazakhstan",code:"KZ"},
   {name:"Kenya",code:"KE"},
-  {name:"Kiribati",code:"KI"},
   {name:"Kuwait",code:"KW"},
   {name:"Kyrgyzstan",code:"KG"},
 
@@ -474,11 +1257,9 @@ const countries = [
   {name:"Maldives",code:"MV"},
   {name:"Mali",code:"ML"},
   {name:"Malta",code:"MT"},
-  {name:"Marshall Islands",code:"MH"},
   {name:"Mauritania",code:"MR"},
   {name:"Mauritius",code:"MU"},
   {name:"Mexico",code:"MX"},
-  {name:"Micronesia",code:"FM"},
   {name:"Moldova",code:"MD"},
   {name:"Monaco",code:"MC"},
   {name:"Mongolia",code:"MN"},
@@ -488,7 +1269,6 @@ const countries = [
   {name:"Myanmar",code:"MM"},
 
   {name:"Namibia",code:"NA"},
-  {name:"Nauru",code:"NR"},
   {name:"Nepal",code:"NP"},
   {name:"Netherlands",code:"NL"},
   {name:"New Zealand",code:"NZ"},
@@ -518,12 +1298,6 @@ const countries = [
   {name:"Russia",code:"RU"},
   {name:"Rwanda",code:"RW"},
 
-  {name:"Saint Kitts and Nevis",code:"KN"},
-  {name:"Saint Lucia",code:"LC"},
-  {name:"Saint Vincent and the Grenadines",code:"VC"},
-  {name:"Samoa",code:"WS"},
-  {name:"San Marino",code:"SM"},
-  {name:"Sao Tome and Principe",code:"ST"},
   {name:"Saudi Arabia",code:"SA"},
   {name:"Senegal",code:"SN"},
   {name:"Serbia",code:"RS"},
@@ -532,7 +1306,6 @@ const countries = [
   {name:"Singapore",code:"SG"},
   {name:"Slovakia",code:"SK"},
   {name:"Slovenia",code:"SI"},
-  {name:"Solomon Islands",code:"SB"},
   {name:"Somalia",code:"SO"},
   {name:"South Africa",code:"ZA"},
   {name:"South Korea",code:"KR"},
@@ -579,71 +1352,124 @@ const countries = [
 ];
 
 
-/* =========================
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const $ = id => document.getElementById(id);
+
+
+/* =====================================================
    GAME VARIABLES
-========================= */
+===================================================== */
 
 let score = 0;
 let round = 1;
 let lives = 3;
+
 let current = null;
+
 let time = 15;
 let timer = null;
 
 let soundOn = true;
 let musicOn = false;
+
 let audio = null;
 
-
-/* =========================
-   SHORT ID FUNCTION
-========================= */
-
-const $ = id => document.getElementById(id);
+let musicTimer = null;
+let musicStep = 0;
 
 
-/* =========================
-   SOUND
-========================= */
+/* =====================================================
+   AUDIO ENGINE
+   Browser-generated sounds.
+   No external copyrighted audio files.
+===================================================== */
 
-function tone(
-  freq,
-  dur,
-  type = "sine",
-  vol = 0.07
-){
-
-  if(!soundOn) return;
+function getAudio(){
 
   try{
 
-    audio =
-      audio ||
-      new (
+    if(!audio){
+
+      const AudioContext =
         window.AudioContext ||
-        window.webkitAudioContext
-      )();
+        window.webkitAudioContext;
 
-    let o = audio.createOscillator();
-    let g = audio.createGain();
+      if(!AudioContext){
+        return null;
+      }
 
-    o.type = type;
-    o.frequency.value = freq;
+      audio = new AudioContext();
 
-    g.gain.value = vol;
+    }
 
-    o.connect(g);
-    g.connect(audio.destination);
+    if(audio.state === "suspended"){
+      audio.resume();
+    }
 
-    o.start();
+    return audio;
 
-    g.gain.exponentialRampToValueAtTime(
-      .001,
-      audio.currentTime + dur
+  }catch(e){
+
+    return null;
+
+  }
+
+}
+
+
+function tone(
+  frequency,
+  duration,
+  type="sine",
+  volume=.07
+){
+
+  if(!soundOn){
+    return;
+  }
+
+  const ac = getAudio();
+
+  if(!ac){
+    return;
+  }
+
+  try{
+
+    const oscillator =
+      ac.createOscillator();
+
+    const gain =
+      ac.createGain();
+
+    oscillator.type = type;
+
+    oscillator.frequency.setValueAtTime(
+      frequency,
+      ac.currentTime
     );
 
-    o.stop(
-      audio.currentTime + dur
+    gain.gain.setValueAtTime(
+      volume,
+      ac.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      ac.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+
+    gain.connect(ac.destination);
+
+    oscillator.start();
+
+    oscillator.stop(
+      ac.currentTime + duration
     );
 
   }catch(e){}
@@ -651,37 +1477,162 @@ function tone(
 }
 
 
+/* =========================
+   CORRECT
+========================= */
+
 function correctSound(){
 
-  tone(660,.1);
+  tone(660,.10,"sine",.08);
 
-  setTimeout(
-    () => tone(880,.14),
-    90
-  );
+  setTimeout(()=>{
+    tone(880,.13,"sine",.08);
+  },90);
 
 }
 
+
+/* =========================
+   WRONG
+========================= */
 
 function wrongSound(){
 
   tone(
     180,
     .18,
-    "sawtooth"
+    "sawtooth",
+    .06
+  );
+
+  setTimeout(()=>{
+    tone(
+      120,
+      .12,
+      "sawtooth",
+      .04
+    );
+  },100);
+
+}
+
+
+/* =========================
+   CLICK
+========================= */
+
+function clickSound(){
+
+  tone(
+    420,
+    .05,
+    "sine",
+    .035
   );
 
 }
 
 
 /* =========================
-   START GAME
+   GAME OVER
 ========================= */
+
+function gameOverSound(){
+
+  tone(
+    330,
+    .12,
+    "triangle",
+    .07
+  );
+
+  setTimeout(()=>{
+    tone(
+      247,
+      .16,
+      "triangle",
+      .07
+    );
+  },120);
+
+  setTimeout(()=>{
+    tone(
+      196,
+      .25,
+      "triangle",
+      .07
+    );
+  },280);
+
+}
+
+
+/* =====================================================
+   GENERATED BACKGROUND MUSIC
+===================================================== */
+
+function musicNote(){
+
+  if(!musicOn){
+    return;
+  }
+
+  const notes =
+    [261.63,329.63,392,329.63,
+     293.66,349.23,440,349.23];
+
+  tone(
+    notes[musicStep % notes.length],
+    .16,
+    "triangle",
+    .018
+  );
+
+  musicStep++;
+
+}
+
+
+function startMusic(){
+
+  stopMusic();
+
+  if(!musicOn){
+    return;
+  }
+
+  musicTimer =
+    setInterval(
+      musicNote,
+      420
+    );
+
+}
+
+
+function stopMusic(){
+
+  if(musicTimer){
+
+    clearInterval(musicTimer);
+
+    musicTimer = null;
+
+  }
+
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
 
 function start(){
 
   score = 0;
+
   round = 1;
+
   lives = 3;
 
   clearInterval(timer);
@@ -690,6 +1641,8 @@ function start(){
 
   $("result").textContent = "";
 
+  $("flag").textContent = "🌍";
+
   update();
 
   next();
@@ -697,23 +1650,29 @@ function start(){
 }
 
 
-/* =========================
+/* =====================================================
    UPDATE UI
-========================= */
+===================================================== */
 
 function update(){
 
-  $("score").textContent = score;
+  $("score").textContent =
+    score;
 
   $("round").textContent =
     Math.min(round,10);
 
-  $("lives").textContent = lives;
+  $("lives").textContent =
+    lives;
 
-  $("time").textContent = time;
+  $("time").textContent =
+    time;
 
-  let progress =
-    ((round - 1) / 10 * 100 + 10);
+  const progress =
+    Math.min(
+      100,
+      ((round - 1) / 10 * 100) + 10
+    );
 
   $("bar").style.width =
     progress + "%";
@@ -721,9 +1680,25 @@ function update(){
 }
 
 
-/* =========================
+/* =====================================================
+   RANDOM COUNTRY
+===================================================== */
+
+function randomCountry(){
+
+  return countries[
+    Math.floor(
+      Math.random() *
+      countries.length
+    )
+  ];
+
+}
+
+
+/* =====================================================
    NEXT QUESTION
-========================= */
+===================================================== */
 
 function next(){
 
@@ -735,16 +1710,12 @@ function next(){
     end();
 
     return;
+
   }
 
 
   current =
-    countries[
-      Math.floor(
-        Math.random() *
-        countries.length
-      )
-    ];
+    randomCountry();
 
 
   $("flag").textContent =
@@ -756,38 +1727,39 @@ function next(){
   update();
 
 
-  /* Create 4 answers */
+  /* =========================
+     CREATE ANSWERS
+  ========================= */
 
-  let opts = [current];
+  const options =
+    [current];
 
 
-  while(opts.length < 4){
+  while(options.length < 4){
 
-    let c =
-      countries[
-        Math.floor(
-          Math.random() *
-          countries.length
-        )
-      ];
+    const country =
+      randomCountry();
 
 
     if(
-      !opts.some(
-        x => x.code === c.code
+      !options.some(
+        item =>
+          item.code === country.code
       )
     ){
 
-      opts.push(c);
+      options.push(country);
 
     }
 
   }
 
 
-  /* Shuffle answers */
+  /* =========================
+     SHUFFLE
+  ========================= */
 
-  opts.sort(
+  options.sort(
     () => Math.random() - .5
   );
 
@@ -795,16 +1767,23 @@ function next(){
   $("answers").innerHTML = "";
 
 
-  opts.forEach(c => {
+  options.forEach(country => {
 
-    let button =
+    const button =
       document.createElement("button");
 
-    button.textContent =
-      c.name;
 
-    button.onclick =
-      () => choose(c);
+    button.type = "button";
+
+    button.textContent =
+      country.name;
+
+
+    button.addEventListener(
+      "click",
+      () => choose(country)
+    );
+
 
     $("answers").appendChild(
       button
@@ -813,12 +1792,15 @@ function next(){
   });
 
 
-  /* Timer */
+  /* =========================
+     TIMER
+  ========================= */
 
   clearInterval(timer);
 
+
   timer =
-    setInterval(() => {
+    setInterval(()=>{
 
       time--;
 
@@ -833,21 +1815,21 @@ function next(){
 
         wrongSound();
 
-        $("result").textContent =
-          "⏰ Time's up!";
+        $("result").innerHTML =
+          '<span class="wrong">⏰ Time\'s up!</span>';
 
         round++;
 
         update();
 
 
-        setTimeout(() => {
+        setTimeout(()=>{
 
           $("result").textContent = "";
 
           next();
 
-        },700);
+        },750);
 
       }
 
@@ -856,32 +1838,37 @@ function next(){
 }
 
 
-/* =========================
-   CHOOSE ANSWER
-========================= */
+/* =====================================================
+   ANSWER
+===================================================== */
 
-function choose(c){
+function choose(country){
 
   clearInterval(timer);
 
 
-  let buttons =
+  const buttons =
     [...$("answers").children];
 
 
   buttons.forEach(
-    b => b.disabled = true
+    button => {
+      button.disabled = true;
+    }
   );
 
 
-  if(c.code === current.code){
+  clickSound();
+
+
+  if(country.code === current.code){
 
     score += 10;
 
     correctSound();
 
-    $("result").textContent =
-      "🎉 CORRECT! +10";
+    $("result").innerHTML =
+      '<span class="correct">🎉 CORRECT! +10</span>';
 
   }else{
 
@@ -889,10 +1876,10 @@ function choose(c){
 
     wrongSound();
 
-    $("result").textContent =
-      "❌ Wrong! It was " +
-      current.name +
-      ".";
+    $("result").innerHTML =
+      '<span class="wrong">❌ Wrong! It was ' +
+      escapeHtml(current.name) +
+      '.</span>';
 
   }
 
@@ -902,116 +1889,184 @@ function choose(c){
   update();
 
 
-  setTimeout(() => {
+  setTimeout(()=>{
 
     $("result").textContent = "";
 
     next();
 
-  },700);
+  },800);
 
 }
 
 
-/* =========================
-   GAME OVER
-========================= */
+/* =====================================================
+   END GAME
+===================================================== */
 
 function end(){
 
   clearInterval(timer);
 
-  $("flag").textContent = "🏆";
+  stopMusic();
 
-  $("answers").innerHTML = "";
+  gameOverSound();
 
-  $("result").textContent =
-    `Game Over! Final score: ${score} 🎉`;
 
-  $("restart").classList.remove(
-    "hidden"
-  );
+  $("flag").textContent =
+    "🏆";
+
+
+  $("answers").innerHTML =
+    "";
+
+
+  $("result").innerHTML =
+    "Game Over! Final score: " +
+    score +
+    " 🎉";
+
+
+  $("restart")
+    .classList
+    .remove("hidden");
+
 
   update();
 
 }
 
 
-/* =========================
+/* =====================================================
    RESTART
-========================= */
+===================================================== */
 
-$("restart").onclick = start;
+$("restart").addEventListener(
+  "click",
+  start
+);
 
 
-/* =========================
+/* =====================================================
    SOUND BUTTON
-========================= */
+===================================================== */
 
-$("sound").onclick = () => {
+$("sound").addEventListener(
+  "click",
+  ()=>{
 
-  soundOn = !soundOn;
-
-  $("sound").textContent =
-    soundOn ? "🔊" : "🔇";
+    soundOn = !soundOn;
 
 
-  if(soundOn){
+    $("sound").textContent =
+      soundOn ? "🔊" : "🔇";
 
-    tone(700,.08);
+
+    if(soundOn){
+
+      tone(
+        700,
+        .08,
+        "sine",
+        .06
+      );
+
+    }
 
   }
+);
 
-};
 
-
-/* =========================
+/* =====================================================
    MUSIC BUTTON
-========================= */
+===================================================== */
 
-$("music").onclick = () => {
+$("music").addEventListener(
+  "click",
+  ()=>{
 
-  musicOn = !musicOn;
-
-  $("music").textContent =
-    musicOn ? "🎶" : "🎵";
+    musicOn = !musicOn;
 
 
-  if(musicOn){
+    $("music").textContent =
+      musicOn ? "🎶" : "🎵";
 
-    tone(
-      260,
-      .12,
-      "triangle",
-      .04
-    );
+
+    if(musicOn){
+
+      getAudio();
+
+      startMusic();
+
+    }else{
+
+      stopMusic();
+
+    }
 
   }
+);
 
-};
 
-
-/* =========================
+/* =====================================================
    FLAG EMOJI
-========================= */
+===================================================== */
 
 function flagEmoji(code){
 
   return [...code.toUpperCase()]
-    .map(c =>
+    .map(letter =>
       String.fromCodePoint(
         127397 +
-        c.charCodeAt(0)
+        letter.charCodeAt(0)
       )
     )
-    .join('');
+    .join("");
 
 }
 
 
-/* =========================
+/* =====================================================
+   BASIC HTML ESCAPE
+===================================================== */
+
+function escapeHtml(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   PAGE VISIBILITY
+===================================================== */
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+
+    if(document.hidden){
+
+      clearInterval(timer);
+
+      if(musicOn){
+        stopMusic();
+      }
+
+    }
+
+  }
+);
+
+
+/* =====================================================
    START
-========================= */
+===================================================== */
 
 start();
 
