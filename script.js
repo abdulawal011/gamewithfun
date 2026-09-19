@@ -97,10 +97,10 @@ const games = [
 
   {
     id: 1,
-    title: "Neon Tic Tac Toe",
+    title: "O&X Game",
     category: "Puzzle",
     icon: "games/logo.png",
-    url: "games/neon_tic_tac_toe-1.html",
+    url: "games/O&X game.html",
     newGame: true,
     popular: false
   },
