@@ -2,16 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-<title>Game With Fun Traffic Jam - Free Traffic Puzzle Game</title>
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-<meta name="description" content="Play Game With Fun Traffic Jam, a free online traffic puzzle game. Move the cars, solve challenging traffic jams, clear the road and guide the red car to the exit.">
-<meta name="keywords" content="traffic jam game, traffic puzzle game, car puzzle game, traffic jam solver, free online puzzle game, Game With Fun">
+<title>Traffic Jam Solve - Free Traffic Puzzle Game | GameWithFun</title>
+
+<meta name="description"
+content="Play Traffic Jam Solve, a free online traffic puzzle game by GameWithFun. Move cars, clear the road and guide the red car to the exit through 30 challenging levels.">
+
+<meta name="keywords"
+content="Traffic Jam Solve, traffic jam game, traffic puzzle game, car puzzle game, traffic jam solver, free puzzle game, online traffic game, GameWithFun">
+
 <meta name="robots" content="index,follow">
-<meta name="author" content="Game With Fun">
+<meta name="author" content="GameWithFun">
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -20,14 +27,14 @@
 }
 
 :root{
-  --bg:#07111f;
-  --panel:#101d2d;
-  --panel2:#16263a;
-  --line:#2a4059;
+  --bg:#06101d;
+  --panel:#0e1b2b;
+  --panel2:#14253a;
+  --line:#29425c;
   --text:#f7fbff;
-  --muted:#a6b5c8;
+  --muted:#a9b9ca;
   --blue:#0878f9;
-  --blue2:#36a3ff;
+  --blue2:#43a7ff;
   --green:#22c55e;
   --gold:#fbbf24;
   --red:#ef4444;
@@ -40,7 +47,12 @@ html{
 body{
   min-height:100vh;
   background:
-    radial-gradient(circle at 50% -10%,#183e69 0,#07111f 45%);
+    radial-gradient(
+      circle at 50% -10%,
+      #1c4877 0,
+      #07111f 43%,
+      #06101d 100%
+    );
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
   line-height:1.5;
@@ -58,14 +70,13 @@ button{
 }
 
 /* =========================
-   HEADER
+HEADER
 ========================= */
 
 .topbar{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:10px;
+  align-items:center;
   margin-bottom:10px;
 }
 
@@ -76,13 +87,13 @@ button{
 }
 
 .logo{
-  width:42px;
-  height:42px;
-  border-radius:12px;
+  width:43px;
+  height:43px;
+  border-radius:13px;
   display:grid;
   place-items:center;
   background:linear-gradient(145deg,#1688ff,#0755c7);
-  box-shadow:0 7px 20px rgba(8,120,249,.25);
+  box-shadow:0 7px 20px rgba(8,120,249,.3);
   font-size:22px;
 }
 
@@ -96,7 +107,6 @@ button{
   color:var(--muted);
   font-size:9px;
   margin-top:1px;
-  font-weight:700;
 }
 
 .sound-btn{
@@ -110,7 +120,7 @@ button{
 }
 
 /* =========================
-   GAME TITLE
+TITLE
 ========================= */
 
 .game-title{
@@ -131,7 +141,7 @@ button{
 }
 
 /* =========================
-   STATS
+STATS
 ========================= */
 
 .stats{
@@ -142,7 +152,7 @@ button{
 }
 
 .stat{
-  background:linear-gradient(145deg,#132238,#0e1928);
+  background:linear-gradient(145deg,#14263c,#0c1827);
   border:1px solid var(--line);
   border-radius:13px;
   padding:9px 4px;
@@ -153,7 +163,7 @@ button{
   display:block;
   color:var(--muted);
   font-size:9px;
-  font-weight:700;
+  font-weight:800;
   text-transform:uppercase;
 }
 
@@ -164,15 +174,15 @@ button{
 }
 
 /* =========================
-   GAME AREA
+GAME PANEL
 ========================= */
 
 .game-panel{
-  background:rgba(15,27,43,.97);
+  background:rgba(13,27,43,.98);
   border:1px solid #29415d;
   border-radius:21px;
   padding:12px;
-  box-shadow:0 18px 50px rgba(0,0,0,.3);
+  box-shadow:0 18px 50px rgba(0,0,0,.32);
 }
 
 .board-wrap{
@@ -186,50 +196,87 @@ button{
   position:relative;
   width:100%;
   aspect-ratio:1;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  grid-template-rows:repeat(6,1fr);
 
   background:
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
-    #263546;
+    linear-gradient(
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px
+    ),
+    #263647;
 
-  background-size:calc(100% / 6) calc(100% / 6);
+  background-size:
+    calc(100% / 6)
+    calc(100% / 6);
 
-  border:7px solid #172333;
-  border-radius:17px;
+  border:7px solid #172433;
+  border-radius:18px;
 
   box-shadow:
-    inset 0 0 0 2px #3c4d60,
-    inset 0 0 35px rgba(0,0,0,.5);
+    inset 0 0 0 2px #415466,
+    inset 0 0 35px rgba(0,0,0,.55);
 
   overflow:visible;
+
   touch-action:none;
+  user-select:none;
 }
 
-/* EXIT */
+/* road markings */
+
+.board::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(50% - 2px);
+  height:4px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.18) 0 22px,
+      transparent 22px 40px
+    );
+  pointer-events:none;
+  z-index:1;
+}
+
+/* =========================
+EXIT
+========================= */
 
 .exit{
   position:absolute;
-  z-index:40;
+  z-index:80;
+
   right:-31px;
   top:calc(50% - 39px);
+
   width:31px;
   height:78px;
-
-  background:linear-gradient(90deg,#16a34a,#4ade80);
-  border-radius:0 12px 12px 0;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
+  background:linear-gradient(
+    90deg,
+    #16a34a,
+    #4ade80
+  );
+
+  border-radius:0 12px 12px 0;
+
   color:#05230f;
   font-size:10px;
   font-weight:950;
 
-  box-shadow:0 0 20px rgba(34,197,94,.4);
+  box-shadow:
+    0 0 22px rgba(34,197,94,.5);
 }
 
 .exit span{
@@ -237,37 +284,44 @@ button{
 }
 
 /* =========================
-   CARS
+CARS
 ========================= */
 
 .car{
   position:absolute;
-  z-index:10;
+  z-index:20;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
   border-radius:11px;
-  border:2px solid rgba(255,255,255,.25);
+
+  border:2px solid rgba(255,255,255,.27);
 
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.3),
-    0 7px 13px rgba(0,0,0,.35);
+    inset 0 2px 0 rgba(255,255,255,.32),
+    0 7px 14px rgba(0,0,0,.42);
 
   cursor:grab;
+
   user-select:none;
   touch-action:none;
 
   transition:
-    left .13s ease,
-    top .13s ease,
-    transform .13s ease;
+    left .12s ease,
+    top .12s ease,
+    transform .12s ease;
+
+  will-change:left,top;
 }
 
-.car:active{
+.car.dragging{
+  transition:none;
+  transform:scale(1.035);
+  z-index:60;
   cursor:grabbing;
-  transform:scale(.97);
+  filter:brightness(1.08);
 }
 
 .car.horizontal::before,
@@ -276,70 +330,102 @@ button{
 .car.vertical::after{
   content:"";
   position:absolute;
-  background:#09111b;
-  opacity:.83;
+  background:#08111a;
+  opacity:.84;
   border-radius:5px;
 }
 
 .car.horizontal::before{
-  width:21%;
-  height:62%;
+  width:20%;
+  height:60%;
   left:7%;
 }
 
 .car.horizontal::after{
-  width:21%;
-  height:62%;
+  width:20%;
+  height:60%;
   right:7%;
 }
 
 .car.vertical::before{
-  width:62%;
-  height:21%;
+  width:60%;
+  height:20%;
   top:7%;
 }
 
 .car.vertical::after{
-  width:62%;
-  height:21%;
+  width:60%;
+  height:20%;
   bottom:7%;
 }
 
 .car.horizontal .glass{
   width:27%;
   height:55%;
-  border-radius:4px;
-  background:rgba(210,235,255,.38);
+  border-radius:5px;
+  background:rgba(205,235,255,.38);
+  position:relative;
+  z-index:5;
 }
 
 .car.vertical .glass{
   width:55%;
   height:27%;
-  border-radius:4px;
-  background:rgba(210,235,255,.38);
+  border-radius:5px;
+  background:rgba(205,235,255,.38);
+  position:relative;
+  z-index:5;
 }
 
 .car.player{
-  background:linear-gradient(145deg,#ff5a5f,#c91f2b);
-  border-color:#ffb1b4;
-  z-index:20;
+  background:
+    linear-gradient(
+      145deg,
+      #ff5c61,
+      #c71928
+    );
+
+  border-color:#ffb4b8;
+
+  z-index:40;
+
   box-shadow:
-    0 0 18px rgba(239,68,68,.32),
+    0 0 19px rgba(239,68,68,.4),
     inset 0 2px 0 rgba(255,255,255,.35),
-    0 7px 13px rgba(0,0,0,.4);
+    0 8px 15px rgba(0,0,0,.45);
 }
 
-.car.blue{background:linear-gradient(145deg,#60a5fa,#2563eb)}
-.car.yellow{background:linear-gradient(145deg,#fde047,#ca8a04)}
-.car.green{background:linear-gradient(145deg,#4ade80,#15803d)}
-.car.purple{background:linear-gradient(145deg,#a78bfa,#6d28d9)}
-.car.orange{background:linear-gradient(145deg,#fb923c,#c2410c)}
-.car.cyan{background:linear-gradient(145deg,#22d3ee,#0e7490)}
-.car.pink{background:linear-gradient(145deg,#f472b6,#be185d)}
+.car.blue{
+  background:linear-gradient(145deg,#60a5fa,#2563eb);
+}
+
+.car.yellow{
+  background:linear-gradient(145deg,#fde047,#ca8a04);
+}
+
+.car.green{
+  background:linear-gradient(145deg,#4ade80,#15803d);
+}
+
+.car.purple{
+  background:linear-gradient(145deg,#a78bfa,#6d28d9);
+}
+
+.car.orange{
+  background:linear-gradient(145deg,#fb923c,#c2410c);
+}
+
+.car.cyan{
+  background:linear-gradient(145deg,#22d3ee,#0e7490);
+}
+
+.car.pink{
+  background:linear-gradient(145deg,#f472b6,#be185d);
+}
 
 .car-label{
   position:relative;
-  z-index:5;
+  z-index:10;
   color:#fff;
   font-size:9px;
   font-weight:950;
@@ -347,12 +433,12 @@ button{
 }
 
 /* =========================
-   COINS
+COINS
 ========================= */
 
 .coin{
   position:absolute;
-  z-index:7;
+  z-index:12;
 
   width:23px;
   height:23px;
@@ -362,26 +448,31 @@ button{
   background:
     radial-gradient(
       circle at 35% 30%,
-      #fff3a5,
+      #fff6ad,
       #fbbf24 45%,
-      #b45309
+      #a16207
     );
 
   border:2px solid #fde68a;
 
-  box-shadow:
-    0 0 13px rgba(251,191,36,.55);
-
   display:grid;
   place-items:center;
 
+  color:#713f12;
   font-size:11px;
   font-weight:900;
-  color:#713f12;
 
   pointer-events:none;
 
-  animation:coinFloat 1.5s ease-in-out infinite;
+  box-shadow:
+    0 0 14px rgba(251,191,36,.6);
+
+  animation:
+    coinFloat 1.35s ease-in-out infinite;
+}
+
+.coin.collected{
+  animation:coinCollect .25s ease forwards;
 }
 
 @keyframes coinFloat{
@@ -394,8 +485,15 @@ button{
   }
 }
 
+@keyframes coinCollect{
+  to{
+    transform:scale(1.7);
+    opacity:0;
+  }
+}
+
 /* =========================
-   BUTTONS
+CONTROLS
 ========================= */
 
 .controls{
@@ -417,24 +515,34 @@ button{
 
 .reset-btn{
   background:#26374c;
-  border:1px solid #38506a;
+  border:1px solid #3a526b;
 }
 
 .hint-btn{
-  background:linear-gradient(90deg,#0878f9,#1769d2);
-  box-shadow:0 6px 18px rgba(8,120,249,.2);
+  background:linear-gradient(
+    90deg,
+    #0878f9,
+    #1769d2
+  );
+
+  box-shadow:
+    0 6px 18px rgba(8,120,249,.25);
+}
+
+.game-btn:active{
+  transform:scale(.98);
 }
 
 .message{
   min-height:25px;
   margin-top:9px;
   text-align:center;
-  color:#aebdd0;
+  color:#b4c2d2;
   font-size:12px;
 }
 
 /* =========================
-   PROGRESS
+PROGRESS
 ========================= */
 
 .progress-box{
@@ -470,30 +578,45 @@ button{
 .progress-fill{
   height:100%;
   width:3.33%;
-  background:linear-gradient(90deg,#0878f9,#36a3ff);
+  background:
+    linear-gradient(
+      90deg,
+      #0878f9,
+      #36a3ff
+    );
+
   border-radius:20px;
+
   transition:width .3s ease;
 }
 
 /* =========================
-   LEVELS
+LEVELS
 ========================= */
 
 .levels{
   margin-top:10px;
+
   display:grid;
-  grid-template-columns:repeat(10,1fr);
+  grid-template-columns:
+    repeat(10,1fr);
+
   gap:5px;
 }
 
 .level{
   min-height:37px;
+
   border:1px solid #2c425b;
   background:#17283c;
-  color:#aebdd0;
+
+  color:#b1bfd0;
+
   border-radius:9px;
+
   font-size:11px;
   font-weight:900;
+
   cursor:pointer;
 }
 
@@ -501,6 +624,9 @@ button{
   background:#0878f9;
   color:#fff;
   border-color:#54a8ff;
+
+  box-shadow:
+    0 0 12px rgba(8,120,249,.25);
 }
 
 .level.completed{
@@ -511,24 +637,29 @@ button{
 
 .level.locked{
   opacity:.38;
+  cursor:not-allowed;
 }
 
 /* =========================
-   WIN SCREEN
+OVERLAY
 ========================= */
 
 .overlay{
   position:absolute;
   inset:0;
-  z-index:100;
+
+  z-index:200;
 
   display:none;
+
   align-items:center;
   justify-content:center;
 
-  background:rgba(3,9,16,.83);
+  background:rgba(3,9,16,.84);
+
   border-radius:10px;
-  backdrop-filter:blur(4px);
+
+  backdrop-filter:blur(5px);
 }
 
 .overlay.show{
@@ -536,8 +667,10 @@ button{
 }
 
 .win-card{
-  width:min(90%,350px);
+  width:min(90%,360px);
+
   padding:25px 18px;
+
   text-align:center;
 
   border-radius:21px;
@@ -545,16 +678,17 @@ button{
   background:
     linear-gradient(
       145deg,
-      #172b43,
-      #0f1c2c
+      #172d47,
+      #0e1b2b
     );
 
-  border:1px solid #45617e;
+  border:1px solid #496681;
 
   box-shadow:
-    0 20px 50px rgba(0,0,0,.5);
+    0 20px 60px rgba(0,0,0,.55);
 
-  animation:winPop .3s ease;
+  animation:
+    winPop .3s ease;
 }
 
 @keyframes winPop{
@@ -570,7 +704,7 @@ button{
 }
 
 .win-icon{
-  font-size:49px;
+  font-size:50px;
 }
 
 .win-card h2{
@@ -592,9 +726,11 @@ button{
 }
 
 .reward{
-  min-width:88px;
+  min-width:95px;
   padding:9px;
+
   border-radius:12px;
+
   background:#0b1726;
   border:1px solid #2d425a;
 }
@@ -613,23 +749,36 @@ button{
 .next-btn{
   width:100%;
   min-height:48px;
+
   border:0;
   border-radius:13px;
-  background:linear-gradient(90deg,#22c55e,#16a34a);
+
+  background:
+    linear-gradient(
+      90deg,
+      #22c55e,
+      #16a34a
+    );
+
   color:#03210d;
+
   font-weight:950;
   font-size:15px;
 }
 
-/* ==================================================
-   SEO CONTENT
-================================================== */
+/* =========================
+SEO CONTENT
+========================= */
 
 .content-section{
   margin-top:18px;
+
   background:#0e1b2b;
+
   border:1px solid #24384f;
+
   border-radius:17px;
+
   padding:17px;
 }
 
@@ -654,7 +803,9 @@ button{
 
 .content-section ul{
   padding-left:20px;
+
   color:#b3c1d1;
+
   font-size:13px;
   line-height:1.8;
 }
@@ -665,7 +816,7 @@ button{
 }
 
 /* =========================
-   FAQ
+FAQ
 ========================= */
 
 .faq{
@@ -682,14 +833,21 @@ button{
 
 .faq-question{
   width:100%;
+
   padding:14px;
+
   border:0;
   background:transparent;
+
   color:#fff;
+
   text-align:left;
+
   font-size:13px;
   font-weight:800;
+
   cursor:pointer;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -699,13 +857,20 @@ button{
 .faq-question span:last-child{
   color:#63a9ff;
   font-size:18px;
+
+  transition:transform .2s ease;
 }
 
 .faq-answer{
   display:none;
-  padding:0 14px 14px;
+
+  padding:
+    0 14px 14px;
+
   color:#aebdd0;
+
   font-size:12px;
+
   line-height:1.7;
 }
 
@@ -713,86 +878,114 @@ button{
   display:block;
 }
 
-.faq-item.open .faq-question span:last-child{
+.faq-item.open
+.faq-question
+span:last-child{
   transform:rotate(45deg);
 }
 
 /* =========================
-   FOOTER INFORMATION
+INFO
 ========================= */
 
-.info-links{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
+.info-section{
   margin-top:18px;
-}
 
-.info-card{
   background:#0e1b2b;
+
   border:1px solid #24384f;
-  border-radius:14px;
-  padding:14px;
+
+  border-radius:17px;
+
+  padding:17px;
 }
 
-.info-card h2{
-  font-size:16px;
-  margin-bottom:7px;
+.info-section h2{
+  font-size:19px;
+  margin-bottom:8px;
 }
 
-.info-card p{
+.info-section p{
   color:#aebdd0;
-  font-size:11px;
-  line-height:1.7;
+  font-size:12px;
+  line-height:1.75;
+  margin-bottom:8px;
 }
 
 /* =========================
-   ADSENSE AREA
+ADSENSE
 ========================= */
 
 .ad-section{
   margin-top:20px;
-  margin-bottom:20px;
+  margin-bottom:0;
+
   padding:12px;
+
   border:1px dashed #50657c;
+
   border-radius:15px;
+
   background:#0a1523;
 }
 
 .ad-label{
   text-align:center;
+
   color:#77899d;
+
   font-size:9px;
+
   text-transform:uppercase;
+
   letter-spacing:1px;
+
   margin-bottom:7px;
 }
 
-/*
-  Replace the comment below with your
-  approved Google AdSense ad code.
-
-  Do NOT put unapproved ad code here.
-*/
-
 .adsense-slot{
-  min-height:90px;
+  min-height:280px;
+
   display:flex;
+
+  flex-direction:column;
+
   align-items:center;
   justify-content:center;
+
+  text-align:center;
+
   color:#66798e;
+
   font-size:11px;
+
+  border-radius:10px;
+}
+
+.adsense-slot small{
+  display:block;
+
+  margin-top:5px;
+
+  color:#526579;
+
+  font-size:9px;
 }
 
 /* =========================
-   FOOTER
+FOOTER
 ========================= */
 
 .footer{
   text-align:center;
-  padding:8px 5px 25px;
+
+  padding:
+    14px 5px 18px;
+
   color:#73869b;
+
   font-size:10px;
+
   line-height:1.7;
 }
 
@@ -801,7 +994,7 @@ button{
 }
 
 /* =========================
-   MOBILE
+MOBILE
 ========================= */
 
 @media(max-width:460px){
@@ -812,6 +1005,10 @@ button{
 
   .game-title h1{
     font-size:24px;
+  }
+
+  .game-title p{
+    font-size:12px;
   }
 
   .game-panel{
@@ -833,19 +1030,33 @@ button{
   }
 
   .levels{
-    grid-template-columns:repeat(6,1fr);
+    grid-template-columns:
+      repeat(6,1fr);
   }
 
   .level{
     min-height:39px;
   }
 
-  .info-links{
-    grid-template-columns:1fr;
+  .content-section,
+  .info-section{
+    padding:14px;
   }
 
-  .content-section{
-    padding:14px;
+  .content-section h2{
+    font-size:19px;
+  }
+
+  .stats{
+    gap:5px;
+  }
+
+  .stat{
+    padding:8px 3px;
+  }
+
+  .stat strong{
+    font-size:16px;
   }
 }
 
@@ -858,6 +1069,7 @@ button{
     transition-duration:.001ms!important;
   }
 }
+
 </style>
 </head>
 
@@ -865,9 +1077,9 @@ button{
 
 <div class="page">
 
-<!-- ==================================================
-     TOP
-================================================== -->
+<!-- =====================================================
+HEADER
+===================================================== -->
 
 <header class="topbar">
 
@@ -892,23 +1104,25 @@ button{
 
 </header>
 
-<!-- ==================================================
-     GAME TITLE
-================================================== -->
+
+<!-- =====================================================
+GAME TITLE
+===================================================== -->
 
 <section class="game-title">
 
-  <h1>🚗 Game With Fun Traffic Jam</h1>
+  <h1>🚗 Traffic Jam Solve</h1>
 
   <p>
-    Solve the traffic puzzle and guide the red car to the exit.
+    Move the cars, clear the traffic and escape!
   </p>
 
 </section>
 
-<!-- ==================================================
-     GAME STATS
-================================================== -->
+
+<!-- =====================================================
+STATS
+===================================================== -->
 
 <div class="stats">
 
@@ -934,25 +1148,32 @@ button{
 
 </div>
 
-<!-- ==================================================
-     GAME AREA
-================================================== -->
+
+<!-- =====================================================
+GAME
+===================================================== -->
 
 <section class="game-panel">
 
   <div class="board-wrap">
 
-    <div id="board" class="board">
+    <div
+      id="board"
+      class="board">
 
       <div class="exit">
         <span>EXIT ▶</span>
       </div>
 
-      <div id="overlay" class="overlay">
+      <div
+        id="overlay"
+        class="overlay">
 
         <div class="win-card">
 
-          <div class="win-icon" id="winIcon">
+          <div
+            id="winIcon"
+            class="win-icon">
             🎉
           </div>
 
@@ -961,19 +1182,27 @@ button{
           </h2>
 
           <p id="winMessage">
-            Great driving!
+            Great job!
           </p>
 
           <div class="rewards">
 
             <div class="reward">
-              <b id="rewardCoins">+10</b>
-              <small>COINS</small>
+              <b id="rewardCoins">
+                +10
+              </b>
+              <small>
+                COINS
+              </small>
             </div>
 
             <div class="reward">
-              <b id="rewardStars">★★★</b>
-              <small>STARS</small>
+              <b id="rewardStars">
+                ★★★
+              </b>
+              <small>
+                STARS
+              </small>
             </div>
 
           </div>
@@ -993,6 +1222,7 @@ button{
 
   </div>
 
+
   <div class="controls">
 
     <button
@@ -1011,21 +1241,27 @@ button{
 
   </div>
 
-  <div id="message" class="message">
+
+  <div
+    id="message"
+    class="message">
     Drag cars in their direction.
   </div>
 
 </section>
 
-<!-- ==================================================
-     PROGRESS
-================================================== -->
+
+<!-- =====================================================
+PROGRESS
+===================================================== -->
 
 <section class="progress-box">
 
   <div class="progress-header">
 
-    <strong>🏁 Game Progress</strong>
+    <strong>
+      🏁 Game Progress
+    </strong>
 
     <span id="progressText">
       1 / 30
@@ -1044,89 +1280,161 @@ button{
 
 </section>
 
-<!-- ==================================================
-     LEVEL SELECTOR
-================================================== -->
 
-<div id="levels" class="levels"></div>
+<!-- =====================================================
+LEVELS
+===================================================== -->
 
-<!-- ==================================================
-     SEO FRIENDLY ORIGINAL CONTENT
-================================================== -->
+<div
+  id="levels"
+  class="levels">
+</div>
+
+
+<!-- =====================================================
+SEO CONTENT
+===================================================== -->
 
 <section class="content-section">
 
   <h2>
-    Game With Fun Traffic Jam – Free Online Traffic Puzzle Game
+    Traffic Jam Solve – Free Online Traffic Puzzle Game
   </h2>
 
   <p>
-    <span class="highlight">Game With Fun Traffic Jam</span>
-    is a free browser puzzle game where your goal is to clear a
-    crowded road and help the red car reach the exit. Each level
-    presents a different traffic arrangement, so you need to think
-    carefully before moving the vehicles.
+
+    <span class="highlight">
+      Traffic Jam Solve
+    </span>
+
+    is a free online traffic puzzle game from GameWithFun.
+    Your goal is simple: move the vehicles, create a clear path
+    and guide the red car toward the exit.
+
   </p>
 
   <p>
-    The game is designed for quick play on mobile phones, tablets
-    and desktop browsers. You do not need to install an application
-    or download extra game files. Open the game, choose a level,
-    move the cars and solve the traffic jam.
+
+    The challenge becomes harder as you progress through the
+    30 levels. Different vehicles can move in different directions,
+    so every move matters. Look at the entire traffic arrangement
+    before moving a car and plan your route carefully.
+
   </p>
 
-  <h3>How to Play Traffic Jam</h3>
+
+  <h3>
+    How to Play Traffic Jam Solve
+  </h3>
 
   <p>
-    The red vehicle is your main car. Other vehicles block its path.
-    Horizontal cars can move horizontally, while vertical cars can
-    move vertically. Move the blocking vehicles into available spaces
-    until the red car has a clear route to the green exit.
+
+    The red car is your main vehicle. Horizontal cars can move
+    from side to side, while vertical cars can move up and down.
+    Vehicles cannot pass through other vehicles or outside the
+    puzzle board.
+
   </p>
 
   <ul>
-    <li>Drag a vehicle in the direction it faces.</li>
-    <li>Clear the road in front of the red car.</li>
-    <li>Use as few moves as possible.</li>
-    <li>Collect coins while solving levels.</li>
-    <li>Earn stars by completing levels efficiently.</li>
-    <li>Complete all 30 levels.</li>
+
+    <li>
+      Drag a car in the direction it can move.
+    </li>
+
+    <li>
+      Create space between blocking vehicles.
+    </li>
+
+    <li>
+      Clear the red car's route.
+    </li>
+
+    <li>
+      Move the red car toward the green EXIT.
+    </li>
+
+    <li>
+      Use fewer moves to earn more stars.
+    </li>
+
+    <li>
+      Collect coins while solving puzzles.
+    </li>
+
   </ul>
 
-  <h3>Traffic Puzzle Strategy</h3>
+
+  <h3>
+    Traffic Puzzle Strategy
+  </h3>
 
   <p>
-    A useful strategy is to look at the entire board before moving
-    the first vehicle. Identify which cars are directly blocking the
-    red car and determine where those vehicles can move. Sometimes
-    moving one vehicle creates the space needed to move another.
-    Planning several moves ahead can help reduce your move count.
+
+    Do not move cars randomly. First identify the vehicles
+    blocking the red car. Then look for the cars that prevent
+    those vehicles from moving. Sometimes the best first move
+    is several steps away from the red car.
+
   </p>
 
-  <h3>Play on Mobile or Desktop</h3>
-
   <p>
-    Game With Fun Traffic Jam supports touch dragging on mobile
-    devices and mouse controls on computers. Keyboard arrow controls
-    are also available for the red car on compatible desktop browsers.
-    The responsive layout keeps the puzzle board comfortable to use
-    on smaller screens.
+
+    On difficult levels, try to think several moves ahead.
+    Creating one empty space can allow another vehicle to move,
+    which can then open the road for the red car.
+
   </p>
 
-  <h3>Free Puzzle Game by GameWithFun</h3>
+
+  <h3>
+    30 Challenging Traffic Levels
+  </h3>
 
   <p>
-    GameWithFun creates simple browser games that can be played
-    directly online. Traffic Jam is designed as an original
-    traffic-solving puzzle experience with its own interface,
-    levels and gameplay presentation.
+
+    Traffic Jam Solve contains 30 levels with increasing
+    complexity. Early puzzles introduce the basic movement system,
+    while later puzzles contain more vehicles and more complicated
+    traffic arrangements.
+
+  </p>
+
+
+  <h3>
+    Play on Mobile and Desktop
+  </h3>
+
+  <p>
+
+    Traffic Jam Solve is designed for modern mobile phones,
+    tablets and desktop browsers. On touch devices, drag vehicles
+    with your finger. On desktop computers, you can use a mouse,
+    and the red car can also be controlled with the left and right
+    arrow keys.
+
+  </p>
+
+
+  <h3>
+    Free Browser Puzzle Game
+  </h3>
+
+  <p>
+
+    You can play Traffic Jam Solve directly in your web browser.
+    The game does not require an additional game installation.
+    GameWithFun creates browser-based games for quick and
+    accessible entertainment.
+
   </p>
 
 </section>
 
-<!-- ==================================================
-     FAQ
-================================================== -->
+
+<!-- =====================================================
+FAQ
+===================================================== -->
 
 <section class="content-section faq">
 
@@ -1134,201 +1442,287 @@ button{
     Frequently Asked Questions
   </h2>
 
+
   <div class="faq-item">
 
     <button
       class="faq-question"
       type="button">
-      <span>What is Game With Fun Traffic Jam?</span>
-      <span>+</span>
+
+      <span>
+        What is Traffic Jam Solve?
+      </span>
+
+      <span>
+        +
+      </span>
+
     </button>
 
     <div class="faq-answer">
-      Game With Fun Traffic Jam is a browser-based puzzle game.
-      Move the vehicles out of the way and guide the red car through
-      the exit to complete each level.
+
+      Traffic Jam Solve is a browser puzzle game where you move
+      cars and create a path for the red car to reach the exit.
+
     </div>
 
   </div>
 
+
   <div class="faq-item">
 
     <button
       class="faq-question"
       type="button">
-      <span>How many levels are available?</span>
-      <span>+</span>
+
+      <span>
+        How many levels are in the game?
+      </span>
+
+      <span>
+        +
+      </span>
+
     </button>
 
     <div class="faq-answer">
-      The game contains 30 levels with progressively different
-      traffic arrangements.
+
+      Traffic Jam Solve contains 30 progressively challenging
+      puzzle levels.
+
     </div>
 
   </div>
 
+
   <div class="faq-item">
 
     <button
       class="faq-question"
       type="button">
-      <span>Can I play on my phone?</span>
-      <span>+</span>
+
+      <span>
+        Can I play on a mobile phone?
+      </span>
+
+      <span>
+        +
+      </span>
+
     </button>
 
     <div class="faq-answer">
-      Yes. The game is designed for mobile touch screens as well as
-      desktop browsers. Drag vehicles with your finger on supported
-      touch devices.
+
+      Yes. The game supports touch dragging on modern mobile
+      browsers and is designed for smaller screens.
+
     </div>
 
   </div>
 
+
   <div class="faq-item">
 
     <button
       class="faq-question"
       type="button">
-      <span>Do I need to download the game?</span>
-      <span>+</span>
+
+      <span>
+        Can I play without downloading an app?
+      </span>
+
+      <span>
+        +
+      </span>
+
     </button>
 
     <div class="faq-answer">
-      No. The game is designed to run directly in a modern web
-      browser without requiring an additional game download.
+
+      Yes. Traffic Jam Solve runs directly inside a compatible
+      web browser.
+
     </div>
 
   </div>
 
+
   <div class="faq-item">
 
     <button
       class="faq-question"
       type="button">
-      <span>How do I earn stars?</span>
-      <span>+</span>
+
+      <span>
+        How do I earn stars?
+      </span>
+
+      <span>
+        +
+      </span>
+
     </button>
 
     <div class="faq-answer">
-      Stars are awarded according to the number of moves used to
-      complete a level. Fewer moves can result in a higher star reward.
+
+      Stars are based on how efficiently you solve each level.
+      Using fewer moves can give you a higher star reward.
+
     </div>
 
   </div>
 
+
   <div class="faq-item">
 
     <button
       class="faq-question"
       type="button">
-      <span>Is Traffic Jam free?</span>
-      <span>+</span>
+
+      <span>
+        Is Traffic Jam Solve free?
+      </span>
+
+      <span>
+        +
+      </span>
+
     </button>
 
     <div class="faq-answer">
-      Yes. Game With Fun Traffic Jam is intended to be available as
-      a free online browser game.
+
+      Yes. Traffic Jam Solve is designed as a free browser game
+      on GameWithFun.
+
     </div>
 
   </div>
 
 </section>
 
-<!-- ==================================================
-     ABOUT
-================================================== -->
 
-<section class="content-section">
+<!-- =====================================================
+ABOUT
+===================================================== -->
 
-  <h2>About GameWithFun</h2>
+<section class="info-section">
+
+  <h2>
+    About GameWithFun
+  </h2>
 
   <p>
-    GameWithFun is an online gaming website focused on simple,
-    accessible browser games. Our goal is to provide games that
-    visitors can start quickly without complicated installation.
+
+    GameWithFun is an online gaming website focused on
+    browser-based games that visitors can play directly
+    from their devices.
+
   </p>
 
   <p>
-    Game With Fun Traffic Jam is one of the puzzle experiences
-    available on the website. The game combines vehicle movement,
-    planning and problem solving in a compact browser experience.
-  </p>
 
-</section>
+    Traffic Jam Solve is presented as an original traffic
+    puzzle experience with its own game interface, gameplay
+    system and level structure.
 
-<!-- ==================================================
-     PRIVACY
-================================================== -->
-
-<section class="content-section">
-
-  <h2>Privacy</h2>
-
-  <p>
-    GameWithFun respects visitor privacy. This game itself does not
-    require you to create an account or provide personal information
-    to play.
-  </p>
-
-  <p>
-    If advertising, analytics or other third-party services are used
-    on the website, those services may process information according
-    to their own privacy policies. Visitors should review the
-    applicable third-party policies for details about their services.
   </p>
 
 </section>
 
-<!-- ==================================================
-     DISCLAIMER
-================================================== -->
 
-<section class="content-section">
+<!-- =====================================================
+PRIVACY
+===================================================== -->
 
-  <h2>Disclaimer</h2>
+<section class="info-section">
+
+  <h2>
+    Privacy
+  </h2>
 
   <p>
-    GameWithFun Traffic Jam is provided for entertainment purposes.
-    While reasonable care is taken to keep the game functional,
-    GameWithFun does not guarantee that the game or website will
-    always be available without interruptions, errors or technical
-    issues.
+
+    Traffic Jam Solve does not require an account to play.
+    Game progress, settings and similar game preferences may
+    be stored locally in your browser using browser storage.
+
   </p>
 
   <p>
-    Website content and game features may be updated, changed or
-    removed when necessary.
-  </p>
 
-</section>
+    If GameWithFun uses advertising, analytics or other
+    third-party services, those services may process information
+    according to their applicable policies and terms.
 
-<!-- ==================================================
-     CONTACT
-================================================== -->
-
-<section class="content-section">
-
-  <h2>Contact GameWithFun</h2>
-
-  <p>
-    If you find a problem with this game, notice a broken feature,
-    or have a general question about GameWithFun, please contact
-    the website owner through the contact method provided on the
-    main GameWithFun website.
-  </p>
-
-  <p>
-    When reporting a game problem, including the device and browser
-    you are using can make troubleshooting easier.
   </p>
 
 </section>
 
-<!-- ==================================================
-     ADSENSE AREA
-================================================== -->
 
-<section class="ad-section">
+<!-- =====================================================
+DISCLAIMER
+===================================================== -->
+
+<section class="info-section">
+
+  <h2>
+    Disclaimer
+  </h2>
+
+  <p>
+
+    Traffic Jam Solve is provided for entertainment purposes.
+    Reasonable efforts are made to keep the game functional,
+    but GameWithFun does not guarantee uninterrupted operation
+    or that the website will always be free from technical issues.
+
+  </p>
+
+  <p>
+
+    Game features, content and website presentation may be
+    updated or changed over time.
+
+  </p>
+
+</section>
+
+
+<!-- =====================================================
+CONTACT
+===================================================== -->
+
+<section class="info-section">
+
+  <h2>
+    Contact GameWithFun
+  </h2>
+
+  <p>
+
+    If you discover a game problem, broken feature or other
+    website issue, please use the official contact method
+    published on the GameWithFun website.
+
+  </p>
+
+  <p>
+
+    When reporting a problem, mentioning your device,
+    operating system and browser can help with troubleshooting.
+
+  </p>
+
+</section>
+
+
+<!-- =====================================================
+ADSENSE
+===================================================== -->
+
+<section
+  class="ad-section"
+  aria-label="Advertisement">
 
   <div class="ad-label">
     Advertisement
@@ -1336,103 +1730,70 @@ button{
 
   <div class="adsense-slot">
 
+    <strong>
+      AdSense Ad Space
+    </strong>
+
+    <small>
+      Paste your approved Google AdSense code here.
+    </small>
+
     <!--
-      GOOGLE ADSENSE CODE GOES HERE.
+
+      IMPORTANT:
 
       After your AdSense account is approved,
-      paste the exact ad code supplied by Google
-      into this area.
+      replace this placeholder with the exact
+      AdSense code supplied by Google.
 
-      Example structure only:
+      Do not use fake publisher IDs or fake
+      advertisement code.
 
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="YOUR_CLIENT_ID"
-           data-ad-slot="YOUR_AD_SLOT"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-
-      Do not use the example values above as real
-      AdSense IDs.
     -->
-
-    Ad space
 
   </div>
 
 </section>
 
-<!-- ==================================================
-     FOOTER
-================================================== -->
+
+<!-- =====================================================
+FOOTER
+===================================================== -->
 
 <footer class="footer">
 
-  <strong>GameWithFun</strong> • Free Online Games
+  <strong>
+    GameWithFun
+  </strong>
+
+  • Free Online Games
 
   <br>
 
-  © <span id="year"></span> GameWithFun.
-  All rights reserved.
+  © <span id="year"></span>
+  GameWithFun. All rights reserved.
 
 </footer>
 
 </div>
 
+
 <script>
+
 (function(){
 
 "use strict";
 
+
 /* =====================================================
-   GAME CONFIGURATION
+CONFIG
 ===================================================== */
 
 const SIZE=6;
 
-/*
-  30 level layouts.
+const STORAGE_KEY=
+  "gamewithfun_traffic_jam_solve_v3";
 
-  The red car always starts on row 2.
-  Vertical cars create the traffic challenge.
-*/
-
-const levelTemplates=[
-  [2],
-  [1,3],
-  [1,3,4],
-  [0,2,4],
-  [0,1,3,5],
-  [0,2,3,5],
-  [1,2,4,5],
-  [0,1,3,4,5],
-  [0,2,3,4,5],
-  [0,1,2,4,5],
-
-  [1,2,3,5],
-  [0,1,3,4,5],
-  [0,2,3,4,5],
-  [0,1,2,3,5],
-  [0,1,2,4,5],
-
-  [0,1,2,3,4],
-  [1,2,3,4,5],
-  [0,1,3,4,5],
-  [0,2,3,4,5],
-  [0,1,2,4,5],
-
-  [0,1,2,3,5],
-  [0,1,3,4,5],
-  [0,2,3,4,5],
-  [0,1,2,3,4,5],
-  [0,1,2,4,5],
-
-  [0,1,2,3,5],
-  [0,1,3,4,5],
-  [0,2,3,4,5],
-  [0,1,2,3,4,5],
-  [0,1,2,4,5]
-];
 
 const colors=[
   "blue",
@@ -1444,170 +1805,9 @@ const colors=[
   "pink"
 ];
 
-/* =====================================================
-   CREATE LEVEL
-===================================================== */
-
-function createLevel(index){
-
-  const blockers=levelTemplates[index];
-
-  const cars=[
-    {
-      id:"P",
-      r:2,
-      c:0,
-      len:2,
-      dir:"h",
-      type:"player"
-    }
-  ];
-
-  let code=65;
-
-  blockers.forEach((column,i)=>{
-
-    const possibleRows=[0,1,3,4];
-
-    let row=
-      possibleRows[
-        (index*3+i*2)%possibleRows.length
-      ];
-
-    let len=
-      ((index+i)%4===0 && row<=3)
-      ? 3
-      : 2;
-
-    if(row+len>SIZE){
-      row=SIZE-len;
-    }
-
-    cars.push({
-      id:String.fromCharCode(code++),
-      r:row,
-      c:column,
-      len:len,
-      dir:"v",
-      type:colors[(index+i)%colors.length]
-    });
-
-  });
-
-  /*
-    Additional horizontal cars on higher levels.
-  */
-
-  const extras=
-    Math.min(
-      4,
-      Math.floor(index/4)
-    );
-
-  const positions=[
-    {r:0,c:0,len:2},
-    {r:1,c:0,len:2},
-    {r:3,c:0,len:2},
-    {r:4,c:1,len:2},
-    {r:5,c:0,len:2},
-    {r:0,c:4,len:2},
-    {r:4,c:4,len:2},
-    {r:5,c:3,len:2}
-  ];
-
-  const used=new Set();
-
-  cars.forEach(car=>{
-
-    for(let i=0;i<car.len;i++){
-
-      const r=
-        car.r+(car.dir==="v"?i:0);
-
-      const c=
-        car.c+(car.dir==="h"?i:0);
-
-      used.add(r+","+c);
-    }
-
-  });
-
-  let added=0;
-
-  for(const pos of positions){
-
-    if(added>=extras)break;
-
-    if(pos.r===2)continue;
-
-    let free=true;
-
-    for(let i=0;i<pos.len;i++){
-
-      if(
-        used.has(
-          pos.r+","+(pos.c+i)
-        )
-      ){
-        free=false;
-        break;
-      }
-
-    }
-
-    if(free){
-
-      cars.push({
-        id:String.fromCharCode(code++),
-        r:pos.r,
-        c:pos.c,
-        len:pos.len,
-        dir:"h",
-        type:colors[
-          (index+added+2)%colors.length
-        ]
-      });
-
-      for(let i=0;i<pos.len;i++){
-
-        used.add(
-          pos.r+","+(pos.c+i)
-        );
-
-      }
-
-      added++;
-    }
-
-  }
-
-  return cars;
-}
-
-const levels=
-  Array.from(
-    {length:30},
-    (_,i)=>createLevel(i)
-  );
 
 /* =====================================================
-   GAME STATE
-===================================================== */
-
-let currentLevel=0;
-let cars=[];
-let moves=0;
-let coins=0;
-let stars=0;
-let soundOn=true;
-
-let completed=
-  new Array(30).fill(false);
-
-let drag=null;
-
-/* =====================================================
-   ELEMENTS
+DOM
 ===================================================== */
 
 const board=
@@ -1664,229 +1864,283 @@ const hintBtn=
 const soundBtn=
   document.getElementById("soundBtn");
 
-/* =====================================================
-   LOAD LEVEL
-===================================================== */
-
-function loadLevel(index){
-
-  currentLevel=
-    Math.max(
-      0,
-      Math.min(29,index)
-    );
-
-  cars=
-    levels[currentLevel]
-    .map(car=>({...car}));
-
-  moves=0;
-  drag=null;
-
-  overlay.classList.remove("show");
-
-  levelNum.textContent=
-    currentLevel+1;
-
-  movesEl.textContent="0";
-
-  progressText.textContent=
-    (currentLevel+1)+" / 30";
-
-  progressFill.style.width=
-    ((currentLevel+1)/30*100)+"%";
-
-  message.textContent=
-    "Drag cars in their direction.";
-
-  render();
-  addCoins();
-  renderLevels();
-}
 
 /* =====================================================
-   RENDER CARS
+STATE
 ===================================================== */
 
-function render(){
+let currentLevel=0;
 
-  board
-    .querySelectorAll(".car,.coin")
-    .forEach(el=>el.remove());
+let cars=[];
 
-  const rect=
-    board.getBoundingClientRect();
+let startCars=[];
 
-  const cellW=
-    rect.width/SIZE;
+let moves=0;
 
-  const cellH=
-    rect.height/SIZE;
+let totalCoins=0;
 
-  cars.forEach(car=>{
+let totalStars=0;
 
-    const el=
-      document.createElement("div");
+let unlocked=1;
 
-    el.className=
-      "car "+
-      (car.dir==="h"
-        ?"horizontal "
-        :"vertical ")+
-      car.type;
+let completed=
+  new Array(30).fill(false);
 
-    if(car.id==="P"){
-      el.classList.add("player");
-    }
+let bestMoves=
+  new Array(30).fill(0);
 
-    el.dataset.id=car.id;
+let soundOn=true;
 
-    const width=
-      car.dir==="h"
-      ?cellW*car.len
-      :cellW;
+let drag=null;
 
-    const height=
-      car.dir==="v"
-      ?cellH*car.len
-      :cellH;
+let levelCoins=[];
 
-    el.style.width=
-      (width-5)+"px";
+let audioCtx=null;
 
-    el.style.height=
-      (height-5)+"px";
 
-    el.style.left=
-      (car.c*cellW+2.5)+"px";
+/* =====================================================
+SAVE
+===================================================== */
 
-    el.style.top=
-      (car.r*cellH+2.5)+"px";
+function saveGame(){
 
-    const glass=
-      document.createElement("span");
+  try{
 
-    glass.className="glass";
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
 
-    el.appendChild(glass);
+        currentLevel,
 
-    if(car.id==="P"){
+        totalCoins,
 
-      const label=
-        document.createElement("span");
+        totalStars,
 
-      label.className="car-label";
-      label.textContent="YOU";
+        unlocked,
 
-      el.appendChild(label);
-    }
+        completed,
 
-    el.addEventListener(
-      "pointerdown",
-      startDrag
+        bestMoves,
+
+        soundOn
+
+      })
     );
 
-    board.appendChild(el);
-
-  });
+  }catch(e){}
 
 }
 
+
 /* =====================================================
-   COINS
+LOAD SAVE
 ===================================================== */
 
-function addCoins(){
+function loadSave(){
 
-  const positions=[
-    {r:0,c:5},
-    {r:1,c:4},
-    {r:3,c:4},
-    {r:4,c:0},
-    {r:5,c:5}
-  ];
+  try{
 
-  const count=
-    Math.min(
-      3,
-      1+Math.floor(currentLevel/8)
+    const raw=
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+    if(!raw)return;
+
+    const data=
+      JSON.parse(raw);
+
+    if(
+      Number.isInteger(data.currentLevel)
+    ){
+
+      currentLevel=
+        Math.max(
+          0,
+          Math.min(
+            29,
+            data.currentLevel
+          )
+        );
+
+    }
+
+    if(
+      Number.isFinite(data.totalCoins)
+    ){
+
+      totalCoins=
+        Math.max(
+          0,
+          data.totalCoins
+        );
+
+    }
+
+    if(
+      Number.isFinite(data.totalStars)
+    ){
+
+      totalStars=
+        Math.max(
+          0,
+          data.totalStars
+        );
+
+    }
+
+    if(
+      Number.isInteger(data.unlocked)
+    ){
+
+      unlocked=
+        Math.max(
+          1,
+          Math.min(
+            30,
+            data.unlocked
+          )
+        );
+
+    }
+
+    if(
+      Array.isArray(data.completed) &&
+      data.completed.length===30
+    ){
+
+      completed=
+        data.completed.map(Boolean);
+
+    }
+
+    if(
+      Array.isArray(data.bestMoves) &&
+      data.bestMoves.length===30
+    ){
+
+      bestMoves=
+        data.bestMoves.map(
+          n=>Number.isFinite(n)?n:0
+        );
+
+    }
+
+    if(
+      typeof data.soundOn==="boolean"
+    ){
+
+      soundOn=data.soundOn;
+
+    }
+
+  }catch(e){}
+
+}
+
+
+/* =====================================================
+SEEDED RANDOM
+===================================================== */
+
+function seededRandom(seed){
+
+  let t=
+    seed+
+    0x6D2B79F5;
+
+  return function(){
+
+    t+=0x6D2B79F5;
+
+    let r=
+      Math.imul(
+        t ^ t>>>15,
+        1|t
+      );
+
+    r^=
+      r+
+      Math.imul(
+        r ^ r>>>7,
+        61|r
+      );
+
+    return(
+      ((r ^ r>>>14)>>>0)/
+      4294967296
     );
 
-  const rect=
-    board.getBoundingClientRect();
+  };
 
-  const cellW=
-    rect.width/SIZE;
+}
 
-  const cellH=
-    rect.height/SIZE;
 
-  positions
-    .slice(0,count)
-    .forEach(pos=>{
+/* =====================================================
+CELL HELPERS
+===================================================== */
 
-      const coin=
-        document.createElement("div");
+function cellsOf(car){
 
-      coin.className="coin";
-      coin.textContent="★";
+  const result=[];
 
-      coin.style.left=
-        (pos.c*cellW+
-        cellW/2-
-        11.5)+"px";
+  for(
+    let i=0;
+    i<car.len;
+    i++
+  ){
 
-      coin.style.top=
-        (pos.r*cellH+
-        cellH/2-
-        11.5)+"px";
+    result.push({
 
-      board.appendChild(coin);
+      r:
+        car.r+
+        (car.dir==="v"?i:0),
+
+      c:
+        car.c+
+        (car.dir==="h"?i:0)
 
     });
 
+  }
+
+  return result;
+
 }
 
-/* =====================================================
-   COLLISION
-===================================================== */
 
-function getCar(id){
-  return cars.find(
-    car=>car.id===id
-  );
-}
-
-function occupied(ignoreId){
+function occupied(carsList,ignoreId){
 
   const set=new Set();
 
-  cars.forEach(car=>{
+  carsList.forEach(car=>{
 
     if(car.id===ignoreId)return;
 
-    for(let i=0;i<car.len;i++){
+    cellsOf(car).forEach(cell=>{
 
-      const r=
-        car.r+
-        (car.dir==="v"?i:0);
+      set.add(
+        cell.r+","+cell.c
+      );
 
-      const c=
-        car.c+
-        (car.dir==="h"?i:0);
-
-      set.add(r+","+c);
-    }
+    });
 
   });
 
   return set;
+
 }
+
+
+/* =====================================================
+VALID MOVE
+===================================================== */
 
 function canMove(
   car,
   newR,
-  newC
+  newC,
+  list=cars
 ){
 
   if(
@@ -1899,24 +2153,40 @@ function canMove(
   if(car.dir==="h"){
 
     if(
-      newC+car.len>SIZE
+      newC+
+      car.len>
+      SIZE
     ){
+
       return false;
+
     }
 
   }else{
 
     if(
-      newR+car.len>SIZE
+      newR+
+      car.len>
+      SIZE
     ){
+
       return false;
+
     }
+
   }
 
   const blocked=
-    occupied(car.id);
+    occupied(
+      list,
+      car.id
+    );
 
-  for(let i=0;i<car.len;i++){
+  for(
+    let i=0;
+    i<car.len;
+    i++
+  ){
 
     const r=
       newR+
@@ -1931,26 +2201,1272 @@ function canMove(
         r+","+c
       )
     ){
+
       return false;
+
     }
+
   }
 
   return true;
+
 }
 
+
 /* =====================================================
-   TOUCH / MOUSE DRAG
+BASE LEVEL
+===================================================== */
+
+/*
+  We first create a completely valid solved
+  puzzle.
+
+  The red car starts at the left.
+
+  No blocker occupies row 2.
+
+  Then we legally scramble the other cars.
+
+  Because every scramble movement is legal,
+  reversing those movements always gives a
+  valid solution.
+*/
+
+function makeBaseLevel(index){
+
+  const rand=
+    seededRandom(
+      1000+index*777
+    );
+
+  const cars=[
+    {
+      id:"P",
+      r:2,
+      c:0,
+      len:2,
+      dir:"h",
+      type:"player"
+    }
+  ];
+
+  /*
+    Vertical vehicles.
+
+    Their initial positions avoid row 2.
+  */
+
+  const verticalTemplates=[
+
+    {r:0,c:0,len:2},
+    {r:3,c:1,len:2},
+
+    {r:0,c:2,len:2},
+    {r:3,c:3,len:2},
+
+    {r:0,c:4,len:2},
+    {r:3,c:5,len:2}
+
+  ];
+
+  let idCode=65;
+
+  const count=
+    Math.min(
+      6,
+      3+
+      Math.floor(
+        index/5
+      )
+    );
+
+  for(
+    let i=0;
+    i<count;
+    i++
+  ){
+
+    const base=
+      verticalTemplates[i];
+
+    let len=
+      base.len;
+
+    if(
+      index>=10 &&
+      i%3===0
+    ){
+
+      len=3;
+
+    }
+
+    cars.push({
+
+      id:
+        String.fromCharCode(
+          idCode++
+        ),
+
+      r:
+        base.r,
+
+      c:
+        base.c,
+
+      len,
+
+      dir:"v",
+
+      type:
+        colors[
+          (index+i)%colors.length
+        ]
+
+    });
+
+  }
+
+
+  /*
+    Horizontal vehicles are added
+    from level 5 onward.
+  */
+
+  const horizontalTemplates=[
+
+    {r:0,c:3,len:2},
+    {r:1,c:0,len:2},
+    {r:3,c:3,len:2},
+    {r:4,c:0,len:2},
+    {r:5,c:2,len:2}
+
+  ];
+
+  const horizontalCount=
+    Math.min(
+      5,
+      Math.floor(
+        Math.max(
+          0,
+          index-3
+        )/4
+      )
+    );
+
+  for(
+    let i=0;
+    i<horizontalCount;
+    i++
+  ){
+
+    const p=
+      horizontalTemplates[i];
+
+    const candidate={
+
+      id:
+        String.fromCharCode(
+          idCode++
+        ),
+
+      r:p.r,
+
+      c:p.c,
+
+      len:
+        index>=18 &&
+        i===4
+        ?3
+        :p.len,
+
+      dir:"h",
+
+      type:
+        colors[
+          (index+i+3)%
+          colors.length
+        ]
+
+    };
+
+    if(
+      canPlaceCar(
+        candidate,
+        cars
+      )
+    ){
+
+      cars.push(candidate);
+
+    }
+
+  }
+
+  /*
+    Give some later levels extra cars
+    if there is available space.
+  */
+
+  if(index>=16){
+
+    const extraOptions=[
+
+      {r:0,c:0,len:2,dir:"h"},
+      {r:1,c:3,len:2,dir:"h"},
+      {r:4,c:2,len:2,dir:"h"},
+      {r:5,c:0,len:2,dir:"h"}
+
+    ];
+
+    for(
+      const p of extraOptions
+    ){
+
+      if(cars.length>=
+         8+
+         Math.floor(index/8)
+      ){
+
+        break;
+
+      }
+
+      const candidate={
+
+        id:
+          String.fromCharCode(
+            idCode++
+          ),
+
+        r:p.r,
+
+        c:p.c,
+
+        len:p.len,
+
+        dir:p.dir,
+
+        type:
+          colors[
+            Math.floor(
+              rand()*colors.length
+            )
+          ]
+
+      };
+
+      if(
+        p.r!==2 &&
+        canPlaceCar(
+          candidate,
+          cars
+        )
+      ){
+
+        cars.push(candidate);
+
+      }
+
+    }
+
+  }
+
+  return cars;
+
+}
+
+
+/* =====================================================
+PLACE CHECK
+===================================================== */
+
+function canPlaceCar(
+  car,
+  list
+){
+
+  if(
+    car.r<0 ||
+    car.c<0
+  ){
+
+    return false;
+
+  }
+
+  if(
+    car.dir==="h"
+  ){
+
+    if(
+      car.c+
+      car.len>
+      SIZE
+    ){
+
+      return false;
+
+    }
+
+  }else{
+
+    if(
+      car.r+
+      car.len>
+      SIZE
+    ){
+
+      return false;
+
+    }
+
+  }
+
+  /*
+    Never place base cars on row 2.
+    This gives us a solved state.
+  */
+
+  if(
+    cellsOf(car)
+      .some(
+        cell=>cell.r===2
+      )
+  ){
+
+    return false;
+
+  }
+
+  const used=
+    occupied(list,null);
+
+  return cellsOf(car)
+    .every(
+      cell=>
+        !used.has(
+          cell.r+","+cell.c
+        )
+    );
+
+}
+
+
+/* =====================================================
+MOVE RANDOM SCRAMBLE
+===================================================== */
+
+function legalMovesForCar(
+  car,
+  list
+){
+
+  const result=[];
+
+  if(car.dir==="h"){
+
+    for(
+      let c=0;
+      c<SIZE-car.len;
+      c++
+    ){
+
+      if(
+        c===car.c
+      ){
+
+        continue;
+
+      }
+
+      if(
+        canMove(
+          car,
+          car.r,
+          c,
+          list
+        )
+      ){
+
+        result.push({
+          r:car.r,
+          c:c
+        });
+
+      }
+
+    }
+
+  }else{
+
+    for(
+      let r=0;
+      r<=SIZE-car.len;
+      r++
+    ){
+
+      if(
+        r===car.r
+      ){
+
+        continue;
+
+      }
+
+      if(
+        canMove(
+          car,
+          r,
+          car.c,
+          list
+        )
+      ){
+
+        result.push({
+          r:r,
+          c:car.c
+        });
+
+      }
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+/* =====================================================
+GENERATE ONE LEVEL
+===================================================== */
+
+function generateLevel(index){
+
+  let result=null;
+
+  for(
+    let attempt=0;
+    attempt<20;
+    attempt++
+  ){
+
+    const base=
+      makeBaseLevel(
+        index
+      );
+
+    const rand=
+      seededRandom(
+        9000+
+        index*991+
+        attempt*37
+      );
+
+    const work=
+      base.map(
+        car=>({...car})
+      );
+
+    /*
+      More levels = more scrambling.
+    */
+
+    const scrambleDepth=
+      8+
+      index*2+
+      Math.floor(
+        index/5
+      );
+
+    let previousId=null;
+
+    for(
+      let step=0;
+      step<scrambleDepth;
+      step++
+    ){
+
+      const candidates=[];
+
+      work.forEach(car=>{
+
+        if(
+          car.id==="P"
+        ){
+
+          return;
+
+        }
+
+        if(
+          car.id===previousId &&
+          work.length>1
+        ){
+
+          return;
+
+        }
+
+        const moves=
+          legalMovesForCar(
+            car,
+            work
+          );
+
+        moves.forEach(pos=>{
+
+          candidates.push({
+
+            car,
+
+            r:pos.r,
+
+            c:pos.c
+
+          });
+
+        });
+
+      });
+
+      if(!candidates.length){
+
+        break;
+
+      }
+
+      /*
+        Prefer cars that can cross the
+        red-car row on harder levels.
+      */
+
+      const crossing=
+        candidates.filter(x=>{
+
+          const test={
+            ...x.car,
+            r:x.r,
+            c:x.c
+          };
+
+          return cellsOf(test)
+            .some(
+              cell=>cell.r===2
+            );
+
+        });
+
+      let pool=
+        crossing.length &&
+        step%3===2
+        ?crossing
+        :candidates;
+
+      const choice=
+        pool[
+          Math.floor(
+            rand()*pool.length
+          )
+        ];
+
+      choice.car.r=
+        choice.r;
+
+      choice.car.c=
+        choice.c;
+
+      previousId=
+        choice.car.id;
+
+    }
+
+    /*
+      Ensure the red car still starts
+      at the left.
+    */
+
+    const player=
+      work.find(
+        car=>car.id==="P"
+      );
+
+    if(player){
+
+      player.r=2;
+      player.c=0;
+
+    }
+
+    /*
+      Make sure at least one blocker
+      crosses row 2 for harder levels.
+    */
+
+    if(index>=2){
+
+      const crossing=
+        work.find(car=>
+          car.id!=="P" &&
+          cellsOf(car)
+            .some(
+              cell=>cell.r===2
+            )
+        );
+
+      if(!crossing){
+
+        /*
+          Find a legal vertical position
+          crossing row 2.
+        */
+
+        const vertical=
+          work.filter(
+            car=>
+              car.id!=="P" &&
+              car.dir==="v"
+          );
+
+        for(
+          const car of vertical
+        ){
+
+          const options=
+            legalMovesForCar(
+              car,
+              work
+            );
+
+          const target=
+            options.find(pos=>{
+
+              const test={
+                ...car,
+                r:pos.r,
+                c:pos.c
+              };
+
+              return cellsOf(test)
+                .some(
+                  cell=>cell.r===2
+                );
+
+            });
+
+          if(target){
+
+            car.r=target.r;
+            car.c=target.c;
+
+            break;
+
+          }
+
+        }
+
+      }
+
+    }
+
+    result=work;
+
+    if(result.length>=3){
+
+      return result;
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+/* =====================================================
+CREATE ALL 30 LEVELS
+===================================================== */
+
+const levels=
+  Array.from(
+    {length:30},
+    (_,i)=>
+      generateLevel(i)
+  );
+
+
+/* =====================================================
+COPY LEVEL
+===================================================== */
+
+function copyLevel(index){
+
+  return levels[index]
+    .map(
+      car=>({...car})
+    );
+
+}
+
+
+/* =====================================================
+LOAD LEVEL
+===================================================== */
+
+function loadLevel(index){
+
+  currentLevel=
+    Math.max(
+      0,
+      Math.min(
+        29,
+        index
+      )
+    );
+
+  cars=
+    copyLevel(
+      currentLevel
+    );
+
+  startCars=
+    copyLevel(
+      currentLevel
+    );
+
+  moves=0;
+
+  drag=null;
+
+  overlay.classList.remove(
+    "show"
+  );
+
+  levelNum.textContent=
+    currentLevel+1;
+
+  movesEl.textContent="0";
+
+  coinsEl.textContent=
+    totalCoins;
+
+  starsEl.textContent=
+    totalStars;
+
+  progressText.textContent=
+    (currentLevel+1)+
+    " / 30";
+
+  progressFill.style.width=
+    ((currentLevel+1)/30*100)+
+    "%";
+
+  message.textContent=
+    currentLevel===0
+    ?"Drag cars in their direction."
+    :"Solve this harder traffic puzzle.";
+
+  levelCoins=
+    createCoinPositions();
+
+  render();
+
+  renderCoins();
+
+  renderLevels();
+
+  saveGame();
+
+}
+
+
+/* =====================================================
+RESET
+===================================================== */
+
+function resetLevel(){
+
+  cars=
+    copyLevel(
+      currentLevel
+    );
+
+  moves=0;
+
+  drag=null;
+
+  overlay.classList.remove(
+    "show"
+  );
+
+  movesEl.textContent="0";
+
+  message.textContent=
+    "Level reset. Try a different strategy.";
+
+  render();
+
+  renderCoins();
+
+  beep(
+    240,
+    .06
+  );
+
+}
+
+
+/* =====================================================
+BOARD CELL SIZE
+===================================================== */
+
+function getCellSize(){
+
+  const rect=
+    board.getBoundingClientRect();
+
+  return {
+
+    width:
+      rect.width/SIZE,
+
+    height:
+      rect.height/SIZE
+
+  };
+
+}
+
+
+/* =====================================================
+RENDER
+===================================================== */
+
+function render(){
+
+  board
+    .querySelectorAll(
+      ".car"
+    )
+    .forEach(
+      el=>el.remove()
+    );
+
+  const cell=
+    getCellSize();
+
+  cars.forEach(car=>{
+
+    const el=
+      document.createElement(
+        "div"
+      );
+
+    el.className=
+      "car "+
+      (
+        car.dir==="h"
+        ?"horizontal "
+        :"vertical "
+      )+
+      car.type;
+
+    if(
+      car.id==="P"
+    ){
+
+      el.classList.add(
+        "player"
+      );
+
+    }
+
+    el.dataset.id=
+      car.id;
+
+    const width=
+      car.dir==="h"
+      ?cell.width*car.len
+      :cell.width;
+
+    const height=
+      car.dir==="v"
+      ?cell.height*car.len
+      :cell.height;
+
+    el.style.width=
+      Math.max(
+        10,
+        width-5
+      )+
+      "px";
+
+    el.style.height=
+      Math.max(
+        10,
+        height-5
+      )+
+      "px";
+
+    el.style.left=
+      (
+        car.c*cell.width+
+        2.5
+      )+
+      "px";
+
+    el.style.top=
+      (
+        car.r*cell.height+
+        2.5
+      )+
+      "px";
+
+    const glass=
+      document.createElement(
+        "span"
+      );
+
+    glass.className="glass";
+
+    el.appendChild(
+      glass
+    );
+
+    if(
+      car.id==="P"
+    ){
+
+      const label=
+        document.createElement(
+          "span"
+        );
+
+      label.className=
+        "car-label";
+
+      label.textContent=
+        "YOU";
+
+      el.appendChild(
+        label
+      );
+
+    }
+
+    el.addEventListener(
+      "pointerdown",
+      startDrag,
+      {
+        passive:false
+      }
+    );
+
+    board.appendChild(
+      el
+    );
+
+  });
+
+}
+
+
+/* =====================================================
+COIN POSITIONS
+===================================================== */
+
+function createCoinPositions(){
+
+  /*
+    Coins stay around the board.
+    Only free cells are used.
+  */
+
+  const preferred=[
+
+    {r:2,c:2},
+    {r:2,c:3},
+    {r:2,c:4},
+
+    {r:1,c:4},
+    {r:4,c:4},
+
+    {r:5,c:1}
+
+  ];
+
+  const used=
+    occupied(
+      cars,
+      null
+    );
+
+  const result=[];
+
+  for(
+    const pos of preferred
+  ){
+
+    if(
+      result.length>=3
+    ){
+
+      break;
+
+    }
+
+    if(
+      !used.has(
+        pos.r+","+pos.c
+      )
+    ){
+
+      result.push({
+        ...pos,
+        collected:false
+      });
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+/* =====================================================
+RENDER COINS
+===================================================== */
+
+function renderCoins(){
+
+  board
+    .querySelectorAll(
+      ".coin"
+    )
+    .forEach(
+      el=>el.remove()
+    );
+
+  const cell=
+    getCellSize();
+
+  levelCoins.forEach(
+    (pos,index)=>{
+
+      if(
+        pos.collected
+      ){
+
+        return;
+
+      }
+
+      const coin=
+        document.createElement(
+          "div"
+        );
+
+      coin.className="coin";
+
+      coin.textContent="★";
+
+      coin.dataset.coin=
+        index;
+
+      coin.style.left=
+        (
+          pos.c*cell.width+
+          cell.width/2-
+          11.5
+        )+
+        "px";
+
+      coin.style.top=
+        (
+          pos.r*cell.height+
+          cell.height/2-
+          11.5
+        )+
+        "px";
+
+      board.appendChild(
+        coin
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+COLLECT COINS
+===================================================== */
+
+function checkCoins(){
+
+  const player=
+    getCar("P");
+
+  if(!player)return;
+
+  const playerCells=
+    cellsOf(player);
+
+  levelCoins.forEach(
+    (coin,index)=>{
+
+      if(
+        coin.collected
+      ){
+
+        return;
+
+      }
+
+      const hit=
+        playerCells.some(
+          cell=>
+            cell.r===coin.r &&
+            cell.c===coin.c
+        );
+
+      if(hit){
+
+        coin.collected=true;
+
+        totalCoins++;
+
+        coinsEl.textContent=
+          totalCoins;
+
+        const el=
+          board.querySelector(
+            '[data-coin="'+
+            index+
+            '"]'
+          );
+
+        if(el){
+
+          el.classList.add(
+            "collected"
+          );
+
+          setTimeout(
+            ()=>{
+              el.remove();
+            },
+            250
+          );
+
+        }
+
+        beep(
+          800,
+          .07
+        );
+
+        saveGame();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+FIND CAR
+===================================================== */
+
+function getCar(id){
+
+  return cars.find(
+    car=>car.id===id
+  );
+
+}
+
+
+/* =====================================================
+APPLY MOVE
+===================================================== */
+
+function applyMove(
+  car,
+  r,
+  c,
+  countMove=true
+){
+
+  if(
+    !canMove(
+      car,
+      r,
+      c
+    )
+  ){
+
+    return false;
+
+  }
+
+  const changed=
+    car.r!==r ||
+    car.c!==c;
+
+  if(!changed){
+
+    return false;
+
+  }
+
+  car.r=r;
+  car.c=c;
+
+  if(countMove){
+
+    moves++;
+
+    movesEl.textContent=
+      moves;
+
+    beep(
+      380,
+      .045
+    );
+
+  }
+
+  return true;
+
+}
+
+
+/* =====================================================
+POINTER DRAG
 ===================================================== */
 
 function startDrag(e){
 
-  e.preventDefault();
-
   if(
-    overlay.classList.contains("show")
+    overlay.classList.contains(
+      "show"
+    )
   ){
+
     return;
+
   }
+
+  e.preventDefault();
 
   const id=
     e.currentTarget.dataset.id;
@@ -1960,160 +3476,327 @@ function startDrag(e){
 
   if(!car)return;
 
-  const rect=
-    board.getBoundingClientRect();
+  const cell=
+    getCellSize();
 
   drag={
-    id:id,
+
+    id,
+
+    pointerId:e.pointerId,
+
     startX:e.clientX,
+
     startY:e.clientY,
+
     startR:car.r,
+
     startC:car.c,
-    cellW:rect.width/SIZE,
-    cellH:rect.height/SIZE
+
+    lastR:car.r,
+
+    lastC:car.c,
+
+    cellW:cell.width,
+
+    cellH:cell.height
+
   };
 
-  try{
-    e.currentTarget.setPointerCapture(
-      e.pointerId
-    );
-  }catch(err){}
-
-  e.currentTarget.addEventListener(
-    "pointermove",
-    moveDrag
+  e.currentTarget.classList.add(
+    "dragging"
   );
 
-  e.currentTarget.addEventListener(
+  window.addEventListener(
+    "pointermove",
+    moveDrag,
+    {
+      passive:false
+    }
+  );
+
+  window.addEventListener(
     "pointerup",
     endDrag,
-    {once:true}
+    {
+      once:true
+    }
   );
 
-  e.currentTarget.addEventListener(
+  window.addEventListener(
     "pointercancel",
     endDrag,
-    {once:true}
+    {
+      once:true
+    }
   );
+
 }
+
+
+/* =====================================================
+POINTER MOVE
+===================================================== */
 
 function moveDrag(e){
 
   if(!drag)return;
 
+  e.preventDefault();
+
   const car=
-    getCar(drag.id);
+    getCar(
+      drag.id
+    );
 
-  if(!car)return;
+  if(!car){
 
-  const dx=
-    e.clientX-drag.startX;
+    return;
 
-  const dy=
-    e.clientY-drag.startY;
+  }
 
-  if(car.dir==="h"){
+  let targetR=
+    drag.startR;
+
+  let targetC=
+    drag.startC;
+
+  if(
+    car.dir==="h"
+  ){
 
     const delta=
       Math.round(
-        dx/drag.cellW
+        (
+          e.clientX-
+          drag.startX
+        )/
+        drag.cellW
       );
 
-    const target=
-      drag.startC+delta;
-
-    if(
-      canMove(
-        car,
-        car.r,
-        target
-      )
-    ){
-
-      car.c=target;
-      render();
-
-    }else{
-
-      const step=
-        Math.sign(delta);
-
-      let c=
-        drag.startC;
-
-      while(
-        c!==target &&
-        canMove(
-          car,
-          car.r,
-          c+step
-        )
-      ){
-        c+=step;
-      }
-
-      if(c!==car.c){
-        car.c=c;
-        render();
-      }
-    }
+    targetC=
+      drag.startC+
+      delta;
 
   }else{
 
     const delta=
       Math.round(
-        dy/drag.cellH
+        (
+          e.clientY-
+          drag.startY
+        )/
+        drag.cellH
       );
 
-    const target=
-      drag.startR+delta;
+    targetR=
+      drag.startR+
+      delta;
 
-    if(
-      canMove(
-        car,
-        target,
-        car.c
-      )
+  }
+
+  /*
+    Clamp target.
+  */
+
+  if(
+    car.dir==="h"
+  ){
+
+    targetC=
+      Math.max(
+        0,
+        Math.min(
+          SIZE-car.len,
+          targetC
+        )
+      );
+
+  }else{
+
+    targetR=
+      Math.max(
+        0,
+        Math.min(
+          SIZE-car.len,
+          targetR
+        )
+      );
+
+  }
+
+  /*
+    Move step-by-step from the
+    original position.
+
+    This prevents cars from jumping
+    through blockers.
+  */
+
+  let r=
+    drag.startR;
+
+  let c=
+    drag.startC;
+
+  if(
+    car.dir==="h"
+  ){
+
+    const step=
+      Math.sign(
+        targetC-c
+      );
+
+    while(
+      c!==targetC
     ){
 
-      car.r=target;
-      render();
+      const next=
+        c+step;
 
-    }else{
-
-      const step=
-        Math.sign(delta);
-
-      let r=
-        drag.startR;
-
-      while(
-        r!==target &&
+      if(
         canMove(
           car,
-          r+step,
-          car.c
+          r,
+          next
         )
       ){
-        r+=step;
+
+        c=next;
+
+      }else{
+
+        break;
+
       }
 
-      if(r!==car.r){
-        car.r=r;
-        render();
-      }
     }
+
+  }else{
+
+    const step=
+      Math.sign(
+        targetR-r
+      );
+
+    while(
+      r!==targetR
+    ){
+
+      const next=
+        r+step;
+
+      if(
+        canMove(
+          car,
+          next,
+          c
+        )
+      ){
+
+        r=next;
+
+      }else{
+
+        break;
+
+      }
+
+    }
+
   }
+
+  if(
+    r!==drag.lastR ||
+    c!==drag.lastC
+  ){
+
+    car.r=r;
+    car.c=c;
+
+    drag.lastR=r;
+    drag.lastC=c;
+
+    updateCarElement(
+      car
+    );
+
+    checkCoins();
+
+  }
+
 }
+
+
+/* =====================================================
+UPDATE SINGLE CAR
+===================================================== */
+
+function updateCarElement(car){
+
+  const el=
+    board.querySelector(
+      '[data-id="'+
+      car.id+
+      '"]'
+    );
+
+  if(!el)return;
+
+  const cell=
+    getCellSize();
+
+  el.style.left=
+    (
+      car.c*cell.width+
+      2.5
+    )+
+    "px";
+
+  el.style.top=
+    (
+      car.r*cell.height+
+      2.5
+    )+
+    "px";
+
+}
+
+
+/* =====================================================
+END DRAG
+===================================================== */
 
 function endDrag(){
 
-  if(!drag)return;
+  if(!drag){
+
+    return;
+
+  }
 
   const car=
-    getCar(drag.id);
+    getCar(
+      drag.id
+    );
 
   if(car){
+
+    const el=
+      board.querySelector(
+        '[data-id="'+
+        car.id+
+        '"]'
+      );
+
+    if(el){
+
+      el.classList.remove(
+        "dragging"
+      );
+
+    }
 
     const moved=
       car.r!==drag.startR ||
@@ -2126,70 +3809,365 @@ function endDrag(){
       movesEl.textContent=
         moves;
 
-      beep(380,.045);
+      beep(
+        380,
+        .045
+      );
+
+      checkCoins();
 
       if(
         car.id==="P" &&
-        car.c+car.len>=SIZE
+        car.c+
+        car.len>=SIZE
       ){
+
         solveLevel();
+
       }
+
     }
+
   }
 
   drag=null;
+
+  window.removeEventListener(
+    "pointermove",
+    moveDrag
+  );
+
 }
 
+
 /* =====================================================
-   COMPLETE LEVEL
+HINT
+===================================================== */
+
+function showHint(){
+
+  if(
+    overlay.classList.contains(
+      "show"
+    )
+  ){
+
+    return;
+
+  }
+
+  const player=
+    getCar("P");
+
+  if(!player){
+
+    return;
+
+  }
+
+  /*
+    Find cars currently occupying
+    the red car's row.
+  */
+
+  const blockers=
+    cars.filter(car=>{
+
+      if(
+        car.id==="P"
+      ){
+
+        return false;
+
+      }
+
+      return cellsOf(car)
+        .some(
+          cell=>
+            cell.r===player.r
+        );
+
+    });
+
+  if(
+    blockers.length
+  ){
+
+    const blocker=
+      blockers[0];
+
+    const el=
+      board.querySelector(
+        '[data-id="'+
+        blocker.id+
+        '"]'
+      );
+
+    if(el){
+
+      el.animate(
+
+        [
+          {
+            transform:"scale(1)"
+          },
+
+          {
+            transform:"scale(1.1)"
+          },
+
+          {
+            transform:"scale(1)"
+          }
+
+        ],
+
+        {
+          duration:500,
+          iterations:3
+        }
+
+      );
+
+    }
+
+    message.textContent=
+      "💡 Try moving the highlighted car first.";
+
+    beep(
+      550,
+      .08
+    );
+
+    return;
+
+  }
+
+  /*
+    Find a vehicle that blocks
+    one of the potential routes.
+  */
+
+  const movable=
+    cars.find(
+      car=>
+        car.id!=="P" &&
+        legalMovesForCar(
+          car,
+          cars
+        ).length>0
+    );
+
+  if(movable){
+
+    const el=
+      board.querySelector(
+        '[data-id="'+
+        movable.id+
+        '"]'
+      );
+
+    if(el){
+
+      el.animate(
+
+        [
+          {
+            transform:"scale(1)"
+          },
+
+          {
+            transform:"scale(1.1)"
+          },
+
+          {
+            transform:"scale(1)"
+          }
+
+        ],
+
+        {
+          duration:500,
+          iterations:3
+        }
+
+      );
+
+    }
+
+    message.textContent=
+      "💡 Look for a car that can create more space.";
+
+  }else{
+
+    message.textContent=
+      "💡 Try opening the spaces around the blocking cars.";
+
+  }
+
+  beep(
+    550,
+    .08
+  );
+
+}
+
+
+/* =====================================================
+SOLVE LEVEL
 ===================================================== */
 
 function solveLevel(){
 
-  if(completed[currentLevel]){
+  if(
+    completed[currentLevel]
+  ){
+
     return;
+
   }
 
   completed[currentLevel]=true;
 
-  const earnedCoins=
-    Math.max(
-      5,
-      25-Math.min(20,moves)
+  /*
+    Progressive star target.
+  */
+
+  const par=
+    7+
+    Math.floor(
+      currentLevel*
+      1.1
     );
 
   let earnedStars=1;
 
-  if(moves<=5){
+  if(
+    moves<=par
+  ){
+
     earnedStars=3;
-  }else if(moves<=9){
+
+  }else if(
+    moves<=par+5
+  ){
+
     earnedStars=2;
+
   }
 
-  coins+=earnedCoins;
-  stars+=earnedStars;
+  /*
+    Prevent repeatedly farming
+    stars/coins on replay.
+  */
+
+  const earnedCoins=
+    completed[currentLevel] &&
+    bestMoves[currentLevel]===0
+    ?20+
+      Math.max(
+        0,
+        12-
+        Math.floor(
+          moves/3
+        )
+      )
+    :5;
+
+  if(
+    bestMoves[currentLevel]===0 ||
+    moves<
+    bestMoves[currentLevel]
+  ){
+
+    bestMoves[currentLevel]=
+      moves;
+
+  }
+
+  if(
+    unlocked<
+    currentLevel+2
+  ){
+
+    unlocked=
+      Math.min(
+        30,
+        currentLevel+2
+      );
+
+  }
+
+  /*
+    Only give full first-completion
+    rewards once.
+
+    Since completed was just set above,
+    use a separate marker.
+  */
+
+  const rewardKey=
+    "rewarded_"+currentLevel;
+
+  let alreadyRewarded=false;
+
+  try{
+
+    alreadyRewarded=
+      localStorage.getItem(
+        STORAGE_KEY+
+        "_"+
+        rewardKey
+      )==="1";
+
+  }catch(e){}
+
+  if(!alreadyRewarded){
+
+    totalCoins+=
+      earnedCoins;
+
+    totalStars+=
+      earnedStars;
+
+    try{
+
+      localStorage.setItem(
+        STORAGE_KEY+
+        "_"+
+        rewardKey,
+        "1"
+      );
+
+    }catch(e){}
+
+  }
 
   coinsEl.textContent=
-    coins;
+    totalCoins;
 
   starsEl.textContent=
-    stars;
+    totalStars;
 
   rewardCoins.textContent=
-    "+"+earnedCoins;
+    alreadyRewarded
+    ?"+5"
+    :"+"+earnedCoins;
 
   rewardStars.textContent=
     "★".repeat(
       earnedStars
     );
 
-  if(currentLevel===29){
+  if(
+    currentLevel===29
+  ){
 
     winTitle.textContent=
-      "🏆 You Finished All 30!";
+      "🏆 30 Levels Complete!";
 
     winMessage.textContent=
-      "Congratulations! You completed all 30 Traffic Jam levels.";
+      "Amazing! You solved all 30 Traffic Jam Solve puzzles.";
 
     nextBtn.textContent=
       "Play Again ↻";
@@ -2200,158 +4178,121 @@ function solveLevel(){
       "🎉 Level Complete!";
 
     winMessage.textContent=
-      "You solved Level "+
+      "Level "+
       (currentLevel+1)+
-      " in "+
+      " solved in "+
       moves+
       " moves.";
 
     nextBtn.textContent=
       "Next Level →";
+
   }
 
-  overlay.classList.add("show");
+  overlay.classList.add(
+    "show"
+  );
 
   message.textContent=
-    "Traffic cleared! Great job.";
+    "🚦 Traffic cleared! Great job.";
 
-  beep(700,.12);
+  saveGame();
+
+  renderLevels();
+
+  beep(
+    700,
+    .11
+  );
 
   setTimeout(
-    ()=>beep(900,.14),
+    ()=>{
+      beep(
+        900,
+        .13
+      );
+    },
     110
   );
 
   setTimeout(
-    ()=>beep(1100,.17),
+    ()=>{
+      beep(
+        1100,
+        .16
+      );
+    },
     220
   );
 
-  renderLevels();
 }
 
+
 /* =====================================================
-   NEXT LEVEL
+NEXT LEVEL
 ===================================================== */
 
 function nextLevel(){
 
-  if(currentLevel<29){
+  if(
+    currentLevel<
+    29
+  ){
+
     loadLevel(
       currentLevel+1
     );
+
   }else{
+
+    /*
+      Restart from level 1,
+      but do not erase progress.
+    */
+
     loadLevel(0);
-  }
-}
 
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetLevel(){
-
-  loadLevel(
-    currentLevel
-  );
-
-  message.textContent=
-    "Level reset.";
-
-  beep(240,.06);
-}
-
-/* =====================================================
-   HINT
-===================================================== */
-
-function showHint(){
-
-  const blocker=
-    cars.find(car=>{
-
-      if(car.id==="P"){
-        return false;
-      }
-
-      if(car.dir!=="v"){
-        return false;
-      }
-
-      return(
-        car.r<=2 &&
-        car.r+car.len>2
-      );
-    });
-
-  if(!blocker){
-
-    message.textContent=
-      "The red car has a clear path!";
-
-    beep(620,.06);
-
-    return;
   }
 
-  const el=
-    board.querySelector(
-      '[data-id="'+
-      blocker.id+
-      '"]'
-    );
-
-  if(el){
-
-    el.animate(
-      [
-        {
-          transform:"scale(1)"
-        },
-        {
-          transform:"scale(1.09)"
-        },
-        {
-          transform:"scale(1)"
-        }
-      ],
-      {
-        duration:650,
-        iterations:2
-      }
-    );
-  }
-
-  message.textContent=
-    "Try moving the highlighted vehicle.";
-
-  beep(520,.08);
 }
 
+
 /* =====================================================
-   LEVEL BUTTONS
+LEVEL BUTTONS
 ===================================================== */
 
 function renderLevels(){
 
   levelsBox.innerHTML="";
 
-  for(let i=0;i<30;i++){
+  for(
+    let i=0;
+    i<30;
+    i++
+  ){
 
     const button=
-      document.createElement("button");
+      document.createElement(
+        "button"
+      );
 
     button.type="button";
 
     button.className="level";
 
-    if(i===currentLevel){
+    if(
+      i===currentLevel
+    ){
+
       button.classList.add(
         "active"
       );
+
     }
 
-    if(completed[i]){
+    if(
+      completed[i]
+    ){
 
       button.classList.add(
         "completed"
@@ -2360,7 +4301,9 @@ function renderLevels(){
       button.textContent=
         "✓ "+(i+1);
 
-    }else if(i>currentLevel){
+    }else if(
+      i>=unlocked
+    ){
 
       button.classList.add(
         "locked"
@@ -2368,48 +4311,99 @@ function renderLevels(){
 
       button.disabled=true;
 
-      button.textContent="🔒";
+      button.textContent=
+        "🔒";
 
     }else{
 
       button.textContent=
         i+1;
+
     }
 
-    button.addEventListener(
-      "click",
-      ()=>{
-        loadLevel(i);
-      }
-    );
+    if(
+      i<unlocked
+    ){
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          loadLevel(i);
+
+        }
+      );
+
+    }
 
     levelsBox.appendChild(
       button
     );
+
   }
+
 }
 
+
 /* =====================================================
-   SOUND
+SOUND
 ===================================================== */
+
+function getAudioContext(){
+
+  if(audioCtx){
+
+    return audioCtx;
+
+  }
+
+  const AC=
+    window.AudioContext||
+    window.webkitAudioContext;
+
+  if(!AC){
+
+    return null;
+
+  }
+
+  audioCtx=
+    new AC();
+
+  return audioCtx;
+
+}
+
 
 function beep(
   frequency,
   duration
 ){
 
-  if(!soundOn)return;
+  if(!soundOn){
+
+    return;
+
+  }
 
   try{
 
-    const AudioContext=
-      window.AudioContext||
-      window.webkitAudioContext;
-
-    if(!AudioContext)return;
-
     const ctx=
-      new AudioContext();
+      getAudioContext();
+
+    if(!ctx){
+
+      return;
+
+    }
+
+    if(
+      ctx.state==="suspended"
+    ){
+
+      ctx.resume();
+
+    }
 
     const oscillator=
       ctx.createOscillator();
@@ -2429,7 +4423,8 @@ function beep(
 
     gain.gain.exponentialRampToValueAtTime(
       .07,
-      ctx.currentTime+.01
+      ctx.currentTime+
+      .01
     );
 
     gain.gain.exponentialRampToValueAtTime(
@@ -2438,8 +4433,13 @@ function beep(
       duration
     );
 
-    oscillator.connect(gain);
-    gain.connect(ctx.destination);
+    oscillator.connect(
+      gain
+    );
+
+    gain.connect(
+      ctx.destination
+    );
 
     oscillator.start();
 
@@ -2449,43 +4449,44 @@ function beep(
       .03
     );
 
-    setTimeout(
-      ()=>{
-        try{
-          ctx.close();
-        }catch(e){}
-      },
-      duration*1000+100
-    );
-
   }catch(e){}
+
 }
 
+
 /* =====================================================
-   FAQ
+SOUND BUTTON
 ===================================================== */
 
-document
-  .querySelectorAll(".faq-question")
-  .forEach(button=>{
+soundBtn.addEventListener(
+  "click",
+  ()=>{
 
-    button.addEventListener(
-      "click",
-      ()=>{
+    soundOn=
+      !soundOn;
 
-        const item=
-          button.parentElement;
+    soundBtn.textContent=
+      soundOn
+      ?"🔊"
+      :"🔇";
 
-        item.classList.toggle(
-          "open"
-        );
-      }
-    );
+    saveGame();
 
-  });
+    if(soundOn){
+
+      beep(
+        650,
+        .06
+      );
+
+    }
+
+  }
+);
+
 
 /* =====================================================
-   BUTTON EVENTS
+BUTTONS
 ===================================================== */
 
 resetBtn.addEventListener(
@@ -2503,25 +4504,9 @@ nextBtn.addEventListener(
   nextLevel
 );
 
-soundBtn.addEventListener(
-  "click",
-  ()=>{
-
-    soundOn=!soundOn;
-
-    soundBtn.textContent=
-      soundOn
-      ?"🔊"
-      :"🔇";
-
-    if(soundOn){
-      beep(650,.06);
-    }
-  }
-);
 
 /* =====================================================
-   KEYBOARD
+KEYBOARD
 ===================================================== */
 
 window.addEventListener(
@@ -2533,84 +4518,137 @@ window.addEventListener(
         "show"
       )
     ){
+
       return;
+
     }
 
+    const active=
+      document.activeElement;
+
     if(
+      active &&
       [
         "INPUT",
         "TEXTAREA",
         "SELECT",
         "BUTTON"
       ].includes(
-        document.activeElement.tagName
+        active.tagName
       )
     ){
+
       return;
+
     }
 
     const player=
       getCar("P");
 
-    if(!player)return;
+    if(!player){
+
+      return;
+
+    }
 
     let target=
       player.c;
 
-    if(e.key==="ArrowLeft"){
+    if(
+      e.key==="ArrowLeft"
+    ){
+
       target--;
-    }else if(e.key==="ArrowRight"){
+
+    }else if(
+      e.key==="ArrowRight"
+    ){
+
       target++;
+
     }else{
+
       return;
+
     }
 
     e.preventDefault();
 
     if(
-      canMove(
+      applyMove(
         player,
         player.r,
-        target
+        target,
+        true
       )
     ){
 
-      player.c=
-        target;
-
-      moves++;
-
-      movesEl.textContent=
-        moves;
-
       render();
 
-      beep(380,.045);
+      checkCoins();
 
       if(
         player.c+
         player.len>=SIZE
       ){
+
         solveLevel();
+
       }
+
     }
+
   }
 );
 
+
 /* =====================================================
-   RESIZE
+RESIZE
 ===================================================== */
 
 window.addEventListener(
   "resize",
   ()=>{
+
     render();
-    addCoins();
+
+    renderCoins();
+
   }
 );
 
+
 /* =====================================================
-   YEAR
+FAQ
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".faq-question"
+  )
+  .forEach(
+    button=>{
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          const item=
+            button.parentElement;
+
+          item.classList.toggle(
+            "open"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+YEAR
 ===================================================== */
 
 document.getElementById(
@@ -2618,14 +4656,28 @@ document.getElementById(
 ).textContent=
   new Date().getFullYear();
 
+
 /* =====================================================
-   START GAME
+START
 ===================================================== */
 
-loadLevel(0);
+loadSave();
+
+soundBtn.textContent=
+  soundOn
+  ?"🔊"
+  :"🔇";
+
+loadLevel(
+  Math.min(
+    currentLevel,
+    unlocked-1
+  )
+);
 
 })();
+
 </script>
 
 </body>
-</html>
+      </html>
