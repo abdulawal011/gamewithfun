@@ -17,7 +17,7 @@ const games = [
     title: "Carrom Board",
     category: "Board",
     icon: "games/file_00000000d8dc820ba98dd0aa7d484503.png",
-    url: "games/carromboardoard.html",
+    url: "games/carromboard.html",
     newGame: false,
     popular: true
   },
