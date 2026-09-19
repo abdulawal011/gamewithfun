@@ -1,0 +1,3799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>Game With Fun Color Sort - Free Online Color Puzzle Game</title>
+
+<meta name="description"
+content="Play Game With Fun Color Sort, a smooth and relaxing free online color sorting puzzle game. Sort colorful balls into bottles, solve challenging levels and enjoy the game on mobile or desktop.">
+
+<meta name="keywords"
+content="color sort game, color sorting puzzle, ball sort puzzle, bottle sort game, free puzzle game, online color game, HTML5 puzzle game, Game With Fun">
+
+<meta name="author" content="Game With Fun">
+
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#090d20">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    width:100%;
+    min-height:100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:#fff;
+
+    overflow-x:hidden;
+
+    background:
+        radial-gradient(
+            circle at 12% 5%,
+            rgba(102,88,255,.28),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 88% 82%,
+            rgba(0,220,255,.14),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            #070a18,
+            #111936 55%,
+            #080d20
+        );
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+button,
+.ball,
+.bottle{
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+.startScreen{
+
+    min-height:100dvh;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(105,94,255,.08),
+            transparent 55%
+        );
+}
+
+.startCard{
+
+    width:min(450px,100%);
+
+    padding:30px 22px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,31,65,.94),
+            rgba(10,15,35,.94)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    box-shadow:
+        0 35px 90px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.09);
+
+    backdrop-filter:blur(20px);
+
+    animation:
+        startCardIn .55s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes startCardIn{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(25px)
+            scale(.94);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+.logo{
+
+    text-align:center;
+
+    font-size:43px;
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+.logoSmall{
+
+    text-align:center;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    letter-spacing:4px;
+
+    opacity:.55;
+}
+
+.preview{
+
+    height:125px;
+
+    margin:25px auto 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+}
+
+.previewBottle{
+
+    width:43px;
+    height:94px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.25);
+
+    border-top:0;
+
+    border-radius:
+        0 0 20px 20px;
+
+    display:flex;
+
+    flex-direction:column-reverse;
+
+    align-items:center;
+
+    padding:5px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.025),
+            rgba(255,255,255,.08)
+        );
+
+    animation:
+        previewFloat 2.5s ease-in-out infinite;
+}
+
+.previewBottle:nth-child(2){
+    animation-delay:.18s;
+}
+
+.previewBottle:nth-child(3){
+    animation-delay:.36s;
+}
+
+@keyframes previewFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+}
+
+.previewBall{
+
+    width:28px;
+    height:28px;
+
+    border-radius:50%;
+
+    margin:1px;
+
+    box-shadow:
+        inset 5px 5px 7px rgba(255,255,255,.32),
+        inset -5px -6px 8px rgba(0,0,0,.22),
+        0 4px 8px rgba(0,0,0,.25);
+}
+
+.p1{
+    background:
+        linear-gradient(
+            145deg,
+            #ff758c,
+            #d51443
+        );
+}
+
+.p2{
+    background:
+        linear-gradient(
+            145deg,
+            #76c1ff,
+            #2360dc
+        );
+}
+
+.p3{
+    background:
+        linear-gradient(
+            145deg,
+            #78f3ac,
+            #15965a
+        );
+}
+
+.instructions{
+
+    display:grid;
+
+    gap:8px;
+
+    margin-bottom:22px;
+}
+
+.instruction{
+
+    padding:10px 13px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+
+    font-size:14px;
+
+    color:#dce4ef;
+}
+
+.startBtn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:17px;
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7066ff,
+            #a84fff
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(112,102,255,.32);
+
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease;
+}
+
+.startBtn:hover{
+
+    box-shadow:
+        0 16px 35px
+        rgba(112,102,255,.45);
+}
+
+.startBtn:active{
+
+    transform:scale(.96);
+}
+
+
+/* =========================================================
+   GAME
+========================================================= */
+
+#game{
+
+    display:none;
+
+    min-height:100dvh;
+
+    padding:
+        12px 10px 30px;
+
+    animation:
+        gameIn .4s ease;
+}
+
+@keyframes gameIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+.top{
+
+    width:min(680px,100%);
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.gameTitle{
+
+    font-size:27px;
+
+    font-weight:900;
+
+    letter-spacing:-.4px;
+}
+
+.levelBadge{
+
+    padding:
+        7px 13px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    font-size:13px;
+
+    font-weight:800;
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.05);
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    width:min(680px,100%);
+
+    margin:10px auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:9px;
+}
+
+.stat{
+
+    min-width:105px;
+
+    text-align:center;
+
+    padding:
+        7px 13px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.065);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.04);
+}
+
+.stat span{
+
+    display:block;
+
+    opacity:.55;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+.stat b{
+
+    font-size:18px;
+}
+
+
+/* =========================================================
+   BOARD
+========================================================= */
+
+.board{
+
+    width:min(680px,100%);
+
+    margin:
+        17px auto 18px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    align-items:flex-end;
+
+    gap:
+        20px 13px;
+
+    padding:
+        18px 4px 28px;
+
+    touch-action:none;
+
+    perspective:900px;
+}
+
+
+/* =========================================================
+   BOTTLE
+========================================================= */
+
+.bottle{
+
+    width:62px;
+    height:205px;
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column-reverse;
+
+    align-items:center;
+
+    padding:7px 0;
+
+    border:
+        2px solid
+        rgba(255,255,255,.27);
+
+    border-top:0;
+
+    border-radius:
+        0 0 30px 30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.025) 45%,
+            rgba(255,255,255,.09)
+        );
+
+    box-shadow:
+        inset 7px 0 10px
+        rgba(255,255,255,.045),
+
+        inset -8px 0 12px
+        rgba(0,0,0,.18),
+
+        0 9px 22px
+        rgba(0,0,0,.18);
+
+    transition:
+        transform .22s
+            cubic-bezier(.2,.8,.2,1),
+
+        border-color .2s ease,
+
+        box-shadow .22s ease;
+}
+
+.bottle::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-8px;
+    left:-4px;
+
+    width:66px;
+    height:11px;
+
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.20),
+            rgba(255,255,255,.50),
+            rgba(255,255,255,.17)
+        );
+
+    box-shadow:
+        0 2px 4px rgba(0,0,0,.2);
+}
+
+.bottle::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:5px;
+
+    border-radius:
+        0 0 24px 24px;
+
+    pointer-events:none;
+
+    border-left:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.bottle.selected{
+
+    transform:
+        translateY(-12px)
+        scale(1.04);
+
+    border-color:
+        rgba(255,255,255,.78);
+
+    box-shadow:
+        0 15px 32px
+        rgba(0,0,0,.32),
+
+        0 0 24px
+        rgba(130,130,255,.20);
+}
+
+.bottle.validTarget{
+
+    border-color:
+        rgba(70,230,160,.9);
+
+    box-shadow:
+        0 0 22px
+        rgba(70,230,160,.28);
+}
+
+.bottle.invalidTarget{
+
+    border-color:
+        rgba(255,90,110,.75);
+
+    animation:
+        shake .25s ease;
+}
+
+@keyframes shake{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    25%{
+        transform:translateX(-5px);
+    }
+
+    75%{
+        transform:translateX(5px);
+    }
+}
+
+
+/* =========================================================
+   BALL
+========================================================= */
+
+.ball{
+
+    width:46px;
+    height:46px;
+
+    flex:
+        0 0 46px;
+
+    border-radius:50%;
+
+    margin:1px 0;
+
+    position:relative;
+
+    box-shadow:
+        inset 7px 7px 10px
+        rgba(255,255,255,.35),
+
+        inset -8px -9px 12px
+        rgba(0,0,0,.22),
+
+        0 4px 8px
+        rgba(0,0,0,.22);
+
+    transition:
+        transform .18s
+            cubic-bezier(.2,.8,.2,1),
+
+        filter .18s ease;
+}
+
+.ball::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:17px;
+    height:10px;
+
+    left:8px;
+    top:7px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.55);
+
+    transform:
+        rotate(-25deg);
+
+    filter:blur(.3px);
+}
+
+.ball::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:3px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+}
+
+.ball.ballPulse{
+
+    animation:
+        ballDrop .3s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes ballDrop{
+
+    0%{
+        transform:
+            translateY(-18px)
+            scale(.75);
+
+        opacity:.2;
+    }
+
+    65%{
+        transform:
+            translateY(3px)
+            scale(1.04);
+
+        opacity:1;
+    }
+
+    100%{
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   COLORS
+========================================================= */
+
+.red{
+    background:
+        linear-gradient(
+            145deg,
+            #ff7287,
+            #d91643
+        );
+}
+
+.blue{
+    background:
+        linear-gradient(
+            145deg,
+            #70bdff,
+            #2161df
+        );
+}
+
+.green{
+    background:
+        linear-gradient(
+            145deg,
+            #71f1a8,
+            #159a58
+        );
+}
+
+.yellow{
+    background:
+        linear-gradient(
+            145deg,
+            #fff079,
+            #e4a700
+        );
+}
+
+.purple{
+    background:
+        linear-gradient(
+            145deg,
+            #df91ff,
+            #7930d2
+        );
+}
+
+.orange{
+    background:
+        linear-gradient(
+            145deg,
+            #ffc071,
+            #ec5b16
+        );
+}
+
+.pink{
+    background:
+        linear-gradient(
+            145deg,
+            #ff91cb,
+            #d8217e
+        );
+}
+
+.cyan{
+    background:
+        linear-gradient(
+            145deg,
+            #72f5ef,
+            #1599a6
+        );
+}
+
+
+/* =========================================================
+   DRAG BALL
+========================================================= */
+
+.dragBall{
+
+    position:fixed;
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:1000;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.10);
+
+    box-shadow:
+        inset 7px 7px 10px
+        rgba(255,255,255,.42),
+
+        inset -8px -9px 12px
+        rgba(0,0,0,.22),
+
+        0 15px 35px
+        rgba(0,0,0,.45);
+
+    will-change:
+        left,
+        top,
+        transform;
+}
+
+.dragBall::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:18px;
+    height:11px;
+
+    left:9px;
+    top:8px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.55);
+
+    transform:rotate(-25deg);
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls{
+
+    width:min(680px,100%);
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+}
+
+.control{
+
+    min-height:45px;
+
+    padding:
+        9px 15px;
+
+    border-radius:14px;
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    background:
+        rgba(255,255,255,.075);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    transition:
+        transform .12s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.control:hover{
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.control:active{
+
+    transform:
+        scale(.92);
+}
+
+.soundOn{
+
+    background:
+        rgba(112,102,255,.22);
+
+    box-shadow:
+        0 0 15px
+        rgba(112,102,255,.12);
+}
+
+
+/* =========================================================
+   COMPLETE OVERLAY
+========================================================= */
+
+.overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:200;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(4,7,18,.78);
+
+    backdrop-filter:
+        blur(12px);
+}
+
+.completeCard{
+
+    width:min(390px,100%);
+
+    padding:
+        30px 22px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c2348,
+            #10152e
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.58);
+
+    animation:
+        pop .38s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.trophy{
+
+    font-size:66px;
+
+    animation:
+        trophy .8s
+        ease-in-out
+        infinite alternate;
+}
+
+@keyframes trophy{
+
+    from{
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    to{
+        transform:
+            translateY(-7px)
+            rotate(3deg);
+    }
+}
+
+@keyframes pop{
+
+    from{
+        transform:
+            scale(.7);
+
+        opacity:0;
+    }
+
+    to{
+        transform:
+            scale(1);
+
+        opacity:1;
+    }
+}
+
+.completeCard h2{
+
+    font-size:30px;
+
+    margin-top:5px;
+}
+
+.completeCard p{
+
+    color:#bfc9da;
+
+    margin:
+        6px 0 20px;
+}
+
+
+/* =========================================================
+   SEO CONTENT
+========================================================= */
+
+#siteContent{
+
+    width:100%;
+
+    max-width:1050px;
+
+    margin:auto;
+
+    padding:
+        24px 14px 45px;
+}
+
+.contentCard{
+
+    margin-bottom:16px;
+
+    padding:
+        22px 18px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,26,49,.95),
+            rgba(8,14,29,.95)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.25);
+}
+
+.contentCard h2{
+
+    margin-bottom:12px;
+
+    font-size:22px;
+
+    font-weight:900;
+}
+
+.contentCard h3{
+
+    margin:
+        18px 0 8px;
+
+    font-size:17px;
+}
+
+.contentCard p{
+
+    margin-bottom:11px;
+
+    color:#c9d4df;
+
+    font-size:14px;
+
+    line-height:1.75;
+}
+
+.contentCard ul{
+
+    padding-left:21px;
+
+    color:#c9d4df;
+
+    font-size:14px;
+
+    line-height:1.85;
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faqItem{
+
+    margin-bottom:9px;
+
+    overflow:hidden;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.faqQuestion{
+
+    width:100%;
+
+    padding:
+        14px;
+
+    border:0;
+
+    border-radius:0;
+
+    color:#fff;
+
+    text-align:left;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    background:transparent;
+}
+
+.faqAnswer{
+
+    display:none;
+
+    padding:
+        0 14px 14px;
+
+    color:#b9c6d2;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+.faqItem.open
+.faqAnswer{
+
+    display:block;
+
+    animation:
+        answerIn .2s ease;
+}
+
+@keyframes answerIn{
+
+    from{
+        opacity:0;
+        transform:translateY(-5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contactBox{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+}
+
+.contactItem{
+
+    flex:
+        1 1 220px;
+
+    padding:14px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.contactItem strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    font-size:14px;
+}
+
+.contactItem span{
+
+    color:#b7c4cf;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   ADSENSE
+========================================================= */
+
+#adSection{
+
+    width:100%;
+
+    max-width:1050px;
+
+    margin:
+        0 auto 40px;
+
+    padding:
+        0 14px;
+}
+
+.adBox{
+
+    width:100%;
+
+    min-height:180px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    border:
+        1px dashed
+        rgba(255,255,255,.24);
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:#8896a3;
+
+    font-size:12px;
+}
+
+.adBox small{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#64727e;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    width:100%;
+
+    padding:
+        25px 15px 35px;
+
+    text-align:center;
+
+    color:#7e8b97;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    #game{
+
+        padding:
+            9px 7px 25px;
+    }
+
+    .gameTitle{
+
+        font-size:23px;
+    }
+
+    .levelBadge{
+
+        font-size:11px;
+
+        padding:
+            6px 10px;
+    }
+
+    .stats{
+
+        margin:
+            8px auto;
+    }
+
+    .stat{
+
+        min-width:92px;
+
+        padding:
+            6px 9px;
+    }
+
+    .stat span{
+
+        font-size:9px;
+    }
+
+    .stat b{
+
+        font-size:16px;
+    }
+
+    .board{
+
+        gap:
+            17px 9px;
+
+        padding:
+            15px 2px 22px;
+
+        margin:
+            12px auto 15px;
+    }
+
+    .bottle{
+
+        width:56px;
+        height:188px;
+    }
+
+    .bottle::before{
+
+        width:60px;
+    }
+
+    .ball{
+
+        width:41px;
+        height:41px;
+
+        flex-basis:41px;
+    }
+
+    .control{
+
+        min-height:42px;
+
+        padding:
+            8px 11px;
+
+        font-size:12px;
+    }
+
+    #siteContent{
+
+        padding:
+            18px 10px 40px;
+    }
+
+    .contentCard{
+
+        padding:
+            18px 14px;
+
+        border-radius:16px;
+    }
+
+    .contentCard h2{
+
+        font-size:19px;
+    }
+
+    .contentCard p,
+    .contentCard ul{
+
+        font-size:13px;
+    }
+
+    #adSection{
+
+        padding:
+            0 10px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media(max-width:360px){
+
+    .bottle{
+
+        width:51px;
+        height:175px;
+    }
+
+    .bottle::before{
+
+        width:55px;
+    }
+
+    .ball{
+
+        width:37px;
+        height:37px;
+
+        flex-basis:37px;
+    }
+
+    .board{
+
+        gap:
+            14px 7px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.001ms !important;
+
+        animation-iteration-count:1 !important;
+
+        transition-duration:.001ms !important;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =======================================================
+     START SCREEN
+======================================================= -->
+
+<section
+    class="startScreen"
+    id="startScreen">
+
+    <div class="startCard">
+
+        <div class="logo">
+            🎨 Color Sort
+        </div>
+
+        <div class="logoSmall">
+            ULTIMATE BALL PUZZLE
+        </div>
+
+
+        <div class="preview">
+
+            <div class="previewBottle">
+
+                <div class="previewBall p1"></div>
+                <div class="previewBall p1"></div>
+                <div class="previewBall p1"></div>
+
+            </div>
+
+            <div class="previewBottle">
+
+                <div class="previewBall p2"></div>
+                <div class="previewBall p2"></div>
+                <div class="previewBall p2"></div>
+
+            </div>
+
+            <div class="previewBottle">
+
+                <div class="previewBall p3"></div>
+                <div class="previewBall p3"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="instructions">
+
+            <div class="instruction">
+                🫳 <b>Drag</b> a ball from one bottle to another.
+            </div>
+
+            <div class="instruction">
+                🎯 Move balls onto the same color.
+            </div>
+
+            <div class="instruction">
+                🧪 Each bottle holds up to 4 balls.
+            </div>
+
+            <div class="instruction">
+                🧠 Sort every color to complete the level.
+            </div>
+
+            <div class="instruction">
+                🔊 Smooth browser-generated sound effects.
+            </div>
+
+        </div>
+
+
+        <button
+            class="startBtn"
+            id="startBtn">
+
+            ▶ Start Game
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     GAME
+======================================================= -->
+
+<main id="game">
+
+    <div class="top">
+
+        <div class="gameTitle">
+            🎨 Color Sort
+        </div>
+
+        <div
+            class="levelBadge"
+            id="levelText">
+
+            Level 1
+
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <span>MOVES</span>
+
+            <b id="moves">
+                0
+            </b>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span>BEST</span>
+
+            <b id="best">
+                —
+            </b>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="board"
+        id="board">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            class="control"
+            id="undoBtn">
+
+            ↩ Undo
+
+        </button>
+
+
+        <button
+            class="control"
+            id="addBtn">
+
+            ➕ Add Bottle
+
+        </button>
+
+
+        <button
+            class="control"
+            id="restartBtn">
+
+            🔄 Restart
+
+        </button>
+
+
+        <button
+            class="control soundOn"
+            id="soundBtn">
+
+            🔊 Sound
+
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- =======================================================
+     COMPLETE
+======================================================= -->
+
+<div
+    class="overlay"
+    id="overlay">
+
+    <div class="completeCard">
+
+        <div class="trophy">
+            🏆
+        </div>
+
+        <h2>
+            Level Complete!
+        </h2>
+
+        <p id="completeText">
+            Amazing!
+        </p>
+
+        <button
+            class="startBtn"
+            id="nextBtn">
+
+            Next Level →
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     SEO CONTENT
+======================================================= -->
+
+<main id="siteContent">
+
+
+<section class="contentCard">
+
+<h2>
+    Game With Fun Color Sort
+</h2>
+
+<p>
+    Game With Fun Color Sort is a free online color sorting puzzle
+    game designed for players who enjoy relaxing and satisfying
+    brain games. The objective is simple: move the colored balls
+    between bottles and organize every color into its own bottle.
+</p>
+
+<p>
+    The game is built for modern web browsers and works on mobile
+    phones, tablets and desktop computers. Its touch-friendly
+    controls make it easy to pick up and move balls with a finger,
+    while mouse controls can be used on desktop devices.
+</p>
+
+<h3>
+    How to Play Color Sort
+</h3>
+
+<p>
+    Select or drag the top ball from a bottle and move it into
+    another bottle. A ball can only be placed where the move is
+    allowed. The goal is to create bottles containing four balls
+    of the same color.
+</p>
+
+<p>
+    Plan your moves carefully because an empty bottle can be very
+    useful when you need extra space. Use the Undo button if you
+    want to return to a previous position and try a different
+    strategy.
+</p>
+
+<h3>
+    Color Sort Game Features
+</h3>
+
+<ul>
+
+<li>Free online color sorting puzzle game</li>
+
+<li>Smooth touch and mouse controls</li>
+
+<li>Drag-and-drop gameplay</li>
+
+<li>Tap controls for mobile devices</li>
+
+<li>Progressive puzzle levels</li>
+
+<li>Undo previous moves</li>
+
+<li>Add an extra bottle</li>
+
+<li>Restart the current puzzle</li>
+
+<li>Browser-generated sound effects</li>
+
+<li>No external music or sound files required</li>
+
+<li>Responsive mobile-friendly design</li>
+
+<li>Works without installing an app</li>
+
+</ul>
+
+</section>
+
+
+<!-- =======================================================
+     FAQ
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Frequently Asked Questions
+</h2>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    How do I play Color Sort?
+</button>
+
+<div class="faqAnswer">
+
+Move the top colored ball from one bottle into another
+valid bottle. The goal is to arrange four balls of the same
+color inside each completed bottle.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Can I play Color Sort on my phone?
+</button>
+
+<div class="faqAnswer">
+
+Yes. The game is designed with touch-friendly controls and
+responsive layouts for smartphones and tablets. You can drag
+balls with your finger or use the tap controls.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    What does the Undo button do?
+</button>
+
+<div class="faqAnswer">
+
+The Undo button restores the previous puzzle position so you
+can try a different move without restarting the entire level.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    What is the Add Bottle button?
+</button>
+
+<div class="faqAnswer">
+
+Add Bottle provides one additional empty bottle that can be
+used as temporary space while solving a difficult puzzle.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Does the game use copyrighted sound files?
+</button>
+
+<div class="faqAnswer">
+
+This version does not load external MP3 or WAV sound files.
+The basic game sounds are generated directly inside the browser
+using the Web Audio API.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Is Color Sort free to play?
+</button>
+
+<div class="faqAnswer">
+
+Yes. This browser game is designed to be played online without
+requiring a paid game download or installation.
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    About Game With Fun
+</h2>
+
+<p>
+    Game With Fun is an online gaming website created to provide
+    simple, entertaining and browser-friendly games. Our games
+    are designed to work across different screen sizes and make
+    it easy for visitors to start playing without complicated
+    installation steps.
+</p>
+
+<p>
+    Color Sort is designed as a relaxing puzzle experience where
+    players can focus on planning, organizing colors and solving
+    increasingly challenging arrangements.
+</p>
+
+</section>
+
+
+<!-- =======================================================
+     PRIVACY
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Privacy Policy
+</h2>
+
+<p>
+    Game With Fun respects the privacy of its visitors. The game
+    itself does not require players to create an account in order
+    to play.
+</p>
+
+<p>
+    Depending on the services enabled on the website, advertising
+    or analytics providers may use cookies or similar technologies
+    for advertising, measurement, security or website functionality.
+</p>
+
+<p>
+    Third-party services may have their own privacy policies and
+    terms. Visitors should review the applicable policies of those
+    services when they are used on the website.
+</p>
+
+<p>
+    If you have a privacy-related question about Game With Fun,
+    please contact the website owner.
+</p>
+
+</section>
+
+
+<!-- =======================================================
+     DISCLAIMER
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Disclaimer
+</h2>
+
+<p>
+    Game With Fun provides browser games for entertainment
+    purposes. Although reasonable efforts may be made to keep
+    the games functional, we cannot guarantee that every game
+    will work perfectly on every browser, device or operating
+    system.
+</p>
+
+<p>
+    Game performance may depend on the device, browser,
+    available memory and other technical conditions.
+</p>
+
+<p>
+    Game content and features may be updated, changed or
+    improved over time.
+</p>
+
+</section>
+
+
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Contact Game With Fun
+</h2>
+
+<p>
+    If you discover a technical problem, have a suggestion or
+    want to report an issue with the game, you can contact the
+    Game With Fun website team.
+</p>
+
+<div class="contactBox">
+
+<div class="contactItem">
+
+<strong>
+    📩 General Support
+</strong>
+
+<span>
+    Replace this section with your official
+    Game With Fun contact email.
+</span>
+
+</div>
+
+
+<div class="contactItem">
+
+<strong>
+    💡 Game Suggestions
+</strong>
+
+<span>
+    Suggestions for new games and improvements
+    are welcome.
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- =======================================================
+     ADSENSE
+======================================================= -->
+
+<section id="adSection">
+
+<div class="adBox">
+
+<div>
+
+<strong>
+    Advertisement
+</strong>
+
+<small>
+    AdSense advertisement space
+</small>
+
+</div>
+
+</div>
+
+<!--
+=============================================================
+GOOGLE ADSENSE
+
+After your AdSense account and website are approved,
+replace the placeholder above with your own AdSense ad code.
+
+Use ONLY the AdSense code supplied from your own Google
+AdSense account.
+
+Do not use someone else's publisher ID or ad slot ID.
+=============================================================
+-->
+
+</section>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+© <span id="year"></span>
+Game With Fun. All rights reserved.
+
+<br>
+
+Free online browser games for entertainment.
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   GAME DATA
+========================================================= */
+
+const COLORS = [
+
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "purple",
+    "orange",
+    "pink",
+    "cyan"
+
+];
+
+
+let level = 1;
+
+let bottles = [];
+
+let selected = null;
+
+let moves = 0;
+
+let history = [];
+
+let extraBottleUsed = false;
+
+let soundEnabled = true;
+
+let audioCtx = null;
+
+
+let drag = {
+
+    active:false,
+
+    source:null,
+
+    color:null,
+
+    ghost:null,
+
+    target:null
+
+};
+
+
+const bestScores = {};
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const startScreen =
+    document.getElementById(
+        "startScreen"
+    );
+
+const game =
+    document.getElementById(
+        "game"
+    );
+
+const board =
+    document.getElementById(
+        "board"
+    );
+
+const movesEl =
+    document.getElementById(
+        "moves"
+    );
+
+const bestEl =
+    document.getElementById(
+        "best"
+    );
+
+const levelEl =
+    document.getElementById(
+        "levelText"
+    );
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+const completeText =
+    document.getElementById(
+        "completeText"
+    );
+
+const soundBtn =
+    document.getElementById(
+        "soundBtn"
+    );
+
+
+/* =========================================================
+   AUDIO
+   Browser generated - no external audio file
+========================================================= */
+
+function initAudio(){
+
+    if(!audioCtx){
+
+        audioCtx =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if(
+        audioCtx.state ===
+        "suspended"
+    ){
+
+        audioCtx.resume();
+
+    }
+
+}
+
+
+function tone(
+    frequency,
+    duration,
+    type="sine",
+    volume=.055,
+    delay=0
+){
+
+    if(
+        !soundEnabled
+    ){
+        return;
+    }
+
+    initAudio();
+
+    const now =
+        audioCtx.currentTime +
+        delay;
+
+    const osc =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+    osc.type =
+        type;
+
+    osc.frequency.setValueAtTime(
+        frequency,
+        now
+    );
+
+    gain.gain.setValueAtTime(
+        .0001,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        volume,
+        now+.012
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now+duration
+    );
+
+    osc.connect(gain);
+
+    gain.connect(
+        audioCtx.destination
+    );
+
+    osc.start(now);
+
+    osc.stop(
+        now+duration+.02
+    );
+
+}
+
+
+function soundPick(){
+
+    tone(
+        520,
+        .055,
+        "sine",
+        .045
+    );
+
+}
+
+
+function soundDrop(){
+
+    tone(
+        430,
+        .05,
+        "triangle",
+        .045
+    );
+
+    tone(
+        650,
+        .075,
+        "sine",
+        .035,
+        .045
+    );
+
+}
+
+
+function soundBad(){
+
+    tone(
+        180,
+        .09,
+        "triangle",
+        .045
+    );
+
+}
+
+
+function soundComplete(){
+
+    tone(
+        523,
+        .10,
+        "sine",
+        .055
+    );
+
+    tone(
+        659,
+        .11,
+        "sine",
+        .055,
+        .11
+    );
+
+    tone(
+        784,
+        .18,
+        "sine",
+        .065,
+        .23
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document
+.getElementById("startBtn")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        soundPick();
+
+        startScreen.style.display =
+            "none";
+
+        game.style.display =
+            "block";
+
+        createLevel();
+
+    }
+);
+
+
+/* =========================================================
+   CREATE LEVEL
+========================================================= */
+
+function createLevel(){
+
+    selected = null;
+
+    moves = 0;
+
+    history = [];
+
+    extraBottleUsed = false;
+
+    drag.active = false;
+
+    drag.source = null;
+
+    drag.target = null;
+
+    const colorCount =
+        Math.min(
+            3 +
+            Math.floor(
+                (level-1)/2
+            ),
+            8
+        );
+
+
+    const selectedColors =
+        COLORS.slice(
+            0,
+            colorCount
+        );
+
+
+    let balls = [];
+
+
+    selectedColors.forEach(
+        color=>{
+
+            for(
+                let i=0;
+                i<4;
+                i++
+            ){
+
+                balls.push(
+                    color
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       Multiple shuffles make
+       the puzzle less repetitive.
+    */
+
+    for(
+        let i=0;
+        i<5;
+        i++
+    ){
+
+        shuffle(balls);
+
+    }
+
+
+    bottles = [];
+
+
+    for(
+        let i=0;
+        i<colorCount;
+        i++
+    ){
+
+        bottles.push(
+            balls.slice(
+                i*4,
+                i*4+4
+            )
+        );
+
+    }
+
+
+    /*
+       Two empty bottles.
+    */
+
+    bottles.push([]);
+
+    bottles.push([]);
+
+
+    /*
+       Prevent accidentally solved
+       starting boards.
+    */
+
+    let attempts = 0;
+
+    while(
+        isSolved() &&
+        attempts < 5
+    ){
+
+        shuffle(balls);
+
+        bottles = [];
+
+        for(
+            let i=0;
+            i<colorCount;
+            i++
+        ){
+
+            bottles.push(
+                balls.slice(
+                    i*4,
+                    i*4+4
+                )
+            );
+
+        }
+
+        bottles.push([]);
+
+        bottles.push([]);
+
+        attempts++;
+
+    }
+
+
+    render();
+
+}
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
+
+function shuffle(arr){
+
+    for(
+        let i=arr.length-1;
+        i>0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random()*
+                (i+1)
+            );
+
+        [
+            arr[i],
+            arr[j]
+        ] =
+        [
+            arr[j],
+            arr[i]
+        ];
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+    board.innerHTML = "";
+
+    bottles.forEach(
+        (bottle,index)=>{
+
+            const bottleEl =
+                document.createElement(
+                    "div"
+                );
+
+            bottleEl.className =
+                "bottle";
+
+            bottleEl.dataset.index =
+                index;
+
+
+            if(
+                selected === index
+            ){
+
+                bottleEl.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            /*
+               Render balls.
+            */
+
+            bottle.forEach(
+                color=>{
+
+                    const ball =
+                        document.createElement(
+                            "div"
+                        );
+
+                    ball.className =
+                        "ball " +
+                        color;
+
+                    ball.dataset.index =
+                        index;
+
+                    bottleEl.appendChild(
+                        ball
+                    );
+
+                }
+            );
+
+
+            /*
+               Tap.
+            */
+
+            bottleEl.addEventListener(
+                "click",
+                e=>{
+
+                    if(
+                        drag.active
+                    ){
+                        return;
+                    }
+
+                    handleTap(index);
+
+                }
+            );
+
+
+            /*
+               Pointer drag.
+            */
+
+            bottleEl.addEventListener(
+                "pointerdown",
+                e=>{
+
+                    startDrag(
+                        e,
+                        index
+                    );
+
+                },
+                {
+                    passive:false
+                }
+            );
+
+
+            board.appendChild(
+                bottleEl
+            );
+
+        }
+    );
+
+
+    levelEl.textContent =
+        "Level " + level;
+
+    movesEl.textContent =
+        moves;
+
+    bestEl.textContent =
+        bestScores[level] ??
+        "—";
+
+}
+
+
+/* =========================================================
+   TAP
+========================================================= */
+
+function handleTap(index){
+
+    if(
+        selected === null
+    ){
+
+        if(
+            bottles[index].length === 0
+        ){
+
+            soundBad();
+
+            return;
+
+        }
+
+        selected =
+            index;
+
+        soundPick();
+
+        render();
+
+        return;
+
+    }
+
+
+    if(
+        selected === index
+    ){
+
+        selected = null;
+
+        render();
+
+        return;
+
+    }
+
+
+    moveBalls(
+        selected,
+        index
+    );
+
+}
+
+
+/* =========================================================
+   START DRAG
+========================================================= */
+
+function startDrag(
+    e,
+    index
+){
+
+    if(
+        e.pointerType === "mouse" &&
+        e.button !== 0
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        bottles[index].length === 0
+    ){
+
+        return;
+
+    }
+
+
+    const color =
+        bottles[index]
+        [
+            bottles[index].length-1
+        ];
+
+
+    drag.active = true;
+
+    drag.source = index;
+
+    drag.color = color;
+
+    drag.target = null;
+
+
+    const ghost =
+        document.createElement(
+            "div"
+        );
+
+    ghost.className =
+        "dragBall " +
+        color;
+
+
+    document.body.appendChild(
+        ghost
+    );
+
+
+    drag.ghost =
+        ghost;
+
+
+    moveGhost(
+        e.clientX,
+        e.clientY
+    );
+
+
+    soundPick();
+
+
+    e.preventDefault();
+
+}
+
+
+/* =========================================================
+   DRAG MOVE
+========================================================= */
+
+document.addEventListener(
+    "pointermove",
+    e=>{
+
+        if(
+            !drag.active
+        ){
+
+            return;
+
+        }
+
+
+        moveGhost(
+            e.clientX,
+            e.clientY
+        );
+
+
+        const target =
+            getBottleAt(
+                e.clientX,
+                e.clientY
+            );
+
+
+        if(
+            target !== drag.target
+        ){
+
+            drag.target =
+                target;
+
+            updateTargetHighlight();
+
+        }
+
+
+        e.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+function moveGhost(x,y){
+
+    if(
+        !drag.ghost
+    ){
+
+        return;
+
+    }
+
+
+    /*
+       Slight smoothing using CSS transform.
+    */
+
+    drag.ghost.style.left =
+        x + "px";
+
+    drag.ghost.style.top =
+        y + "px";
+
+}
+
+
+/* =========================================================
+   TARGET HIGHLIGHT
+========================================================= */
+
+function updateTargetHighlight(){
+
+    document
+    .querySelectorAll(
+        ".bottle"
+    )
+    .forEach(
+        el=>{
+
+            el.classList.remove(
+                "validTarget",
+                "invalidTarget"
+            );
+
+        }
+    );
+
+
+    if(
+        drag.target === null
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        drag.target ===
+        drag.source
+    ){
+
+        return;
+
+    }
+
+
+    const targetBottle =
+        bottles[drag.target];
+
+
+    const valid =
+        targetBottle.length < 4 &&
+        (
+            targetBottle.length === 0 ||
+            targetBottle[
+                targetBottle.length-1
+            ] === drag.color
+        );
+
+
+    const targetEl =
+        document.querySelector(
+            `.bottle[data-index="${drag.target}"]`
+        );
+
+
+    if(
+        !targetEl
+    ){
+
+        return;
+
+    }
+
+
+    targetEl.classList.add(
+        valid
+        ? "validTarget"
+        : "invalidTarget"
+    );
+
+}
+
+
+/* =========================================================
+   END DRAG
+========================================================= */
+
+document.addEventListener(
+    "pointerup",
+    e=>{
+
+        if(
+            !drag.active
+        ){
+
+            return;
+
+        }
+
+
+        const target =
+            getBottleAt(
+                e.clientX,
+                e.clientY
+            );
+
+
+        const source =
+            drag.source;
+
+
+        if(
+            drag.ghost
+        ){
+
+            drag.ghost.remove();
+
+        }
+
+
+        drag.active = false;
+
+        drag.ghost = null;
+
+        drag.source = null;
+
+        drag.color = null;
+
+        drag.target = null;
+
+
+        document
+        .querySelectorAll(
+            ".bottle"
+        )
+        .forEach(
+            el=>{
+
+                el.classList.remove(
+                    "validTarget",
+                    "invalidTarget"
+                );
+
+            }
+        );
+
+
+        if(
+            target !== null &&
+            target !== source
+        ){
+
+            moveBalls(
+                source,
+                target
+            );
+
+        }else{
+
+            selected = null;
+
+            render();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FIND BOTTLE
+========================================================= */
+
+function getBottleAt(x,y){
+
+    const elements =
+        document.elementsFromPoint(
+            x,
+            y
+        );
+
+
+    for(
+        const el of elements
+    ){
+
+        if(
+            el.classList &&
+            el.classList.contains(
+                "bottle"
+            )
+        ){
+
+            return Number(
+                el.dataset.index
+            );
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   MOVE BALLS
+========================================================= */
+
+function moveBalls(
+    fromIndex,
+    toIndex
+){
+
+    const from =
+        bottles[fromIndex];
+
+    const to =
+        bottles[toIndex];
+
+
+    if(
+        !from ||
+        from.length === 0
+    ){
+
+        selected = null;
+
+        render();
+
+        return;
+
+    }
+
+
+    if(
+        to.length >= 4
+    ){
+
+        soundBad();
+
+        const target =
+            document.querySelector(
+                `.bottle[data-index="${toIndex}"]`
+            );
+
+        if(target){
+
+            target.classList.add(
+                "invalidTarget"
+            );
+
+            setTimeout(
+                ()=>{
+                    target.classList.remove(
+                        "invalidTarget"
+                    );
+                },
+                300
+            );
+
+        }
+
+        selected = null;
+
+        render();
+
+        return;
+
+    }
+
+
+    const color =
+        from[
+            from.length-1
+        ];
+
+
+    if(
+        to.length > 0 &&
+        to[
+            to.length-1
+        ] !== color
+    ){
+
+        soundBad();
+
+        const target =
+            document.querySelector(
+                `.bottle[data-index="${toIndex}"]`
+            );
+
+        if(target){
+
+            target.classList.add(
+                "invalidTarget"
+            );
+
+            setTimeout(
+                ()=>{
+                    target.classList.remove(
+                        "invalidTarget"
+                    );
+                },
+                300
+            );
+
+        }
+
+        selected = null;
+
+        render();
+
+        return;
+
+    }
+
+
+    saveHistory();
+
+
+    /*
+       Find connected top balls.
+    */
+
+    let count = 0;
+
+
+    for(
+        let i=from.length-1;
+        i>=0;
+        i--
+    ){
+
+        if(
+            from[i] === color
+        ){
+
+            count++;
+
+        }else{
+
+            break;
+
+        }
+
+    }
+
+
+    const space =
+        4-to.length;
+
+
+    const amount =
+        Math.min(
+            count,
+            space
+        );
+
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        to.push(
+            from.pop()
+        );
+
+    }
+
+
+    moves++;
+
+    selected = null;
+
+
+    soundDrop();
+
+
+    /*
+       Smooth render.
+    */
+
+    render();
+
+
+    /*
+       Add small drop animation
+       to the newly placed balls.
+    */
+
+    requestAnimationFrame(
+        ()=>{
+
+            const targetEl =
+                document.querySelector(
+                    `.bottle[data-index="${toIndex}"]`
+                );
+
+            if(!targetEl)
+                return;
+
+            const newBalls =
+                targetEl.querySelectorAll(
+                    ".ball"
+                );
+
+
+            const start =
+                Math.max(
+                    0,
+                    newBalls.length-amount
+                );
+
+
+            for(
+                let i=start;
+                i<newBalls.length;
+                i++
+            ){
+
+                newBalls[i]
+                .classList.add(
+                    "ballPulse"
+                );
+
+            }
+
+        }
+    );
+
+
+    if(
+        isSolved()
+    ){
+
+        completeLevel();
+
+    }
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function saveHistory(){
+
+    history.push(
+        bottles.map(
+            bottle=>[
+                ...bottle
+            ]
+        )
+    );
+
+
+    /*
+       Prevent unlimited memory growth.
+    */
+
+    if(
+        history.length > 100
+    ){
+
+        history.shift();
+
+    }
+
+}
+
+
+/* =========================================================
+   UNDO
+========================================================= */
+
+document
+.getElementById("undoBtn")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+
+        if(
+            history.length === 0
+        ){
+
+            soundBad();
+
+            return;
+
+        }
+
+
+        bottles =
+            history
+            .pop()
+            .map(
+                b=>[
+                    ...b
+                ]
+            );
+
+
+        moves =
+            Math.max(
+                0,
+                moves-1
+            );
+
+
+        selected = null;
+
+        soundPick();
+
+        render();
+
+    }
+);
+
+
+/* =========================================================
+   ADD BOTTLE
+========================================================= */
+
+document
+.getElementById("addBtn")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+
+        if(
+            extraBottleUsed
+        ){
+
+            soundBad();
+
+            return;
+
+        }
+
+
+        saveHistory();
+
+
+        bottles.push([]);
+
+        extraBottleUsed = true;
+
+        selected = null;
+
+        soundDrop();
+
+        render();
+
+    }
+);
+
+
+/* =========================================================
+   RESTART
+========================================================= */
+
+document
+.getElementById("restartBtn")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        soundPick();
+
+        createLevel();
+
+    }
+);
+
+
+/* =========================================================
+   SOUND BUTTON
+========================================================= */
+
+soundBtn.addEventListener(
+    "click",
+    ()=>{
+
+        soundEnabled =
+            !soundEnabled;
+
+
+        soundBtn.textContent =
+            soundEnabled
+            ? "🔊 Sound"
+            : "🔇 Sound";
+
+
+        soundBtn.classList.toggle(
+            "soundOn",
+            soundEnabled
+        );
+
+
+        if(
+            soundEnabled
+        ){
+
+            soundPick();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SOLVED
+========================================================= */
+
+function isSolved(){
+
+    const filled =
+        bottles.filter(
+            b =>
+                b.length > 0
+        );
+
+
+    if(
+        filled.length === 0
+    ){
+
+        return false;
+
+    }
+
+
+    return filled.every(
+        b =>
+
+            b.length === 4 &&
+
+            b.every(
+                color =>
+                    color === b[0]
+            )
+    );
+
+}
+
+
+/* =========================================================
+   COMPLETE
+========================================================= */
+
+function completeLevel(){
+
+    if(
+        bestScores[level] === undefined ||
+        moves < bestScores[level]
+    ){
+
+        bestScores[level] =
+            moves;
+
+    }
+
+
+    bestEl.textContent =
+        bestScores[level];
+
+
+    soundComplete();
+
+
+    completeText.textContent =
+        "Level " +
+        level +
+        " completed in " +
+        moves +
+        " moves!";
+
+
+    setTimeout(
+        ()=>{
+
+            overlay.style.display =
+                "flex";
+
+        },
+        350
+    );
+
+}
+
+
+/* =========================================================
+   NEXT LEVEL
+========================================================= */
+
+document
+.getElementById("nextBtn")
+.addEventListener(
+    "click",
+    ()=>{
+
+        overlay.style.display =
+            "none";
+
+        level++;
+
+        createLevel();
+
+    }
+);
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+document
+.querySelectorAll(
+    ".faqQuestion"
+)
+.forEach(
+    button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+                const item =
+                    button.parentElement;
+
+
+                document
+                .querySelectorAll(
+                    ".faqItem"
+                )
+                .forEach(
+                    other=>{
+
+                        if(
+                            other !== item
+                        ){
+
+                            other.classList.remove(
+                                "open"
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                item.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   YEAR
+========================================================= */
+
+document
+.getElementById("year")
+.textContent =
+    new Date()
+    .getFullYear();
+
+
+/* =========================================================
+   PREVENT DOUBLE TAP ZOOM
+========================================================= */
+
+document.addEventListener(
+    "dblclick",
+    e=>{
+        e.preventDefault();
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   PREVENT GESTURE ZOOM
+========================================================= */
+
+document.addEventListener(
+    "gesturestart",
+    e=>{
+        e.preventDefault();
+    }
+);
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+</script>
+
+</body>
+</html>
