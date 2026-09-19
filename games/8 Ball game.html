@@ -1,0 +1,4393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
+
+<title>Game With Fun AI VS Human 8 Ball Pool - Free Online Pool Game</title>
+
+<meta name="description"
+content="Play Game With Fun AI VS Human 8 Ball Pool, a free online pool game. Aim, shoot, pocket balls and challenge the AI on mobile or desktop.">
+
+<meta name="keywords"
+content="8 ball pool, online pool game, free pool game, AI pool game, billiards game, HTML5 pool game, Game With Fun">
+
+<meta name="author"
+content="Game With Fun">
+
+<meta name="robots"
+content="index, follow">
+
+<meta name="theme-color"
+content="#071018">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #20394d 0%,
+            #071018 48%,
+            #030608 100%
+        );
+
+    color:#fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+}
+
+button,
+canvas{
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+
+/* =========================================================
+   GAME SECTION
+========================================================= */
+
+#gameSection{
+
+    width:100%;
+
+    min-height:100dvh;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding:
+        6px 6px 12px;
+
+    touch-action:none;
+}
+
+
+/* HEADER */
+
+.header{
+
+    width:min(1100px,100%);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        3px 4px 6px;
+}
+
+.logo{
+
+    font-size:20px;
+
+    font-weight:900;
+
+    letter-spacing:.2px;
+}
+
+.turn{
+
+    padding:
+        7px 13px;
+
+    border-radius:20px;
+
+    background:#ffffff12;
+
+    border:
+        1px solid
+        #ffffff20;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    transition:.2s ease;
+}
+
+
+/* PLAYERS */
+
+.players{
+
+    width:min(1100px,100%);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:5px;
+}
+
+.player{
+
+    min-width:110px;
+
+    padding:
+        5px 10px;
+
+    border-radius:11px;
+
+    background:#ffffff09;
+
+    border:
+        1px solid
+        #ffffff14;
+
+    font-size:10px;
+
+    transition:.2s ease;
+}
+
+.player strong{
+
+    display:block;
+
+    font-size:13px;
+}
+
+.player span{
+
+    opacity:.7;
+}
+
+.player.active{
+
+    background:#087044;
+
+    border-color:#48e69b;
+
+    box-shadow:
+        0 0 16px
+        #22cf8050;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+#tableArea{
+
+    width:min(1100px,99vw);
+
+    aspect-ratio:1.82;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+#canvas{
+
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    border-radius:17px;
+
+    background:#064b31;
+
+    box-shadow:
+        0 18px 45px #000d,
+        0 0 0 5px #5a3318,
+        0 0 0 9px #1e1008;
+
+    touch-action:none;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls{
+
+    width:min(1100px,100%);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding-top:8px;
+}
+
+button{
+
+    border:
+        1px solid
+        #ffffff20;
+
+    background:#ffffff12;
+
+    color:#fff;
+
+    border-radius:11px;
+
+    padding:
+        8px 13px;
+
+    font-weight:900;
+
+    font-size:12px;
+
+    cursor:pointer;
+
+    transition:
+        transform .12s ease,
+        background .15s ease;
+}
+
+button:active{
+
+    transform:scale(.93);
+}
+
+button:hover{
+
+    background:#ffffff1e;
+}
+
+
+/* POWER */
+
+.power{
+
+    width:170px;
+    height:30px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    background:#ffffff12;
+
+    border:
+        1px solid
+        #ffffff1d;
+}
+
+.powerFill{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #20d47d,
+            #ffe05a,
+            #ff5151
+        );
+}
+
+.powerText{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   HELP
+========================================================= */
+
+#help{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:#04080ced;
+
+    backdrop-filter:blur(7px);
+}
+
+.helpBox{
+
+    width:min(420px,100%);
+
+    padding:25px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #182b3c,
+            #091118
+        );
+
+    border:
+        1px solid
+        #ffffff22;
+
+    box-shadow:
+        0 25px 80px #000;
+}
+
+.helpBox h1{
+
+    margin-bottom:12px;
+}
+
+.helpBox p{
+
+    color:#dce7ee;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    margin:7px 0;
+}
+
+#start{
+
+    width:100%;
+
+    margin-top:15px;
+
+    background:#119b60;
+
+    padding:13px;
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+#result{
+
+    position:fixed;
+
+    z-index:90;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    min-width:275px;
+
+    padding:25px;
+
+    text-align:center;
+
+    border-radius:22px;
+
+    background:#071018ef;
+
+    border:
+        1px solid
+        #ffffff25;
+
+    box-shadow:
+        0 25px 80px #000;
+
+    display:none;
+
+    backdrop-filter:blur(10px);
+}
+
+#result h2{
+
+    margin-bottom:8px;
+}
+
+#result button{
+
+    margin-top:15px;
+
+    background:#159d63;
+}
+
+
+/* =========================================================
+   CONTENT SECTION
+========================================================= */
+
+#siteContent{
+
+    width:100%;
+
+    max-width:1050px;
+
+    margin:auto;
+
+    padding:
+        20px 14px 50px;
+}
+
+
+/* CONTENT CARD */
+
+.contentCard{
+
+    background:
+        linear-gradient(
+            145deg,
+            #101c26,
+            #071017
+        );
+
+    border:
+        1px solid
+        #ffffff13;
+
+    border-radius:18px;
+
+    padding:
+        22px 18px;
+
+    margin-bottom:16px;
+
+    box-shadow:
+        0 10px 35px #0005;
+}
+
+.contentCard h2{
+
+    font-size:22px;
+
+    margin-bottom:12px;
+
+    color:#ffffff;
+}
+
+.contentCard h3{
+
+    font-size:17px;
+
+    margin:
+        18px 0 8px;
+}
+
+.contentCard p{
+
+    color:#cbd7df;
+
+    font-size:14px;
+
+    line-height:1.75;
+
+    margin-bottom:10px;
+}
+
+.contentCard ul{
+
+    padding-left:20px;
+
+    color:#cbd7df;
+
+    line-height:1.8;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faqItem{
+
+    border:
+        1px solid
+        #ffffff12;
+
+    border-radius:12px;
+
+    margin-bottom:9px;
+
+    overflow:hidden;
+
+    background:#ffffff06;
+}
+
+.faqQuestion{
+
+    width:100%;
+
+    text-align:left;
+
+    background:none;
+
+    border:0;
+
+    border-radius:0;
+
+    padding:
+        14px;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    color:#fff;
+
+    cursor:pointer;
+}
+
+.faqAnswer{
+
+    display:none;
+
+    padding:
+        0 14px 14px;
+
+    color:#bdcad3;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+.faqItem.open
+.faqAnswer{
+
+    display:block;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contactBox{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+}
+
+.contactItem{
+
+    flex:1 1 220px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    background:#ffffff08;
+
+    border:
+        1px solid
+        #ffffff12;
+}
+
+.contactItem strong{
+
+    display:block;
+
+    margin-bottom:4px;
+}
+
+.contactItem span{
+
+    color:#b8c6cf;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   ADSENSE AREA
+========================================================= */
+
+#adSection{
+
+    width:100%;
+
+    max-width:1050px;
+
+    margin:
+        0 auto 40px;
+
+    padding:
+        0 14px;
+}
+
+.adBox{
+
+    width:100%;
+
+    min-height:180px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    border:
+        1px dashed
+        #ffffff25;
+
+    border-radius:15px;
+
+    background:
+        #ffffff04;
+
+    color:#87949d;
+
+    font-size:12px;
+
+    padding:20px;
+}
+
+.adBox small{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#64717a;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    width:100%;
+
+    padding:
+        25px 15px 35px;
+
+    text-align:center;
+
+    color:#7e8b94;
+
+    border-top:
+        1px solid
+        #ffffff0d;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(
+    max-width:600px
+){
+
+    #gameSection{
+
+        min-height:100dvh;
+
+        padding:
+            4px 4px 8px;
+    }
+
+    .logo{
+
+        font-size:16px;
+    }
+
+    .turn{
+
+        font-size:9px;
+
+        padding:
+            6px 9px;
+    }
+
+    .player{
+
+        min-width:82px;
+
+        padding:
+            4px 7px;
+
+        font-size:9px;
+    }
+
+    .player strong{
+
+        font-size:11px;
+    }
+
+    #tableArea{
+
+        width:
+            min(
+                calc(100vw - 12px),
+                calc((100dvh - 105px) * .55)
+            );
+
+        height:
+            min(
+                calc(100dvh - 105px),
+                calc((100vw - 12px) * 1.82)
+            );
+
+        aspect-ratio:
+            550 / 1000;
+
+        flex:1;
+
+        min-height:0;
+
+        margin:
+            1px auto;
+    }
+
+    #canvas{
+
+        border-radius:14px;
+
+        box-shadow:
+            0 12px 30px #000d,
+            0 0 0 4px #5a3318,
+            0 0 0 7px #1e1008;
+    }
+
+    .controls{
+
+        padding-top:4px;
+
+        gap:5px;
+
+        flex-shrink:0;
+    }
+
+    button{
+
+        padding:
+            7px 8px;
+
+        font-size:9px;
+
+        border-radius:9px;
+    }
+
+    .power{
+
+        width:
+            min(125px,30vw);
+
+        height:27px;
+    }
+
+    .powerText{
+
+        font-size:8px;
+    }
+
+    #siteContent{
+
+        padding:
+            15px 10px 40px;
+    }
+
+    .contentCard{
+
+        padding:
+            18px 14px;
+
+        border-radius:15px;
+    }
+
+    .contentCard h2{
+
+        font-size:19px;
+    }
+
+    .contentCard p,
+    .contentCard ul{
+
+        font-size:13px;
+    }
+
+    #adSection{
+
+        padding:
+            0 10px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media(
+    max-width:380px
+) and (
+    orientation:portrait
+){
+
+    #tableArea{
+
+        width:
+            calc(100vw - 10px);
+
+        height:
+            calc(100dvh - 101px);
+    }
+
+    .power{
+
+        width:105px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     GAME
+======================================================= -->
+
+<section id="gameSection">
+
+
+<header class="header">
+
+    <div class="logo">
+        🎱 Game With Fun
+    </div>
+
+    <div
+        class="turn"
+        id="turn">
+
+        YOUR TURN
+
+    </div>
+
+</header>
+
+
+<div class="players">
+
+    <div
+        class="player active"
+        id="human">
+
+        <small>
+            PLAYER
+        </small>
+
+        <strong>
+            👤 HUMAN
+        </strong>
+
+        <span id="humanGroup">
+            Open Table
+        </span>
+
+    </div>
+
+
+    <div
+        class="player"
+        id="ai">
+
+        <small>
+            OPPONENT
+        </small>
+
+        <strong>
+            🤖 AI
+        </strong>
+
+        <span id="aiGroup">
+            Open Table
+        </span>
+
+    </div>
+
+</div>
+
+
+<div id="tableArea">
+
+    <canvas id="canvas"></canvas>
+
+</div>
+
+
+<div class="controls">
+
+    <button id="left">
+        ◀ AIM
+    </button>
+
+    <div class="power">
+
+        <div
+            class="powerFill"
+            id="powerFill">
+        </div>
+
+        <div class="powerText">
+            DRAG TO SHOOT
+        </div>
+
+    </div>
+
+    <button id="right">
+        AIM ▶
+    </button>
+
+    <button id="restart">
+        ↻
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     HELP
+======================================================= -->
+
+<div id="help">
+
+    <div class="helpBox">
+
+        <h1>
+            🎱 8 BALL POOL
+        </h1>
+
+        <p>
+            🎯 Drag away from the cue ball
+            to aim and set your shot power.
+        </p>
+
+        <p>
+            🎱 Pocket your own group of balls.
+        </p>
+
+        <p>
+            🏆 Clear your group before
+            attempting the 8-ball.
+        </p>
+
+        <p>
+            ⚠️ Pocketing the 8-ball too early
+            loses the game.
+        </p>
+
+        <p>
+            🔊 Sound effects are generated
+            directly in your browser.
+        </p>
+
+        <button id="start">
+            START GAME
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     RESULT
+======================================================= -->
+
+<div id="result">
+
+    <h2 id="resultTitle"></h2>
+
+    <p id="resultText">
+        Match finished.
+    </p>
+
+    <button id="again">
+        PLAY AGAIN
+    </button>
+
+</div>
+
+
+<!-- =======================================================
+     SEO CONTENT
+======================================================= -->
+
+<main id="siteContent">
+
+
+<section class="contentCard">
+
+<h2>
+    Game With Fun AI VS Human 8 Ball Pool
+</h2>
+
+<p>
+    Game With Fun AI VS Human 8 Ball Pool is a free browser-based
+    billiards game designed for quick and enjoyable matches on
+    mobile phones, tablets and desktop devices. Aim your cue,
+    control your shot power and try to pocket the balls while
+    competing against the computer opponent.
+</p>
+
+<p>
+    The game uses a responsive HTML5 game area so you can play
+    directly in your web browser without installing an application.
+    On portrait mobile screens, the pool table automatically uses
+    a vertical layout to make better use of the available screen
+    space.
+</p>
+
+<h3>
+    How to Play 8 Ball Pool
+</h3>
+
+<p>
+    Start the game and use the cue ball to aim toward the object
+    balls. On a touchscreen, drag away from the cue ball to choose
+    your shooting direction and power. Release your finger to take
+    the shot.
+</p>
+
+<p>
+    The first legally pocketed group determines whether you play
+    solids or stripes. Continue pocketing balls from your group
+    and try to clear them before attempting the black 8-ball.
+</p>
+
+<h3>
+    Game Features
+</h3>
+
+<ul>
+    <li>Free online 8 ball pool gameplay</li>
+    <li>Human versus AI game mode</li>
+    <li>Responsive mobile-friendly pool table</li>
+    <li>Portrait table orientation on mobile</li>
+    <li>Touch-based aiming and shooting</li>
+    <li>Adjustable shot power</li>
+    <li>AI opponent</li>
+    <li>Browser-generated sound effects</li>
+    <li>No external audio files required</li>
+    <li>Works directly in modern web browsers</li>
+</ul>
+
+</section>
+
+
+<!-- =======================================================
+     FAQ
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Frequently Asked Questions
+</h2>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    How do I play this 8 Ball Pool game?
+</button>
+
+<div class="faqAnswer">
+
+Start the game and drag away from the cue ball to aim.
+Move farther away from the cue ball to increase shooting
+power, then release your finger to shoot.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Can I play the game on a mobile phone?
+</button>
+
+<div class="faqAnswer">
+
+Yes. The game is designed for touch screens and responsive
+mobile browsers. The table automatically changes to a
+portrait layout on supported mobile screens.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Does the game require an app download?
+</button>
+
+<div class="faqAnswer">
+
+No. The game is designed to run directly in a modern web
+browser using HTML5, CSS and JavaScript.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Does the game use copyrighted music or sound files?
+</button>
+
+<div class="faqAnswer">
+
+This version does not load third-party MP3 or WAV files.
+Its basic pool sound effects are generated in the browser
+using the Web Audio API.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    How do I win the game?
+</button>
+
+<div class="faqAnswer">
+
+Clear the balls belonging to your assigned group and then
+legally pocket the 8-ball. Pocketing the 8-ball before your
+group is cleared results in a loss.
+
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<button class="faqQuestion">
+    Can I restart the match?
+</button>
+
+<div class="faqAnswer">
+
+Yes. Press the restart button below the game to start a
+new match.
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    About Game With Fun
+</h2>
+
+<p>
+    Game With Fun is an online gaming website focused on
+    providing simple browser games that can be played quickly
+    on phones, tablets and computers.
+</p>
+
+<p>
+    Our goal is to create lightweight and enjoyable games with
+    easy controls, responsive layouts and clear instructions.
+    Games are designed for browser-based entertainment without
+    requiring users to install additional software.
+</p>
+
+</section>
+
+
+<!-- =======================================================
+     PRIVACY
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Privacy Policy
+</h2>
+
+<p>
+    Game With Fun respects the privacy of visitors. This game
+    itself is designed to run in the browser and does not require
+    players to create an account to play.
+</p>
+
+<p>
+    Depending on the services used by the website, third-party
+    advertising or analytics providers may use cookies or similar
+    technologies to provide services, measure traffic or display
+    relevant advertisements.
+</p>
+
+<p>
+    Visitors should review the applicable policies of third-party
+    services such as advertising providers when those services
+    are enabled on the website.
+</p>
+
+<p>
+    If you have questions about privacy or data practices on
+    Game With Fun, please contact the website owner.
+</p>
+
+</section>
+
+
+<!-- =======================================================
+     DISCLAIMER
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Disclaimer
+</h2>
+
+<p>
+    Game With Fun provides browser games for entertainment and
+    general informational purposes. While reasonable efforts may
+    be made to keep games functional and available, we do not
+    guarantee that the website or individual games will always
+    be available, error-free or compatible with every device
+    and browser.
+</p>
+
+<p>
+    Game results are intended for entertainment. Users should
+    play responsibly and understand that browser performance,
+    device hardware and internet conditions can affect gameplay.
+</p>
+
+</section>
+
+
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
+<section class="contentCard">
+
+<h2>
+    Contact Game With Fun
+</h2>
+
+<p>
+    If you find a problem with this game, have a suggestion or
+    want to report an issue with the website, you can contact
+    the Game With Fun team.
+</p>
+
+<div class="contactBox">
+
+    <div class="contactItem">
+
+        <strong>
+            📩 General Support
+        </strong>
+
+        <span>
+            Replace this text with your official
+            Game With Fun contact email.
+        </span>
+
+    </div>
+
+
+    <div class="contactItem">
+
+        <strong>
+            💡 Suggestions
+        </strong>
+
+        <span>
+            We welcome ideas for new browser games
+            and improvements.
+        </span>
+
+    </div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- =======================================================
+     ADSENSE AREA
+======================================================= -->
+
+<section id="adSection">
+
+    <div class="adBox">
+
+        <div>
+
+            <strong>
+                Advertisement
+            </strong>
+
+            <small>
+                AdSense ad space
+            </small>
+
+        </div>
+
+    </div>
+
+    <!--
+    =========================================================
+    GOOGLE ADSENSE CODE
+
+    Replace the placeholder above with your actual AdSense
+    ad unit code after your AdSense account and website
+    are approved.
+
+    Example structure:
+
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    Do NOT copy random publisher IDs.
+    Use your own AdSense code from Google.
+    =========================================================
+    -->
+
+</section>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    © <span id="year"></span>
+    Game With Fun. All rights reserved.
+
+    <br>
+
+    Free online browser games for entertainment.
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   GAME CANVAS
+========================================================= */
+
+const canvas =
+    document.getElementById("canvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+const LOGICAL_W = 1000;
+const LOGICAL_H = 550;
+
+
+/* =========================================================
+   RESPONSIVE CANVAS
+========================================================= */
+
+function isPortrait(){
+
+    return (
+        window.innerWidth <= 600 &&
+        window.innerHeight >
+        window.innerWidth
+    );
+
+}
+
+
+function resizeCanvas(){
+
+    if(
+        isPortrait()
+    ){
+
+        canvas.width =
+            LOGICAL_H;
+
+        canvas.height =
+            LOGICAL_W;
+
+    }else{
+
+        canvas.width =
+            LOGICAL_W;
+
+        canvas.height =
+            LOGICAL_H;
+
+    }
+
+    renderFrame();
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+window.addEventListener(
+    "orientationchange",
+    ()=>{
+
+        setTimeout(
+            resizeCanvas,
+            100
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+const table = {
+
+    l:60,
+    r:940,
+
+    t:55,
+    b:495
+
+};
+
+
+const ballR = 14;
+
+
+const pockets = [
+
+    [table.l,table.t],
+
+    [500,table.t-2],
+
+    [table.r,table.t],
+
+    [table.l,table.b],
+
+    [500,table.b+2],
+
+    [table.r,table.b]
+
+];
+
+
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
+
+let balls = [];
+
+let cueBall = null;
+
+let current = "human";
+
+let moving = false;
+
+let gameOver = false;
+
+let humanGroup = null;
+
+let aiGroup = null;
+
+let firstContact = null;
+
+let pocketedThisShot = [];
+
+let foul = false;
+
+let aimAngle = 0;
+
+let power = 0;
+
+let dragging = false;
+
+
+/* =========================================================
+   BROWSER GENERATED SOUND
+========================================================= */
+
+let audioCtx = null;
+
+
+function initAudio(){
+
+    if(!audioCtx){
+
+        audioCtx =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if(
+        audioCtx.state ===
+        "suspended"
+    ){
+
+        audioCtx.resume();
+
+    }
+
+}
+
+
+function sound(
+    frequency=300,
+    duration=.08,
+    type="sine",
+    volume=.05
+){
+
+    if(!audioCtx)
+        return;
+
+
+    const oscillator =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+
+    oscillator.type =
+        type;
+
+
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        audioCtx.currentTime
+    );
+
+
+    gain.gain.setValueAtTime(
+        volume,
+        audioCtx.currentTime
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        audioCtx.currentTime +
+        duration
+    );
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioCtx.destination
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioCtx.currentTime +
+        duration
+    );
+
+}
+
+
+/* Cue hit */
+
+function cueHitSound(){
+
+    sound(
+        120,
+        .10,
+        "triangle",
+        .10
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                75,
+                .09,
+                "sine",
+                .05
+            );
+        },
+        20
+    );
+
+}
+
+
+/* Ball collision */
+
+function collisionSound(){
+
+    sound(
+        240,
+        .035,
+        "sine",
+        .035
+    );
+
+}
+
+
+/* Pocket */
+
+function pocketSound(){
+
+    sound(
+        110,
+        .13,
+        "sine",
+        .08
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                65,
+                .16,
+                "triangle",
+                .06
+            );
+        },
+        45
+    );
+
+}
+
+
+/* Foul */
+
+function foulSound(){
+
+    sound(
+        130,
+        .15,
+        "sawtooth",
+        .07
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                90,
+                .18,
+                "sawtooth",
+                .05
+            );
+        },
+        80
+    );
+
+}
+
+
+/* Turn */
+
+function turnSound(){
+
+    sound(
+        520,
+        .06,
+        "sine",
+        .04
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                700,
+                .08,
+                "sine",
+                .04
+            );
+        },
+        70
+    );
+
+}
+
+
+/* Win */
+
+function winSound(){
+
+    sound(
+        523,
+        .12,
+        "sine",
+        .07
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                659,
+                .12,
+                "sine",
+                .07
+            );
+        },
+        130
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                784,
+                .22,
+                "sine",
+                .08
+            );
+        },
+        260
+    );
+
+}
+
+
+/* Lose */
+
+function loseSound(){
+
+    sound(
+        330,
+        .15,
+        "sine",
+        .06
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                220,
+                .18,
+                "sine",
+                .06
+            );
+        },
+        150
+    );
+
+    setTimeout(
+        ()=>{
+            sound(
+                140,
+                .30,
+                "sine",
+                .06
+            );
+        },
+        320
+    );
+
+}
+
+
+/* =========================================================
+   BALL CREATION
+========================================================= */
+
+function createBall(
+    number,
+    x,
+    y
+){
+
+    return {
+
+        number,
+
+        x,
+        y,
+
+        vx:0,
+        vy:0,
+
+        r:ballR,
+
+        pocketed:false
+
+    };
+
+}
+
+
+/* =========================================================
+   NEW GAME
+========================================================= */
+
+function newGame(){
+
+    balls = [];
+
+
+    cueBall =
+        createBall(
+            0,
+            245,
+            275
+        );
+
+
+    balls.push(
+        cueBall
+    );
+
+
+    const numbers = [
+
+        1,9,2,10,8,
+
+        11,3,12,4,13,
+
+        5,14,6,15,7
+
+    ];
+
+
+    let index = 0;
+
+
+    const startX = 670;
+
+    const startY = 275;
+
+    const gap = 29;
+
+
+    for(
+        let row=0;
+        row<5;
+        row++
+    ){
+
+        for(
+            let col=0;
+            col<=row;
+            col++
+        ){
+
+            const x =
+                startX +
+                row *
+                gap *
+                .86;
+
+
+            const y =
+                startY +
+                (
+                    col -
+                    row/2
+                ) *
+                gap;
+
+
+            balls.push(
+                createBall(
+                    numbers[index++],
+                    x,
+                    y
+                )
+            );
+
+        }
+
+    }
+
+
+    current =
+        "human";
+
+    moving =
+        false;
+
+    gameOver =
+        false;
+
+    humanGroup =
+        null;
+
+    aiGroup =
+        null;
+
+    firstContact =
+        null;
+
+    pocketedThisShot =
+        [];
+
+    foul =
+        false;
+
+    aimAngle =
+        0;
+
+    power =
+        0;
+
+    dragging =
+        false;
+
+
+    updatePower();
+
+    updateUI();
+
+}
+
+
+/* =========================================================
+   COLORS
+========================================================= */
+
+function ballColor(n){
+
+    const colors = {
+
+        1:"#f7d72b",
+        2:"#2367df",
+        3:"#e64035",
+        4:"#6f3bd1",
+        5:"#ed7d20",
+        6:"#168a49",
+        7:"#861c20",
+
+        9:"#f7d72b",
+        10:"#2367df",
+        11:"#e64035",
+        12:"#6f3bd1",
+        13:"#ed7d20",
+        14:"#168a49",
+        15:"#861c20"
+
+    };
+
+    return colors[n] || "#111";
+
+}
+
+
+/* =========================================================
+   TABLE DRAW
+========================================================= */
+
+function drawTable(){
+
+    const wood =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            LOGICAL_H
+        );
+
+
+    wood.addColorStop(
+        0,
+        "#8b5528"
+    );
+
+    wood.addColorStop(
+        .5,
+        "#4b2813"
+    );
+
+    wood.addColorStop(
+        1,
+        "#8a5427"
+    );
+
+
+    ctx.fillStyle =
+        wood;
+
+
+    ctx.fillRect(
+        20,
+        15,
+        LOGICAL_W-40,
+        LOGICAL_H-30
+    );
+
+
+    const felt =
+        ctx.createRadialGradient(
+            500,
+            270,
+            80,
+            500,
+            270,
+            650
+        );
+
+
+    felt.addColorStop(
+        0,
+        "#15915c"
+    );
+
+    felt.addColorStop(
+        .65,
+        "#087343"
+    );
+
+    felt.addColorStop(
+        1,
+        "#04512f"
+    );
+
+
+    ctx.fillStyle =
+        felt;
+
+
+    ctx.fillRect(
+        table.l,
+        table.t,
+        table.r-table.l,
+        table.b-table.t
+    );
+
+
+    ctx.strokeStyle =
+        "#42d694";
+
+    ctx.globalAlpha =
+        .22;
+
+    ctx.lineWidth =
+        3;
+
+
+    ctx.strokeRect(
+        table.l+7,
+        table.t+7,
+        table.r-table.l-14,
+        table.b-table.t-14
+    );
+
+
+    ctx.globalAlpha =
+        1;
+
+
+    ctx.fillStyle =
+        "#063c27";
+
+
+    ctx.fillRect(
+        table.l,
+        table.t,
+        table.r-table.l,
+        17
+    );
+
+
+    ctx.fillRect(
+        table.l,
+        table.b-17,
+        table.r-table.l,
+        17
+    );
+
+
+    ctx.fillRect(
+        table.l,
+        table.t,
+        17,
+        table.b-table.t
+    );
+
+
+    ctx.fillRect(
+        table.r-17,
+        table.t,
+        17,
+        table.b-table.t
+    );
+
+
+    drawDiamonds();
+
+    drawPockets();
+
+}
+
+
+/* =========================================================
+   DIAMONDS
+========================================================= */
+
+function drawDiamonds(){
+
+    const xs = [
+
+        table.l+110,
+        table.l+220,
+        table.l+330,
+        table.l+440,
+        table.l+550,
+        table.l+660,
+        table.l+770
+
+    ];
+
+
+    ctx.save();
+
+    ctx.fillStyle =
+        "#e9d6a5";
+
+    ctx.shadowColor =
+        "#000";
+
+    ctx.shadowBlur =
+        4;
+
+
+    for(
+        const x of xs
+    ){
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            table.t+8
+        );
+
+        ctx.rotate(
+            Math.PI/4
+        );
+
+        ctx.fillRect(
+            -4,
+            -4,
+            8,
+            8
+        );
+
+        ctx.restore();
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            table.b-8
+        );
+
+        ctx.rotate(
+            Math.PI/4
+        );
+
+        ctx.fillRect(
+            -4,
+            -4,
+            8,
+            8
+        );
+
+        ctx.restore();
+
+    }
+
+
+    const ys = [
+
+        table.t+75,
+        table.t+145,
+        table.t+220,
+        table.t+295,
+        table.t+365
+
+    ];
+
+
+    for(
+        const y of ys
+    ){
+
+        ctx.save();
+
+        ctx.translate(
+            table.l+8,
+            y
+        );
+
+        ctx.rotate(
+            Math.PI/4
+        );
+
+        ctx.fillRect(
+            -4,
+            -4,
+            8,
+            8
+        );
+
+        ctx.restore();
+
+
+        ctx.save();
+
+        ctx.translate(
+            table.r-8,
+            y
+        );
+
+        ctx.rotate(
+            Math.PI/4
+        );
+
+        ctx.fillRect(
+            -4,
+            -4,
+            8,
+            8
+        );
+
+        ctx.restore();
+
+    }
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   POCKETS
+========================================================= */
+
+function drawPockets(){
+
+    for(
+        const p of pockets
+    ){
+
+        const glow =
+            ctx.createRadialGradient(
+                p[0],
+                p[1],
+                5,
+                p[0],
+                p[1],
+                28
+            );
+
+
+        glow.addColorStop(
+            0,
+            "#000"
+        );
+
+        glow.addColorStop(
+            .7,
+            "#020202"
+        );
+
+        glow.addColorStop(
+            1,
+            "#0000"
+        );
+
+
+        ctx.fillStyle =
+            glow;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p[0],
+            p[1],
+            29,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.strokeStyle =
+            "#111";
+
+        ctx.lineWidth =
+            4;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p[0],
+            p[1],
+            19,
+            0,
+            Math.PI*2
+        );
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* =========================================================
+   BALL DRAW
+========================================================= */
+
+function drawBall(b){
+
+    if(
+        b.pocketed
+    ) return;
+
+
+    const grad =
+        ctx.createRadialGradient(
+            b.x-5,
+            b.y-6,
+            1,
+            b.x,
+            b.y,
+            b.r+3
+        );
+
+
+    if(
+        b.number===0
+    ){
+
+        grad.addColorStop(
+            0,
+            "#ffffff"
+        );
+
+        grad.addColorStop(
+            .7,
+            "#dedede"
+        );
+
+        grad.addColorStop(
+            1,
+            "#999"
+        );
+
+    }else{
+
+        grad.addColorStop(
+            0,
+            "#ffffff"
+        );
+
+        grad.addColorStop(
+            .18,
+            ballColor(
+                b.number
+            )
+        );
+
+        grad.addColorStop(
+            1,
+            "#111"
+        );
+
+    }
+
+
+    ctx.fillStyle =
+        grad;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        b.x,
+        b.y,
+        b.r,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    if(
+        b.number>=9 &&
+        b.number<=15
+    ){
+
+        ctx.save();
+
+        ctx.beginPath();
+
+        ctx.arc(
+            b.x,
+            b.y,
+            b.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.clip();
+
+        ctx.fillStyle =
+            "#f7f7f7";
+
+        ctx.fillRect(
+            b.x-b.r,
+            b.y-5,
+            b.r*2,
+            10
+        );
+
+        ctx.restore();
+
+    }
+
+
+    if(
+        b.number>0
+    ){
+
+        ctx.fillStyle =
+            "#fff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            b.x,
+            b.y,
+            6.3,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#111";
+
+        ctx.font =
+            "bold 8px Arial";
+
+        ctx.textAlign =
+            "center";
+
+        ctx.textBaseline =
+            "middle";
+
+        ctx.fillText(
+            b.number,
+            b.x,
+            b.y+.3
+        );
+
+    }
+
+
+    ctx.fillStyle =
+        "#ffffff99";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        b.x-5,
+        b.y-6,
+        2.2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+}
+
+
+/* =========================================================
+   AIM
+========================================================= */
+
+function drawAim(){
+
+    if(
+        current!=="human" ||
+        moving ||
+        gameOver
+    ) return;
+
+
+    const maxLen =
+        390;
+
+
+    const dx =
+        Math.cos(
+            aimAngle
+        );
+
+    const dy =
+        Math.sin(
+            aimAngle
+        );
+
+
+    ctx.save();
+
+
+    ctx.strokeStyle =
+        "#ffffffb5";
+
+    ctx.lineWidth =
+        2;
+
+    ctx.setLineDash([
+        9,
+        8
+    ]);
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        cueBall.x,
+        cueBall.y
+    );
+
+    ctx.lineTo(
+        cueBall.x+
+        dx*maxLen,
+        cueBall.y+
+        dy*maxLen
+    );
+
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+
+    for(
+        let i=1;
+        i<=6;
+        i++
+    ){
+
+        const d =
+            i*48;
+
+
+        ctx.fillStyle =
+            "#ffffffaa";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            cueBall.x+
+            dx*d,
+            cueBall.y+
+            dy*d,
+            2.5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    ctx.strokeStyle =
+        "#ffe45c";
+
+    ctx.lineWidth =
+        2;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cueBall.x,
+        cueBall.y,
+        19,
+        0,
+        Math.PI*2
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   PHYSICS
+========================================================= */
+
+function updatePhysics(){
+
+    if(!moving)
+        return;
+
+
+    let anyMoving =
+        false;
+
+
+    for(
+        const b of balls
+    ){
+
+        if(
+            b.pocketed
+        ) continue;
+
+
+        b.x +=
+            b.vx;
+
+        b.y +=
+            b.vy;
+
+
+        b.vx *=
+            .988;
+
+        b.vy *=
+            .988;
+
+
+        if(
+            Math.abs(b.vx)>.05 ||
+            Math.abs(b.vy)>.05
+        ){
+
+            anyMoving =
+                true;
+
+        }
+
+
+        if(
+            b.x-b.r <
+            table.l+17
+        ){
+
+            b.x =
+                table.l+
+                17+
+                b.r;
+
+            b.vx =
+                Math.abs(
+                    b.vx
+                )*.88;
+
+        }
+
+
+        if(
+            b.x+b.r >
+            table.r-17
+        ){
+
+            b.x =
+                table.r-
+                17-
+                b.r;
+
+            b.vx =
+                -Math.abs(
+                    b.vx
+                )*.88;
+
+        }
+
+
+        if(
+            b.y-b.r <
+            table.t+17
+        ){
+
+            b.y =
+                table.t+
+                17+
+                b.r;
+
+            b.vy =
+                Math.abs(
+                    b.vy
+                )*.88;
+
+        }
+
+
+        if(
+            b.y+b.r >
+            table.b-17
+        ){
+
+            b.y =
+                table.b-
+                17-
+                b.r;
+
+            b.vy =
+                -Math.abs(
+                    b.vy
+                )*.88;
+
+        }
+
+
+        for(
+            const p of pockets
+        ){
+
+            const dx =
+                b.x-p[0];
+
+            const dy =
+                b.y-p[1];
+
+            const dist =
+                Math.hypot(
+                    dx,
+                    dy
+                );
+
+
+            if(
+                dist<24
+            ){
+
+                b.pocketed =
+                    true;
+
+                b.vx =
+                    0;
+
+                b.vy =
+                    0;
+
+                pocketedThisShot.push(
+                    b
+                );
+
+                pocketSound();
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    for(
+        let i=0;
+        i<balls.length;
+        i++
+    ){
+
+        const a =
+            balls[i];
+
+        if(
+            a.pocketed
+        ) continue;
+
+
+        for(
+            let j=i+1;
+            j<balls.length;
+            j++
+        ){
+
+            const b =
+                balls[j];
+
+            if(
+                b.pocketed
+            ) continue;
+
+
+            const dx =
+                b.x-a.x;
+
+            const dy =
+                b.y-a.y;
+
+            const dist =
+                Math.hypot(
+                    dx,
+                    dy
+                );
+
+
+            const minDist =
+                a.r+b.r;
+
+
+            if(
+                dist>0 &&
+                dist<minDist
+            ){
+
+                const nx =
+                    dx/dist;
+
+                const ny =
+                    dy/dist;
+
+
+                const overlap =
+                    minDist-dist;
+
+
+                a.x -=
+                    nx*
+                    overlap/2;
+
+                a.y -=
+                    ny*
+                    overlap/2;
+
+                b.x +=
+                    nx*
+                    overlap/2;
+
+                b.y +=
+                    ny*
+                    overlap/2;
+
+
+                const rvx =
+                    b.vx-a.vx;
+
+                const rvy =
+                    b.vy-a.vy;
+
+
+                const vel =
+                    rvx*nx+
+                    rvy*ny;
+
+
+                if(
+                    vel<0
+                ){
+
+                    const impulse =
+                        -vel*.98;
+
+
+                    a.vx -=
+                        impulse*nx;
+
+                    a.vy -=
+                        impulse*ny;
+
+                    b.vx +=
+                        impulse*nx;
+
+                    b.vy +=
+                        impulse*ny;
+
+
+                    collisionSound();
+
+
+                    if(
+                        !firstContact &&
+                        a===cueBall
+                    ){
+
+                        firstContact =
+                            b;
+
+                    }
+
+
+                    if(
+                        !firstContact &&
+                        b===cueBall
+                    ){
+
+                        firstContact =
+                            a;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    if(
+        !anyMoving
+    ){
+
+        moving =
+            false;
+
+        setTimeout(
+            resolveShot,
+            100
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GROUP
+========================================================= */
+
+function isGroupBall(
+    b,
+    group
+){
+
+    if(
+        group==="solids"
+    ){
+
+        return (
+            b.number>=1 &&
+            b.number<=7
+        );
+
+    }
+
+
+    return (
+        b.number>=9 &&
+        b.number<=15
+    );
+
+}
+
+
+/* =========================================================
+   SHOT RESOLUTION
+========================================================= */
+
+function resolveShot(){
+
+    if(gameOver)
+        return;
+
+
+    if(
+        cueBall.pocketed
+    ){
+
+        foul =
+            true;
+
+        foulSound();
+
+
+        cueBall.pocketed =
+            false;
+
+        cueBall.x =
+            245;
+
+        cueBall.y =
+            275;
+
+        cueBall.vx =
+            0;
+
+        cueBall.vy =
+            0;
+
+    }
+
+
+    if(
+        !humanGroup &&
+        !aiGroup
+    ){
+
+        const first =
+            pocketedThisShot.find(
+                b =>
+                    b.number!==0
+            );
+
+
+        if(
+            first &&
+            first.number!==8
+        ){
+
+            if(
+                first.number<=7
+            ){
+
+                humanGroup =
+                    current==="human"
+                    ? "solids"
+                    : "stripes";
+
+                aiGroup =
+                    current==="human"
+                    ? "stripes"
+                    : "solids";
+
+            }else{
+
+                humanGroup =
+                    current==="human"
+                    ? "stripes"
+                    : "solids";
+
+                aiGroup =
+                    current==="human"
+                    ? "solids"
+                    : "stripes";
+
+            }
+
+        }
+
+    }
+
+
+    if(
+        firstContact &&
+        !isLegalFirstContact(
+            firstContact
+        )
+    ){
+
+        foul =
+            true;
+
+        foulSound();
+
+    }
+
+
+    const eight =
+        pocketedThisShot.find(
+            b =>
+                b.number===8
+        );
+
+
+    if(eight){
+
+        handleEight();
+
+        return;
+
+    }
+
+
+    const normalPocket =
+        pocketedThisShot.some(
+            b =>
+                b.number!==0
+        );
+
+
+    updateUI();
+
+
+    if(foul){
+
+        switchTurn();
+
+        return;
+
+    }
+
+
+    if(normalPocket){
+
+        turnSound();
+
+        updateUI();
+
+        if(
+            current==="ai"
+        ){
+
+            setTimeout(
+                aiTurn,
+                700
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    switchTurn();
+
+}
+
+
+/* =========================================================
+   LEGAL CONTACT
+========================================================= */
+
+function isLegalFirstContact(b){
+
+    const group =
+        current==="human"
+        ? humanGroup
+        : aiGroup;
+
+
+    if(!group){
+
+        return b.number!==8;
+
+    }
+
+
+    return isGroupBall(
+        b,
+        group
+    );
+
+}
+
+
+/* =========================================================
+   EIGHT BALL
+========================================================= */
+
+function handleEight(){
+
+    const group =
+        current==="human"
+        ? humanGroup
+        : aiGroup;
+
+
+    if(!group){
+
+        endGame(
+            false,
+            "The 8-ball was pocketed too early."
+        );
+
+        return;
+
+    }
+
+
+    const remaining =
+        balls.filter(
+            b =>
+                !b.pocketed &&
+                b.number!==0 &&
+                b.number!==8 &&
+                isGroupBall(
+                    b,
+                    group
+                )
+        );
+
+
+    if(
+        remaining.length===0
+    ){
+
+        endGame(
+            current==="human",
+            current==="human"
+            ? "You cleared your group and legally pocketed the 8-ball!"
+            : "AI cleared its group and pocketed the 8-ball."
+        );
+
+    }else{
+
+        endGame(
+            current!=="human",
+            "The 8-ball was pocketed before the group was cleared."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SWITCH TURN
+========================================================= */
+
+function switchTurn(){
+
+    current =
+        current==="human"
+        ? "ai"
+        : "human";
+
+
+    foul =
+        false;
+
+    firstContact =
+        null;
+
+    pocketedThisShot =
+        [];
+
+    aimAngle =
+        0;
+
+    power =
+        0;
+
+
+    updatePower();
+
+    turnSound();
+
+    updateUI();
+
+
+    if(
+        current==="ai"
+    ){
+
+        setTimeout(
+            aiTurn,
+            650
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   AI
+========================================================= */
+
+function aiTurn(){
+
+    if(
+        gameOver ||
+        moving ||
+        current!=="ai"
+    ){
+
+        return;
+
+    }
+
+
+    const group =
+        aiGroup;
+
+
+    let targets =
+        balls.filter(
+            b =>
+                !b.pocketed &&
+                b!==cueBall &&
+                b.number!==8 &&
+                (
+                    !group ||
+                    isGroupBall(
+                        b,
+                        group
+                    )
+                )
+        );
+
+
+    if(
+        targets.length===0
+    ){
+
+        targets =
+            balls.filter(
+                b =>
+                    !b.pocketed &&
+                    b!==cueBall &&
+                    b.number!==0
+            );
+
+    }
+
+
+    if(
+        !targets.length
+    ){
+
+        return;
+
+    }
+
+
+    let target =
+        targets[0];
+
+
+    let best =
+        Infinity;
+
+
+    for(
+        const b of targets
+    ){
+
+        const d =
+            Math.hypot(
+                b.x-cueBall.x,
+                b.y-cueBall.y
+            );
+
+
+        if(
+            d<best
+        ){
+
+            best =
+                d;
+
+            target =
+                b;
+
+        }
+
+    }
+
+
+    const pocket =
+        nearestPocket(
+            target
+        );
+
+
+    const pdx =
+        pocket[0]-target.x;
+
+    const pdy =
+        pocket[1]-target.y;
+
+
+    const plen =
+        Math.hypot(
+            pdx,
+            pdy
+        );
+
+
+    const nx =
+        pdx/plen;
+
+    const ny =
+        pdy/plen;
+
+
+    const contactX =
+        target.x-
+        nx*ballR*2;
+
+
+    const contactY =
+        target.y-
+        ny*ballR*2;
+
+
+    let dx =
+        contactX-cueBall.x;
+
+    let dy =
+        contactY-cueBall.y;
+
+
+    const len =
+        Math.hypot(
+            dx,
+            dy
+        );
+
+
+    dx/=len;
+
+    dy/=len;
+
+
+    const error =
+        (
+            Math.random()-.5
+        )*.06;
+
+
+    const ca =
+        Math.cos(error);
+
+    const sa =
+        Math.sin(error);
+
+
+    const finalX =
+        dx*ca-
+        dy*sa;
+
+
+    const finalY =
+        dx*sa+
+        dy*ca;
+
+
+    const speed =
+        Math.min(
+            14,
+            Math.max(
+                7,
+                len*.045
+            )
+        );
+
+
+    setTimeout(
+        ()=>{
+
+            shootCue(
+                finalX,
+                finalY,
+                speed
+            );
+
+        },
+        450
+    );
+
+}
+
+
+/* =========================================================
+   NEAREST POCKET
+========================================================= */
+
+function nearestPocket(b){
+
+    let best =
+        pockets[0];
+
+    let bestDistance =
+        Infinity;
+
+
+    for(
+        const p of pockets
+    ){
+
+        const distance =
+            Math.hypot(
+                p[0]-b.x,
+                p[1]-b.y
+            );
+
+
+        if(
+            distance<bestDistance
+        ){
+
+            bestDistance =
+                distance;
+
+            best =
+                p;
+
+        }
+
+    }
+
+
+    return best;
+
+}
+
+
+/* =========================================================
+   SHOOT
+========================================================= */
+
+function shootCue(
+    dx,
+    dy,
+    speed
+){
+
+    if(
+        moving ||
+        gameOver
+    ){
+
+        return;
+
+    }
+
+
+    moving =
+        true;
+
+    firstContact =
+        null;
+
+    pocketedThisShot =
+        [];
+
+    foul =
+        false;
+
+
+    cueHitSound();
+
+
+    cueBall.vx =
+        dx*speed;
+
+    cueBall.vy =
+        dy*speed;
+
+}
+
+
+/* =========================================================
+   HUMAN SHOOT
+========================================================= */
+
+function shootHuman(){
+
+    if(
+        moving ||
+        gameOver ||
+        current!=="human"
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        power<8
+    ){
+
+        return;
+
+    }
+
+
+    const dx =
+        Math.cos(
+            aimAngle
+        );
+
+    const dy =
+        Math.sin(
+            aimAngle
+        );
+
+
+    const speed =
+        2+
+        power/150*13;
+
+
+    shootCue(
+        dx,
+        dy,
+        speed
+    );
+
+
+    power =
+        0;
+
+    updatePower();
+
+}
+
+
+/* =========================================================
+   POINTER POSITION
+========================================================= */
+
+function pointerPosition(e){
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    const sx =
+        (
+            e.clientX-
+            rect.left
+        )/
+        rect.width;
+
+
+    const sy =
+        (
+            e.clientY-
+            rect.top
+        )/
+        rect.height;
+
+
+    if(
+        isPortrait()
+    ){
+
+        return {
+
+            x:
+                sy*
+                LOGICAL_W,
+
+            y:
+                (
+                    1-sx
+                )*
+                LOGICAL_H
+
+        };
+
+    }
+
+
+    return {
+
+        x:
+            sx*
+            LOGICAL_W,
+
+        y:
+            sy*
+            LOGICAL_H
+
+    };
+
+}
+
+
+/* =========================================================
+   POINTER DOWN
+========================================================= */
+
+canvas.addEventListener(
+    "pointerdown",
+    e=>{
+
+        if(
+            current!=="human" ||
+            moving ||
+            gameOver
+        ){
+
+            return;
+
+        }
+
+
+        initAudio();
+
+
+        const p =
+            pointerPosition(e);
+
+
+        const d =
+            Math.hypot(
+                p.x-cueBall.x,
+                p.y-cueBall.y
+            );
+
+
+        if(
+            d<145
+        ){
+
+            dragging =
+                true;
+
+            canvas.setPointerCapture(
+                e.pointerId
+            );
+
+            e.preventDefault();
+
+        }
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   POINTER MOVE
+========================================================= */
+
+canvas.addEventListener(
+    "pointermove",
+    e=>{
+
+        if(!dragging)
+            return;
+
+
+        const p =
+            pointerPosition(e);
+
+
+        const dx =
+            p.x-cueBall.x;
+
+        const dy =
+            p.y-cueBall.y;
+
+
+        const distance =
+            Math.hypot(
+                dx,
+                dy
+            );
+
+
+        if(
+            distance<2
+        ){
+
+            return;
+
+        }
+
+
+        aimAngle =
+            Math.atan2(
+                -dy,
+                -dx
+            );
+
+
+        power =
+            Math.min(
+                100,
+                Math.max(
+                    0,
+                    (distance-5)*.85
+                )
+            );
+
+
+        updatePower();
+
+
+        e.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   POINTER UP
+========================================================= */
+
+canvas.addEventListener(
+    "pointerup",
+    e=>{
+
+        if(!dragging)
+            return;
+
+
+        dragging =
+            false;
+
+
+        if(
+            power>8
+        ){
+
+            shootHuman();
+
+        }else{
+
+            power =
+                0;
+
+            updatePower();
+
+        }
+
+
+        e.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   POINTER CANCEL
+========================================================= */
+
+canvas.addEventListener(
+    "pointercancel",
+    ()=>{
+
+        dragging =
+            false;
+
+        power =
+            0;
+
+        updatePower();
+
+    }
+);
+
+
+/* =========================================================
+   AIM BUTTONS
+========================================================= */
+
+document
+.getElementById("left")
+.addEventListener(
+    "pointerdown",
+    e=>{
+
+        initAudio();
+
+        if(
+            current==="human" &&
+            !moving
+        ){
+
+            aimAngle -=
+                .035;
+
+        }
+
+        e.preventDefault();
+
+    }
+);
+
+
+document
+.getElementById("right")
+.addEventListener(
+    "pointerdown",
+    e=>{
+
+        initAudio();
+
+        if(
+            current==="human" &&
+            !moving
+        ){
+
+            aimAngle +=
+                .035;
+
+        }
+
+        e.preventDefault();
+
+    }
+);
+
+
+/* =========================================================
+   POWER UI
+========================================================= */
+
+function updatePower(){
+
+    document
+    .getElementById(
+        "powerFill"
+    )
+    .style.width =
+        power+"%";
+
+}
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+function updateUI(){
+
+    document
+    .getElementById(
+        "turn"
+    )
+    .textContent =
+        current==="human"
+        ? "YOUR TURN"
+        : "AI TURN";
+
+
+    document
+    .getElementById(
+        "human"
+    )
+    .classList.toggle(
+        "active",
+        current==="human"
+    );
+
+
+    document
+    .getElementById(
+        "ai"
+    )
+    .classList.toggle(
+        "active",
+        current==="ai"
+    );
+
+
+    document
+    .getElementById(
+        "humanGroup"
+    )
+    .textContent =
+        humanGroup
+        ? humanGroup.toUpperCase()
+        : "Open Table";
+
+
+    document
+    .getElementById(
+        "aiGroup"
+    )
+    .textContent =
+        aiGroup
+        ? aiGroup.toUpperCase()
+        : "Open Table";
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function endGame(
+    humanWon,
+    message
+){
+
+    gameOver =
+        true;
+
+    moving =
+        false;
+
+
+    if(
+        humanWon
+    ){
+
+        winSound();
+
+    }else{
+
+        loseSound();
+
+    }
+
+
+    document
+    .getElementById(
+        "resultTitle"
+    )
+    .textContent =
+        humanWon
+        ? "🏆 YOU WIN!"
+        : "🤖 AI WINS!";
+
+
+    document
+    .getElementById(
+        "resultText"
+    )
+    .textContent =
+        message;
+
+
+    document
+    .getElementById(
+        "result"
+    )
+    .style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document
+.getElementById("start")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        document
+        .getElementById(
+            "help"
+        )
+        .style.display =
+            "none";
+
+        newGame();
+
+    }
+);
+
+
+/* =========================================================
+   RESTART
+========================================================= */
+
+document
+.getElementById("restart")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        newGame();
+
+        document
+        .getElementById(
+            "result"
+        )
+        .style.display =
+            "none";
+
+    }
+);
+
+
+/* =========================================================
+   AGAIN
+========================================================= */
+
+document
+.getElementById("again")
+.addEventListener(
+    "click",
+    ()=>{
+
+        initAudio();
+
+        newGame();
+
+        document
+        .getElementById(
+            "result"
+        )
+        .style.display =
+            "none";
+
+    }
+);
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+document
+.querySelectorAll(
+    ".faqQuestion"
+)
+.forEach(
+    button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+                const item =
+                    button.parentElement;
+
+                item.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   YEAR
+========================================================= */
+
+document
+.getElementById(
+    "year"
+)
+.textContent =
+    new Date()
+    .getFullYear();
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderFrame(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const portrait =
+        isPortrait();
+
+
+    if(portrait){
+
+        ctx.save();
+
+
+        ctx.translate(
+            LOGICAL_H,
+            0
+        );
+
+
+        ctx.rotate(
+            Math.PI/2
+        );
+
+    }
+
+
+    drawTable();
+
+    drawAim();
+
+
+    for(
+        const b of balls
+    ){
+
+        drawBall(b);
+
+    }
+
+
+    if(portrait){
+
+        ctx.restore();
+
+    }
+
+}
+
+
+/* =========================================================
+   MAIN LOOP
+========================================================= */
+
+function render(){
+
+    renderFrame();
+
+    updatePhysics();
+
+    requestAnimationFrame(
+        render
+    );
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+resizeCanvas();
+
+newGame();
+
+render();
+
+</script>
+
+</body>
+</html>
