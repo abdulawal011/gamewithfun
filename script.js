@@ -108,7 +108,7 @@ const games = [
   {
     id: 5,
     title: "",
-    category: "Puzzle",
+    category: "",
     icon: "",
     url: "",
     newGame: false,
@@ -166,9 +166,6 @@ const categories = [
   "Quiz",
   "Recing",
   "Board",
-  "Arcade",
-  "Sports",
-  "Strategy"
 ];
 
 
