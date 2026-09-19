@@ -3,72 +3,1487 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Picture Puzzle</title>
+
+<title>Game With Fun Picture Puzzle - Free Online Puzzle Game</title>
+
+<meta name="description"
+content="Play Game With Fun Picture Puzzle, a free online sliding puzzle game. Arrange numbers from 1 to 8, solve the puzzle, improve your moves and beat your best score.">
+
+<meta name="keywords"
+content="picture puzzle, sliding puzzle, number puzzle, 8 puzzle game, free puzzle game, online puzzle game, Game With Fun">
+
+<meta name="robots" content="index,follow">
+<meta name="author" content="Game With Fun">
+
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;min-height:100vh;background:linear-gradient(135deg,#151a46,#40206f);font-family:Arial,sans-serif;color:#fff;display:flex;justify-content:center}
-.app{width:min(100%,480px);padding:22px 16px;text-align:center}
-h1{margin:8px 0 5px;font-size:30px}.sub{color:#c8cced;margin:0 0 18px}
-.stats{display:flex;justify-content:center;gap:12px;margin-bottom:18px}.stat{background:#101538aa;border:1px solid #6670aa;border-radius:14px;padding:10px 17px;font-weight:bold}
-#board{width:min(92vw,400px);aspect-ratio:1;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;background:#080b23;border:3px solid #8896ff;border-radius:14px;box-shadow:0 10px 35px #080516}
-.tile{border:0;border-radius:8px;font-size:44px;cursor:pointer;background:linear-gradient(145deg,#4d72ff,#783ce8);color:#fff;font-weight:bold;box-shadow:0 3px 0 #25155d;transition:transform .12s}
-.tile:active{transform:scale(.94)}.empty{background:transparent;box-shadow:none;cursor:default}
-.controls{display:flex;gap:10px;justify-content:center;margin:22px 0}.btn{border:0;border-radius:14px;padding:14px 22px;color:#fff;font-size:16px;font-weight:bold;background:linear-gradient(100deg,#258cff,#7b29e8);box-shadow:0 5px 15px #24155c}
-#message{min-height:28px;font-size:18px;font-weight:bold;color:#ffe24b;margin:8px}.how{background:#0c1030aa;border:1px solid #4b5484;border-radius:15px;padding:14px;text-align:left;color:#dce0f7;font-size:14px;line-height:1.5}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 0%,#30206d,transparent 35%),
+    radial-gradient(circle at 90% 30%,#162e70,transparent 35%),
+    linear-gradient(135deg,#080b20,#17113d 50%,#090b20);
+  font-family:Arial,sans-serif;
+  color:#fff;
+}
+
+button{
+  font-family:inherit;
+}
+
+.app{
+  width:min(100%,760px);
+  margin:auto;
+  padding:14px 14px 40px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 2px;
+  border-bottom:1px solid #4a5080;
+  margin-bottom:14px;
+}
+
+.brand{
+  color:#fff;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:900;
+}
+
+.brand span{
+  color:#62eaff;
+}
+
+.sound-btn{
+  border:1px solid #6576c9;
+  background:#151a42;
+  color:#fff;
+  border-radius:12px;
+  padding:9px 13px;
+  cursor:pointer;
+  font-size:17px;
+}
+
+.sound-btn:active{
+  transform:scale(.95);
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+.game-card{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(24,29,69,.98),
+      rgba(8,12,34,.98)
+    );
+  border:2px solid #6e72ff;
+  border-radius:26px;
+  padding:22px 16px 20px;
+  text-align:center;
+  box-shadow:
+    0 20px 60px #0008,
+    0 0 45px #7045ff25;
+}
+
+.game-title{
+  margin:4px 0 5px;
+  font-size:clamp(29px,8vw,45px);
+  font-weight:900;
+  background:
+    linear-gradient(
+      90deg,
+      #5d7cff,
+      #00eaff,
+      #d46cff,
+      #ffe14c
+    );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.sub{
+  color:#c5cae8;
+  margin:0 0 18px;
+  font-size:16px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-bottom:17px;
+}
+
+.stat{
+  background:#101538cc;
+  border:1px solid #515b91;
+  border-radius:13px;
+  padding:9px 14px;
+  font-weight:bold;
+  color:#e8ebff;
+}
+
+.stat span{
+  color:#62eaff;
+}
+
+/* =========================
+   BOARD
+========================= */
+
+#board{
+  width:min(92vw,400px);
+  aspect-ratio:1;
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+
+  padding:6px;
+
+  background:#050819;
+  border:3px solid #8896ff;
+  border-radius:18px;
+
+  box-shadow:
+    0 10px 35px #05030f,
+    0 0 30px #5865ff44;
+}
+
+.tile{
+  border:0;
+  border-radius:10px;
+
+  font-size:clamp(32px,9vw,48px);
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      145deg,
+      #5276ff,
+      #743ce8
+    );
+
+  color:#fff;
+  font-weight:900;
+
+  box-shadow:
+    0 4px 0 #24145e,
+    inset 0 1px 0 #ffffff44;
+
+  transition:
+    transform .12s,
+    filter .12s;
+}
+
+.tile:hover{
+  filter:brightness(1.12);
+}
+
+.tile:active{
+  transform:scale(.92);
+}
+
+.empty{
+  background:
+    radial-gradient(
+      circle,
+      #111735,
+      #070a1c
+    );
+
+  box-shadow:
+    inset 0 0 15px #0008;
+
+  cursor:default;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+#message{
+  min-height:30px;
+  margin:15px 8px 7px;
+
+  font-size:19px;
+  font-weight:bold;
+
+  color:#ffe24b;
+
+  text-shadow:
+    0 0 12px #ffe24b44;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin:18px 0;
+}
+
+.btn{
+  border:1px solid #7196ff;
+  border-radius:14px;
+  padding:13px 20px;
+
+  color:#fff;
+  font-size:15px;
+  font-weight:bold;
+
+  background:
+    linear-gradient(
+      100deg,
+      #258cff,
+      #7b29e8
+    );
+
+  box-shadow:
+    0 5px 16px #24155c;
+
+  cursor:pointer;
+  transition:.15s;
+}
+
+.btn:hover{
+  filter:brightness(1.12);
+  transform:translateY(-2px);
+}
+
+.btn:active{
+  transform:translateY(2px);
+}
+
+/* =========================
+   HOW TO PLAY
+========================= */
+
+.how{
+  background:#090e2aaa;
+  border:1px solid #4b5484;
+  border-radius:16px;
+
+  padding:15px;
+
+  text-align:left;
+
+  color:#dce0f7;
+  font-size:14px;
+  line-height:1.65;
+}
+
+.how b{
+  color:#68eaff;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content-section{
+  margin-top:18px;
+  background:#0d1229ed;
+  border:1px solid #394674;
+  border-radius:20px;
+  padding:20px 18px;
+  box-shadow:0 12px 35px #0005;
+}
+
+.content-section h2{
+  margin:0 0 12px;
+  color:#6eeaff;
+  font-size:24px;
+}
+
+.content-section h3{
+  color:#c99cff;
+  margin:18px 0 7px;
+  font-size:18px;
+}
+
+.content-section p{
+  margin:8px 0;
+  color:#c7cee7;
+  line-height:1.75;
+  font-size:15px;
+}
+
+.content-section ul{
+  margin:8px 0;
+  padding-left:22px;
+  color:#c7cee7;
+  line-height:1.8;
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.faq-item{
+  border:1px solid #3d4a78;
+  border-radius:13px;
+  margin:10px 0;
+  overflow:hidden;
+  background:#101735;
+}
+
+.faq-item summary{
+  padding:14px;
+  cursor:pointer;
+  font-weight:bold;
+  color:#fff;
+}
+
+.faq-item p{
+  padding:0 14px 14px;
+  margin:0;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-box{
+  background:#111a38;
+  border:1px solid #465486;
+  padding:14px;
+  border-radius:13px;
+  margin-top:10px;
+}
+
+.contact-box a{
+  color:#63eaff;
+  text-decoration:none;
+}
+
+/* =========================
+   ADSENSE AREA
+========================= */
+
+.ad-container{
+  margin:20px 0 0;
+  padding:12px;
+
+  min-height:110px;
+
+  border:1px dashed #56617e;
+  border-radius:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#687594;
+  font-size:11px;
+  text-align:center;
+
+  background:#070b1b;
+}
+
+.ad-label{
+  opacity:.8;
+}
+
+/*
+   Replace the placeholder above with your
+   Google AdSense code after your site is
+   approved by Google AdSense.
+*/
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  text-align:center;
+  color:#7784a6;
+  font-size:13px;
+  line-height:1.7;
+  padding:22px 5px 5px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+  .app{
+    padding:10px 9px 30px;
+  }
+
+  .game-card{
+    padding:18px 11px 18px;
+    border-radius:22px;
+  }
+
+  .site-header{
+    padding:9px 1px;
+  }
+
+  .brand{
+    font-size:15px;
+  }
+
+  .sound-btn{
+    padding:8px 11px;
+  }
+
+  .stat{
+    padding:8px 10px;
+    font-size:13px;
+  }
+
+  #board{
+    width:min(94vw,390px);
+    gap:5px;
+    padding:5px;
+  }
+
+  .tile{
+    font-size:clamp(30px,11vw,45px);
+  }
+
+  .controls{
+    gap:8px;
+  }
+
+  .btn{
+    padding:12px 15px;
+    font-size:14px;
+  }
+
+  .content-section{
+    padding:17px 14px;
+  }
+
+  .content-section h2{
+    font-size:21px;
+  }
+
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+button:focus-visible,
+summary:focus-visible,
+a:focus-visible{
+  outline:3px solid #6ff;
+  outline-offset:3px;
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-<h1>🧩 PUZZLE GAME</h1>
-<p class="sub">Arrange the numbers from 1 to 8</p>
-<div class="stats"><div class="stat">👆 Moves: <span id="moves">0</span></div><div class="stat">🏆 Best: <span id="best">0</span></div></div>
-<div id="board"></div>
-<div id="message"></div>
-<div class="controls"><button class="btn" onclick="shuffle()">🔀 SHUFFLE</button><button class="btn" onclick="resetGame()">↻ RESET</button></div>
-<div class="how"><b>How to play:</b><br>Tap a tile next to the empty space to move it. Put the numbers in order: <b>1 → 8</b>.</div>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+  <a class="brand" href="../index.html">
+    🎮 <span>Game With Fun</span>
+  </a>
+
+  <button
+    id="soundBtn"
+    class="sound-btn"
+    type="button"
+    aria-label="Toggle sound">
+    🔊
+  </button>
+
+</header>
+
+
+<!-- =========================
+     GAME AREA
+========================= -->
+
+<main class="game-card">
+
+  <h1 class="game-title">
+    🧩 Game With Fun Picture Puzzle
+  </h1>
+
+  <p class="sub">
+    Arrange the numbers from 1 to 8 and solve the puzzle!
+  </p>
+
+
+  <div class="stats">
+
+    <div class="stat">
+      👆 Moves:
+      <span id="moves">0</span>
+    </div>
+
+    <div class="stat">
+      🏆 Best:
+      <span id="best">—</span>
+    </div>
+
+  </div>
+
+
+  <div
+    id="board"
+    aria-label="Picture puzzle game board">
+  </div>
+
+
+  <div
+    id="message"
+    aria-live="polite">
+  </div>
+
+
+  <div class="controls">
+
+    <button
+      class="btn"
+      id="shuffleBtn"
+      type="button">
+      🔀 SHUFFLE
+    </button>
+
+    <button
+      class="btn"
+      id="resetBtn"
+      type="button">
+      ↻ RESET
+    </button>
+
+  </div>
+
+
+  <div class="how">
+
+    <b>How to play:</b><br>
+
+    Tap a number tile next to the empty space
+    to move it.
+
+    Arrange the numbers in this order:
+
+    <b>1 → 2 → 3 → 4 → 5 → 6 → 7 → 8</b>.
+
+    <br><br>
+
+    Try to solve the puzzle using as few moves
+    as possible and beat your best score.
+
+  </div>
+
+</main>
+
+
+<!-- =========================
+     SEO CONTENT
+========================= -->
+
+<section class="content-section">
+
+  <h2>Game With Fun Picture Puzzle</h2>
+
+  <p>
+    Game With Fun Picture Puzzle is a simple and
+    entertaining online sliding puzzle game that
+    you can play directly in your web browser.
+    The goal is to arrange the numbers from
+    1 to 8 in the correct order by moving tiles
+    into the empty space.
+  </p>
+
+  <p>
+    This free puzzle game is designed for both
+    mobile and desktop players. You do not need
+    to download an application or install special
+    software. Simply open the game, tap or click
+    the tiles and start solving the puzzle.
+  </p>
+
+  <h3>How to Play the Picture Puzzle</h3>
+
+  <p>
+    The puzzle contains eight numbered tiles and
+    one empty space. Only a tile next to the empty
+    space can be moved. Your objective is to place
+    every number in the correct sequence.
+  </p>
+
+  <ul>
+    <li>Tap or click a tile beside the empty space.</li>
+    <li>Move the tiles until they form the correct order.</li>
+    <li>Try to complete the puzzle with fewer moves.</li>
+    <li>Use the Shuffle button to start a new puzzle.</li>
+    <li>Check your Best score and try to improve it.</li>
+  </ul>
+
+  <h3>Why Play This Puzzle Game?</h3>
+
+  <p>
+    Sliding puzzles are a fun way to practice
+    logical thinking, planning and problem solving.
+    Game With Fun Picture Puzzle keeps the controls
+    simple so that players can quickly understand
+    the rules and start playing.
+  </p>
+
+  <p>
+    The game works with touch controls on phones
+    and tablets as well as mouse clicks on desktop
+    computers. Your best result can be saved locally
+    in your browser so you can try to improve your
+    previous performance.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     FAQ
+========================= -->
+
+<section class="content-section">
+
+  <h2>Frequently Asked Questions</h2>
+
+
+  <details class="faq-item">
+
+    <summary>
+      What is Game With Fun Picture Puzzle?
+    </summary>
+
+    <p>
+      It is a free browser-based sliding puzzle game
+      where you arrange the numbers from 1 to 8 into
+      the correct order.
+    </p>
+
+  </details>
+
+
+  <details class="faq-item">
+
+    <summary>
+      How do I move a puzzle tile?
+    </summary>
+
+    <p>
+      Tap or click a numbered tile that is directly
+      next to the empty space. The tile will move
+      into the empty position.
+    </p>
+
+  </details>
+
+
+  <details class="faq-item">
+
+    <summary>
+      Can I play on a mobile phone?
+    </summary>
+
+    <p>
+      Yes. The game is designed to work with touch
+      controls on smartphones and tablets as well as
+      mouse controls on desktop devices.
+    </p>
+
+  </details>
+
+
+  <details class="faq-item">
+
+    <summary>
+      Does the game require a download?
+    </summary>
+
+    <p>
+      No. The game runs directly in a modern web
+      browser, so no separate game download is
+      required.
+    </p>
+
+  </details>
+
+
+  <details class="faq-item">
+
+    <summary>
+      How is the Best score calculated?
+    </summary>
+
+    <p>
+      Your Best score records the lowest number of
+      moves you have used to successfully solve the
+      puzzle on the same browser.
+    </p>
+
+  </details>
+
+
+  <details class="faq-item">
+
+    <summary>
+      Can I turn the sound off?
+    </summary>
+
+    <p>
+      Yes. Use the sound button at the top of the
+      game to turn the browser-generated sound
+      effects on or off.
+    </p>
+
+  </details>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="content-section">
+
+  <h2>About Game With Fun</h2>
+
+  <p>
+    Game With Fun is an online gaming website
+    focused on providing simple browser games that
+    are easy to access on phones, tablets and
+    computers.
+  </p>
+
+  <p>
+    Our games are designed to provide quick,
+    enjoyable entertainment without requiring users
+    to install large applications.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     PRIVACY
+========================= -->
+
+<section class="content-section">
+
+  <h2>Privacy</h2>
+
+  <p>
+    Game With Fun respects your privacy. This
+    Picture Puzzle game does not require you to
+    create an account or provide personal
+    information to play.
+  </p>
+
+  <p>
+    Game progress and the Best score may be stored
+    locally in your browser using browser storage.
+    This information is used to provide the game
+    functionality and is not a user account.
+  </p>
+
+  <p>
+    If advertising or analytics services are used
+    on this website, those services may collect
+    information according to their own privacy
+    policies and applicable laws.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     DISCLAIMER
+========================= -->
+
+<section class="content-section">
+
+  <h2>Disclaimer</h2>
+
+  <p>
+    Game With Fun provides this game for general
+    entertainment purposes. While we aim to keep
+    the game working correctly, we do not guarantee
+    that the website or game will always be available
+    without interruption or technical issues.
+  </p>
+
+  <p>
+    Game features, design and content may be updated
+    or changed in the future without prior notice.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section class="content-section">
+
+  <h2>Contact</h2>
+
+  <p>
+    If you have questions, suggestions or notice a
+    problem with this game, you can contact the
+    Game With Fun team.
+  </p>
+
+  <div class="contact-box">
+
+    📧 Email:
+    <a href="mailto:contact@gamewithfun.com">
+      contact@gamewithfun.com
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     ADSENSE AREA
+========================= -->
+
+<section class="ad-container">
+
+  <div class="ad-label">
+
+    ADVERTISEMENT<br>
+    <!--
+      Google AdSense code can be placed here
+      after your website is approved for AdSense.
+    -->
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+  © 2026 Game With Fun. All rights reserved.
+
+  <br>
+
+  Picture Puzzle — Free Online Puzzle Game
+
+</footer>
+
 </div>
+
+
 <script>
-const board=document.getElementById('board'), movesEl=document.getElementById('moves'), bestEl=document.getElementById('best'), msg=document.getElementById('message');
-let state=[1,2,3,4,5,6,7,8,0],moves=0,best=Number(localStorage.getItem('puzzleBest')||0);
-bestEl.textContent=best;
+"use strict";
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const board =
+  document.getElementById("board");
+
+const movesEl =
+  document.getElementById("moves");
+
+const bestEl =
+  document.getElementById("best");
+
+const msg =
+  document.getElementById("message");
+
+const soundBtn =
+  document.getElementById("soundBtn");
+
+const shuffleBtn =
+  document.getElementById("shuffleBtn");
+
+const resetBtn =
+  document.getElementById("resetBtn");
+
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
+let state =
+  [1,2,3,4,5,6,7,8,0];
+
+let moves = 0;
+
+let best =
+  Number(
+    localStorage.getItem("gameWithFunPuzzleBest") || 0
+  );
+
+let soundOn = true;
+
+let audioContext = null;
+
+
+/* =========================
+   BEST SCORE
+========================= */
+
+function updateBest(){
+
+  bestEl.textContent =
+    best > 0 ? best : "—";
+
+}
+
+updateBest();
+
+
+/* =========================
+   SOUND ENGINE
+   Browser generated
+   No external audio files
+========================= */
+
+function getAudio(){
+
+  if(!soundOn) return null;
+
+  try{
+
+    if(!audioContext){
+
+      const AudioCtx =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+      if(!AudioCtx) return null;
+
+      audioContext =
+        new AudioCtx();
+
+    }
+
+    if(audioContext.state === "suspended"){
+
+      audioContext.resume();
+
+    }
+
+    return audioContext;
+
+  }catch(e){
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================
+   PLAY TONE
+========================= */
+
+function playTone(
+  frequency,
+  duration,
+  type="sine",
+  volume=.045,
+  delay=0
+){
+
+  const ac = getAudio();
+
+  if(!ac) return;
+
+  try{
+
+    const oscillator =
+      ac.createOscillator();
+
+    const gain =
+      ac.createGain();
+
+    oscillator.type = type;
+
+    oscillator.frequency.setValueAtTime(
+      frequency,
+      ac.currentTime + delay
+    );
+
+    gain.gain.setValueAtTime(
+      0.001,
+      ac.currentTime + delay
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      volume,
+      ac.currentTime + delay + .015
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      ac.currentTime + delay + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(ac.destination);
+
+    oscillator.start(
+      ac.currentTime + delay
+    );
+
+    oscillator.stop(
+      ac.currentTime + delay + duration + .02
+    );
+
+  }catch(e){}
+
+}
+
+
+/* =========================
+   TILE SOUND
+========================= */
+
+function moveSound(){
+
+  playTone(
+    420,
+    .07,
+    "sine",
+    .035
+  );
+
+}
+
+
+/* =========================
+   SHUFFLE SOUND
+========================= */
+
+function shuffleSound(){
+
+  playTone(
+    280,
+    .07,
+    "triangle",
+    .035
+  );
+
+  playTone(
+    390,
+    .08,
+    "triangle",
+    .03,
+    .07
+  );
+
+}
+
+
+/* =========================
+   WIN SOUND
+========================= */
+
+function winSound(){
+
+  playTone(
+    523,
+    .12,
+    "sine",
+    .055
+  );
+
+  playTone(
+    659,
+    .12,
+    "sine",
+    .055,
+    .11
+  );
+
+  playTone(
+    784,
+    .18,
+    "sine",
+    .06,
+    .22
+  );
+
+  playTone(
+    1047,
+    .25,
+    "sine",
+    .065,
+    .38
+  );
+
+}
+
+
+/* =========================
+   RESET SOUND
+========================= */
+
+function resetSound(){
+
+  playTone(
+    300,
+    .08,
+    "triangle",
+    .035
+  );
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
 
 function render(){
- board.innerHTML='';
- state.forEach((n,i)=>{
-  const b=document.createElement('button');
-  b.className='tile'+(n===0?' empty':'');
-  b.textContent=n||'';
-  if(n)b.onclick=()=>move(i);
-  board.appendChild(b);
- });
- movesEl.textContent=moves;
+
+  board.innerHTML = "";
+
+  state.forEach((n,i)=>{
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "tile" +
+      (n === 0 ? " empty" : "");
+
+    button.textContent =
+      n || "";
+
+    button.setAttribute(
+      "aria-label",
+      n ? "Tile " + n : "Empty space"
+    );
+
+    if(n){
+
+      button.onclick =
+        () => move(i);
+
+    }else{
+
+      button.disabled = true;
+
+    }
+
+    board.appendChild(button);
+
+  });
+
+  movesEl.textContent =
+    moves;
+
 }
+
+
+/* =========================
+   CHECK ADJACENT
+========================= */
+
 function adjacent(a,b){
- const ar=Math.floor(a/3),ac=a%3,br=Math.floor(b/3),bc=b%3;
- return Math.abs(ar-br)+Math.abs(ac-bc)===1;
+
+  const ar =
+    Math.floor(a / 3);
+
+  const ac =
+    a % 3;
+
+  const br =
+    Math.floor(b / 3);
+
+  const bc =
+    b % 3;
+
+  return (
+    Math.abs(ar - br) +
+    Math.abs(ac - bc)
+  ) === 1;
+
 }
+
+
+/* =========================
+   MOVE TILE
+========================= */
+
 function move(i){
- const empty=state.indexOf(0);
- if(!adjacent(i,empty)||msg.textContent)return;
- [state[i],state[empty]]=[state[empty],state[i]];moves++;render();checkWin();
+
+  if(msg.dataset.won === "true"){
+    return;
+  }
+
+  const empty =
+    state.indexOf(0);
+
+  if(!adjacent(i,empty)){
+    return;
+  }
+
+  [
+    state[i],
+    state[empty]
+  ] =
+  [
+    state[empty],
+    state[i]
+  ];
+
+  moves++;
+
+  moveSound();
+
+  render();
+
+  checkWin();
+
 }
+
+
+/* =========================
+   CHECK WIN
+========================= */
+
 function checkWin(){
- if(state.every((v,i)=>v===(i===8?0:i+1))){
-  msg.textContent='🎉 YOU WON!';
-  if(!best||moves<best){best=moves;localStorage.setItem('puzzleBest',best);bestEl.textContent=best;}
- }
+
+  const won =
+    state.every(
+      (v,i) =>
+        v === (i === 8 ? 0 : i + 1)
+    );
+
+  if(!won){
+    return;
+  }
+
+  msg.dataset.won =
+    "true";
+
+  msg.textContent =
+    "🎉 YOU WON! Amazing!";
+
+  winSound();
+
+
+  if(!best || moves < best){
+
+    best = moves;
+
+    localStorage.setItem(
+      "gameWithFunPuzzleBest",
+      best
+    );
+
+    updateBest();
+
+    msg.textContent =
+      "🏆 NEW BEST! " +
+      moves +
+      " MOVES!";
+
+  }
+
 }
+
+
+/* =========================
+   SHUFFLE
+   Uses legal moves so
+   puzzle is always solvable
+========================= */
+
 function shuffle(){
- msg.textContent='';state=[1,2,3,4,5,6,7,8,0];moves=0;
- let empty=8,last=-1;
- for(let k=0;k<150;k++){
-  const choices=[0,1,2,3,4,5,6,7,8].filter(i=>adjacent(i,empty)&&i!==last);
-  const pick=choices[Math.floor(Math.random()*choices.length)];
-  [state[pick],state[empty]]=[state[empty],state[pick]];last=empty;empty=pick;
- }
- if(state.every((v,i)=>v===(i===8?0:i+1)))shuffle(); else render();
+
+  msg.textContent = "";
+
+  msg.dataset.won =
+    "false";
+
+  state =
+    [1,2,3,4,5,6,7,8,0];
+
+  moves = 0;
+
+  let empty = 8;
+
+  let last = -1;
+
+  for(let k=0;k<180;k++){
+
+    let choices =
+      [0,1,2,3,4,5,6,7,8]
+      .filter(
+        i =>
+          adjacent(i,empty) &&
+          i !== last
+      );
+
+    const pick =
+      choices[
+        Math.floor(
+          Math.random() *
+          choices.length
+        )
+      ];
+
+    [
+      state[pick],
+      state[empty]
+    ] =
+    [
+      state[empty],
+      state[pick]
+    ];
+
+    last = empty;
+    empty = pick;
+
+  }
+
+
+  /* Make sure it is not already solved */
+
+  if(
+    state.every(
+      (v,i) =>
+        v === (i === 8 ? 0 : i + 1)
+    )
+  ){
+
+    shuffle();
+
+    return;
+
+  }
+
+
+  shuffleSound();
+
+  render();
+
 }
-function resetGame(){state=[1,2,3,4,5,6,7,8,0];moves=0;msg.textContent='';render();}
-render();shuffle();
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetGame(){
+
+  msg.dataset.won =
+    "false";
+
+  state =
+    [1,2,3,4,5,6,7,8,0];
+
+  moves = 0;
+
+  msg.textContent = "";
+
+  resetSound();
+
+  render();
+
+}
+
+
+/* =========================
+   SOUND BUTTON
+========================= */
+
+soundBtn.onclick = function(){
+
+  soundOn =
+    !soundOn;
+
+  soundBtn.textContent =
+    soundOn ? "🔊" : "🔇";
+
+  if(soundOn){
+
+    playTone(
+      700,
+      .08,
+      "sine",
+      .04
+    );
+
+  }
+
+};
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+shuffleBtn.onclick =
+  shuffle;
+
+resetBtn.onclick =
+  resetGame;
+
+
+/* =========================
+   START
+========================= */
+
+render();
+
+shuffle();
+
 </script>
-</body></html>
+
+</body>
+</html>
