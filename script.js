@@ -63,7 +63,7 @@ const games = [
     title: "Color Ball",
     category: "",
     icon: "games/file_000000004ff8820b8805b91364bea1d7.png",
-    url: "games/Color Sort.html",
+    url: "games/colorsort.html",
     newGame: false,
     popular: true
   },
@@ -72,7 +72,7 @@ const games = [
     title: "8 Ball Pool",
     category: "",
     icon: "games/file_00000000919c820bbb8f8a7356e17062.png",
-    url: "games/8 Ball game.html",
+    url: "games/8ballgame.html",
     newGame: false,
     popular: true
   },
@@ -81,7 +81,7 @@ const games = [
     title: "Traffic Jam",
     category: "Puzzle",
     icon: "games/file_00000000e84481fa8f401de9375a9cde.png",
-    url: "games/Traffic jam Solve.html",
+    url: "games/trafficjamsolve.html",
     newGame: false,
     popular: true
   },
@@ -90,7 +90,7 @@ const games = [
     title: "Endless Runner",
     category: "Recing",
     icon: "games/neon_runner_logo.jpg",
-    url: "games/Endless Runner.html",
+    url: "games/endlessrunner.html",
     newGame: true,
     popular: false
   },
@@ -100,7 +100,7 @@ const games = [
     title: "O&X Game",
     category: "Puzzle",
     icon: "games/logo.png",
-    url: "games/O&X game.html",
+    url: "games/oxgame.html",
     newGame: true,
     popular: false
   },
