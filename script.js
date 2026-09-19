@@ -8,7 +8,7 @@ const games = [
     title: "Bubble Shooter",
     category: "Puzzle",
     icon: "games/file_0000000050f0820b9874f8a8962b1ec4.png",
-    url: "games/Bubble Shooter.html",
+    url: "games/bubbleshooter.html",
     newGame: false,
     popular: true
   },
@@ -17,7 +17,7 @@ const games = [
     title: "Carrom Board",
     category: "Board",
     icon: "games/file_00000000d8dc820ba98dd0aa7d484503.png",
-    url: "games/Carrom Board.html",
+    url: "games/carromboardoard.html",
     newGame: false,
     popular: true
   },
@@ -26,7 +26,7 @@ const games = [
     title: "Game With Fun Crush",
     category: "Puzzle",
     icon: "games/file_00000000cb94820baabbf485ed45e9bc.png",
-    url: "games/Game With Fun Crush.html",
+    url:"games/gamewithfuncrush.html",
     newGame: false,
     popular: true
   },
@@ -45,7 +45,7 @@ const games = [
     title: "Ghost House",
     category: "",
     icon: "games/file_00000000b7f8820899dd27132b05151a.png",
-    url: "games/Ghost House.html",
+    url:"games/ghosthouse.html",
     newGame: false,
     popular: true
   },
@@ -54,7 +54,7 @@ const games = [
     title: "flaying bird",
     category: "",
     icon: "games/file_0000000036d88211912b32513b8a13b4.png",
-    url: "games/gamewithfun flaying bird.html",
+    url:"games/gamewithfun-flaying-bird.html",
     newGame: false,
     popular: true
   },
