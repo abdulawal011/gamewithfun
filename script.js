@@ -53,7 +53,7 @@ const games = [
     id: 13,
     title: "flaying bird",
     category: "",
-    icon: "games/file_00000000b7f8820899dd27132b05151a.png",
+    icon: "games/file_0000000036d88211912b32513b8a13b4.png",
     url: "games/gamewithfun flaying bird.html",
     newGame: false,
     popular: true
