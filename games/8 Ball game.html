@@ -5,8 +5,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,initial-scale=1.0,
-      maximum-scale=1.0,user-scalable=no">
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>Game With Fun AI VS Human 8 Ball Pool - Free Online Pool Game</title>
 
@@ -16,14 +15,11 @@ content="Play Game With Fun AI VS Human 8 Ball Pool, a free online pool game. Ai
 <meta name="keywords"
 content="8 ball pool, online pool game, free pool game, AI pool game, billiards game, HTML5 pool game, Game With Fun">
 
-<meta name="author"
-content="Game With Fun">
+<meta name="author" content="Game With Fun">
 
-<meta name="robots"
-content="index, follow">
+<meta name="robots" content="index, follow">
 
-<meta name="theme-color"
-content="#071018">
+<meta name="theme-color" content="#071018">
 
 <style>
 
@@ -39,7 +35,6 @@ html{
 }
 
 body{
-
     min-height:100vh;
 
     background:
@@ -70,101 +65,70 @@ canvas{
     -webkit-user-select:none;
 }
 
-
-/* =========================================================
-   GAME SECTION
-========================================================= */
+/* =====================================================
+   GAME
+===================================================== */
 
 #gameSection{
-
     width:100%;
-
     min-height:100dvh;
 
     display:flex;
     flex-direction:column;
     align-items:center;
 
-    padding:
-        6px 6px 12px;
+    padding:6px 6px 12px;
 
     touch-action:none;
 }
 
-
-/* HEADER */
-
 .header{
-
     width:min(1100px,100%);
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
-    padding:
-        3px 4px 6px;
+    padding:3px 4px 6px;
 }
 
 .logo{
-
     font-size:20px;
-
     font-weight:900;
-
-    letter-spacing:.2px;
 }
 
 .turn{
-
-    padding:
-        7px 13px;
+    padding:7px 13px;
 
     border-radius:20px;
 
     background:#ffffff12;
 
-    border:
-        1px solid
-        #ffffff20;
+    border:1px solid #ffffff20;
 
     font-size:11px;
-
     font-weight:900;
-
-    transition:.2s ease;
 }
 
-
-/* PLAYERS */
-
 .players{
-
     width:min(1100px,100%);
 
     display:flex;
-
     justify-content:space-between;
 
     margin-bottom:5px;
 }
 
 .player{
-
     min-width:110px;
 
-    padding:
-        5px 10px;
+    padding:5px 10px;
 
     border-radius:11px;
 
     background:#ffffff09;
 
-    border:
-        1px solid
-        #ffffff14;
+    border:1px solid #ffffff14;
 
     font-size:10px;
 
@@ -172,35 +136,28 @@ canvas{
 }
 
 .player strong{
-
     display:block;
-
     font-size:13px;
 }
 
 .player span{
-
     opacity:.7;
 }
 
 .player.active{
-
     background:#087044;
 
     border-color:#48e69b;
 
     box-shadow:
-        0 0 16px
-        #22cf8050;
+        0 0 16px #22cf8050;
 }
 
-
-/* =========================================================
+/* =====================================================
    TABLE
-========================================================= */
+===================================================== */
 
 #tableArea{
-
     width:min(1100px,99vw);
 
     aspect-ratio:1.82;
@@ -208,14 +165,11 @@ canvas{
     position:relative;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 }
 
 #canvas{
-
     width:100%;
     height:100%;
 
@@ -233,19 +187,15 @@ canvas{
     touch-action:none;
 }
 
-
-/* =========================================================
+/* =====================================================
    CONTROLS
-========================================================= */
+===================================================== */
 
 .controls{
-
     width:min(1100px,100%);
 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
 
     gap:7px;
@@ -254,10 +204,7 @@ canvas{
 }
 
 button{
-
-    border:
-        1px solid
-        #ffffff20;
+    border:1px solid #ffffff20;
 
     background:#ffffff12;
 
@@ -265,8 +212,7 @@ button{
 
     border-radius:11px;
 
-    padding:
-        8px 13px;
+    padding:8px 13px;
 
     font-weight:900;
 
@@ -280,20 +226,14 @@ button{
 }
 
 button:active{
-
     transform:scale(.93);
 }
 
 button:hover{
-
     background:#ffffff1e;
 }
 
-
-/* POWER */
-
 .power{
-
     width:170px;
     height:30px;
 
@@ -305,13 +245,10 @@ button:hover{
 
     background:#ffffff12;
 
-    border:
-        1px solid
-        #ffffff1d;
+    border:1px solid #ffffff1d;
 }
 
 .powerFill{
-
     position:absolute;
 
     left:0;
@@ -327,43 +264,36 @@ button:hover{
             #ffe05a,
             #ff5151
         );
+
+    transition:width .05s linear;
 }
 
 .powerText{
-
     position:absolute;
-
     inset:0;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
     font-size:10px;
-
     font-weight:900;
 
     pointer-events:none;
 }
 
-
-/* =========================================================
+/* =====================================================
    HELP
-========================================================= */
+===================================================== */
 
 #help{
-
     position:fixed;
-
     inset:0;
 
     z-index:100;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     padding:20px;
@@ -374,7 +304,6 @@ button:hover{
 }
 
 .helpBox{
-
     width:min(420px,100%);
 
     padding:25px;
@@ -388,21 +317,16 @@ button:hover{
             #091118
         );
 
-    border:
-        1px solid
-        #ffffff22;
+    border:1px solid #ffffff22;
 
-    box-shadow:
-        0 25px 80px #000;
+    box-shadow:0 25px 80px #000;
 }
 
 .helpBox h1{
-
     margin-bottom:12px;
 }
 
 .helpBox p{
-
     color:#dce7ee;
 
     font-size:14px;
@@ -413,7 +337,6 @@ button:hover{
 }
 
 #start{
-
     width:100%;
 
     margin-top:15px;
@@ -423,13 +346,11 @@ button:hover{
     padding:13px;
 }
 
-
-/* =========================================================
+/* =====================================================
    RESULT
-========================================================= */
+===================================================== */
 
 #result{
-
     position:fixed;
 
     z-index:90;
@@ -437,8 +358,7 @@ button:hover{
     left:50%;
     top:50%;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     min-width:275px;
 
@@ -450,12 +370,9 @@ button:hover{
 
     background:#071018ef;
 
-    border:
-        1px solid
-        #ffffff25;
+    border:1px solid #ffffff25;
 
-    box-shadow:
-        0 25px 80px #000;
+    box-shadow:0 25px 80px #000;
 
     display:none;
 
@@ -463,39 +380,28 @@ button:hover{
 }
 
 #result h2{
-
     margin-bottom:8px;
 }
 
 #result button{
-
     margin-top:15px;
-
     background:#159d63;
 }
 
-
-/* =========================================================
-   CONTENT SECTION
-========================================================= */
+/* =====================================================
+   CONTENT
+===================================================== */
 
 #siteContent{
-
     width:100%;
-
     max-width:1050px;
 
     margin:auto;
 
-    padding:
-        20px 14px 50px;
+    padding:20px 14px 50px;
 }
 
-
-/* CONTENT CARD */
-
 .contentCard{
-
     background:
         linear-gradient(
             145deg,
@@ -503,40 +409,28 @@ button:hover{
             #071017
         );
 
-    border:
-        1px solid
-        #ffffff13;
+    border:1px solid #ffffff13;
 
     border-radius:18px;
 
-    padding:
-        22px 18px;
+    padding:22px 18px;
 
     margin-bottom:16px;
 
-    box-shadow:
-        0 10px 35px #0005;
+    box-shadow:0 10px 35px #0005;
 }
 
 .contentCard h2{
-
     font-size:22px;
-
     margin-bottom:12px;
-
-    color:#ffffff;
 }
 
 .contentCard h3{
-
     font-size:17px;
-
-    margin:
-        18px 0 8px;
+    margin:18px 0 8px;
 }
 
 .contentCard p{
-
     color:#cbd7df;
 
     font-size:14px;
@@ -547,7 +441,6 @@ button:hover{
 }
 
 .contentCard ul{
-
     padding-left:20px;
 
     color:#cbd7df;
@@ -557,16 +450,12 @@ button:hover{
     font-size:14px;
 }
 
-
-/* =========================================================
+/* =====================================================
    FAQ
-========================================================= */
+===================================================== */
 
 .faqItem{
-
-    border:
-        1px solid
-        #ffffff12;
+    border:1px solid #ffffff12;
 
     border-radius:12px;
 
@@ -578,7 +467,6 @@ button:hover{
 }
 
 .faqQuestion{
-
     width:100%;
 
     text-align:left;
@@ -589,24 +477,19 @@ button:hover{
 
     border-radius:0;
 
-    padding:
-        14px;
+    padding:14px;
 
     font-size:14px;
 
     font-weight:800;
 
     color:#fff;
-
-    cursor:pointer;
 }
 
 .faqAnswer{
-
     display:none;
 
-    padding:
-        0 14px 14px;
+    padding:0 14px 14px;
 
     color:#bdcad3;
 
@@ -615,19 +498,15 @@ button:hover{
     line-height:1.7;
 }
 
-.faqItem.open
-.faqAnswer{
-
+.faqItem.open .faqAnswer{
     display:block;
 }
 
-
-/* =========================================================
+/* =====================================================
    CONTACT
-========================================================= */
+===================================================== */
 
 .contactBox{
-
     display:flex;
 
     flex-wrap:wrap;
@@ -636,7 +515,6 @@ button:hover{
 }
 
 .contactItem{
-
     flex:1 1 220px;
 
     padding:13px;
@@ -645,45 +523,34 @@ button:hover{
 
     background:#ffffff08;
 
-    border:
-        1px solid
-        #ffffff12;
+    border:1px solid #ffffff12;
 }
 
 .contactItem strong{
-
     display:block;
-
     margin-bottom:4px;
 }
 
 .contactItem span{
-
     color:#b8c6cf;
-
     font-size:13px;
 }
 
-
-/* =========================================================
-   ADSENSE AREA
-========================================================= */
+/* =====================================================
+   ADSENSE
+===================================================== */
 
 #adSection{
-
     width:100%;
 
     max-width:1050px;
 
-    margin:
-        0 auto 40px;
+    margin:0 auto 40px;
 
-    padding:
-        0 14px;
+    padding:0 14px;
 }
 
 .adBox{
-
     width:100%;
 
     min-height:180px;
@@ -696,14 +563,11 @@ button:hover{
 
     text-align:center;
 
-    border:
-        1px dashed
-        #ffffff25;
+    border:1px dashed #ffffff25;
 
     border-radius:15px;
 
-    background:
-        #ffffff04;
+    background:#ffffff04;
 
     color:#87949d;
 
@@ -713,86 +577,62 @@ button:hover{
 }
 
 .adBox small{
-
     display:block;
-
     margin-top:5px;
-
     color:#64717a;
 }
 
-
-/* =========================================================
+/* =====================================================
    FOOTER
-========================================================= */
+===================================================== */
 
 footer{
-
     width:100%;
 
-    padding:
-        25px 15px 35px;
+    padding:25px 15px 35px;
 
     text-align:center;
 
     color:#7e8b94;
 
-    border-top:
-        1px solid
-        #ffffff0d;
+    border-top:1px solid #ffffff0d;
 
     font-size:12px;
 
     line-height:1.7;
 }
 
-
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
-@media(
-    max-width:600px
-){
+@media(max-width:600px){
 
     #gameSection{
-
         min-height:100dvh;
-
-        padding:
-            4px 4px 8px;
+        padding:4px 4px 8px;
     }
 
     .logo{
-
         font-size:16px;
     }
 
     .turn{
-
         font-size:9px;
-
-        padding:
-            6px 9px;
+        padding:6px 9px;
     }
 
     .player{
-
         min-width:82px;
-
-        padding:
-            4px 7px;
-
+        padding:4px 7px;
         font-size:9px;
     }
 
     .player strong{
-
         font-size:11px;
     }
 
     #tableArea{
-
         width:
             min(
                 calc(100vw - 12px),
@@ -805,19 +645,16 @@ footer{
                 calc((100vw - 12px) * 1.82)
             );
 
-        aspect-ratio:
-            550 / 1000;
+        aspect-ratio:550 / 1000;
 
         flex:1;
 
         min-height:0;
 
-        margin:
-            1px auto;
+        margin:1px auto;
     }
 
     #canvas{
-
         border-radius:14px;
 
         box-shadow:
@@ -827,92 +664,61 @@ footer{
     }
 
     .controls{
-
         padding-top:4px;
-
         gap:5px;
-
         flex-shrink:0;
     }
 
     button{
-
-        padding:
-            7px 8px;
-
+        padding:7px 8px;
         font-size:9px;
-
         border-radius:9px;
     }
 
     .power{
-
-        width:
-            min(125px,30vw);
-
+        width:min(125px,30vw);
         height:27px;
     }
 
     .powerText{
-
         font-size:8px;
     }
 
     #siteContent{
-
-        padding:
-            15px 10px 40px;
+        padding:15px 10px 40px;
     }
 
     .contentCard{
-
-        padding:
-            18px 14px;
-
+        padding:18px 14px;
         border-radius:15px;
     }
 
     .contentCard h2{
-
         font-size:19px;
     }
 
     .contentCard p,
     .contentCard ul{
-
         font-size:13px;
     }
 
     #adSection{
-
-        padding:
-            0 10px;
+        padding:0 10px;
     }
-
 }
 
+/* =====================================================
+   SMALL PHONE
+===================================================== */
 
-/* =========================================================
-   SMALL PHONES
-========================================================= */
-
-@media(
-    max-width:380px
-) and (
-    orientation:portrait
-){
+@media(max-width:380px) and (orientation:portrait){
 
     #tableArea{
-
-        width:
-            calc(100vw - 10px);
-
-        height:
-            calc(100dvh - 101px);
+        width:calc(100vw - 10px);
+        height:calc(100dvh - 101px);
     }
 
     .power{
-
         width:105px;
     }
 }
@@ -920,16 +726,13 @@ footer{
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =======================================================
+<!-- =====================================================
      GAME
-======================================================= -->
+===================================================== -->
 
 <section id="gameSection">
-
 
 <header class="header">
 
@@ -937,30 +740,19 @@ footer{
         🎱 Game With Fun
     </div>
 
-    <div
-        class="turn"
-        id="turn">
-
+    <div class="turn" id="turn">
         YOUR TURN
-
     </div>
 
 </header>
 
-
 <div class="players">
 
-    <div
-        class="player active"
-        id="human">
+    <div class="player active" id="human">
 
-        <small>
-            PLAYER
-        </small>
+        <small>PLAYER</small>
 
-        <strong>
-            👤 HUMAN
-        </strong>
+        <strong>👤 HUMAN</strong>
 
         <span id="humanGroup">
             Open Table
@@ -968,18 +760,11 @@ footer{
 
     </div>
 
+    <div class="player" id="ai">
 
-    <div
-        class="player"
-        id="ai">
+        <small>OPPONENT</small>
 
-        <small>
-            OPPONENT
-        </small>
-
-        <strong>
-            🤖 AI
-        </strong>
+        <strong>🤖 AI</strong>
 
         <span id="aiGroup">
             Open Table
@@ -989,13 +774,11 @@ footer{
 
 </div>
 
-
 <div id="tableArea">
 
     <canvas id="canvas"></canvas>
 
 </div>
-
 
 <div class="controls">
 
@@ -1028,18 +811,15 @@ footer{
 
 </section>
 
-
-<!-- =======================================================
+<!-- =====================================================
      HELP
-======================================================= -->
+===================================================== -->
 
 <div id="help">
 
     <div class="helpBox">
 
-        <h1>
-            🎱 8 BALL POOL
-        </h1>
+        <h1>🎱 8 BALL POOL</h1>
 
         <p>
             🎯 Drag away from the cue ball
@@ -1073,10 +853,9 @@ footer{
 
 </div>
 
-
-<!-- =======================================================
+<!-- =====================================================
      RESULT
-======================================================= -->
+===================================================== -->
 
 <div id="result">
 
@@ -1092,13 +871,11 @@ footer{
 
 </div>
 
-
-<!-- =======================================================
+<!-- =====================================================
      SEO CONTENT
-======================================================= -->
+===================================================== -->
 
 <main id="siteContent">
-
 
 <section class="contentCard">
 
@@ -1117,9 +894,6 @@ footer{
 <p>
     The game uses a responsive HTML5 game area so you can play
     directly in your web browser without installing an application.
-    On portrait mobile screens, the pool table automatically uses
-    a vertical layout to make better use of the available screen
-    space.
 </p>
 
 <h3>
@@ -1127,16 +901,15 @@ footer{
 </h3>
 
 <p>
-    Start the game and use the cue ball to aim toward the object
-    balls. On a touchscreen, drag away from the cue ball to choose
-    your shooting direction and power. Release your finger to take
-    the shot.
+    Start the game and drag away from the cue ball to choose
+    your shooting direction and power. Release your finger
+    to take the shot.
 </p>
 
 <p>
     The first legally pocketed group determines whether you play
-    solids or stripes. Continue pocketing balls from your group
-    and try to clear them before attempting the black 8-ball.
+    solids or stripes. Clear your group before attempting the
+    black 8-ball.
 </p>
 
 <h3>
@@ -1147,7 +920,6 @@ footer{
     <li>Free online 8 ball pool gameplay</li>
     <li>Human versus AI game mode</li>
     <li>Responsive mobile-friendly pool table</li>
-    <li>Portrait table orientation on mobile</li>
     <li>Touch-based aiming and shooting</li>
     <li>Adjustable shot power</li>
     <li>AI opponent</li>
@@ -1158,17 +930,13 @@ footer{
 
 </section>
 
-
-<!-- =======================================================
-     FAQ
-======================================================= -->
+<!-- FAQ -->
 
 <section class="contentCard">
 
 <h2>
     Frequently Asked Questions
 </h2>
-
 
 <div class="faqItem">
 
@@ -1177,15 +945,12 @@ footer{
 </button>
 
 <div class="faqAnswer">
-
-Start the game and drag away from the cue ball to aim.
-Move farther away from the cue ball to increase shooting
-power, then release your finger to shoot.
-
+    Start the game and drag away from the cue ball to aim.
+    Move farther away from the cue ball to increase shooting
+    power, then release your finger to shoot.
 </div>
 
 </div>
-
 
 <div class="faqItem">
 
@@ -1194,15 +959,11 @@ power, then release your finger to shoot.
 </button>
 
 <div class="faqAnswer">
-
-Yes. The game is designed for touch screens and responsive
-mobile browsers. The table automatically changes to a
-portrait layout on supported mobile screens.
-
+    Yes. The game is designed for touch screens and responsive
+    mobile browsers.
 </div>
 
 </div>
-
 
 <div class="faqItem">
 
@@ -1211,14 +972,10 @@ portrait layout on supported mobile screens.
 </button>
 
 <div class="faqAnswer">
-
-No. The game is designed to run directly in a modern web
-browser using HTML5, CSS and JavaScript.
-
+    No. The game runs directly in a modern web browser.
 </div>
 
 </div>
-
 
 <div class="faqItem">
 
@@ -1227,15 +984,11 @@ browser using HTML5, CSS and JavaScript.
 </button>
 
 <div class="faqAnswer">
-
-This version does not load third-party MP3 or WAV files.
-Its basic pool sound effects are generated in the browser
-using the Web Audio API.
-
+    This version does not load third-party MP3 or WAV files.
+    Basic sound effects are generated with the Web Audio API.
 </div>
 
 </div>
-
 
 <div class="faqItem">
 
@@ -1244,15 +997,11 @@ using the Web Audio API.
 </button>
 
 <div class="faqAnswer">
-
-Clear the balls belonging to your assigned group and then
-legally pocket the 8-ball. Pocketing the 8-ball before your
-group is cleared results in a loss.
-
+    Clear the balls belonging to your assigned group and then
+    legally pocket the 8-ball.
 </div>
 
 </div>
-
 
 <div class="faqItem">
 
@@ -1261,20 +1010,15 @@ group is cleared results in a loss.
 </button>
 
 <div class="faqAnswer">
-
-Yes. Press the restart button below the game to start a
-new match.
-
+    Yes. Press the restart button below the game to start a
+    new match.
 </div>
 
 </div>
 
 </section>
 
-
-<!-- =======================================================
-     ABOUT
-======================================================= -->
+<!-- ABOUT -->
 
 <section class="contentCard">
 
@@ -1291,16 +1035,11 @@ new match.
 <p>
     Our goal is to create lightweight and enjoyable games with
     easy controls, responsive layouts and clear instructions.
-    Games are designed for browser-based entertainment without
-    requiring users to install additional software.
 </p>
 
 </section>
 
-
-<!-- =======================================================
-     PRIVACY
-======================================================= -->
+<!-- PRIVACY -->
 
 <section class="contentCard">
 
@@ -1323,21 +1062,12 @@ new match.
 
 <p>
     Visitors should review the applicable policies of third-party
-    services such as advertising providers when those services
-    are enabled on the website.
-</p>
-
-<p>
-    If you have questions about privacy or data practices on
-    Game With Fun, please contact the website owner.
+    services when those services are enabled.
 </p>
 
 </section>
 
-
-<!-- =======================================================
-     DISCLAIMER
-======================================================= -->
+<!-- DISCLAIMER -->
 
 <section class="contentCard">
 
@@ -1347,25 +1077,18 @@ new match.
 
 <p>
     Game With Fun provides browser games for entertainment and
-    general informational purposes. While reasonable efforts may
-    be made to keep games functional and available, we do not
-    guarantee that the website or individual games will always
-    be available, error-free or compatible with every device
-    and browser.
+    general informational purposes. We do not guarantee that
+    the website or individual games will always be available,
+    error-free or compatible with every device and browser.
 </p>
 
 <p>
-    Game results are intended for entertainment. Users should
-    play responsibly and understand that browser performance,
-    device hardware and internet conditions can affect gameplay.
+    Game results are intended for entertainment.
 </p>
 
 </section>
 
-
-<!-- =======================================================
-     CONTACT
-======================================================= -->
+<!-- CONTACT -->
 
 <section class="contentCard">
 
@@ -1394,7 +1117,6 @@ new match.
 
     </div>
 
-
     <div class="contactItem">
 
         <strong>
@@ -1414,10 +1136,9 @@ new match.
 
 </main>
 
-
-<!-- =======================================================
-     ADSENSE AREA
-======================================================= -->
+<!-- =====================================================
+     ADSENSE
+===================================================== -->
 
 <section id="adSection">
 
@@ -1437,38 +1158,7 @@ new match.
 
     </div>
 
-    <!--
-    =========================================================
-    GOOGLE ADSENSE CODE
-
-    Replace the placeholder above with your actual AdSense
-    ad unit code after your AdSense account and website
-    are approved.
-
-    Example structure:
-
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="XXXXXXXXXX"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-    Do NOT copy random publisher IDs.
-    Use your own AdSense code from Google.
-    =========================================================
-    -->
-
 </section>
-
-
-<!-- =======================================================
-     FOOTER
-======================================================= -->
 
 <footer>
 
@@ -1481,12 +1171,11 @@ new match.
 
 </footer>
 
-
 <script>
 
-/* =========================================================
-   GAME CANVAS
-========================================================= */
+/* =====================================================
+   CANVAS
+===================================================== */
 
 const canvas =
     document.getElementById("canvas");
@@ -1494,110 +1183,36 @@ const canvas =
 const ctx =
     canvas.getContext("2d");
 
-
 const LOGICAL_W = 1000;
 const LOGICAL_H = 550;
 
 
-/* =========================================================
-   RESPONSIVE CANVAS
-========================================================= */
-
-function isPortrait(){
-
-    return (
-        window.innerWidth <= 600 &&
-        window.innerHeight >
-        window.innerWidth
-    );
-
-}
-
-
-function resizeCanvas(){
-
-    if(
-        isPortrait()
-    ){
-
-        canvas.width =
-            LOGICAL_H;
-
-        canvas.height =
-            LOGICAL_W;
-
-    }else{
-
-        canvas.width =
-            LOGICAL_W;
-
-        canvas.height =
-            LOGICAL_H;
-
-    }
-
-    renderFrame();
-
-}
-
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-window.addEventListener(
-    "orientationchange",
-    ()=>{
-
-        setTimeout(
-            resizeCanvas,
-            100
-        );
-
-    }
-);
-
-
-/* =========================================================
+/* =====================================================
    TABLE
-========================================================= */
+===================================================== */
 
 const table = {
-
     l:60,
     r:940,
-
     t:55,
     b:495
-
 };
-
 
 const ballR = 14;
 
-
 const pockets = [
-
     [table.l,table.t],
-
     [500,table.t-2],
-
     [table.r,table.t],
-
     [table.l,table.b],
-
     [500,table.b+2],
-
     [table.r,table.b]
-
 ];
 
 
-/* =========================================================
-   GAME VARIABLES
-========================================================= */
+/* =====================================================
+   GAME STATE
+===================================================== */
 
 let balls = [];
 
@@ -1625,29 +1240,35 @@ let power = 0;
 
 let dragging = false;
 
+let resolving = false;
 
-/* =========================================================
-   BROWSER GENERATED SOUND
-========================================================= */
+
+/* =====================================================
+   AUDIO
+===================================================== */
 
 let audioCtx = null;
-
 
 function initAudio(){
 
     if(!audioCtx){
 
-        audioCtx =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if(AudioContext){
+
+            audioCtx =
+                new AudioContext();
+
+        }
 
     }
 
     if(
-        audioCtx.state ===
-        "suspended"
+        audioCtx &&
+        audioCtx.state === "suspended"
     ){
 
         audioCtx.resume();
@@ -1655,7 +1276,6 @@ function initAudio(){
     }
 
 }
-
 
 function sound(
     frequency=300,
@@ -1667,251 +1287,175 @@ function sound(
     if(!audioCtx)
         return;
 
+    try{
 
-    const oscillator =
-        audioCtx.createOscillator();
+        const oscillator =
+            audioCtx.createOscillator();
 
-    const gain =
-        audioCtx.createGain();
+        const gain =
+            audioCtx.createGain();
 
+        oscillator.type = type;
 
-    oscillator.type =
-        type;
+        oscillator.frequency.setValueAtTime(
+            frequency,
+            audioCtx.currentTime
+        );
 
+        gain.gain.setValueAtTime(
+            volume,
+            audioCtx.currentTime
+        );
 
-    oscillator.frequency.setValueAtTime(
-        frequency,
-        audioCtx.currentTime
-    );
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audioCtx.currentTime + duration
+        );
 
+        oscillator.connect(gain);
 
-    gain.gain.setValueAtTime(
-        volume,
-        audioCtx.currentTime
-    );
+        gain.connect(audioCtx.destination);
 
+        oscillator.start();
 
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audioCtx.currentTime +
-        duration
-    );
+        oscillator.stop(
+            audioCtx.currentTime + duration
+        );
 
-
-    oscillator.connect(gain);
-
-    gain.connect(
-        audioCtx.destination
-    );
-
-
-    oscillator.start();
-
-    oscillator.stop(
-        audioCtx.currentTime +
-        duration
-    );
+    }catch(e){}
 
 }
-
-
-/* Cue hit */
 
 function cueHitSound(){
 
-    sound(
-        120,
-        .10,
-        "triangle",
-        .10
-    );
+    sound(120,.10,"triangle",.10);
 
-    setTimeout(
-        ()=>{
-            sound(
-                75,
-                .09,
-                "sine",
-                .05
-            );
-        },
-        20
-    );
+    setTimeout(()=>{
+        sound(75,.09,"sine",.05);
+    },20);
 
 }
-
-
-/* Ball collision */
 
 function collisionSound(){
 
-    sound(
-        240,
-        .035,
-        "sine",
-        .035
-    );
+    sound(240,.035,"sine",.025);
 
 }
-
-
-/* Pocket */
 
 function pocketSound(){
 
-    sound(
-        110,
-        .13,
-        "sine",
-        .08
-    );
+    sound(110,.13,"sine",.08);
 
-    setTimeout(
-        ()=>{
-            sound(
-                65,
-                .16,
-                "triangle",
-                .06
-            );
-        },
-        45
-    );
+    setTimeout(()=>{
+        sound(65,.16,"triangle",.06);
+    },45);
 
 }
-
-
-/* Foul */
 
 function foulSound(){
 
-    sound(
-        130,
-        .15,
-        "sawtooth",
-        .07
-    );
+    sound(130,.15,"sawtooth",.07);
 
-    setTimeout(
-        ()=>{
-            sound(
-                90,
-                .18,
-                "sawtooth",
-                .05
-            );
-        },
-        80
-    );
+    setTimeout(()=>{
+        sound(90,.18,"sawtooth",.05);
+    },80);
 
 }
-
-
-/* Turn */
 
 function turnSound(){
 
-    sound(
-        520,
-        .06,
-        "sine",
-        .04
-    );
+    sound(520,.06,"sine",.04);
 
-    setTimeout(
-        ()=>{
-            sound(
-                700,
-                .08,
-                "sine",
-                .04
-            );
-        },
-        70
-    );
+    setTimeout(()=>{
+        sound(700,.08,"sine",.04);
+    },70);
 
 }
-
-
-/* Win */
 
 function winSound(){
 
-    sound(
-        523,
-        .12,
-        "sine",
-        .07
-    );
+    sound(523,.12,"sine",.07);
 
-    setTimeout(
-        ()=>{
-            sound(
-                659,
-                .12,
-                "sine",
-                .07
-            );
-        },
-        130
-    );
+    setTimeout(()=>{
+        sound(659,.12,"sine",.07);
+    },130);
 
-    setTimeout(
-        ()=>{
-            sound(
-                784,
-                .22,
-                "sine",
-                .08
-            );
-        },
-        260
-    );
+    setTimeout(()=>{
+        sound(784,.22,"sine",.08);
+    },260);
 
 }
-
-
-/* Lose */
 
 function loseSound(){
 
-    sound(
-        330,
-        .15,
-        "sine",
-        .06
-    );
+    sound(330,.15,"sine",.06);
 
-    setTimeout(
-        ()=>{
-            sound(
-                220,
-                .18,
-                "sine",
-                .06
-            );
-        },
-        150
-    );
+    setTimeout(()=>{
+        sound(220,.18,"sine",.06);
+    },150);
 
-    setTimeout(
-        ()=>{
-            sound(
-                140,
-                .30,
-                "sine",
-                .06
-            );
-        },
-        320
+    setTimeout(()=>{
+        sound(140,.30,"sine",.06);
+    },320);
+
+}
+
+
+/* =====================================================
+   PORTRAIT
+===================================================== */
+
+function isPortrait(){
+
+    return (
+        window.innerWidth <= 600 &&
+        window.innerHeight > window.innerWidth
     );
 
 }
 
 
-/* =========================================================
-   BALL CREATION
-========================================================= */
+/* =====================================================
+   CANVAS SIZE
+===================================================== */
+
+function resizeCanvas(){
+
+    if(isPortrait()){
+
+        canvas.width = LOGICAL_H;
+        canvas.height = LOGICAL_W;
+
+    }else{
+
+        canvas.width = LOGICAL_W;
+        canvas.height = LOGICAL_H;
+
+    }
+
+    renderFrame();
+
+}
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+window.addEventListener(
+    "orientationchange",
+    ()=>{
+        setTimeout(
+            resizeCanvas,
+            150
+        );
+    }
+);
+
+
+/* =====================================================
+   BALL
+===================================================== */
 
 function createBall(
     number,
@@ -1920,32 +1464,25 @@ function createBall(
 ){
 
     return {
-
         number,
-
         x,
         y,
-
         vx:0,
         vy:0,
-
         r:ballR,
-
         pocketed:false
-
     };
 
 }
 
 
-/* =========================================================
+/* =====================================================
    NEW GAME
-========================================================= */
+===================================================== */
 
 function newGame(){
 
     balls = [];
-
 
     cueBall =
         createBall(
@@ -1954,51 +1491,29 @@ function newGame(){
             275
         );
 
-
-    balls.push(
-        cueBall
-    );
-
+    balls.push(cueBall);
 
     const numbers = [
-
         1,9,2,10,8,
-
         11,3,12,4,13,
-
         5,14,6,15,7
-
     ];
 
+    const startX = 670;
+    const startY = 275;
+    const gap = 29;
 
     let index = 0;
 
+    for(let row=0;row<5;row++){
 
-    const startX = 670;
-
-    const startY = 275;
-
-    const gap = 29;
-
-
-    for(
-        let row=0;
-        row<5;
-        row++
-    ){
-
-        for(
-            let col=0;
-            col<=row;
-            col++
-        ){
+        for(let col=0;col<=row;col++){
 
             const x =
                 startX +
                 row *
                 gap *
                 .86;
-
 
             const y =
                 startY +
@@ -2007,7 +1522,6 @@ function newGame(){
                     row/2
                 ) *
                 gap;
-
 
             balls.push(
                 createBall(
@@ -2021,40 +1535,33 @@ function newGame(){
 
     }
 
+    current = "human";
 
-    current =
-        "human";
+    moving = false;
 
-    moving =
-        false;
+    gameOver = false;
 
-    gameOver =
-        false;
+    humanGroup = null;
 
-    humanGroup =
-        null;
+    aiGroup = null;
 
-    aiGroup =
-        null;
+    firstContact = null;
 
-    firstContact =
-        null;
+    pocketedThisShot = [];
 
-    pocketedThisShot =
-        [];
+    foul = false;
 
-    foul =
-        false;
+    aimAngle = 0;
 
-    aimAngle =
-        0;
+    power = 0;
 
-    power =
-        0;
+    dragging = false;
 
-    dragging =
-        false;
+    resolving = false;
 
+    document
+        .getElementById("result")
+        .style.display = "none";
 
     updatePower();
 
@@ -2063,9 +1570,9 @@ function newGame(){
 }
 
 
-/* =========================================================
+/* =====================================================
    COLORS
-========================================================= */
+===================================================== */
 
 function ballColor(n){
 
@@ -2094,9 +1601,9 @@ function ballColor(n){
 }
 
 
-/* =========================================================
+/* =====================================================
    TABLE DRAW
-========================================================= */
+===================================================== */
 
 function drawTable(){
 
@@ -2107,7 +1614,6 @@ function drawTable(){
             0,
             LOGICAL_H
         );
-
 
     wood.addColorStop(
         0,
@@ -2124,10 +1630,7 @@ function drawTable(){
         "#8a5427"
     );
 
-
-    ctx.fillStyle =
-        wood;
-
+    ctx.fillStyle = wood;
 
     ctx.fillRect(
         20,
@@ -2135,7 +1638,6 @@ function drawTable(){
         LOGICAL_W-40,
         LOGICAL_H-30
     );
-
 
     const felt =
         ctx.createRadialGradient(
@@ -2146,7 +1648,6 @@ function drawTable(){
             270,
             650
         );
-
 
     felt.addColorStop(
         0,
@@ -2163,10 +1664,7 @@ function drawTable(){
         "#04512f"
     );
 
-
-    ctx.fillStyle =
-        felt;
-
+    ctx.fillStyle = felt;
 
     ctx.fillRect(
         table.l,
@@ -2175,16 +1673,11 @@ function drawTable(){
         table.b-table.t
     );
 
+    ctx.strokeStyle = "#42d694";
 
-    ctx.strokeStyle =
-        "#42d694";
+    ctx.globalAlpha = .22;
 
-    ctx.globalAlpha =
-        .22;
-
-    ctx.lineWidth =
-        3;
-
+    ctx.lineWidth = 3;
 
     ctx.strokeRect(
         table.l+7,
@@ -2193,14 +1686,9 @@ function drawTable(){
         table.b-table.t-14
     );
 
+    ctx.globalAlpha = 1;
 
-    ctx.globalAlpha =
-        1;
-
-
-    ctx.fillStyle =
-        "#063c27";
-
+    ctx.fillStyle = "#063c27";
 
     ctx.fillRect(
         table.l,
@@ -2208,7 +1696,6 @@ function drawTable(){
         table.r-table.l,
         17
     );
-
 
     ctx.fillRect(
         table.l,
@@ -2217,14 +1704,12 @@ function drawTable(){
         17
     );
 
-
     ctx.fillRect(
         table.l,
         table.t,
         17,
         table.b-table.t
     );
-
 
     ctx.fillRect(
         table.r-17,
@@ -2233,7 +1718,6 @@ function drawTable(){
         table.b-table.t
     );
 
-
     drawDiamonds();
 
     drawPockets();
@@ -2241,14 +1725,13 @@ function drawTable(){
 }
 
 
-/* =========================================================
+/* =====================================================
    DIAMONDS
-========================================================= */
+===================================================== */
 
 function drawDiamonds(){
 
     const xs = [
-
         table.l+110,
         table.l+220,
         table.l+330,
@@ -2256,25 +1739,17 @@ function drawDiamonds(){
         table.l+550,
         table.l+660,
         table.l+770
-
     ];
-
 
     ctx.save();
 
-    ctx.fillStyle =
-        "#e9d6a5";
+    ctx.fillStyle = "#e9d6a5";
 
-    ctx.shadowColor =
-        "#000";
+    ctx.shadowColor = "#000";
 
-    ctx.shadowBlur =
-        4;
+    ctx.shadowBlur = 4;
 
-
-    for(
-        const x of xs
-    ){
+    for(const x of xs){
 
         ctx.save();
 
@@ -2295,7 +1770,6 @@ function drawDiamonds(){
         );
 
         ctx.restore();
-
 
         ctx.save();
 
@@ -2319,21 +1793,15 @@ function drawDiamonds(){
 
     }
 
-
     const ys = [
-
         table.t+75,
         table.t+145,
         table.t+220,
         table.t+295,
         table.t+365
-
     ];
 
-
-    for(
-        const y of ys
-    ){
+    for(const y of ys){
 
         ctx.save();
 
@@ -2354,7 +1822,6 @@ function drawDiamonds(){
         );
 
         ctx.restore();
-
 
         ctx.save();
 
@@ -2378,21 +1845,18 @@ function drawDiamonds(){
 
     }
 
-
     ctx.restore();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    POCKETS
-========================================================= */
+===================================================== */
 
 function drawPockets(){
 
-    for(
-        const p of pockets
-    ){
+    for(const p of pockets){
 
         const glow =
             ctx.createRadialGradient(
@@ -2403,7 +1867,6 @@ function drawPockets(){
                 p[1],
                 28
             );
-
 
         glow.addColorStop(
             0,
@@ -2420,10 +1883,7 @@ function drawPockets(){
             "#0000"
         );
 
-
-        ctx.fillStyle =
-            glow;
-
+        ctx.fillStyle = glow;
 
         ctx.beginPath();
 
@@ -2437,13 +1897,9 @@ function drawPockets(){
 
         ctx.fill();
 
+        ctx.strokeStyle = "#111";
 
-        ctx.strokeStyle =
-            "#111";
-
-        ctx.lineWidth =
-            4;
-
+        ctx.lineWidth = 4;
 
         ctx.beginPath();
 
@@ -2462,16 +1918,14 @@ function drawPockets(){
 }
 
 
-/* =========================================================
+/* =====================================================
    BALL DRAW
-========================================================= */
+===================================================== */
 
 function drawBall(b){
 
-    if(
-        b.pocketed
-    ) return;
-
+    if(b.pocketed)
+        return;
 
     const grad =
         ctx.createRadialGradient(
@@ -2483,10 +1937,7 @@ function drawBall(b){
             b.r+3
         );
 
-
-    if(
-        b.number===0
-    ){
+    if(b.number===0){
 
         grad.addColorStop(
             0,
@@ -2512,9 +1963,7 @@ function drawBall(b){
 
         grad.addColorStop(
             .18,
-            ballColor(
-                b.number
-            )
+            ballColor(b.number)
         );
 
         grad.addColorStop(
@@ -2524,10 +1973,7 @@ function drawBall(b){
 
     }
 
-
-    ctx.fillStyle =
-        grad;
-
+    ctx.fillStyle = grad;
 
     ctx.beginPath();
 
@@ -2540,7 +1986,6 @@ function drawBall(b){
     );
 
     ctx.fill();
-
 
     if(
         b.number>=9 &&
@@ -2561,8 +2006,7 @@ function drawBall(b){
 
         ctx.clip();
 
-        ctx.fillStyle =
-            "#f7f7f7";
+        ctx.fillStyle = "#f7f7f7";
 
         ctx.fillRect(
             b.x-b.r,
@@ -2575,13 +2019,9 @@ function drawBall(b){
 
     }
 
+    if(b.number>0){
 
-    if(
-        b.number>0
-    ){
-
-        ctx.fillStyle =
-            "#fff";
+        ctx.fillStyle = "#fff";
 
         ctx.beginPath();
 
@@ -2595,18 +2035,13 @@ function drawBall(b){
 
         ctx.fill();
 
+        ctx.fillStyle = "#111";
 
-        ctx.fillStyle =
-            "#111";
+        ctx.font = "bold 8px Arial";
 
-        ctx.font =
-            "bold 8px Arial";
+        ctx.textAlign = "center";
 
-        ctx.textAlign =
-            "center";
-
-        ctx.textBaseline =
-            "middle";
+        ctx.textBaseline = "middle";
 
         ctx.fillText(
             b.number,
@@ -2616,9 +2051,7 @@ function drawBall(b){
 
     }
 
-
-    ctx.fillStyle =
-        "#ffffff99";
+    ctx.fillStyle = "#ffffff99";
 
     ctx.beginPath();
 
@@ -2635,48 +2068,40 @@ function drawBall(b){
 }
 
 
-/* =========================================================
+/* =====================================================
    AIM
-========================================================= */
+===================================================== */
 
 function drawAim(){
 
     if(
         current!=="human" ||
         moving ||
-        gameOver
-    ) return;
+        gameOver ||
+        !cueBall ||
+        cueBall.pocketed
+    ){
+        return;
+    }
 
-
-    const maxLen =
-        390;
-
+    const maxLen = 390;
 
     const dx =
-        Math.cos(
-            aimAngle
-        );
+        Math.cos(aimAngle);
 
     const dy =
-        Math.sin(
-            aimAngle
-        );
-
+        Math.sin(aimAngle);
 
     ctx.save();
 
+    ctx.strokeStyle = "#ffffffb5";
 
-    ctx.strokeStyle =
-        "#ffffffb5";
-
-    ctx.lineWidth =
-        2;
+    ctx.lineWidth = 2;
 
     ctx.setLineDash([
         9,
         8
     ]);
-
 
     ctx.beginPath();
 
@@ -2686,38 +2111,25 @@ function drawAim(){
     );
 
     ctx.lineTo(
-        cueBall.x+
-        dx*maxLen,
-        cueBall.y+
-        dy*maxLen
+        cueBall.x+dx*maxLen,
+        cueBall.y+dy*maxLen
     );
 
     ctx.stroke();
 
     ctx.setLineDash([]);
 
+    for(let i=1;i<=6;i++){
 
-    for(
-        let i=1;
-        i<=6;
-        i++
-    ){
+        const d = i*48;
 
-        const d =
-            i*48;
-
-
-        ctx.fillStyle =
-            "#ffffffaa";
-
+        ctx.fillStyle = "#ffffffaa";
 
         ctx.beginPath();
 
         ctx.arc(
-            cueBall.x+
-            dx*d,
-            cueBall.y+
-            dy*d,
+            cueBall.x+dx*d,
+            cueBall.y+dy*d,
             2.5,
             0,
             Math.PI*2
@@ -2727,13 +2139,9 @@ function drawAim(){
 
     }
 
+    ctx.strokeStyle = "#ffe45c";
 
-    ctx.strokeStyle =
-        "#ffe45c";
-
-    ctx.lineWidth =
-        2;
-
+    ctx.lineWidth = 2;
 
     ctx.beginPath();
 
@@ -2747,350 +2155,375 @@ function drawAim(){
 
     ctx.stroke();
 
-
     ctx.restore();
 
 }
 
 
-/* =========================================================
-   PHYSICS
-========================================================= */
+/* =====================================================
+   POCKET DETECTION
+===================================================== */
 
-function updatePhysics(){
+function checkPocket(b){
 
-    if(!moving)
-        return;
+    if(b.pocketed)
+        return false;
 
+    for(const p of pockets){
 
-    let anyMoving =
-        false;
+        const dx =
+            b.x-p[0];
 
+        const dy =
+            b.y-p[1];
 
-    for(
-        const b of balls
-    ){
+        const distance =
+            Math.hypot(
+                dx,
+                dy
+            );
 
-        if(
-            b.pocketed
-        ) continue;
+        /*
+         * Bigger radius around the pocket.
+         * This fixes corner pocket problems.
+         */
+        if(distance < 27){
 
+            b.pocketed = true;
 
-        b.x +=
-            b.vx;
+            b.vx = 0;
+            b.vy = 0;
 
-        b.y +=
-            b.vy;
+            /*
+             * Put the ball slightly inside
+             * the pocket visually.
+             */
+            b.x = p[0];
+            b.y = p[1];
 
+            pocketedThisShot.push(b);
 
-        b.vx *=
-            .988;
+            pocketSound();
 
-        b.vy *=
-            .988;
-
-
-        if(
-            Math.abs(b.vx)>.05 ||
-            Math.abs(b.vy)>.05
-        ){
-
-            anyMoving =
-                true;
-
-        }
-
-
-        if(
-            b.x-b.r <
-            table.l+17
-        ){
-
-            b.x =
-                table.l+
-                17+
-                b.r;
-
-            b.vx =
-                Math.abs(
-                    b.vx
-                )*.88;
-
-        }
-
-
-        if(
-            b.x+b.r >
-            table.r-17
-        ){
-
-            b.x =
-                table.r-
-                17-
-                b.r;
-
-            b.vx =
-                -Math.abs(
-                    b.vx
-                )*.88;
-
-        }
-
-
-        if(
-            b.y-b.r <
-            table.t+17
-        ){
-
-            b.y =
-                table.t+
-                17+
-                b.r;
-
-            b.vy =
-                Math.abs(
-                    b.vy
-                )*.88;
-
-        }
-
-
-        if(
-            b.y+b.r >
-            table.b-17
-        ){
-
-            b.y =
-                table.b-
-                17-
-                b.r;
-
-            b.vy =
-                -Math.abs(
-                    b.vy
-                )*.88;
-
-        }
-
-
-        for(
-            const p of pockets
-        ){
-
-            const dx =
-                b.x-p[0];
-
-            const dy =
-                b.y-p[1];
-
-            const dist =
-                Math.hypot(
-                    dx,
-                    dy
-                );
-
-
-            if(
-                dist<24
-            ){
-
-                b.pocketed =
-                    true;
-
-                b.vx =
-                    0;
-
-                b.vy =
-                    0;
-
-                pocketedThisShot.push(
-                    b
-                );
-
-                pocketSound();
-
-                break;
-
-            }
-
+            return true;
         }
 
     }
 
+    return false;
 
-    for(
-        let i=0;
-        i<balls.length;
-        i++
+}
+
+
+/* =====================================================
+   CUSHION COLLISION
+===================================================== */
+
+function cushionCollision(b){
+
+    const left =
+        table.l+17;
+
+    const right =
+        table.r-17;
+
+    const top =
+        table.t+17;
+
+    const bottom =
+        table.b-17;
+
+
+    /*
+     * Only bounce when the ball is not
+     * already inside a pocket area.
+     */
+    if(
+        b.x-b.r < left &&
+        Math.abs(b.y-table.t)>25 &&
+        Math.abs(b.y-table.b)>25
     ){
 
-        const a =
-            balls[i];
+        b.x = left+b.r;
 
-        if(
-            a.pocketed
-        ) continue;
-
-
-        for(
-            let j=i+1;
-            j<balls.length;
-            j++
-        ){
-
-            const b =
-                balls[j];
-
-            if(
-                b.pocketed
-            ) continue;
-
-
-            const dx =
-                b.x-a.x;
-
-            const dy =
-                b.y-a.y;
-
-            const dist =
-                Math.hypot(
-                    dx,
-                    dy
-                );
-
-
-            const minDist =
-                a.r+b.r;
-
-
-            if(
-                dist>0 &&
-                dist<minDist
-            ){
-
-                const nx =
-                    dx/dist;
-
-                const ny =
-                    dy/dist;
-
-
-                const overlap =
-                    minDist-dist;
-
-
-                a.x -=
-                    nx*
-                    overlap/2;
-
-                a.y -=
-                    ny*
-                    overlap/2;
-
-                b.x +=
-                    nx*
-                    overlap/2;
-
-                b.y +=
-                    ny*
-                    overlap/2;
-
-
-                const rvx =
-                    b.vx-a.vx;
-
-                const rvy =
-                    b.vy-a.vy;
-
-
-                const vel =
-                    rvx*nx+
-                    rvy*ny;
-
-
-                if(
-                    vel<0
-                ){
-
-                    const impulse =
-                        -vel*.98;
-
-
-                    a.vx -=
-                        impulse*nx;
-
-                    a.vy -=
-                        impulse*ny;
-
-                    b.vx +=
-                        impulse*nx;
-
-                    b.vy +=
-                        impulse*ny;
-
-
-                    collisionSound();
-
-
-                    if(
-                        !firstContact &&
-                        a===cueBall
-                    ){
-
-                        firstContact =
-                            b;
-
-                    }
-
-
-                    if(
-                        !firstContact &&
-                        b===cueBall
-                    ){
-
-                        firstContact =
-                            a;
-
-                    }
-
-                }
-
-            }
-
-        }
+        b.vx =
+            Math.abs(b.vx)*.90;
 
     }
 
 
     if(
-        !anyMoving
+        b.x+b.r > right &&
+        Math.abs(b.y-table.t)>25 &&
+        Math.abs(b.y-table.b)>25
     ){
 
-        moving =
-            false;
+        b.x = right-b.r;
 
-        setTimeout(
-            resolveShot,
-            100
-        );
+        b.vx =
+            -Math.abs(b.vx)*.90;
+
+    }
+
+
+    if(
+        b.y-b.r < top &&
+        Math.abs(b.x-table.l)>25 &&
+        Math.abs(b.x-table.r)>25
+    ){
+
+        b.y = top+b.r;
+
+        b.vy =
+            Math.abs(b.vy)*.90;
+
+    }
+
+
+    if(
+        b.y+b.r > bottom &&
+        Math.abs(b.x-table.l)>25 &&
+        Math.abs(b.x-table.r)>25
+    ){
+
+        b.y = bottom-b.r;
+
+        b.vy =
+            -Math.abs(b.vy)*.90;
 
     }
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   BALL COLLISION
+===================================================== */
+
+function collideBalls(a,b){
+
+    if(
+        a.pocketed ||
+        b.pocketed
+    ){
+        return;
+    }
+
+    const dx =
+        b.x-a.x;
+
+    const dy =
+        b.y-a.y;
+
+    const distance =
+        Math.hypot(
+            dx,
+            dy
+        );
+
+    const minDistance =
+        a.r+b.r;
+
+    if(
+        distance<=0 ||
+        distance>=minDistance
+    ){
+        return;
+    }
+
+    const nx =
+        dx/distance;
+
+    const ny =
+        dy/distance;
+
+    const overlap =
+        minDistance-distance;
+
+    a.x -=
+        nx*overlap/2;
+
+    a.y -=
+        ny*overlap/2;
+
+    b.x +=
+        nx*overlap/2;
+
+    b.y +=
+        ny*overlap/2;
+
+    const rvx =
+        b.vx-a.vx;
+
+    const rvy =
+        b.vy-a.vy;
+
+    const velocityAlongNormal =
+        rvx*nx+rvy*ny;
+
+    if(
+        velocityAlongNormal>0
+    ){
+        return;
+    }
+
+    const restitution = .94;
+
+    const impulse =
+        -(1+restitution)*
+        velocityAlongNormal/2;
+
+    a.vx -= impulse*nx;
+    a.vy -= impulse*ny;
+
+    b.vx += impulse*nx;
+    b.vy += impulse*ny;
+
+    /*
+     * Detect first object ball
+     * touched by the cue ball.
+     */
+    if(!firstContact){
+
+        if(a===cueBall && b!==cueBall){
+
+            firstContact = b;
+
+        }else if(
+            b===cueBall &&
+            a!==cueBall
+        ){
+
+            firstContact = a;
+
+        }
+
+    }
+
+    collisionSound();
+
+}
+
+
+/* =====================================================
+   PHYSICS STEP
+===================================================== */
+
+function physicsStep(){
+
+    for(const b of balls){
+
+        if(b.pocketed)
+            continue;
+
+        b.x += b.vx;
+        b.y += b.vy;
+
+        /*
+         * Friction.
+         */
+        b.vx *= .985;
+        b.vy *= .985;
+
+        /*
+         * Very small velocities are stopped.
+         */
+        if(Math.abs(b.vx)<.025)
+            b.vx=0;
+
+        if(Math.abs(b.vy)<.025)
+            b.vy=0;
+
+        /*
+         * Check pockets BEFORE cushion collision.
+         * This is one of the important fixes.
+         */
+        if(checkPocket(b))
+            continue;
+
+        cushionCollision(b);
+
+    }
+
+    /*
+     * Multiple collision passes make
+     * the physics much more stable.
+     */
+    for(let pass=0;pass<2;pass++){
+
+        for(
+            let i=0;
+            i<balls.length;
+            i++
+        ){
+
+            const a = balls[i];
+
+            if(a.pocketed)
+                continue;
+
+            for(
+                let j=i+1;
+                j<balls.length;
+                j++
+            ){
+
+                const b = balls[j];
+
+                if(b.pocketed)
+                    continue;
+
+                collideBalls(a,b);
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   IS ANY BALL MOVING?
+===================================================== */
+
+function ballsAreMoving(){
+
+    for(const b of balls){
+
+        if(b.pocketed)
+            continue;
+
+        if(
+            Math.abs(b.vx)>.025 ||
+            Math.abs(b.vy)>.025
+        ){
+
+            return true;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+
+/* =====================================================
    GROUP
-========================================================= */
+===================================================== */
 
 function isGroupBall(
     b,
     group
 ){
 
-    if(
-        group==="solids"
-    ){
+    if(!group)
+        return false;
+
+    if(group==="solids"){
 
         return (
             b.number>=1 &&
@@ -3098,7 +2531,6 @@ function isGroupBall(
         );
 
     }
-
 
     return (
         b.number>=9 &&
@@ -3108,44 +2540,151 @@ function isGroupBall(
 }
 
 
-/* =========================================================
-   SHOT RESOLUTION
-========================================================= */
+/* =====================================================
+   GROUP ASSIGNMENT
+===================================================== */
+
+function assignGroups(first){
+
+    if(!first)
+        return;
+
+    if(
+        first.number===8 ||
+        first.number===0
+    ){
+        return;
+    }
+
+    const firstGroup =
+        first.number<=7
+        ? "solids"
+        : "stripes";
+
+    if(current==="human"){
+
+        humanGroup = firstGroup;
+
+        aiGroup =
+            firstGroup==="solids"
+            ? "stripes"
+            : "solids";
+
+    }else{
+
+        aiGroup = firstGroup;
+
+        humanGroup =
+            firstGroup==="solids"
+            ? "stripes"
+            : "solids";
+
+    }
+
+}
+
+
+/* =====================================================
+   LEGAL CONTACT
+===================================================== */
+
+function isLegalFirstContact(b){
+
+    if(!b)
+        return false;
+
+    const group =
+        current==="human"
+        ? humanGroup
+        : aiGroup;
+
+    /*
+     * Open table:
+     * Any numbered ball except 8 is legal.
+     */
+    if(!group){
+
+        return b.number!==8;
+
+    }
+
+    /*
+     * If all own balls are cleared,
+     * 8-ball becomes legal.
+     */
+    if(
+        areGroupBallsCleared(group)
+    ){
+
+        return b.number===8;
+
+    }
+
+    return isGroupBall(
+        b,
+        group
+    );
+
+}
+
+
+/* =====================================================
+   GROUP CLEARED
+===================================================== */
+
+function areGroupBallsCleared(group){
+
+    if(!group)
+        return false;
+
+    return !balls.some(
+        b =>
+            !b.pocketed &&
+            b.number!==0 &&
+            b.number!==8 &&
+            isGroupBall(
+                b,
+                group
+            )
+    );
+
+}
+
+
+/* =====================================================
+   RESOLVE SHOT
+===================================================== */
 
 function resolveShot(){
 
-    if(gameOver)
-        return;
-
-
     if(
-        cueBall.pocketed
+        gameOver ||
+        resolving
     ){
+        return;
+    }
 
-        foul =
-            true;
+    resolving = true;
+
+    /*
+     * Cue ball foul.
+     */
+    if(cueBall.pocketed){
+
+        foul = true;
 
         foulSound();
 
+        cueBall.pocketed = false;
 
-        cueBall.pocketed =
-            false;
-
-        cueBall.x =
-            245;
-
-        cueBall.y =
-            275;
-
-        cueBall.vx =
-            0;
-
-        cueBall.vy =
-            0;
+        respawnCueBall();
 
     }
 
 
+    /*
+     * Assign groups.
+     */
     if(
         !humanGroup &&
         !aiGroup
@@ -3154,48 +2693,22 @@ function resolveShot(){
         const first =
             pocketedThisShot.find(
                 b =>
-                    b.number!==0
+                    b.number!==0 &&
+                    b.number!==8
             );
 
+        if(first){
 
-        if(
-            first &&
-            first.number!==8
-        ){
-
-            if(
-                first.number<=7
-            ){
-
-                humanGroup =
-                    current==="human"
-                    ? "solids"
-                    : "stripes";
-
-                aiGroup =
-                    current==="human"
-                    ? "stripes"
-                    : "solids";
-
-            }else{
-
-                humanGroup =
-                    current==="human"
-                    ? "stripes"
-                    : "solids";
-
-                aiGroup =
-                    current==="human"
-                    ? "solids"
-                    : "stripes";
-
-            }
+            assignGroups(first);
 
         }
 
     }
 
 
+    /*
+     * Check first contact.
+     */
     if(
         firstContact &&
         !isLegalFirstContact(
@@ -3203,30 +2716,36 @@ function resolveShot(){
         )
     ){
 
-        foul =
-            true;
+        foul = true;
 
         foulSound();
 
     }
 
 
+    /*
+     * 8-ball.
+     */
     const eight =
         pocketedThisShot.find(
             b =>
                 b.number===8
         );
 
-
     if(eight){
 
         handleEight();
+
+        resolving = false;
 
         return;
 
     }
 
 
+    /*
+     * Normal pocket.
+     */
     const normalPocket =
         pocketedThisShot.some(
             b =>
@@ -3239,6 +2758,8 @@ function resolveShot(){
 
     if(foul){
 
+        resolving = false;
+
         switchTurn();
 
         return;
@@ -3246,15 +2767,19 @@ function resolveShot(){
     }
 
 
+    /*
+     * Player pockets a legal ball:
+     * player continues.
+     */
     if(normalPocket){
 
         turnSound();
 
+        resolving = false;
+
         updateUI();
 
-        if(
-            current==="ai"
-        ){
+        if(current==="ai"){
 
             setTimeout(
                 aiTurn,
@@ -3268,41 +2793,74 @@ function resolveShot(){
     }
 
 
+    /*
+     * Nothing pocketed:
+     * change turn.
+     */
+    resolving = false;
+
     switchTurn();
 
 }
 
 
-/* =========================================================
-   LEGAL CONTACT
-========================================================= */
+/* =====================================================
+   CUE BALL RESPAWN
+===================================================== */
 
-function isLegalFirstContact(b){
+function respawnCueBall(){
 
-    const group =
-        current==="human"
-        ? humanGroup
-        : aiGroup;
+    const positions = [
 
+        [245,275],
+        [220,275],
+        [245,240],
+        [245,310],
+        [210,240],
+        [210,310]
 
-    if(!group){
+    ];
 
-        return b.number!==8;
+    for(const pos of positions){
+
+        const blocked =
+            balls.some(
+                b =>
+                    b!==cueBall &&
+                    !b.pocketed &&
+                    Math.hypot(
+                        b.x-pos[0],
+                        b.y-pos[1]
+                    ) <
+                    b.r+cueBall.r+5
+            );
+
+        if(!blocked){
+
+            cueBall.x = pos[0];
+            cueBall.y = pos[1];
+
+            cueBall.vx = 0;
+            cueBall.vy = 0;
+
+            return;
+
+        }
 
     }
 
+    cueBall.x = 245;
+    cueBall.y = 275;
 
-    return isGroupBall(
-        b,
-        group
-    );
+    cueBall.vx = 0;
+    cueBall.vy = 0;
 
 }
 
 
-/* =========================================================
-   EIGHT BALL
-========================================================= */
+/* =====================================================
+   8 BALL
+===================================================== */
 
 function handleEight(){
 
@@ -3311,18 +2869,18 @@ function handleEight(){
         ? humanGroup
         : aiGroup;
 
-
     if(!group){
 
         endGame(
             false,
-            "The 8-ball was pocketed too early."
+            current==="human"
+            ? "You pocketed the 8-ball too early."
+            : "AI pocketed the 8-ball too early."
         );
 
         return;
 
     }
-
 
     const remaining =
         balls.filter(
@@ -3336,7 +2894,6 @@ function handleEight(){
                 )
         );
 
-
     if(
         remaining.length===0
     ){
@@ -3345,14 +2902,16 @@ function handleEight(){
             current==="human",
             current==="human"
             ? "You cleared your group and legally pocketed the 8-ball!"
-            : "AI cleared its group and pocketed the 8-ball."
+            : "AI cleared its group and legally pocketed the 8-ball."
         );
 
     }else{
 
         endGame(
             current!=="human",
-            "The 8-ball was pocketed before the group was cleared."
+            current==="human"
+            ? "You pocketed the 8-ball before clearing your group."
+            : "AI pocketed the 8-ball before clearing its group."
         );
 
     }
@@ -3360,33 +2919,29 @@ function handleEight(){
 }
 
 
-/* =========================================================
+/* =====================================================
    SWITCH TURN
-========================================================= */
+===================================================== */
 
 function switchTurn(){
+
+    if(gameOver)
+        return;
 
     current =
         current==="human"
         ? "ai"
         : "human";
 
+    foul = false;
 
-    foul =
-        false;
+    firstContact = null;
 
-    firstContact =
-        null;
+    pocketedThisShot = [];
 
-    pocketedThisShot =
-        [];
+    aimAngle = 0;
 
-    aimAngle =
-        0;
-
-    power =
-        0;
-
+    power = 0;
 
     updatePower();
 
@@ -3394,10 +2949,7 @@ function switchTurn(){
 
     updateUI();
 
-
-    if(
-        current==="ai"
-    ){
+    if(current==="ai"){
 
         setTimeout(
             aiTurn,
@@ -3409,9 +2961,78 @@ function switchTurn(){
 }
 
 
-/* =========================================================
-   AI
-========================================================= */
+/* =====================================================
+   AI TARGET
+===================================================== */
+
+function getAITargets(){
+
+    let targets = [];
+
+    /*
+     * If AI has a group, shoot own balls.
+     */
+    if(aiGroup){
+
+        targets =
+            balls.filter(
+                b =>
+                    !b.pocketed &&
+                    b!==cueBall &&
+                    b.number!==8 &&
+                    isGroupBall(
+                        b,
+                        aiGroup
+                    )
+            );
+
+        /*
+         * Important:
+         * If all AI balls are cleared,
+         * AI must target the 8-ball.
+         */
+        if(
+            targets.length===0
+        ){
+
+            const eight =
+                balls.find(
+                    b =>
+                        !b.pocketed &&
+                        b.number===8
+                );
+
+            if(eight){
+
+                targets = [eight];
+
+            }
+
+        }
+
+    }else{
+
+        /*
+         * Open table.
+         */
+        targets =
+            balls.filter(
+                b =>
+                    !b.pocketed &&
+                    b!==cueBall &&
+                    b.number!==8
+            );
+
+    }
+
+    return targets;
+
+}
+
+
+/* =====================================================
+   AI TURN
+===================================================== */
 
 function aiTurn(){
 
@@ -3420,126 +3041,95 @@ function aiTurn(){
         moving ||
         current!=="ai"
     ){
+        return;
+    }
+
+    const targets =
+        getAITargets();
+
+    if(!targets.length){
+
+        /*
+         * Safety fallback.
+         */
+        switchTurn();
 
         return;
 
     }
 
+    let target = null;
 
-    const group =
-        aiGroup;
+    let bestScore = Infinity;
 
+    for(const b of targets){
 
-    let targets =
-        balls.filter(
-            b =>
-                !b.pocketed &&
-                b!==cueBall &&
-                b.number!==8 &&
-                (
-                    !group ||
-                    isGroupBall(
-                        b,
-                        group
-                    )
-                )
-        );
+        const pocket =
+            nearestPocket(b);
 
-
-    if(
-        targets.length===0
-    ){
-
-        targets =
-            balls.filter(
-                b =>
-                    !b.pocketed &&
-                    b!==cueBall &&
-                    b.number!==0
-            );
-
-    }
-
-
-    if(
-        !targets.length
-    ){
-
-        return;
-
-    }
-
-
-    let target =
-        targets[0];
-
-
-    let best =
-        Infinity;
-
-
-    for(
-        const b of targets
-    ){
-
-        const d =
+        const cueDistance =
             Math.hypot(
                 b.x-cueBall.x,
                 b.y-cueBall.y
             );
 
+        const pocketDistance =
+            Math.hypot(
+                pocket[0]-b.x,
+                pocket[1]-b.y
+            );
 
-        if(
-            d<best
-        ){
+        const score =
+            cueDistance+
+            pocketDistance*.65;
 
-            best =
-                d;
+        if(score<bestScore){
 
-            target =
-                b;
+            bestScore = score;
+
+            target = b;
 
         }
 
     }
 
+    if(!target)
+        return;
 
     const pocket =
-        nearestPocket(
-            target
-        );
+        nearestPocket(target);
 
-
-    const pdx =
+    /*
+     * Direction from target to pocket.
+     */
+    let pdx =
         pocket[0]-target.x;
 
-    const pdy =
+    let pdy =
         pocket[1]-target.y;
 
-
-    const plen =
+    let plen =
         Math.hypot(
             pdx,
             pdy
         );
 
+    if(plen<1)
+        plen=1;
 
-    const nx =
-        pdx/plen;
+    pdx/=plen;
+    pdy/=plen;
 
-    const ny =
-        pdy/plen;
-
-
+    /*
+     * Cue-ball contact point.
+     */
     const contactX =
         target.x-
-        nx*ballR*2;
-
+        pdx*(ballR*2.05);
 
     const contactY =
         target.y-
-        ny*ballR*2;
-
+        pdy*(ballR*2.05);
 
     let dx =
         contactX-cueBall.x;
@@ -3547,84 +3137,93 @@ function aiTurn(){
     let dy =
         contactY-cueBall.y;
 
-
-    const len =
+    let len =
         Math.hypot(
             dx,
             dy
         );
 
+    if(len<1)
+        len=1;
 
     dx/=len;
-
     dy/=len;
 
-
+    /*
+     * Small AI error.
+     */
     const error =
-        (
-            Math.random()-.5
-        )*.06;
+        (Math.random()-.5)*.045;
 
-
-    const ca =
+    const cos =
         Math.cos(error);
 
-    const sa =
+    const sin =
         Math.sin(error);
 
-
     const finalX =
-        dx*ca-
-        dy*sa;
-
+        dx*cos-
+        dy*sin;
 
     const finalY =
-        dx*sa+
-        dy*ca;
+        dx*sin+
+        dy*cos;
 
+    /*
+     * More realistic power.
+     */
+    const distance =
+        Math.hypot(
+            contactX-cueBall.x,
+            contactY-cueBall.y
+        );
 
     const speed =
         Math.min(
-            14,
+            15,
             Math.max(
                 7,
-                len*.045
+                6+
+                distance*.025+
+                Math.random()*1.5
             )
         );
-
 
     setTimeout(
         ()=>{
 
-            shootCue(
-                finalX,
-                finalY,
-                speed
-            );
+            if(
+                current==="ai" &&
+                !gameOver &&
+                !moving
+            ){
+
+                shootCue(
+                    finalX,
+                    finalY,
+                    speed
+                );
+
+            }
 
         },
-        450
+        500
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    NEAREST POCKET
-========================================================= */
+===================================================== */
 
 function nearestPocket(b){
 
-    let best =
-        pockets[0];
+    let best = pockets[0];
 
-    let bestDistance =
-        Infinity;
+    let bestDistance = Infinity;
 
-
-    for(
-        const p of pockets
-    ){
+    for(const p of pockets){
 
         const distance =
             Math.hypot(
@@ -3632,30 +3231,24 @@ function nearestPocket(b){
                 p[1]-b.y
             );
 
+        if(distance<bestDistance){
 
-        if(
-            distance<bestDistance
-        ){
+            bestDistance = distance;
 
-            bestDistance =
-                distance;
-
-            best =
-                p;
+            best = p;
 
         }
 
     }
-
 
     return best;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    SHOOT
-========================================================= */
+===================================================== */
 
 function shootCue(
     dx,
@@ -3665,42 +3258,33 @@ function shootCue(
 
     if(
         moving ||
-        gameOver
+        gameOver ||
+        cueBall.pocketed
     ){
-
         return;
-
     }
 
+    moving = true;
 
-    moving =
-        true;
+    resolving = false;
 
-    firstContact =
-        null;
+    firstContact = null;
 
-    pocketedThisShot =
-        [];
+    pocketedThisShot = [];
 
-    foul =
-        false;
-
+    foul = false;
 
     cueHitSound();
 
-
-    cueBall.vx =
-        dx*speed;
-
-    cueBall.vy =
-        dy*speed;
+    cueBall.vx = dx*speed;
+    cueBall.vy = dy*speed;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    HUMAN SHOOT
-========================================================= */
+===================================================== */
 
 function shootHuman(){
 
@@ -3709,36 +3293,28 @@ function shootHuman(){
         gameOver ||
         current!=="human"
     ){
+        return;
+    }
+
+    if(power<8){
+
+        power=0;
+
+        updatePower();
 
         return;
 
     }
-
-
-    if(
-        power<8
-    ){
-
-        return;
-
-    }
-
 
     const dx =
-        Math.cos(
-            aimAngle
-        );
+        Math.cos(aimAngle);
 
     const dy =
-        Math.sin(
-            aimAngle
-        );
-
+        Math.sin(aimAngle);
 
     const speed =
         2+
-        power/150*13;
-
+        power/100*13;
 
     shootCue(
         dx,
@@ -3746,24 +3322,21 @@ function shootHuman(){
         speed
     );
 
-
-    power =
-        0;
+    power = 0;
 
     updatePower();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    POINTER POSITION
-========================================================= */
+===================================================== */
 
 function pointerPosition(e){
 
     const rect =
         canvas.getBoundingClientRect();
-
 
     const sx =
         (
@@ -3772,7 +3345,6 @@ function pointerPosition(e){
         )/
         rect.width;
 
-
     const sy =
         (
             e.clientY-
@@ -3780,46 +3352,36 @@ function pointerPosition(e){
         )/
         rect.height;
 
-
-    if(
-        isPortrait()
-    ){
+    if(isPortrait()){
 
         return {
 
             x:
-                sy*
-                LOGICAL_W,
+                sy*LOGICAL_W,
 
             y:
-                (
-                    1-sx
-                )*
-                LOGICAL_H
+                (1-sx)*LOGICAL_H
 
         };
 
     }
 
-
     return {
 
         x:
-            sx*
-            LOGICAL_W,
+            sx*LOGICAL_W,
 
         y:
-            sy*
-            LOGICAL_H
+            sy*LOGICAL_H
 
     };
 
 }
 
 
-/* =========================================================
+/* =====================================================
    POINTER DOWN
-========================================================= */
+===================================================== */
 
 canvas.addEventListener(
     "pointerdown",
@@ -3828,20 +3390,16 @@ canvas.addEventListener(
         if(
             current!=="human" ||
             moving ||
-            gameOver
+            gameOver ||
+            cueBall.pocketed
         ){
-
             return;
-
         }
-
 
         initAudio();
 
-
         const p =
             pointerPosition(e);
-
 
         const d =
             Math.hypot(
@@ -3849,13 +3407,15 @@ canvas.addEventListener(
                 p.y-cueBall.y
             );
 
+        /*
+         * Larger area makes mobile
+         * aiming easier.
+         */
+        if(d<170){
 
-        if(
-            d<145
-        ){
+            dragging = true;
 
-            dragging =
-                true;
+            power = 0;
 
             canvas.setPointerCapture(
                 e.pointerId
@@ -3872,9 +3432,9 @@ canvas.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    POINTER MOVE
-========================================================= */
+===================================================== */
 
 canvas.addEventListener(
     "pointermove",
@@ -3883,10 +3443,8 @@ canvas.addEventListener(
         if(!dragging)
             return;
 
-
         const p =
             pointerPosition(e);
-
 
         const dx =
             p.x-cueBall.x;
@@ -3894,29 +3452,24 @@ canvas.addEventListener(
         const dy =
             p.y-cueBall.y;
 
-
         const distance =
             Math.hypot(
                 dx,
                 dy
             );
 
-
-        if(
-            distance<2
-        ){
-
+        if(distance<3)
             return;
 
-        }
-
-
+        /*
+         * Pull cue backwards.
+         * Ball shoots opposite direction.
+         */
         aimAngle =
             Math.atan2(
                 -dy,
                 -dx
             );
-
 
         power =
             Math.min(
@@ -3927,9 +3480,7 @@ canvas.addEventListener(
                 )
             );
 
-
         updatePower();
-
 
         e.preventDefault();
 
@@ -3940,9 +3491,9 @@ canvas.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    POINTER UP
-========================================================= */
+===================================================== */
 
 canvas.addEventListener(
     "pointerup",
@@ -3951,26 +3502,19 @@ canvas.addEventListener(
         if(!dragging)
             return;
 
+        dragging = false;
 
-        dragging =
-            false;
-
-
-        if(
-            power>8
-        ){
+        if(power>=8){
 
             shootHuman();
 
         }else{
 
-            power =
-                0;
+            power=0;
 
             updatePower();
 
         }
-
 
         e.preventDefault();
 
@@ -3981,19 +3525,17 @@ canvas.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    POINTER CANCEL
-========================================================= */
+===================================================== */
 
 canvas.addEventListener(
     "pointercancel",
     ()=>{
 
-        dragging =
-            false;
+        dragging=false;
 
-        power =
-            0;
+        power=0;
 
         updatePower();
 
@@ -4001,9 +3543,9 @@ canvas.addEventListener(
 );
 
 
-/* =========================================================
-   AIM BUTTONS
-========================================================= */
+/* =====================================================
+   AIM BUTTON
+===================================================== */
 
 document
 .getElementById("left")
@@ -4015,11 +3557,11 @@ document
 
         if(
             current==="human" &&
-            !moving
+            !moving &&
+            !gameOver
         ){
 
-            aimAngle -=
-                .035;
+            aimAngle -= .055;
 
         }
 
@@ -4039,11 +3581,11 @@ document
 
         if(
             current==="human" &&
-            !moving
+            !moving &&
+            !gameOver
         ){
 
-            aimAngle +=
-                .035;
+            aimAngle += .055;
 
         }
 
@@ -4053,99 +3595,80 @@ document
 );
 
 
-/* =========================================================
-   POWER UI
-========================================================= */
+/* =====================================================
+   POWER
+===================================================== */
 
 function updatePower(){
 
     document
-    .getElementById(
-        "powerFill"
-    )
+    .getElementById("powerFill")
     .style.width =
         power+"%";
 
 }
 
 
-/* =========================================================
+/* =====================================================
    UI
-========================================================= */
+===================================================== */
 
 function updateUI(){
 
     document
-    .getElementById(
-        "turn"
-    )
+    .getElementById("turn")
     .textContent =
         current==="human"
         ? "YOUR TURN"
         : "AI TURN";
 
-
     document
-    .getElementById(
-        "human"
-    )
+    .getElementById("human")
     .classList.toggle(
         "active",
         current==="human"
     );
 
-
     document
-    .getElementById(
-        "ai"
-    )
+    .getElementById("ai")
     .classList.toggle(
         "active",
         current==="ai"
     );
 
-
     document
-    .getElementById(
-        "humanGroup"
-    )
+    .getElementById("humanGroup")
     .textContent =
         humanGroup
         ? humanGroup.toUpperCase()
-        : "Open Table";
-
+        : "OPEN TABLE";
 
     document
-    .getElementById(
-        "aiGroup"
-    )
+    .getElementById("aiGroup")
     .textContent =
         aiGroup
         ? aiGroup.toUpperCase()
-        : "Open Table";
+        : "OPEN TABLE";
 
 }
 
 
-/* =========================================================
+/* =====================================================
    RESULT
-========================================================= */
+===================================================== */
 
 function endGame(
     humanWon,
     message
 ){
 
-    gameOver =
-        true;
+    gameOver = true;
 
-    moving =
-        false;
+    moving = false;
 
+    resolving = false;
 
-    if(
-        humanWon
-    ){
+    if(humanWon){
 
         winSound();
 
@@ -4155,38 +3678,29 @@ function endGame(
 
     }
 
-
     document
-    .getElementById(
-        "resultTitle"
-    )
+    .getElementById("resultTitle")
     .textContent =
         humanWon
         ? "🏆 YOU WIN!"
         : "🤖 AI WINS!";
 
-
     document
-    .getElementById(
-        "resultText"
-    )
+    .getElementById("resultText")
     .textContent =
         message;
 
-
     document
-    .getElementById(
-        "result"
-    )
+    .getElementById("result")
     .style.display =
         "block";
 
 }
 
 
-/* =========================================================
+/* =====================================================
    START
-========================================================= */
+===================================================== */
 
 document
 .getElementById("start")
@@ -4197,9 +3711,7 @@ document
         initAudio();
 
         document
-        .getElementById(
-            "help"
-        )
+        .getElementById("help")
         .style.display =
             "none";
 
@@ -4209,9 +3721,9 @@ document
 );
 
 
-/* =========================================================
+/* =====================================================
    RESTART
-========================================================= */
+===================================================== */
 
 document
 .getElementById("restart")
@@ -4224,9 +3736,7 @@ document
         newGame();
 
         document
-        .getElementById(
-            "result"
-        )
+        .getElementById("help")
         .style.display =
             "none";
 
@@ -4234,9 +3744,9 @@ document
 );
 
 
-/* =========================================================
+/* =====================================================
    AGAIN
-========================================================= */
+===================================================== */
 
 document
 .getElementById("again")
@@ -4249,9 +3759,7 @@ document
         newGame();
 
         document
-        .getElementById(
-            "result"
-        )
+        .getElementById("help")
         .style.display =
             "none";
 
@@ -4259,14 +3767,12 @@ document
 );
 
 
-/* =========================================================
+/* =====================================================
    FAQ
-========================================================= */
+===================================================== */
 
 document
-.querySelectorAll(
-    ".faqQuestion"
-)
+.querySelectorAll(".faqQuestion")
 .forEach(
     button=>{
 
@@ -4274,12 +3780,10 @@ document
             "click",
             ()=>{
 
-                const item =
-                    button.parentElement;
-
-                item.classList.toggle(
-                    "open"
-                );
+                button
+                .parentElement
+                .classList
+                .toggle("open");
 
             }
         );
@@ -4288,22 +3792,19 @@ document
 );
 
 
-/* =========================================================
+/* =====================================================
    YEAR
-========================================================= */
+===================================================== */
 
 document
-.getElementById(
-    "year"
-)
+.getElementById("year")
 .textContent =
-    new Date()
-    .getFullYear();
+    new Date().getFullYear();
 
 
-/* =========================================================
+/* =====================================================
    RENDER
-========================================================= */
+===================================================== */
 
 function renderFrame(){
 
@@ -4314,21 +3815,17 @@ function renderFrame(){
         canvas.height
     );
 
-
     const portrait =
         isPortrait();
-
 
     if(portrait){
 
         ctx.save();
 
-
         ctx.translate(
             LOGICAL_H,
             0
         );
-
 
         ctx.rotate(
             Math.PI/2
@@ -4336,20 +3833,15 @@ function renderFrame(){
 
     }
 
-
     drawTable();
 
     drawAim();
 
-
-    for(
-        const b of balls
-    ){
+    for(const b of balls){
 
         drawBall(b);
 
     }
-
 
     if(portrait){
 
@@ -4360,34 +3852,85 @@ function renderFrame(){
 }
 
 
-/* =========================================================
-   MAIN LOOP
-========================================================= */
+/* =====================================================
+   GAME LOOP
+===================================================== */
 
-function render(){
+let lastTime = performance.now();
+
+function gameLoop(now){
+
+    /*
+     * Prevent very large physics jumps
+     * after browser tab switching.
+     */
+    const elapsed =
+        Math.min(
+            32,
+            now-lastTime
+        );
+
+    lastTime = now;
+
+    /*
+     * Two physics steps at normal speed
+     * gives smoother collisions.
+     */
+    if(moving){
+
+        physicsStep();
+
+        if(elapsed>16){
+
+            physicsStep();
+
+        }
+
+        if(
+            !ballsAreMoving()
+        ){
+
+            moving = false;
+
+            /*
+             * Small delay lets the final
+             * pocket animation settle.
+             */
+            if(!resolving){
+
+                setTimeout(
+                    resolveShot,
+                    80
+                );
+
+            }
+
+        }
+
+    }
 
     renderFrame();
 
-    updatePhysics();
-
     requestAnimationFrame(
-        render
+        gameLoop
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    INIT
-========================================================= */
+===================================================== */
 
 resizeCanvas();
 
 newGame();
 
-render();
+requestAnimationFrame(
+    gameLoop
+);
 
 </script>
 
 </body>
-</html>
+      </html>
