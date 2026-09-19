@@ -77,11 +77,11 @@ const games = [
     popular: true
   },
    {
-    id: 10,
-    title: "",
-    category: "",
-    icon: "",
-    url: "",
+    id: 11,
+    title: "Traffic Jam",
+    category: "Puzzle",
+    icon: "games/file_00000000e84481fa8f401de9375a9cde.png",
+    url: "games/Traffic jam Solve.html",
     newGame: false,
     popular: true
   },
@@ -149,7 +149,7 @@ const games = [
     id: 6,
     title: "Car Racing",
     category: "Recing",
-    icon: "games/file_00000000f2808208ae73d8b75c491ce3.png",
+    icon: "games/file_00000000275881f4ac08aa9459aa2519.png",
     url: "games/careering.html",
     newGame: true,
     popular: false
