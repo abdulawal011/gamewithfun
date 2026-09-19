@@ -60,19 +60,19 @@ const games = [
   },
    {
     id: 10,
-    title: "",
+    title: "Color Ball",
     category: "",
-    icon: "",
-    url: "",
+    icon: "games/file_000000004ff8820b8805b91364bea1d7.png",
+    url: "games/Color Sort.html",
     newGame: false,
     popular: true
   },
    {
     id: 9,
-    title: "",
+    title: "8 Ball Pool",
     category: "",
-    icon: "",
-    url: "",
+    icon: "games/file_00000000919c820bbb8f8a7356e17062.png",
+    url: "games/8 Ball game.html",
     newGame: false,
     popular: true
   },
