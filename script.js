@@ -129,7 +129,7 @@ const games = [
     id: 4,
     title: "Math Quiz",
     category: "Quiz",
-    icon: "games/file_00000000b20c81f59277a71fc4330a3a.png",
+    icon: "games/file_00000000f14c81faaea391eed9adbaa0.png",
     url: "games/math_quiz_sound.html",
     newGame: false,
     popular: true
@@ -139,7 +139,7 @@ const games = [
     id: 5,
     title: "Sliding Puzzle",
     category: "Puzzle",
-    icon: "games/sliding-puzzle-logo.jpg",
+    icon: "games/file_00000000c49881faa999d08efc9fe34b.png",
     url: "games/puzzle-game.html",
     newGame: true,
     popular: false
