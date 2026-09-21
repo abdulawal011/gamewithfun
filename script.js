@@ -3,7 +3,7 @@
 ================================================== */
 
 const games = [
-   {
+  {
     id: 16,
     title: "Bubble Shooter",
     category: "Puzzle",
@@ -12,7 +12,8 @@ const games = [
     newGame: false,
     popular: true
   },
-   {
+
+  {
     id: 15,
     title: "Carrom Board",
     category: "Board",
@@ -21,12 +22,13 @@ const games = [
     newGame: false,
     popular: true
   },
-   {
+
+  {
     id: 14,
     title: "Game With Fun Crush",
     category: "Puzzle",
     icon: "games/crush.webp",
-    url:"games/gamewithfuncrush.html",
+    url: "games/gamewithfuncrush.html",
     newGame: false,
     popular: true
   },
@@ -40,25 +42,28 @@ const games = [
     newGame: true,
     popular: false
   },
-   {
+
+  {
     id: 12,
     title: "Ghost House",
     category: "",
     icon: "games/ghostgame.webp",
-    url:"games/ghosthouse.html",
+    url: "games/ghosthouse.html",
     newGame: false,
     popular: true
   },
-   {
+
+  {
     id: 11,
     title: "flaying bird",
     category: "",
     icon: "games/flaying_bird.webp",
-    url:"games/gamewithfun-flaying-bird.html",
+    url: "games/gamewithfun-flaying-bird.html",
     newGame: false,
     popular: true
   },
-   {
+
+  {
     id: 10,
     title: "Color Ball",
     category: "",
@@ -67,7 +72,8 @@ const games = [
     newGame: false,
     popular: true
   },
-   {
+
+  {
     id: 9,
     title: "8 Ball Pool",
     category: "",
@@ -76,7 +82,8 @@ const games = [
     newGame: false,
     popular: true
   },
-   {
+
+  {
     id: 8,
     title: "Traffic Jam",
     category: "Puzzle",
@@ -85,6 +92,7 @@ const games = [
     newGame: false,
     popular: true
   },
+
   {
     id: 7,
     title: "Endless Runner",
@@ -165,7 +173,7 @@ const categories = [
   "Puzzle",
   "Quiz",
   "Recing",
-  "Board",
+  "Board"
 ];
 
 
@@ -182,7 +190,7 @@ let favorites = JSON.parse(
    GAME CARD
 ================================================== */
 
-function gameCard(game) {
+function gameCard(game, index) {
 
   const isFavorite = favorites.includes(game.id);
 
@@ -200,6 +208,21 @@ function gameCard(game) {
       ? game.url
       : null;
 
+
+  /*
+     First 6 images:
+     Load immediately.
+
+     Remaining images:
+     Load only when needed.
+  */
+
+  const loadingType =
+    index < 6
+      ? "eager"
+      : "lazy";
+
+
   return `
     <article class="game-item">
 
@@ -211,6 +234,7 @@ function gameCard(game) {
         ${isFavorite ? "♥" : "♡"}
 
       </button>
+
 
       ${
         gameUrl
@@ -230,19 +254,33 @@ function gameCard(game) {
         `
       }
 
+
           <div class="game-logo">
 
             ${
               isImage
-                ? `<img src="${game.icon}" alt="${escapeHTML(game.title)}">`
-                : `<span class="emoji-logo">${game.icon}</span>`
+                ? `
+                  <img
+                    src="${game.icon}"
+                    alt="${escapeHTML(game.title)}"
+                    loading="${loadingType}"
+                    decoding="async"
+                  >
+                `
+                : `
+                  <span class="emoji-logo">
+                    ${game.icon}
+                  </span>
+                `
             }
 
           </div>
 
+
           <h3>
             ${escapeHTML(game.title)}
           </h3>
+
 
         </a>
 
@@ -260,23 +298,39 @@ function openGameFromCard(event, id) {
 
   event.preventDefault();
 
-  const game = games.find(item => item.id === id);
 
-  if (!game || !game.url || game.url === "#") {
-    showToast("This game is coming soon 🎮");
+  const game =
+    games.find(item => item.id === id);
+
+
+  if (
+    !game ||
+    !game.url ||
+    game.url === "#"
+  ) {
+
+    showToast(
+      "This game is coming soon 🎮"
+    );
+
     return false;
+
   }
+
 
   /*
      Firebase tracking function comes from
      leaderboard.js
   */
 
-  if (typeof window.trackGameStart === "function") {
+  if (
+    typeof window.trackGameStart === "function"
+  ) {
 
     window.trackGameStart(id);
 
   }
+
 
   /*
      Give Firebase a short moment to start
@@ -286,9 +340,11 @@ function openGameFromCard(event, id) {
 
   setTimeout(() => {
 
-    window.location.href = game.url;
+    window.location.href =
+      game.url;
 
   }, 250);
+
 
   return false;
 }
@@ -307,22 +363,32 @@ function renderGames() {
     document.getElementById("popularGrid");
 
 
+  /*
+     NEW GAMES
+  */
+
   if (newGrid) {
 
-    newGrid.innerHTML = games
-      .filter(game => game.newGame)
-      .map(gameCard)
-      .join("");
+    newGrid.innerHTML =
+      games
+        .filter(game => game.newGame)
+        .map(gameCard)
+        .join("");
 
   }
 
 
+  /*
+     POPULAR GAMES
+  */
+
   if (popularGrid) {
 
-    popularGrid.innerHTML = games
-      .filter(game => game.popular)
-      .map(gameCard)
-      .join("");
+    popularGrid.innerHTML =
+      games
+        .filter(game => game.popular)
+        .map(gameCard)
+        .join("");
 
   }
 
@@ -342,34 +408,41 @@ function renderCategories() {
     document.getElementById("allCategoryGrid");
 
 
-  const html = categories
-    .map(category => `
+  const html =
+    categories
+      .map(category => `
 
-      <button
-        class="category-card"
-        onclick="showCategory('${category}')">
+        <button
+          class="category-card"
+          onclick="showCategory('${category}')">
 
-        <span>
-          ${categoryIcon(category)}
-        </span>
+          <span>
+            ${categoryIcon(category)}
+          </span>
 
-        <b>
-          ${category}
-        </b>
+          <b>
+            ${category}
+          </b>
 
-      </button>
+        </button>
 
-    `)
-    .join("");
+      `)
+      .join("");
 
 
   if (categoryGrid) {
-    categoryGrid.innerHTML = html;
+
+    categoryGrid.innerHTML =
+      html;
+
   }
 
 
   if (allCategoryGrid) {
-    allCategoryGrid.innerHTML = html;
+
+    allCategoryGrid.innerHTML =
+      html;
+
   }
 
 }
@@ -393,6 +466,7 @@ function categoryIcon(category) {
 
   };
 
+
   return icons[category] || "🎮";
 }
 
@@ -406,7 +480,9 @@ function toggleFavorite(id) {
   if (favorites.includes(id)) {
 
     favorites =
-      favorites.filter(item => item !== id);
+      favorites.filter(
+        item => item !== id
+      );
 
   } else {
 
@@ -425,7 +501,9 @@ function toggleFavorite(id) {
 
 
   const favoritesPage =
-    document.getElementById("favoritesPage");
+    document.getElementById(
+      "favoritesPage"
+    );
 
 
   if (
@@ -454,15 +532,18 @@ function toggleFavorite(id) {
 function renderFavorites() {
 
   const favoriteGrid =
-    document.getElementById("favoriteGrid");
+    document.getElementById(
+      "favoriteGrid"
+    );
 
 
   if (!favoriteGrid) return;
 
 
   const favoriteGames =
-    games.filter(game =>
-      favorites.includes(game.id)
+    games.filter(
+      game =>
+        favorites.includes(game.id)
     );
 
 
@@ -506,13 +587,18 @@ function renderFavorites() {
 function playGame(id) {
 
   const game =
-    games.find(item => item.id === id);
+    games.find(
+      item => item.id === id
+    );
 
 
   if (!game) return;
 
 
-  if (!game.url || game.url === "#") {
+  if (
+    !game.url ||
+    game.url === "#"
+  ) {
 
     showToast(
       "This game is coming soon 🎮"
@@ -523,7 +609,9 @@ function playGame(id) {
   }
 
 
-  if (typeof window.trackGameStart === "function") {
+  if (
+    typeof window.trackGameStart === "function"
+  ) {
 
     window.trackGameStart(id);
 
@@ -565,7 +653,9 @@ function showPage(
 
 
   if (!pages[page]) {
+
     page = "home";
+
   }
 
 
@@ -588,18 +678,22 @@ function showPage(
      Hide All Pages
   ------------------------------ */
 
-  Object.values(pages).forEach(id => {
+  Object.values(pages)
+    .forEach(id => {
 
-    const element =
-      document.getElementById(id);
+      const element =
+        document.getElementById(id);
 
-    if (element) {
 
-      element.classList.add("hidden");
+      if (element) {
 
-    }
+        element.classList.add(
+          "hidden"
+        );
 
-  });
+      }
+
+    });
 
 
   /* ------------------------------
@@ -614,7 +708,9 @@ function showPage(
 
   if (target) {
 
-    target.classList.remove("hidden");
+    target.classList.remove(
+      "hidden"
+    );
 
   }
 
@@ -624,10 +720,14 @@ function showPage(
   ------------------------------ */
 
   document
-    .querySelectorAll(".bottom-nav button")
+    .querySelectorAll(
+      ".bottom-nav button"
+    )
     .forEach(button => {
 
-      button.classList.remove("active");
+      button.classList.remove(
+        "active"
+      );
 
     });
 
@@ -668,12 +768,15 @@ function showPage(
       .getElementById("navLeaderboard")
       ?.classList.add("active");
 
+
     /*
        Real Firebase leaderboard
        is loaded by leaderboard.js.
     */
 
-    if (typeof window.loadLeaderboard === "function") {
+    if (
+      typeof window.loadLeaderboard === "function"
+    ) {
 
       window.loadLeaderboard();
 
@@ -692,6 +795,7 @@ function showPage(
       .getElementById("navFavorites")
       ?.classList.add("active");
 
+
     renderFavorites();
 
   }
@@ -702,8 +806,11 @@ function showPage(
   ------------------------------ */
 
   window.scrollTo({
+
     top: 0,
+
     behavior: "smooth"
+
   });
 
 }
@@ -718,7 +825,9 @@ window.addEventListener(
   function(event) {
 
     const page =
-      event.state?.page || "home";
+      event.state?.page ||
+      "home";
+
 
     showPage(
       page,
@@ -751,15 +860,20 @@ if (!location.hash) {
 function loadInitialPage() {
 
   const hash =
-    location.hash.replace("#", "");
+    location.hash.replace(
+      "#",
+      ""
+    );
 
 
   const allowedPages = [
+
     "home",
     "categories",
     "favorites",
     "all",
     "leaderboard"
+
   ];
 
 
@@ -791,10 +905,14 @@ function loadInitialPage() {
 function openAll(type) {
 
   const title =
-    document.getElementById("allTitle");
+    document.getElementById(
+      "allTitle"
+    );
 
   const grid =
-    document.getElementById("allGrid");
+    document.getElementById(
+      "allGrid"
+    );
 
 
   if (!grid) return;
@@ -858,10 +976,14 @@ function openAll(type) {
 function showCategory(category) {
 
   const title =
-    document.getElementById("allTitle");
+    document.getElementById(
+      "allTitle"
+    );
 
   const grid =
-    document.getElementById("allGrid");
+    document.getElementById(
+      "allGrid"
+    );
 
 
   const selectedGames =
@@ -949,12 +1071,16 @@ function searchGames() {
     games.filter(game => {
 
       const title =
-        String(game.title || "")
-          .toLowerCase();
+        String(
+          game.title || ""
+        ).toLowerCase();
+
 
       const category =
-        String(game.category || "")
-          .toLowerCase();
+        String(
+          game.category || ""
+        ).toLowerCase();
+
 
       return (
         title.includes(query) ||
@@ -1062,11 +1188,31 @@ function showToast(message) {
 function escapeHTML(value) {
 
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
