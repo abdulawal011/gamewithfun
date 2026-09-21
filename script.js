@@ -99,7 +99,7 @@ const games = [
     id: 6,
     title: "O&X Game",
     category: "Puzzle",
-    icon: "Ox.webp",
+    icon: "games/Ox.webp",
     url: "games/oxgame.html",
     newGame: true,
     popular: false
