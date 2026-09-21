@@ -35,7 +35,7 @@ const games = [
     id: 13,
     title: "Fruit Cut",
     category: "",
-    icon: "games/IMG-20260914-WA0051.jpg",
+    icon: "games/1000150283_11zon.jpg",
     url: "games/bdcut.html",
     newGame: true,
     popular: false
