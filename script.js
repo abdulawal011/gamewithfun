@@ -7,7 +7,7 @@ const games = [
     id: 16,
     title: "Bubble Shooter",
     category: "Puzzle",
-    icon: "games/file_0000000050f0820b9874f8a8962b1ec4.png",
+    icon: "games/bubble.webp",
     url: "games/bubbleshooter.html",
     newGame: false,
     popular: true
@@ -16,7 +16,7 @@ const games = [
     id: 15,
     title: "Carrom Board",
     category: "Board",
-    icon: "games/file_00000000d8dc820ba98dd0aa7d484503.png",
+    icon: "games/carrom.webp",
     url: "games/carromboard.html",
     newGame: false,
     popular: true
@@ -25,7 +25,7 @@ const games = [
     id: 14,
     title: "Game With Fun Crush",
     category: "Puzzle",
-    icon: "games/file_00000000cb94820baabbf485ed45e9bc.png",
+    icon: "games/crush.webp",
     url:"games/gamewithfuncrush.html",
     newGame: false,
     popular: true
@@ -44,7 +44,7 @@ const games = [
     id: 12,
     title: "Ghost House",
     category: "",
-    icon: "games/file_00000000b7f8820899dd27132b05151a.png",
+    icon: "games/ghostgame.webp",
     url:"games/ghosthouse.html",
     newGame: false,
     popular: true
