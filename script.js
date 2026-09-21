@@ -53,7 +53,7 @@ const games = [
     id: 11,
     title: "flaying bird",
     category: "",
-    icon: "games/file_0000000036d88211912b32513b8a13b4.png",
+    icon: "games/flaying_bird.webp",
     url:"games/gamewithfun-flaying-bird.html",
     newGame: false,
     popular: true
@@ -62,7 +62,7 @@ const games = [
     id: 10,
     title: "Color Ball",
     category: "",
-    icon: "games/file_000000004ff8820b8805b91364bea1d7.png",
+    icon: "games/color_ball.webp",
     url: "games/colorsort.html",
     newGame: false,
     popular: true
@@ -71,7 +71,7 @@ const games = [
     id: 9,
     title: "8 Ball Pool",
     category: "",
-    icon: "games/file_00000000919c820bbb8f8a7356e17062.png",
+    icon: "games/8ballpool.webp",
     url: "games/8ballgame.html",
     newGame: false,
     popular: true
@@ -80,7 +80,7 @@ const games = [
     id: 8,
     title: "Traffic Jam",
     category: "Puzzle",
-    icon: "games/file_00000000e84481fa8f401de9375a9cde.png",
+    icon: "games/trafficjam.webpn",
     url: "games/trafficjamsolve.html",
     newGame: false,
     popular: true
@@ -89,7 +89,7 @@ const games = [
     id: 7,
     title: "Endless Runner",
     category: "Recing",
-    icon: "games/neon_runner_logo.jpg",
+    icon: "games/endless.webp",
     url: "games/endlessrunner.html",
     newGame: true,
     popular: false
@@ -99,7 +99,7 @@ const games = [
     id: 6,
     title: "O&X Game",
     category: "Puzzle",
-    icon: "games/logo.png",
+    icon: "games/logo (1).webp",
     url: "games/oxgame.html",
     newGame: true,
     popular: false
@@ -119,7 +119,7 @@ const games = [
     id: 4,
     title: "Flag Guess",
     category: "Quiz",
-    icon: "games/flag_guess_logo.jpg",
+    icon: "games/flag_guess_logo.webp",
     url: "games/flag-guess.html",
     newGame: true,
     popular: false
@@ -129,7 +129,7 @@ const games = [
     id: 3,
     title: "Math Quiz",
     category: "Quiz",
-    icon: "games/file_00000000f14c81faaea391eed9adbaa0.png",
+    icon: "games/math_quiz.webp",
     url: "games/math_quiz_sound.html",
     newGame: false,
     popular: true
@@ -139,7 +139,7 @@ const games = [
     id: 2,
     title: "Sliding Puzzle",
     category: "Puzzle",
-    icon: "games/file_00000000c49881faa999d08efc9fe34b.png",
+    icon: "games/sliding_puzzle.webp",
     url: "games/puzzle-game.html",
     newGame: true,
     popular: false
@@ -149,7 +149,7 @@ const games = [
     id: 1,
     title: "Car Racing",
     category: "Recing",
-    icon: "games/file_00000000275881f4ac08aa9459aa2519.png",
+    icon: "games/cargame-3.webp",
     url: "games/careering.html",
     newGame: true,
     popular: false
