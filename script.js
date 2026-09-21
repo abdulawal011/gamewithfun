@@ -187,12 +187,30 @@ let favorites = JSON.parse(
 
 
 /* ==================================================
+   IMAGE LOADING
+================================================== */
+
+/*
+   Only the first 6 REAL images on the HOME page
+   are loaded eagerly.
+
+   Everything else uses lazy loading.
+*/
+
+let homeEagerImagesUsed = 0;
+
+const HOME_EAGER_LIMIT = 6;
+
+
+/* ==================================================
    GAME CARD
 ================================================== */
 
-function gameCard(game, index) {
+function gameCard(game, loadingType = "lazy") {
 
-  const isFavorite = favorites.includes(game.id);
+  const isFavorite =
+    favorites.includes(game.id);
+
 
   const isImage =
     game.icon &&
@@ -203,24 +221,11 @@ function gameCard(game, index) {
       game.icon.includes(".webp")
     );
 
+
   const gameUrl =
     game.url && game.url !== "#"
       ? game.url
       : null;
-
-
-  /*
-     First 6 images:
-     Load immediately.
-
-     Remaining images:
-     Load only when needed.
-  */
-
-  const loadingType =
-    index < 6
-      ? "eager"
-      : "lazy";
 
 
   return `
@@ -351,7 +356,7 @@ function openGameFromCard(event, id) {
 
 
 /* ==================================================
-   RENDER GAMES
+   RENDER HOME GAMES
 ================================================== */
 
 function renderGames() {
@@ -364,30 +369,108 @@ function renderGames() {
 
 
   /*
-     NEW GAMES
+     Reset counter every time HOME is rendered.
   */
+
+  homeEagerImagesUsed = 0;
+
+
+  /* ==================================================
+     NEW GAMES
+  ================================================== */
 
   if (newGrid) {
 
+    const newGames =
+      games.filter(
+        game =>
+          game.newGame &&
+          game.icon
+      );
+
+
     newGrid.innerHTML =
-      games
-        .filter(game => game.newGame)
-        .map(gameCard)
+      newGames
+        .map(game => {
+
+          let loadingType = "lazy";
+
+
+          /*
+             Only real images count.
+          */
+
+          if (
+            homeEagerImagesUsed <
+            HOME_EAGER_LIMIT
+          ) {
+
+            loadingType = "eager";
+
+            homeEagerImagesUsed++;
+
+          }
+
+
+          return gameCard(
+            game,
+            loadingType
+          );
+
+        })
         .join("");
 
   }
 
 
-  /*
+  /* ==================================================
      POPULAR GAMES
-  */
+  ================================================== */
 
   if (popularGrid) {
 
+    const popularGames =
+      games.filter(
+        game =>
+          game.popular &&
+          game.icon
+      );
+
+
     popularGrid.innerHTML =
-      games
-        .filter(game => game.popular)
-        .map(gameCard)
+      popularGames
+        .map(game => {
+
+          let loadingType = "lazy";
+
+
+          /*
+             Continue the SAME counter.
+
+             This means the first 6 images across
+             the entire HOME page are eager.
+
+             No reset here.
+          */
+
+          if (
+            homeEagerImagesUsed <
+            HOME_EAGER_LIMIT
+          ) {
+
+            loadingType = "eager";
+
+            homeEagerImagesUsed++;
+
+          }
+
+
+          return gameCard(
+            game,
+            loadingType
+          );
+
+        })
         .join("");
 
   }
@@ -497,6 +580,10 @@ function toggleFavorite(id) {
   );
 
 
+  /*
+     Re-render HOME.
+  */
+
   renderGames();
 
 
@@ -572,9 +659,18 @@ function renderFavorites() {
   }
 
 
+  /*
+     Favorites are NOT HOME.
+
+     Therefore all images are lazy.
+  */
+
   favoriteGrid.innerHTML =
     favoriteGames
-      .map(gameCard)
+      .map(
+        game =>
+          gameCard(game, "lazy")
+      )
       .join("");
 
 }
@@ -958,9 +1054,17 @@ function openAll(type) {
   }
 
 
+  /*
+     All Games page:
+     Everything is lazy.
+  */
+
   grid.innerHTML =
     selectedGames
-      .map(gameCard)
+      .map(
+        game =>
+          gameCard(game, "lazy")
+      )
       .join("");
 
 
@@ -1007,7 +1111,10 @@ function showCategory(category) {
       selectedGames.length
 
         ? selectedGames
-            .map(gameCard)
+            .map(
+              game =>
+                gameCard(game, "lazy")
+            )
             .join("")
 
         : `
@@ -1116,7 +1223,10 @@ function searchGames() {
       results.length
 
         ? results
-            .map(gameCard)
+            .map(
+              game =>
+                gameCard(game, "lazy")
+            )
             .join("")
 
         : `
