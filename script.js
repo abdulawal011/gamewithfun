@@ -80,7 +80,7 @@ const games = [
     id: 8,
     title: "Traffic Jam",
     category: "Puzzle",
-    icon: "games/trafficjam.webpn",
+    icon: "games/trafficjam.webp",
     url: "games/trafficjamsolve.html",
     newGame: false,
     popular: true
