@@ -48,6 +48,7 @@ const LEADERBOARD_TIMEZONE = "Asia/Riyadh";
 // ==================================================
 
 function getSaudiDateParts() {
+
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: LEADERBOARD_TIMEZONE,
     year: "numeric",
@@ -58,9 +59,11 @@ function getSaudiDateParts() {
   const result = {};
 
   parts.forEach(part => {
+
     if (part.type !== "literal") {
       result[part.type] = part.value;
     }
+
   });
 
   return {
@@ -72,12 +75,13 @@ function getSaudiDateParts() {
 
 
 // ==================================================
-// GET CURRENT LEADERBOARD PERIOD
+// LEADERBOARD PERIOD
 // ==================================================
 
 function getLeaderboardPeriod() {
 
-  const { year, month, day } = getSaudiDateParts();
+  const { year, month, day } =
+    getSaudiDateParts();
 
   const monthNames = [
     "January",
@@ -100,13 +104,15 @@ function getLeaderboardPeriod() {
   let endDay;
 
   if (day <= 15) {
+
     startDay = 1;
     endDay = 15;
-  } else {
-    startDay = 16;
 
-    // Last day of month
+  } else {
+
+    startDay = 16;
     endDay = new Date(year, month, 0).getDate();
+
   }
 
   const periodId =
@@ -117,11 +123,11 @@ function getLeaderboardPeriod() {
 
   return {
     id: periodId,
-    label: label,
-    startDay: startDay,
-    endDay: endDay,
-    year: year,
-    month: month
+    label,
+    startDay,
+    endDay,
+    year,
+    month
   };
 }
 
@@ -134,7 +140,8 @@ function showLeaderboardPeriod() {
 
   const period = getLeaderboardPeriod();
 
-  let periodBox = document.getElementById("leaderboardPeriod");
+  let periodBox =
+    document.getElementById("leaderboardPeriod");
 
   if (!periodBox) {
 
@@ -146,7 +153,9 @@ function showLeaderboardPeriod() {
     periodBox.style.margin = "10px 0";
     periodBox.style.fontWeight = "600";
 
-    if (leaderboardList && leaderboardList.parentNode) {
+    if (leaderboardList &&
+        leaderboardList.parentNode) {
+
       leaderboardList.parentNode.insertBefore(
         periodBox,
         leaderboardList
@@ -171,17 +180,21 @@ async function checkLeaderboardPeriod() {
 
   const period = getLeaderboardPeriod();
 
-  const settingsRef = doc(db, "settings", "leaderboard");
+  const settingsRef =
+    doc(db, "settings", "leaderboard");
 
   try {
 
-    const settingsSnap = await getDoc(settingsRef);
+    const settingsSnap =
+      await getDoc(settingsRef);
 
     if (!settingsSnap.exists()) {
 
       await setDoc(settingsRef, {
+
         leaderboardPeriod: period.id,
         updatedAt: serverTimestamp()
+
       });
 
       return period;
@@ -191,11 +204,15 @@ async function checkLeaderboardPeriod() {
 
     if (data.leaderboardPeriod !== period.id) {
 
-      console.log("New leaderboard period detected.");
+      console.log(
+        "New leaderboard period detected."
+      );
 
-      const playersRef = collection(db, "players");
+      const playersRef =
+        collection(db, "players");
 
-      const snapshot = await getDocs(playersRef);
+      const snapshot =
+        await getDocs(playersRef);
 
       const resetPromises = [];
 
@@ -203,31 +220,41 @@ async function checkLeaderboardPeriod() {
 
         resetPromises.push(
           updateDoc(playerDoc.ref, {
+
             gamesPlayed: 0,
             totalTime: 0,
             lastGame: "",
             online: false,
             leaderboardPeriod: period.id,
             lastActive: serverTimestamp()
+
           })
         );
+
       });
 
       await Promise.all(resetPromises);
 
       await setDoc(settingsRef, {
+
         leaderboardPeriod: period.id,
         updatedAt: serverTimestamp()
+
       });
 
-      console.log("Leaderboard reset completed.");
+      console.log(
+        "Leaderboard reset completed."
+      );
     }
 
     return period;
 
   } catch (error) {
 
-    console.error("Period check error:", error);
+    console.error(
+      "Period check error:",
+      error
+    );
 
     return period;
   }
@@ -240,22 +267,31 @@ async function checkLeaderboardPeriod() {
 
 if (loginBtn) {
 
-  loginBtn.addEventListener("click", async () => {
+  loginBtn.addEventListener(
+    "click",
+    async () => {
 
-    try {
+      try {
 
-      await signInWithPopup(auth, googleProvider);
+        await signInWithPopup(
+          auth,
+          googleProvider
+        );
 
-    } catch (error) {
+      } catch (error) {
 
-      console.error("Google login error:", error);
+        console.error(
+          "Google login error:",
+          error
+        );
 
-      alert(
-        "Google Login failed: " +
-        (error.message || "Unknown error")
-      );
+        alert(
+          "Google Login failed: " +
+          (error.message || "Unknown error")
+        );
+      }
     }
-  });
+  );
 }
 
 
@@ -265,35 +301,45 @@ if (loginBtn) {
 
 if (logoutBtn) {
 
-  logoutBtn.addEventListener("click", async () => {
+  logoutBtn.addEventListener(
+    "click",
+    async () => {
 
-    try {
+      try {
 
-      await saveTimeSpent();
+        await saveTimeSpent();
 
-      if (currentUser) {
+        if (currentUser) {
 
-        const playerRef = doc(
-          db,
-          "players",
-          currentUser.uid
+          const playerRef =
+            doc(
+              db,
+              "players",
+              currentUser.uid
+            );
+
+          await updateDoc(
+            playerRef,
+            {
+              online: false,
+              lastActive: serverTimestamp()
+            }
+          );
+        }
+
+        stopTimeTracking();
+
+        await signOut(auth);
+
+      } catch (error) {
+
+        console.error(
+          "Logout error:",
+          error
         );
-
-        await updateDoc(playerRef, {
-          online: false,
-          lastActive: serverTimestamp()
-        });
       }
-
-      stopTimeTracking();
-
-      await signOut(auth);
-
-    } catch (error) {
-
-      console.error("Logout error:", error);
     }
-  });
+  );
 }
 
 
@@ -301,92 +347,120 @@ if (logoutBtn) {
 // AUTH STATE
 // ==================================================
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+  auth,
+  async (user) => {
 
-  currentUser = user;
+    currentUser = user;
 
-  if (user) {
+    if (user) {
 
-    try {
+      try {
 
-      const period = await checkLeaderboardPeriod();
+        await checkLeaderboardPeriod();
 
-      showLeaderboardPeriod();
+        showLeaderboardPeriod();
+
+        if (loginBtn) {
+          loginBtn.style.display = "none";
+        }
+
+        if (logoutBtn) {
+          logoutBtn.style.display = "block";
+        }
+
+        if (userInfo) {
+
+          const photo =
+            user.photoURL
+              ? `
+                <img
+                  src="${escapeHTML(user.photoURL)}"
+                  style="
+                    width:36px;
+                    height:36px;
+                    border-radius:50%;
+                    object-fit:cover;
+                  "
+                >
+              `
+              : "";
+
+          userInfo.innerHTML = `
+            ${photo}
+            <span>
+              ${escapeHTML(
+                user.displayName || "Player"
+              )}
+            </span>
+          `;
+
+          userInfo.style.display = "flex";
+        }
+
+        await createOrUpdatePlayer(user);
+
+        startTimeTracking();
+
+        await loadLeaderboard();
+
+      } catch (error) {
+
+        console.error(
+          "Auth state error:",
+          error
+        );
+
+        if (leaderboardList) {
+
+          leaderboardList.innerHTML = `
+            <div style="
+              text-align:center;
+              padding:20px;
+            ">
+              Unable to load leaderboard.
+            </div>
+          `;
+        }
+      }
+
+    } else {
 
       if (loginBtn) {
-        loginBtn.style.display = "none";
+        loginBtn.style.display = "block";
       }
 
       if (logoutBtn) {
-        logoutBtn.style.display = "block";
+        logoutBtn.style.display = "none";
       }
 
       if (userInfo) {
 
-        const photo = user.photoURL
-          ? `<img src="${escapeHTML(user.photoURL)}"
-                  style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`
-          : "";
-
-        userInfo.innerHTML = `
-          ${photo}
-          <span>${escapeHTML(user.displayName || "Player")}</span>
-        `;
-
-        userInfo.style.display = "flex";
+        userInfo.innerHTML = "";
+        userInfo.style.display = "none";
       }
 
-      await createOrUpdatePlayer(user);
+      stopTimeTracking();
 
-      startTimeTracking();
-
-      await loadLeaderboard();
-
-    } catch (error) {
-
-      console.error("Auth state error:", error);
+      currentUser = null;
 
       if (leaderboardList) {
 
         leaderboardList.innerHTML = `
-          <div style="text-align:center;padding:20px;">
-            Unable to load leaderboard.
+          <div style="
+            text-align:center;
+            padding:20px;
+          ">
+            Login to join the leaderboard 🎮
           </div>
         `;
       }
+
+      showLeaderboardPeriod();
     }
 
-  } else {
-
-    if (loginBtn) {
-      loginBtn.style.display = "block";
-    }
-
-    if (logoutBtn) {
-      logoutBtn.style.display = "none";
-    }
-
-    if (userInfo) {
-      userInfo.innerHTML = "";
-      userInfo.style.display = "none";
-    }
-
-    stopTimeTracking();
-
-    currentUser = null;
-
-    if (leaderboardList) {
-
-      leaderboardList.innerHTML = `
-        <div style="text-align:center;padding:20px;">
-          Login to join the leaderboard 🎮
-        </div>
-      `;
-    }
-
-    showLeaderboardPeriod();
   }
-});
+);
 
 
 // ==================================================
@@ -395,82 +469,118 @@ onAuthStateChanged(auth, async (user) => {
 
 async function createOrUpdatePlayer(user) {
 
-  const period = getLeaderboardPeriod();
+  const period =
+    getLeaderboardPeriod();
 
-  const playerRef = doc(
-    db,
-    "players",
-    user.uid
-  );
+  const playerRef =
+    doc(
+      db,
+      "players",
+      user.uid
+    );
 
-  const playerSnap = await getDoc(playerRef);
+  const playerSnap =
+    await getDoc(playerRef);
 
   if (!playerSnap.exists()) {
 
-    await setDoc(playerRef, {
+    await setDoc(
+      playerRef,
+      {
 
-      name: user.displayName || "Player",
+        name:
+          user.displayName || "Player",
 
-      email: user.email || "",
+        email:
+          user.email || "",
 
-      photoURL: user.photoURL || "",
+        photoURL:
+          user.photoURL || "",
 
-      gamesPlayed: 0,
+        gamesPlayed: 0,
 
-      totalTime: 0,
+        totalTime: 0,
 
-      online: true,
+        online: true,
 
-      lastGame: "",
+        lastGame: "",
 
-      leaderboardPeriod: period.id,
+        leaderboardPeriod:
+          period.id,
 
-      lastActive: serverTimestamp(),
+        lastActive:
+          serverTimestamp(),
 
-      createdAt: serverTimestamp()
-    });
+        createdAt:
+          serverTimestamp()
+      }
+    );
 
     return;
   }
 
-  const playerData = playerSnap.data();
+  const playerData =
+    playerSnap.data();
 
   if (
     playerData.leaderboardPeriod &&
     playerData.leaderboardPeriod !== period.id
   ) {
 
-    await updateDoc(playerRef, {
+    await updateDoc(
+      playerRef,
+      {
 
-      gamesPlayed: 0,
+        gamesPlayed: 0,
 
-      totalTime: 0,
+        totalTime: 0,
 
-      lastGame: "",
+        lastGame: "",
 
-      leaderboardPeriod: period.id,
+        leaderboardPeriod:
+          period.id,
 
-      online: true,
+        online: true,
 
-      lastActive: serverTimestamp()
-    });
+        name:
+          user.displayName || "Player",
+
+        email:
+          user.email || "",
+
+        photoURL:
+          user.photoURL || "",
+
+        lastActive:
+          serverTimestamp()
+
+      }
+    );
 
   } else {
 
-    await updateDoc(playerRef, {
+    await updateDoc(
+      playerRef,
+      {
 
-      name: user.displayName || "Player",
+        name:
+          user.displayName || "Player",
 
-      email: user.email || "",
+        email:
+          user.email || "",
 
-      photoURL: user.photoURL || "",
+        photoURL:
+          user.photoURL || "",
 
-      leaderboardPeriod: period.id,
+        leaderboardPeriod:
+          period.id,
 
-      online: true,
+        online: true,
 
-      lastActive: serverTimestamp()
-    });
+        lastActive:
+          serverTimestamp()
+      }
+    );
   }
 }
 
@@ -479,44 +589,58 @@ async function createOrUpdatePlayer(user) {
 // TRACK GAME START
 // ==================================================
 
-window.trackGameStart = async function(gameId) {
+window.trackGameStart =
+  async function(gameId) {
 
-  if (!currentUser) {
-    return;
-  }
+    if (!currentUser) {
+      return;
+    }
 
-  try {
+    try {
 
-    const period = await checkLeaderboardPeriod();
+      const period =
+        await checkLeaderboardPeriod();
 
-    const playerRef = doc(
-      db,
-      "players",
-      currentUser.uid
-    );
+      const playerRef =
+        doc(
+          db,
+          "players",
+          currentUser.uid
+        );
 
-    await updateDoc(playerRef, {
+      await updateDoc(
+        playerRef,
+        {
 
-      gamesPlayed: increment(1),
+          gamesPlayed:
+            increment(1),
 
-      lastGame: gameId || "",
+          lastGame:
+            gameId || "",
 
-      online: true,
+          online: true,
 
-      leaderboardPeriod: period.id,
+          leaderboardPeriod:
+            period.id,
 
-      lastActive: serverTimestamp()
-    });
+          lastActive:
+            serverTimestamp()
 
-    gameStartTime = Date.now();
+        }
+      );
 
-    await loadLeaderboard();
+      gameStartTime = Date.now();
 
-  } catch (error) {
+      await loadLeaderboard();
 
-    console.error("Game start tracking error:", error);
-  }
-};
+    } catch (error) {
+
+      console.error(
+        "Game start tracking error:",
+        error
+      );
+    }
+  };
 
 
 // ==================================================
@@ -527,13 +651,18 @@ function startTimeTracking() {
 
   stopTimeTracking();
 
-  gameStartTime = Date.now();
+  gameStartTime =
+    Date.now();
 
-  timeInterval = setInterval(() => {
+  timeInterval =
+    setInterval(
+      () => {
 
-    saveTimeSpent();
+        saveTimeSpent();
 
-  }, 30000);
+      },
+      30000
+    );
 }
 
 
@@ -556,46 +685,64 @@ function stopTimeTracking() {
 
 async function saveTimeSpent() {
 
-  if (!currentUser || !gameStartTime) {
+  if (
+    !currentUser ||
+    !gameStartTime
+  ) {
+
     return;
   }
 
-  const elapsedSeconds = Math.floor(
-    (Date.now() - gameStartTime) / 1000
-  );
+  const elapsedSeconds =
+    Math.floor(
+      (Date.now() - gameStartTime) / 1000
+    );
 
   if (elapsedSeconds <= 0) {
     return;
   }
 
-  gameStartTime = Date.now();
+  gameStartTime =
+    Date.now();
 
   try {
 
-    const period = getLeaderboardPeriod();
+    const period =
+      getLeaderboardPeriod();
 
-    const playerRef = doc(
-      db,
-      "players",
-      currentUser.uid
+    const playerRef =
+      doc(
+        db,
+        "players",
+        currentUser.uid
+      );
+
+    await updateDoc(
+      playerRef,
+      {
+
+        totalTime:
+          increment(elapsedSeconds),
+
+        lastActive:
+          serverTimestamp(),
+
+        online: true,
+
+        leaderboardPeriod:
+          period.id
+
+      }
     );
-
-    await updateDoc(playerRef, {
-
-      totalTime: increment(elapsedSeconds),
-
-      lastActive: serverTimestamp(),
-
-      online: true,
-
-      leaderboardPeriod: period.id
-    });
 
     await loadLeaderboard();
 
   } catch (error) {
 
-    console.error("Save time error:", error);
+    console.error(
+      "Save time error:",
+      error
+    );
   }
 }
 
@@ -618,37 +765,53 @@ document.addEventListener(
 
         await saveTimeSpent();
 
-        const playerRef = doc(
-          db,
-          "players",
-          currentUser.uid
-        );
+        const playerRef =
+          doc(
+            db,
+            "players",
+            currentUser.uid
+          );
 
-        await updateDoc(playerRef, {
-          online: false,
-          lastActive: serverTimestamp()
-        });
+        await updateDoc(
+          playerRef,
+          {
+
+            online: false,
+
+            lastActive:
+              serverTimestamp()
+
+          }
+        );
 
         stopTimeTracking();
 
       } else {
 
-        const period = await checkLeaderboardPeriod();
+        const period =
+          await checkLeaderboardPeriod();
 
-        const playerRef = doc(
-          db,
-          "players",
-          currentUser.uid
+        const playerRef =
+          doc(
+            db,
+            "players",
+            currentUser.uid
+          );
+
+        await updateDoc(
+          playerRef,
+          {
+
+            online: true,
+
+            leaderboardPeriod:
+              period.id,
+
+            lastActive:
+              serverTimestamp()
+
+          }
         );
-
-        await updateDoc(playerRef, {
-
-          online: true,
-
-          leaderboardPeriod: period.id,
-
-          lastActive: serverTimestamp()
-        });
 
         showLeaderboardPeriod();
 
@@ -659,7 +822,10 @@ document.addEventListener(
 
     } catch (error) {
 
-      console.error("Visibility error:", error);
+      console.error(
+        "Visibility error:",
+        error
+      );
     }
   }
 );
@@ -669,33 +835,51 @@ document.addEventListener(
 // PAGE HIDE
 // ==================================================
 
-window.addEventListener("pagehide", () => {
+window.addEventListener(
+  "pagehide",
+  () => {
 
-  saveTimeSpent();
+    saveTimeSpent();
 
-});
+  }
+);
 
 
 // ==================================================
 // PRIVATE PLAYER RANK
 // ==================================================
 
-function showPrivateRank(rank, hasPlayed) {
+function showPrivateRank(
+  rank,
+  hasPlayed
+) {
 
   let rankBox =
-    document.getElementById("privatePlayerRank");
+    document.getElementById(
+      "privatePlayerRank"
+    );
 
   if (!rankBox) {
 
-    rankBox = document.createElement("div");
+    rankBox =
+      document.createElement("div");
 
-    rankBox.id = "privatePlayerRank";
+    rankBox.id =
+      "privatePlayerRank";
 
-    rankBox.style.textAlign = "center";
-    rankBox.style.margin = "10px 0";
-    rankBox.style.fontWeight = "600";
+    rankBox.style.textAlign =
+      "center";
 
-    if (leaderboardList && leaderboardList.parentNode) {
+    rankBox.style.margin =
+      "10px 0";
+
+    rankBox.style.fontWeight =
+      "600";
+
+    if (
+      leaderboardList &&
+      leaderboardList.parentNode
+    ) {
 
       leaderboardList.parentNode.insertBefore(
         rankBox,
@@ -704,13 +888,19 @@ function showPrivateRank(rank, hasPlayed) {
     }
   }
 
-  if (!currentUser || !hasPlayed) {
+  if (
+    !currentUser ||
+    !hasPlayed
+  ) {
 
-    rankBox.style.display = "none";
+    rankBox.style.display =
+      "none";
+
     return;
   }
 
-  rankBox.style.display = "block";
+  rankBox.style.display =
+    "block";
 
   rankBox.innerHTML =
     `🎯 Your Rank: #${rank}`;
@@ -729,62 +919,79 @@ async function loadLeaderboard() {
 
   try {
 
-    const period = getLeaderboardPeriod();
+    const period =
+      getLeaderboardPeriod();
 
-    /*
-      Get players sorted by totalTime.
+    const playersRef =
+      collection(db, "players");
 
-      No Firestore "where" filter is used here,
-      so this avoids common index errors.
-    */
+    const leaderboardQuery =
+      query(
+        playersRef,
+        orderBy("totalTime", "desc")
+      );
 
-    const playersRef = collection(db, "players");
-
-    const leaderboardQuery = query(
-      playersRef,
-      orderBy("totalTime", "desc")
-    );
-
-    const snapshot = await getDocs(leaderboardQuery);
+    const snapshot =
+      await getDocs(
+        leaderboardQuery
+      );
 
     const players = [];
 
-    snapshot.forEach(playerDoc => {
+    snapshot.forEach(
+      playerDoc => {
 
-      const data = playerDoc.data();
+        const data =
+          playerDoc.data();
 
-      /*
-        IMPORTANT:
-        A player only appears after actually
-        playing a game in the current period.
-      */
+        if (
+          data.leaderboardPeriod ===
+            period.id &&
+          Number(
+            data.gamesPlayed || 0
+          ) > 0
+        ) {
 
-      if (
-        data.leaderboardPeriod === period.id &&
-        Number(data.gamesPlayed || 0) > 0
-      ) {
+          players.push({
 
-        players.push({
-          id: playerDoc.id,
-          ...data
-        });
+            id:
+              playerDoc.id,
+
+            ...data
+
+          });
+        }
       }
-    });
+    );
 
 
-    // Make sure ranking is correctly sorted
-    players.sort((a, b) => {
+    // ==================================================
+    // SORT
+    // ==================================================
 
-      const timeA = Number(a.totalTime || 0);
-      const timeB = Number(b.totalTime || 0);
+    players.sort(
+      (a, b) => {
 
-      if (timeB !== timeA) {
-        return timeB - timeA;
+        const timeA =
+          Number(a.totalTime || 0);
+
+        const timeB =
+          Number(b.totalTime || 0);
+
+        if (
+          timeB !== timeA
+        ) {
+
+          return timeB - timeA;
+        }
+
+        return String(
+          a.name || ""
+        ).localeCompare(
+          String(b.name || "")
+        );
       }
-
-      return String(a.name || "")
-        .localeCompare(String(b.name || ""));
-    });
+    );
 
 
     // ==================================================
@@ -793,9 +1000,12 @@ async function loadLeaderboard() {
 
     if (currentUser) {
 
-      const myIndex = players.findIndex(
-        player => player.id === currentUser.uid
-      );
+      const myIndex =
+        players.findIndex(
+          player =>
+            player.id ===
+            currentUser.uid
+        );
 
       if (myIndex !== -1) {
 
@@ -822,17 +1032,20 @@ async function loadLeaderboard() {
 
 
     // ==================================================
-    // PUBLIC TOP 25 ONLY
+    // PUBLIC TOP 25
     // ==================================================
 
-    const top25 = players.slice(0, 25);
+    const top25 =
+      players.slice(0, 25);
 
 
-    // No active players yet
     if (top25.length === 0) {
 
       leaderboardList.innerHTML = `
-        <div style="text-align:center;padding:20px;">
+        <div style="
+          text-align:center;
+          padding:20px;
+        ">
           No players yet.<br>
           🎮 Play a game to join the leaderboard!
         </div>
@@ -846,65 +1059,161 @@ async function loadLeaderboard() {
     // RENDER TOP 25
     // ==================================================
 
-    leaderboardList.innerHTML = top25.map(
-      (player, index) => {
+    leaderboardList.innerHTML =
+      top25.map(
+        (player, index) => {
 
-        const rank = index + 1;
+          const rank =
+            index + 1;
 
-        const name =
-          escapeHTML(player.name || "Player");
+          const name =
+            escapeHTML(
+              player.name ||
+              "Player"
+            );
 
-        const gamesPlayed =
-          Number(player.gamesPlayed || 0);
+          const photoURL =
+            player.photoURL
+              ? escapeHTML(
+                  player.photoURL
+                )
+              : "";
 
-        const totalTime =
-          Number(player.totalTime || 0);
+          const gamesPlayed =
+            Number(
+              player.gamesPlayed || 0
+            );
 
-        const online =
-          player.online === true;
+          const totalTime =
+            Number(
+              player.totalTime || 0
+            );
 
-        return `
+          const online =
+            player.online === true;
 
-          <div class="leaderboard-player">
 
-            <div class="leaderboard-rank">
-              #${rank}
-            </div>
+          // ==================================================
+          // PROFILE IMAGE
+          // ==================================================
 
-            <div class="leaderboard-name">
+          const profileImage =
+            photoURL
 
-              <div>
-                ${name}
+              ? `
+                <img
+                  src="${photoURL}"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                  style="
+                    width:40px;
+                    height:40px;
+                    min-width:40px;
+                    border-radius:50%;
+                    object-fit:cover;
+                    margin-right:9px;
+                    vertical-align:middle;
+                  "
+                  onerror="
+                    this.style.display='none';
+                  "
+                >
+              `
+
+              : `
+                <div
+                  style="
+                    width:40px;
+                    height:40px;
+                    min-width:40px;
+                    border-radius:50%;
+                    background:#ddd;
+                    display:inline-flex;
+                    align-items:center;
+                    justify-content:center;
+                    margin-right:9px;
+                    vertical-align:middle;
+                    font-size:20px;
+                  "
+                >
+                  👤
+                </div>
+              `;
+
+
+          return `
+
+            <div
+              class="leaderboard-player"
+            >
+
+              <div
+                class="leaderboard-rank"
+              >
+                #${rank}
               </div>
 
-              <small>
-                ${gamesPlayed} games
-              </small>
 
-            </div>
-
-            <div class="leaderboard-time">
-
-              ${formatTime(totalTime)}
-
-              <span
+              <div
+                class="leaderboard-name"
                 style="
-                  display:inline-block;
-                  width:8px;
-                  height:8px;
-                  border-radius:50%;
-                  background:${online ? "#22c55e" : "#999"};
-                  margin-left:5px;
+                  display:flex;
+                  align-items:center;
+                  min-width:0;
                 "
-              ></span>
+              >
+
+                ${profileImage}
+
+                <div
+                  style="
+                    min-width:0;
+                  "
+                >
+
+                  <div>
+                    ${name}
+                  </div>
+
+                  <small>
+                    ${gamesPlayed} games
+                  </small>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="leaderboard-time"
+              >
+
+                ${formatTime(
+                  totalTime
+                )}
+
+                <span
+                  style="
+                    display:inline-block;
+                    width:8px;
+                    height:8px;
+                    border-radius:50%;
+                    background:${
+                      online
+                        ? "#22c55e"
+                        : "#999"
+                    };
+                    margin-left:5px;
+                  "
+                ></span>
+
+              </div>
 
             </div>
 
-          </div>
-
-        `;
-      }
-    ).join("");
+          `;
+        }
+      ).join("");
 
 
   } catch (error) {
@@ -914,13 +1223,11 @@ async function loadLeaderboard() {
       error
     );
 
-    /*
-      Do not show "Error: unknown".
-      Show a simple message to the player.
-    */
-
     leaderboardList.innerHTML = `
-      <div style="text-align:center;padding:20px;">
+      <div style="
+        text-align:center;
+        padding:20px;
+      ">
         Unable to load leaderboard.
       </div>
     `;
@@ -934,16 +1241,23 @@ async function loadLeaderboard() {
 
 function formatTime(seconds) {
 
-  seconds = Math.max(
-    0,
-    Math.floor(Number(seconds) || 0)
-  );
+  seconds =
+    Math.max(
+      0,
+      Math.floor(
+        Number(seconds) || 0
+      )
+    );
 
   const hours =
-    Math.floor(seconds / 3600);
+    Math.floor(
+      seconds / 3600
+    );
 
   const minutes =
-    Math.floor((seconds % 3600) / 60);
+    Math.floor(
+      (seconds % 3600) / 60
+    );
 
   const secs =
     seconds % 60;
@@ -952,13 +1266,11 @@ function formatTime(seconds) {
   if (hours > 0) {
 
     return `${hours}h ${minutes}m`;
-
   }
 
   if (minutes > 0) {
 
     return `${minutes}m ${secs}s`;
-
   }
 
   return `${secs}s`;
@@ -972,11 +1284,26 @@ function formatTime(seconds) {
 function escapeHTML(value) {
 
   return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
 
 
@@ -984,11 +1311,12 @@ function escapeHTML(value) {
 // GLOBAL
 // ==================================================
 
-window.loadLeaderboard = loadLeaderboard;
+window.loadLeaderboard =
+  loadLeaderboard;
 
 
 // ==================================================
-// INITIAL PERIOD DISPLAY
+// INITIAL PERIOD
 // ==================================================
 
 showLeaderboardPeriod();
