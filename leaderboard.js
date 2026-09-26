@@ -1,6 +1,7 @@
 // ========================================
 // GAMEWITHFUN LEADERBOARD
 // Google Popup Login + Firestore
+// Fixed 15-Day Period System
 // ========================================
 
 import {
@@ -54,14 +55,533 @@ let timeInterval = null;
 
 
 // ========================================
+// LEADERBOARD PERIOD
+// Saudi Arabia Time
+// ========================================
+
+const LEADERBOARD_TIMEZONE =
+  "Asia/Riyadh";
+
+
+// ========================================
+// GET SAUDI DATE PARTS
+// ========================================
+
+function getSaudiDateParts() {
+
+  const formatter =
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        timeZone:
+          LEADERBOARD_TIMEZONE,
+
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+
+        hour12: false
+      }
+    );
+
+
+  const parts =
+    formatter.formatToParts(
+      new Date()
+    );
+
+
+  const result = {};
+
+
+  parts.forEach(
+    part => {
+
+      if (
+        part.type !== "literal"
+      ) {
+
+        result[part.type] =
+          part.value;
+
+      }
+
+    }
+  );
+
+
+  return {
+
+    year:
+      Number(result.year),
+
+    month:
+      Number(result.month),
+
+    day:
+      Number(result.day),
+
+    hour:
+      Number(result.hour),
+
+    minute:
+      Number(result.minute),
+
+    second:
+      Number(result.second)
+
+  };
+
+}
+
+
+// ========================================
+// GET CURRENT PERIOD
+// ========================================
+
+function getLeaderboardPeriod() {
+
+  const date =
+    getSaudiDateParts();
+
+
+  const year =
+    date.year;
+
+  const month =
+    date.month;
+
+  const day =
+    date.day;
+
+
+  let startDay;
+  let endDay;
+
+
+  // ======================================
+  // PERIOD 1
+  // 1st → 15th
+  // ======================================
+
+  if (day <= 15) {
+
+    startDay =
+      1;
+
+    endDay =
+      15;
+
+  }
+
+
+  // ======================================
+  // PERIOD 2
+  // 16th → END OF MONTH
+  // ======================================
+
+  else {
+
+    startDay =
+      16;
+
+
+    // Get last day of current month
+    endDay =
+      new Date(
+        Date.UTC(
+          year,
+          month,
+          0
+        )
+      ).getUTCDate();
+
+  }
+
+
+  const monthName =
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        month: "short",
+        timeZone:
+          LEADERBOARD_TIMEZONE
+      }
+    ).format(
+      new Date(
+        Date.UTC(
+          year,
+          month - 1,
+          1
+        )
+      )
+    );
+
+
+  const periodId =
+    `${year}-${String(month).padStart(2, "0")}-${startDay}`;
+
+
+  return {
+
+    id:
+      periodId,
+
+    year,
+
+    month,
+
+    startDay,
+
+    endDay,
+
+    monthName,
+
+    label:
+      `${monthName} ${startDay} – ${monthName} ${endDay}`
+
+  };
+
+}
+
+
+// ========================================
+// SHOW CURRENT PERIOD
+// ========================================
+
+function showLeaderboardPeriod() {
+
+  const period =
+    getLeaderboardPeriod();
+
+
+  // Try existing common elements first
+  let periodElement =
+    document.getElementById(
+      "leaderboardPeriod"
+    );
+
+
+  // If element doesn't exist,
+  // create one without changing
+  // the existing leaderboard structure.
+  if (!periodElement) {
+
+    periodElement =
+      document.createElement(
+        "div"
+      );
+
+    periodElement.id =
+      "leaderboardPeriod";
+
+
+    periodElement.style.textAlign =
+      "center";
+
+    periodElement.style.marginBottom =
+      "12px";
+
+    periodElement.style.fontSize =
+      "13px";
+
+    periodElement.style.opacity =
+      "0.75";
+
+
+    if (leaderboardList) {
+
+      leaderboardList.parentNode.insertBefore(
+        periodElement,
+        leaderboardList
+      );
+
+    }
+
+  }
+
+
+  periodElement.innerHTML = `
+
+    🏆 Leaderboard Period:
+    <strong>
+      ${escapeHTML(period.label)}
+    </strong>
+
+    <br>
+
+    ⏰ Ends at
+    <strong>
+      11:59 PM
+    </strong>
+
+  `;
+
+}
+
+
+// ========================================
+// PERIOD RESET
+// ========================================
+//
+// IMPORTANT:
+//
+// We use a separate Firestore document
+// to remember which period is active.
+//
+// This means:
+// - Account creation date is NOT used
+// - Everyone shares the same period
+// - Ranking resets together
+//
+// ========================================
+
+async function checkLeaderboardPeriod() {
+
+  const period =
+    getLeaderboardPeriod();
+
+
+  const periodRef =
+    doc(
+      db,
+      "settings",
+      "leaderboard"
+    );
+
+
+  try {
+
+    const periodSnap =
+      await getDoc(
+        periodRef
+      );
+
+
+    // ====================================
+    // FIRST PERIOD
+    // ====================================
+
+    if (!periodSnap.exists()) {
+
+      await setDoc(
+        periodRef,
+        {
+
+          currentPeriod:
+            period.id,
+
+          periodLabel:
+            period.label,
+
+          updatedAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      console.log(
+        "🆕 Leaderboard period initialized:",
+        period.id
+      );
+
+
+      return;
+
+    }
+
+
+    const data =
+      periodSnap.data();
+
+
+    const oldPeriod =
+      data.currentPeriod;
+
+
+    // ====================================
+    // SAME PERIOD
+    // ====================================
+
+    if (
+      oldPeriod ===
+      period.id
+    ) {
+
+      console.log(
+        "✅ Current leaderboard period:",
+        period.id
+      );
+
+      return;
+
+    }
+
+
+    // ====================================
+    // NEW PERIOD
+    // ====================================
+
+    console.log(
+      "🔄 NEW LEADERBOARD PERIOD!"
+    );
+
+
+    console.log(
+      "Old:",
+      oldPeriod
+    );
+
+
+    console.log(
+      "New:",
+      period.id
+    );
+
+
+    // ====================================
+    // GET ALL PLAYERS
+    // ====================================
+
+    const playersRef =
+      collection(
+        db,
+        "players"
+      );
+
+
+    const snapshot =
+      await getDocs(
+        playersRef
+      );
+
+
+    // ====================================
+    // RESET PLAYER STATS
+    // ====================================
+
+    const resetPromises =
+      [];
+
+
+    snapshot.forEach(
+      playerDoc => {
+
+        resetPromises.push(
+
+          updateDoc(
+            doc(
+              db,
+              "players",
+              playerDoc.id
+            ),
+            {
+
+              gamesPlayed:
+                0,
+
+              totalTime:
+                0,
+
+              lastGame:
+                "",
+
+              online:
+                false,
+
+              lastActive:
+                serverTimestamp(),
+
+              leaderboardPeriod:
+                period.id
+
+            }
+          )
+
+        );
+
+      }
+    );
+
+
+    await Promise.all(
+      resetPromises
+    );
+
+
+    // ====================================
+    // SAVE NEW PERIOD
+    // ====================================
+
+    await setDoc(
+      periodRef,
+      {
+
+        currentPeriod:
+          period.id,
+
+        periodLabel:
+          period.label,
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    console.log(
+      "✅ Leaderboard reset completed!"
+    );
+
+
+    console.log(
+      "🏆 New period:",
+      period.label
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "❌ Period check/reset error:",
+      error
+    );
+
+  }
+
+}
+
+
+// ========================================
 // DEBUG
 // ========================================
 
-console.log("================================");
-console.log("🎮 GameWithFun Leaderboard Loaded");
-console.log("🔥 Firebase Project: gamewithfun-bc508");
-console.log("🔐 Login Method: Google Popup");
-console.log("================================");
+console.log(
+  "================================"
+);
+
+console.log(
+  "🎮 GameWithFun Leaderboard Loaded"
+);
+
+console.log(
+  "🔥 Leaderboard Period System: ON"
+);
+
+console.log(
+  "🇸🇦 Timezone: Asia/Riyadh"
+);
+
+console.log(
+  "================================"
+);
 
 
 // ========================================
@@ -76,14 +596,17 @@ if (loginBtn) {
 
       try {
 
-        loginBtn.disabled = true;
+        loginBtn.disabled =
+          true;
 
         loginBtn.textContent =
           "Opening Google...";
 
+
         console.log(
           "🔐 Starting Google Popup Login..."
         );
+
 
         const result =
           await signInWithPopup(
@@ -91,21 +614,30 @@ if (loginBtn) {
             googleProvider
           );
 
+
         console.log(
           "✅ Google Login Successful:",
           result.user.email
         );
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
           "❌ Google Login Error:",
           error
         );
 
-        showLoginError(error);
 
-        loginBtn.disabled = false;
+        showLoginError(
+          error
+        );
+
+
+        loginBtn.disabled =
+          false;
+
 
         loginBtn.textContent =
           "🔐 Login with Google";
@@ -127,7 +659,11 @@ function showLoginError(error) {
   let message =
     "Google Login failed.";
 
-  if (error && error.code) {
+
+  if (
+    error &&
+    error.code
+  ) {
 
     message +=
       "\n\nError Code:\n" +
@@ -135,7 +671,11 @@ function showLoginError(error) {
 
   }
 
-  if (error && error.message) {
+
+  if (
+    error &&
+    error.message
+  ) {
 
     message +=
       "\n\nMessage:\n" +
@@ -143,7 +683,10 @@ function showLoginError(error) {
 
   }
 
-  alert(message);
+
+  alert(
+    message
+  );
 
 }
 
@@ -162,6 +705,7 @@ if (logoutBtn) {
 
         await saveTimeSpent();
 
+
         if (currentUser) {
 
           try {
@@ -173,16 +717,23 @@ if (logoutBtn) {
                 currentUser.uid
               );
 
+
             await updateDoc(
               playerRef,
               {
-                online: false,
+
+                online:
+                  false,
+
                 lastActive:
                   serverTimestamp()
+
               }
             );
 
-          } catch (error) {
+          }
+
+          catch (error) {
 
             console.error(
               "Offline status error:",
@@ -193,18 +744,25 @@ if (logoutBtn) {
 
         }
 
-        await signOut(auth);
+
+        await signOut(
+          auth
+        );
+
 
         console.log(
           "✅ User logged out."
         );
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
           "❌ Logout Error:",
           error
         );
+
 
         alert(
           "Logout Error:\n\n" +
@@ -230,7 +788,8 @@ onAuthStateChanged(
   auth,
   async (user) => {
 
-    currentUser = user;
+    currentUser =
+      user;
 
 
     // ====================================
@@ -243,28 +802,40 @@ onAuthStateChanged(
         "================================"
       );
 
+
       console.log(
         "✅ AUTHENTICATED USER"
       );
+
 
       console.log(
         "Name:",
         user.displayName
       );
 
+
       console.log(
         "Email:",
         user.email
       );
+
 
       console.log(
         "UID:",
         user.uid
       );
 
+
       console.log(
         "================================"
       );
+
+
+      // Check period FIRST
+      await checkLeaderboardPeriod();
+
+
+      showLeaderboardPeriod();
 
 
       // ==================================
@@ -300,13 +871,16 @@ onAuthStateChanged(
         userInfo.style.display =
           "block";
 
+
         const name =
           user.displayName ||
           "Player";
 
+
         const photo =
           user.photoURL ||
           "";
+
 
         userInfo.innerHTML = `
 
@@ -322,7 +896,9 @@ onAuthStateChanged(
 
             ${
               photo
+
                 ? `
+
                   <img
                     src="${escapeHTML(photo)}"
                     alt="Profile"
@@ -333,8 +909,11 @@ onAuthStateChanged(
                       object-fit:cover;
                     "
                   >
+
                 `
+
                 : `
+
                   <div
                     style="
                       width:45px;
@@ -349,14 +928,17 @@ onAuthStateChanged(
                   >
                     🎮
                   </div>
+
                 `
             }
+
 
             <div style="text-align:left;">
 
               <strong>
                 ${escapeHTML(name)}
               </strong>
+
 
               <div
                 style="
@@ -381,7 +963,9 @@ onAuthStateChanged(
       // SAVE PLAYER
       // ==================================
 
-      await createOrUpdatePlayer(user);
+      await createOrUpdatePlayer(
+        user
+      );
 
 
       // ==================================
@@ -416,8 +1000,10 @@ onAuthStateChanged(
         loginBtn.style.display =
           "inline-block";
 
+
         loginBtn.disabled =
           false;
+
 
         loginBtn.textContent =
           "🔐 Login with Google";
@@ -437,6 +1023,7 @@ onAuthStateChanged(
 
         userInfo.style.display =
           "none";
+
 
         userInfo.innerHTML =
           "";
@@ -477,6 +1064,7 @@ async function createOrUpdatePlayer(user) {
     "🔥 FIRESTORE PLAYER SAVE START"
   );
 
+
   try {
 
     const playerRef =
@@ -487,27 +1075,33 @@ async function createOrUpdatePlayer(user) {
       );
 
 
-    // ====================================
-    // CHECK EXISTING PLAYER
-    // ====================================
-
     const playerSnap =
-      await getDoc(playerRef);
+      await getDoc(
+        playerRef
+      );
+
+
+    const period =
+      getLeaderboardPeriod();
 
 
     // ====================================
     // NEW PLAYER
     // ====================================
 
-    if (!playerSnap.exists()) {
+    if (
+      !playerSnap.exists()
+    ) {
 
       console.log(
         "🆕 Creating new player..."
       );
 
+
       await setDoc(
         playerRef,
         {
+
           name:
             user.displayName ||
             "Player",
@@ -520,19 +1114,30 @@ async function createOrUpdatePlayer(user) {
             user.photoURL ||
             "",
 
-          gamesPlayed: 0,
+          gamesPlayed:
+            0,
 
-          totalTime: 0,
+          totalTime:
+            0,
 
-          online: true,
+          online:
+            true,
+
+          lastGame:
+            "",
+
+          leaderboardPeriod:
+            period.id,
 
           lastActive:
             serverTimestamp(),
 
           createdAt:
             serverTimestamp()
+
         }
       );
+
 
       console.log(
         "✅ New player created successfully!"
@@ -547,31 +1152,95 @@ async function createOrUpdatePlayer(user) {
 
     else {
 
-      console.log(
-        "👤 Existing player found — keeping stats."
-      );
+      const player =
+        playerSnap.data();
 
-      await updateDoc(
-        playerRef,
-        {
-          name:
-            user.displayName ||
-            "Player",
 
-          email:
-            user.email ||
-            "",
+      // If somehow an old player document
+      // belongs to an older period,
+      // reset ONLY their leaderboard stats.
+      //
+      // Normally global reset already handles
+      // this, but this protects against a
+      // player returning after a period change.
 
-          photoURL:
-            user.photoURL ||
-            "",
+      if (
+        player.leaderboardPeriod &&
+        player.leaderboardPeriod !==
+        period.id
+      ) {
 
-          online: true,
+        await updateDoc(
+          playerRef,
+          {
 
-          lastActive:
-            serverTimestamp()
-        }
-      );
+            gamesPlayed:
+              0,
+
+            totalTime:
+              0,
+
+            lastGame:
+              "",
+
+            leaderboardPeriod:
+              period.id,
+
+            name:
+              user.displayName ||
+              "Player",
+
+            email:
+              user.email ||
+              "",
+
+            photoURL:
+              user.photoURL ||
+              "",
+
+            online:
+              true,
+
+            lastActive:
+              serverTimestamp()
+
+          }
+        );
+
+      }
+
+      else {
+
+        await updateDoc(
+          playerRef,
+          {
+
+            name:
+              user.displayName ||
+              "Player",
+
+            email:
+              user.email ||
+              "",
+
+            photoURL:
+              user.photoURL ||
+              "",
+
+            online:
+              true,
+
+            leaderboardPeriod:
+              period.id,
+
+            lastActive:
+              serverTimestamp()
+
+          }
+        );
+
+      }
+
 
       console.log(
         "✅ Existing player updated."
@@ -584,26 +1253,31 @@ async function createOrUpdatePlayer(user) {
       "================================"
     );
 
+
     console.log(
       "🎮 PLAYER PROFILE READY"
     );
+
 
     console.log(
       "Firestore: players/" +
       user.uid
     );
 
+
     console.log(
       "================================"
     );
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
       "❌ FIRESTORE PLAYER ERROR:",
       error
     );
+
 
     alert(
       "❌ FIRESTORE ERROR\n\n" +
@@ -648,6 +1322,14 @@ window.trackGameStart =
 
     try {
 
+      // Make sure period is current
+      await checkLeaderboardPeriod();
+
+
+      const period =
+        getLeaderboardPeriod();
+
+
       const playerRef =
         doc(
           db,
@@ -670,7 +1352,10 @@ window.trackGameStart =
             serverTimestamp(),
 
           online:
-            true
+            true,
+
+          leaderboardPeriod:
+            period.id
 
         }
       );
@@ -682,11 +1367,11 @@ window.trackGameStart =
       );
 
 
-      // Refresh leaderboard
       await loadLeaderboard();
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
       console.error(
         "❌ Game tracking error:",
@@ -705,6 +1390,7 @@ window.trackGameStart =
 function startTimeTracking() {
 
   stopTimeTracking();
+
 
   gameStartTime =
     Date.now();
@@ -739,6 +1425,7 @@ function stopTimeTracking() {
       null;
 
   }
+
 
   gameStartTime =
     null;
@@ -784,6 +1471,14 @@ async function saveTimeSpent() {
 
   try {
 
+    // Check if period changed
+    await checkLeaderboardPeriod();
+
+
+    const period =
+      getLeaderboardPeriod();
+
+
     const playerRef =
       doc(
         db,
@@ -803,7 +1498,10 @@ async function saveTimeSpent() {
           serverTimestamp(),
 
         online:
-          true
+          true,
+
+        leaderboardPeriod:
+          period.id
 
       }
     );
@@ -815,8 +1513,9 @@ async function saveTimeSpent() {
       "seconds"
     );
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
       "❌ Save time error:",
@@ -853,7 +1552,9 @@ document.addEventListener(
 
     try {
 
-      if (document.hidden) {
+      if (
+        document.hidden
+      ) {
 
         await saveTimeSpent();
 
@@ -876,6 +1577,9 @@ document.addEventListener(
 
       else {
 
+        await checkLeaderboardPeriod();
+
+
         gameStartTime =
           Date.now();
 
@@ -888,14 +1592,25 @@ document.addEventListener(
               true,
 
             lastActive:
-              serverTimestamp()
+              serverTimestamp(),
+
+            leaderboardPeriod:
+              getLeaderboardPeriod().id
 
           }
         );
 
+
+        showLeaderboardPeriod();
+
+
+        await loadLeaderboard();
+
       }
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "❌ Visibility error:",
@@ -922,6 +1637,7 @@ window.addEventListener(
 
     }
 
+
     saveTimeSpent();
 
   }
@@ -942,6 +1658,13 @@ async function loadLeaderboard() {
 
 
   try {
+
+    // Check period before displaying
+    await checkLeaderboardPeriod();
+
+
+    showLeaderboardPeriod();
+
 
     leaderboardList.innerHTML = `
 
@@ -964,10 +1687,12 @@ async function loadLeaderboard() {
     const leaderboardQuery =
       query(
         playersRef,
+
         orderBy(
           "totalTime",
           "desc"
         ),
+
         limit(100)
       );
 
@@ -998,8 +1723,13 @@ async function loadLeaderboard() {
     let html =
       "";
 
+
     let rank =
       1;
+
+
+    const currentPeriod =
+      getLeaderboardPeriod();
 
 
     snapshot.forEach(
@@ -1007,6 +1737,21 @@ async function loadLeaderboard() {
 
         const player =
           docSnap.data();
+
+
+        // ==================================
+        // ONLY CURRENT PERIOD PLAYERS
+        // ==================================
+
+        if (
+          player.leaderboardPeriod &&
+          player.leaderboardPeriod !==
+          currentPeriod.id
+        ) {
+
+          return;
+
+        }
 
 
         const name =
@@ -1034,28 +1779,35 @@ async function loadLeaderboard() {
 
 
         const online =
-          player.online === true;
+          player.online ===
+          true;
 
 
         let rankIcon =
           rank;
 
 
-        if (rank === 1) {
+        if (
+          rank === 1
+        ) {
 
           rankIcon =
             "🥇";
 
         }
 
-        else if (rank === 2) {
+        else if (
+          rank === 2
+        ) {
 
           rankIcon =
             "🥈";
 
         }
 
-        else if (rank === 3) {
+        else if (
+          rank === 3
+        ) {
 
           rankIcon =
             "🥉";
@@ -1172,11 +1924,29 @@ async function loadLeaderboard() {
     );
 
 
+    if (!html) {
+
+      leaderboardList.innerHTML = `
+
+        <div class="leaderboard-empty">
+
+          No players yet 🎮
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
     leaderboardList.innerHTML =
       html;
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
       "❌ Leaderboard loading error:",
@@ -1310,3 +2080,10 @@ function escapeHTML(value) {
 
 window.loadLeaderboard =
   loadLeaderboard;
+
+
+// ========================================
+// SHOW PERIOD IMMEDIATELY
+// ========================================
+
+showLeaderboardPeriod();
