@@ -59,11 +59,9 @@ function getSaudiDateParts() {
   const result = {};
 
   parts.forEach(part => {
-
     if (part.type !== "literal") {
       result[part.type] = part.value;
     }
-
   });
 
   return {
@@ -112,7 +110,6 @@ function getLeaderboardPeriod() {
 
     startDay = 16;
     endDay = new Date(year, month, 0).getDate();
-
   }
 
   const periodId =
@@ -191,10 +188,8 @@ async function checkLeaderboardPeriod() {
     if (!settingsSnap.exists()) {
 
       await setDoc(settingsRef, {
-
         leaderboardPeriod: period.id,
         updatedAt: serverTimestamp()
-
       });
 
       return period;
@@ -236,10 +231,8 @@ async function checkLeaderboardPeriod() {
       await Promise.all(resetPromises);
 
       await setDoc(settingsRef, {
-
         leaderboardPeriod: period.id,
         updatedAt: serverTimestamp()
-
       });
 
       console.log(
@@ -376,6 +369,7 @@ onAuthStateChanged(
               ? `
                 <img
                   src="${escapeHTML(user.photoURL)}"
+                  referrerpolicy="no-referrer"
                   style="
                     width:36px;
                     height:36px;
@@ -400,7 +394,9 @@ onAuthStateChanged(
 
         await createOrUpdatePlayer(user);
 
-        startTimeTracking();
+        if (!document.hidden) {
+          startTimeTracking();
+        }
 
         await loadLeaderboard();
 
@@ -435,7 +431,6 @@ onAuthStateChanged(
       }
 
       if (userInfo) {
-
         userInfo.innerHTML = "";
         userInfo.style.display = "none";
       }
@@ -458,7 +453,6 @@ onAuthStateChanged(
 
       showLeaderboardPeriod();
     }
-
   }
 );
 
@@ -532,9 +526,7 @@ async function createOrUpdatePlayer(user) {
       {
 
         gamesPlayed: 0,
-
         totalTime: 0,
-
         lastGame: "",
 
         leaderboardPeriod:
@@ -553,7 +545,6 @@ async function createOrUpdatePlayer(user) {
 
         lastActive:
           serverTimestamp()
-
       }
     );
 
@@ -596,6 +587,11 @@ window.trackGameStart =
       return;
     }
 
+    // Do not count game activity while tab is hidden
+    if (document.hidden) {
+      return;
+    }
+
     try {
 
       const period =
@@ -625,11 +621,11 @@ window.trackGameStart =
 
           lastActive:
             serverTimestamp()
-
         }
       );
 
-      gameStartTime = Date.now();
+      gameStartTime =
+        Date.now();
 
       await loadLeaderboard();
 
@@ -651,6 +647,11 @@ function startTimeTracking() {
 
   stopTimeTracking();
 
+  // Never start timer in background tab
+  if (document.hidden) {
+    return;
+  }
+
   gameStartTime =
     Date.now();
 
@@ -658,7 +659,9 @@ function startTimeTracking() {
     setInterval(
       () => {
 
-        saveTimeSpent();
+        if (!document.hidden) {
+          saveTimeSpent();
+        }
 
       },
       30000
@@ -685,11 +688,23 @@ function stopTimeTracking() {
 
 async function saveTimeSpent() {
 
-  if (
-    !currentUser ||
-    !gameStartTime
-  ) {
+  if (!currentUser) {
+    return;
+  }
 
+  // ==================================================
+  // IMPORTANT:
+  // NEVER COUNT TIME WHEN TAB IS NOT VISIBLE
+  // ==================================================
+
+  if (document.hidden) {
+
+    gameStartTime = null;
+
+    return;
+  }
+
+  if (!gameStartTime) {
     return;
   }
 
@@ -731,7 +746,6 @@ async function saveTimeSpent() {
 
         leaderboardPeriod:
           period.id
-
       }
     );
 
@@ -761,8 +775,14 @@ document.addEventListener(
 
     try {
 
+      // ==================================================
+      // PLAYER LEFT GAMEWITHFUN TAB
+      // ==================================================
+
       if (document.hidden) {
 
+        // Save only the time that was actually
+        // spent while the GameWithFun tab was visible
         await saveTimeSpent();
 
         const playerRef =
@@ -780,45 +800,49 @@ document.addEventListener(
 
             lastActive:
               serverTimestamp()
-
           }
         );
 
         stopTimeTracking();
 
-      } else {
+        return;
+      }
 
-        const period =
-          await checkLeaderboardPeriod();
 
-        const playerRef =
-          doc(
-            db,
-            "players",
-            currentUser.uid
-          );
+      // ==================================================
+      // PLAYER RETURNED TO GAMEWITHFUN
+      // ==================================================
 
-        await updateDoc(
-          playerRef,
-          {
+      const period =
+        await checkLeaderboardPeriod();
 
-            online: true,
-
-            leaderboardPeriod:
-              period.id,
-
-            lastActive:
-              serverTimestamp()
-
-          }
+      const playerRef =
+        doc(
+          db,
+          "players",
+          currentUser.uid
         );
 
-        showLeaderboardPeriod();
+      await updateDoc(
+        playerRef,
+        {
 
-        startTimeTracking();
+          online: true,
 
-        await loadLeaderboard();
-      }
+          leaderboardPeriod:
+            period.id,
+
+          lastActive:
+            serverTimestamp()
+        }
+      );
+
+      showLeaderboardPeriod();
+
+      // Start a NEW timer from this moment
+      startTimeTracking();
+
+      await loadLeaderboard();
 
     } catch (error) {
 
@@ -837,10 +861,16 @@ document.addEventListener(
 
 window.addEventListener(
   "pagehide",
-  () => {
+  async () => {
 
-    saveTimeSpent();
+    if (!currentUser) {
+      return;
+    }
 
+    // Only save if GameWithFun was visible
+    if (!document.hidden) {
+      await saveTimeSpent();
+    }
   }
 );
 
@@ -958,7 +988,6 @@ async function loadLeaderboard() {
               playerDoc.id,
 
             ...data
-
           });
         }
       }
@@ -1092,10 +1121,6 @@ async function loadLeaderboard() {
           const online =
             player.online === true;
 
-
-          // ==================================================
-          // PROFILE IMAGE
-          // ==================================================
 
           const profileImage =
             photoURL
@@ -1264,12 +1289,10 @@ function formatTime(seconds) {
 
 
   if (hours > 0) {
-
     return `${hours}h ${minutes}m`;
   }
 
   if (minutes > 0) {
-
     return `${minutes}m ${secs}s`;
   }
 
@@ -1284,26 +1307,11 @@ function formatTime(seconds) {
 function escapeHTML(value) {
 
   return String(value || "")
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 
