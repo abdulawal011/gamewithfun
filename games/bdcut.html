@@ -1673,6 +1673,31 @@ Contact
 
 </script>
 
+      
+<!-- =====================================================
+     BROWSER BACK → GAMEWITHFUN HOMEPAGE
+===================================================== -->
+
+<script>
+(function () {
+
+  // Add one history entry for the game page
+  history.pushState(
+    { bdCutGame: true },
+    "",
+    location.href
+  );
+
+  // When Chrome Back is pressed
+  window.addEventListener("popstate", function () {
+
+    // Go to GameWithFun homepage
+    window.location.replace("../index.html");
+
+  });
+
+})();
+</script>
 
 
 <!-- =====================================================
