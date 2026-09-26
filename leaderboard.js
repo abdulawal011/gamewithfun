@@ -2,6 +2,7 @@
 // GAMEWITHFUN LEADERBOARD
 // Google Popup Login + Firestore
 // Fixed 15-Day Period System
+// PUBLIC TOP 50 + PRIVATE PLAYER RANK
 // ========================================
 
 import {
@@ -190,7 +191,6 @@ function getLeaderboardPeriod() {
       16;
 
 
-    // Get last day of current month
     endDay =
       new Date(
         Date.UTC(
@@ -259,16 +259,12 @@ function showLeaderboardPeriod() {
     getLeaderboardPeriod();
 
 
-  // Try existing common elements first
   let periodElement =
     document.getElementById(
       "leaderboardPeriod"
     );
 
 
-  // If element doesn't exist,
-  // create one without changing
-  // the existing leaderboard structure.
   if (!periodElement) {
 
     periodElement =
@@ -325,18 +321,101 @@ function showLeaderboardPeriod() {
 
 
 // ========================================
+// SHOW PRIVATE PLAYER RANK
+// ========================================
+
+function showPrivateRank(rank, hasPlayed) {
+
+  let rankElement =
+    document.getElementById(
+      "privatePlayerRank"
+    );
+
+
+  if (!rankElement) {
+
+    rankElement =
+      document.createElement(
+        "div"
+      );
+
+    rankElement.id =
+      "privatePlayerRank";
+
+
+    rankElement.style.textAlign =
+      "center";
+
+    rankElement.style.marginBottom =
+      "12px";
+
+    rankElement.style.fontSize =
+      "14px";
+
+    rankElement.style.fontWeight =
+      "600";
+
+
+    if (leaderboardList) {
+
+      leaderboardList.parentNode.insertBefore(
+        rankElement,
+        leaderboardList
+      );
+
+    }
+
+  }
+
+
+  // ======================================
+  // PLAYER HAS NOT PLAYED
+  // ======================================
+
+  if (!currentUser || !hasPlayed) {
+
+    rankElement.innerHTML =
+      "";
+
+    rankElement.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  // ======================================
+  // PLAYER RANK
+  // ======================================
+
+  rankElement.style.display =
+    "block";
+
+
+  rankElement.innerHTML = `
+
+    🎯 Your Rank:
+    <strong>
+      #${rank}
+    </strong>
+
+  `;
+
+}
+
+
+// ========================================
 // PERIOD RESET
 // ========================================
 //
-// IMPORTANT:
+// Player accounts stay.
 //
-// We use a separate Firestore document
-// to remember which period is active.
+// Only leaderboard statistics reset.
 //
-// This means:
-// - Account creation date is NOT used
-// - Everyone shares the same period
-// - Ranking resets together
+// New period starts EMPTY.
+// A player appears only after
+// playing a game in the new period.
 //
 // ========================================
 
@@ -462,7 +541,7 @@ async function checkLeaderboardPeriod() {
 
 
     // ====================================
-    // RESET PLAYER STATS
+    // RESET PLAYER LEADERBOARD STATS
     // ====================================
 
     const resetPromises =
@@ -573,6 +652,14 @@ console.log(
 
 console.log(
   "🔥 Leaderboard Period System: ON"
+);
+
+console.log(
+  "🏆 Public Leaderboard: TOP 50"
+);
+
+console.log(
+  "🔒 Private Rank: ENABLED"
 );
 
 console.log(
@@ -1034,6 +1121,12 @@ onAuthStateChanged(
       stopTimeTracking();
 
 
+      showPrivateRank(
+        null,
+        false
+      );
+
+
       if (leaderboardList) {
 
         leaderboardList.innerHTML = `
@@ -1156,13 +1249,9 @@ async function createOrUpdatePlayer(user) {
         playerSnap.data();
 
 
-      // If somehow an old player document
-      // belongs to an older period,
-      // reset ONLY their leaderboard stats.
-      //
-      // Normally global reset already handles
-      // this, but this protects against a
-      // player returning after a period change.
+      // ==================================
+      // OLD PERIOD PROTECTION
+      // ==================================
 
       if (
         player.leaderboardPeriod &&
@@ -1513,6 +1602,10 @@ async function saveTimeSpent() {
       "seconds"
     );
 
+
+    // Refresh ranking after time update
+    await loadLeaderboard();
+
   }
 
   catch (error) {
@@ -1637,7 +1730,6 @@ window.addEventListener(
 
     }
 
-
     saveTimeSpent();
 
   }
@@ -1646,6 +1738,17 @@ window.addEventListener(
 
 // ========================================
 // LOAD LEADERBOARD
+// ========================================
+//
+// PUBLIC:
+// Only current-period players who have
+// actually played are included.
+// Only TOP 50 are shown.
+//
+// PRIVATE:
+// Logged-in player can see own rank
+// even when rank is > 50.
+//
 // ========================================
 
 async function loadLeaderboard() {
@@ -1659,7 +1762,7 @@ async function loadLeaderboard() {
 
   try {
 
-    // Check period before displaying
+    // Check current period
     await checkLeaderboardPeriod();
 
 
@@ -1684,6 +1787,10 @@ async function loadLeaderboard() {
       );
 
 
+    // ====================================
+    // GET PLAYERS
+    // ====================================
+
     const leaderboardQuery =
       query(
         playersRef,
@@ -1693,7 +1800,7 @@ async function loadLeaderboard() {
           "desc"
         ),
 
-        limit(100)
+        limit(1000)
       );
 
 
@@ -1703,7 +1810,164 @@ async function loadLeaderboard() {
       );
 
 
-    if (snapshot.empty) {
+    const currentPeriod =
+      getLeaderboardPeriod();
+
+
+    // ====================================
+    // CREATE CURRENT PERIOD PLAYER LIST
+    // ====================================
+
+    const players =
+      [];
+
+
+    snapshot.forEach(
+      (docSnap) => {
+
+        const player =
+          docSnap.data();
+
+
+        // ==================================
+        // ONLY CURRENT PERIOD
+        // ==================================
+
+        if (
+          player.leaderboardPeriod !==
+          currentPeriod.id
+        ) {
+
+          return;
+
+        }
+
+
+        // ==================================
+        // ONLY PLAYERS WHO PLAYED
+        // ==================================
+
+        const games =
+          Number(
+            player.gamesPlayed ||
+            0
+          );
+
+
+        const totalTime =
+          Number(
+            player.totalTime ||
+            0
+          );
+
+
+        if (
+          games <= 0
+        ) {
+
+          return;
+
+        }
+
+
+        players.push({
+
+          id:
+            docSnap.id,
+
+          ...player,
+
+          gamesPlayed:
+            games,
+
+          totalTime:
+            totalTime
+
+        });
+
+      }
+    );
+
+
+    // ====================================
+    // SORT CURRENT PERIOD PLAYERS
+    // ====================================
+
+    players.sort(
+      (a, b) => {
+
+        return (
+          b.totalTime -
+          a.totalTime
+        );
+
+      }
+    );
+
+
+    // ====================================
+    // FIND CURRENT PLAYER PRIVATE RANK
+    // ====================================
+
+    let currentPlayerRank =
+      null;
+
+
+    let currentPlayerHasPlayed =
+      false;
+
+
+    if (currentUser) {
+
+      const index =
+        players.findIndex(
+          player =>
+            player.id ===
+            currentUser.uid
+        );
+
+
+      if (index !== -1) {
+
+        currentPlayerHasPlayed =
+          true;
+
+        currentPlayerRank =
+          index + 1;
+
+      }
+
+    }
+
+
+    // ====================================
+    // SHOW PRIVATE RANK
+    // ====================================
+
+    showPrivateRank(
+      currentPlayerRank,
+      currentPlayerHasPlayed
+    );
+
+
+    // ====================================
+    // PUBLIC TOP 25
+    // ====================================
+
+    const top25 =
+      players.slice(
+        0,
+        25
+      );
+
+
+    // ====================================
+    // NEW PERIOD = EMPTY LEADERBOARD
+    // ====================================
+
+    if (
+      top25.length === 0
+    ) {
 
       leaderboardList.innerHTML = `
 
@@ -1720,38 +1984,19 @@ async function loadLeaderboard() {
     }
 
 
+    // ====================================
+    // BUILD PUBLIC LEADERBOARD
+    // ====================================
+
     let html =
       "";
 
 
-    let rank =
-      1;
+    top50.forEach(
+      (player, index) => {
 
-
-    const currentPeriod =
-      getLeaderboardPeriod();
-
-
-    snapshot.forEach(
-      (docSnap) => {
-
-        const player =
-          docSnap.data();
-
-
-        // ==================================
-        // ONLY CURRENT PERIOD PLAYERS
-        // ==================================
-
-        if (
-          player.leaderboardPeriod &&
-          player.leaderboardPeriod !==
-          currentPeriod.id
-        ) {
-
-          return;
-
-        }
+        const rank =
+          index + 1;
 
 
         const name =
@@ -1917,28 +2162,8 @@ async function loadLeaderboard() {
 
         `;
 
-
-        rank++;
-
       }
     );
-
-
-    if (!html) {
-
-      leaderboardList.innerHTML = `
-
-        <div class="leaderboard-empty">
-
-          No players yet 🎮
-
-        </div>
-
-      `;
-
-      return;
-
-    }
 
 
     leaderboardList.innerHTML =
