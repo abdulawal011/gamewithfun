@@ -1,1174 +1,3079 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0,user-scalable=no">
+<!DOCTYPE html>  <html lang="bn">  
+<head>  <meta charset="UTF-8">  <meta name="viewport"  
+content="width=device-width,initial-scale=1.0,user-scalable=no">
 
-<title>BD Cut 🎮🍉 | GameWithFun</title>
+<title>BD Cut 🎮🍉 - Free Fruit Cutting Game Online</title>  <meta name="description"  
+content="BD Cut is a fun and fast fruit cutting game that you can play online for free. Slice falling fruits, build combos, avoid bombs and try to achieve the highest score.">
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
+<meta name="keywords"  
+content="BD Cut, fruit cutting game, fruit game, online game, free online game, browser game, HTML5 game, fruit slice game, Bangla game, mobile game">
 
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-}
+<meta name="author" content="BD Cut">  <meta name="robots" content="index, follow">  <meta name="theme-color" content="#07111c">  <style>  
+  
+/* =====================================================  
+   BASIC  
+===================================================== */  
+  
+*{  
+  box-sizing:border-box;  
+  margin:0;  
+  padding:0;  
+}  
+  
+html{  
+  scroll-behavior:smooth;  
+}  
+  
+body{  
+  margin:0;  
+  background:#f5f8fc;  
+  font-family:Arial,sans-serif;  
+  color:#17283a;  
+  overflow-x:hidden;  
+}  
+  
+  
+/* =====================================================  
+   GAME AREA  
+===================================================== */  
+  
+#game{  
+  position:relative;  
+  width:100%;  
+  max-width:600px;  
+  
+  height:100vh;  
+  height:100dvh;  
+  
+  margin:auto;  
+  
+  overflow:hidden;  
+  
+  background:#152637;  
+}  
+  
+canvas{  
+  display:block;  
+  
+  width:100%;  
+  height:100%;  
+  
+  touch-action:none;  
+}  
+  
+  
+/* =====================================================  
+   HUD  
+   SCORE FIXED  
+===================================================== */  
+  
+.hud{  
+  
+  position:absolute;  
+  
+  top:18px;  
+  left:18px;  
+  right:18px;  
+  
+  display:flex;  
+  
+  justify-content:space-between;  
+  
+  pointer-events:none;  
+  
+  z-index:20;  
+  
+  color:#ffffff !important;  
+  
+  text-shadow:  
+    0 3px 6px rgba(0,0,0,.9);  
+}  
+  
+  
+/* SCORE */  
+  
+.score{  
+  
+  font-size:42px;  
+  
+  font-weight:900;  
+  
+  color:#ffffff !important;  
+  
+  -webkit-text-fill-color:#ffffff !important;  
+  
+  text-shadow:  
+    0 3px 6px rgba(0,0,0,.9);  
+  
+  line-height:1;  
+}  
+  
+  
+/* SCORE / BEST LABEL */  
+  
+.label{  
+  
+  font-size:12px;  
+  
+  color:#ffd34d !important;  
+  
+  -webkit-text-fill-color:#ffd34d !important;  
+  
+  font-weight:bold;  
+  
+  letter-spacing:2px;  
+  
+  text-shadow:  
+    0 2px 4px rgba(0,0,0,.9);  
+  
+  margin-top:5px;  
+}  
+  
+  
+/* COMBO */  
+  
+.combo{  
+  
+  font-size:30px;  
+  
+  font-weight:900;  
+  
+  color:#b8ff49 !important;  
+  
+  -webkit-text-fill-color:#b8ff49 !important;  
+  
+  text-shadow:  
+    0 3px 6px rgba(0,0,0,.9);  
+  
+  line-height:1;  
+}  
+  
+  
+/* =====================================================  
+   OVERLAY  
+===================================================== */  
+  
+.overlay{  
+  
+  position:absolute;  
+  
+  inset:0;  
+  
+  background:  
+    linear-gradient(  
+      145deg,  
+      #071323f7,  
+      #172d3df5  
+    );  
+  
+  display:flex;  
+  
+  flex-direction:column;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  text-align:center;  
+  
+  padding:22px;  
+  
+  z-index:50;  
+  
+  overflow-y:auto;  
+}  
+  
+.hidden{  
+  display:none !important;  
+}  
+  
+  
+/* =====================================================  
+   LOGO  
+===================================================== */  
+  
+.logo{  
+  
+  font-size:  
+    clamp(  
+      38px,  
+      11vw,  
+      65px  
+    );  
+  
+  line-height:.9;  
+  
+  font-weight:1000;  
+  
+  letter-spacing:-3px;  
+  
+  color:#ffdd55;  
+  
+  text-shadow:  
+    0 5px 0 #a33d16,  
+    0 0 25px #ff8128;  
+}  
+  
+  
+.tag{  
+  
+  color:#b5d5e8;  
+  
+  letter-spacing:4px;  
+  
+  font-size:11px;  
+  
+  margin-top:15px;  
+  
+  font-weight:bold;  
+}  
+  
+  
+/* =====================================================  
+   START PANEL  
+===================================================== */  
+  
+.panel{  
+  
+  width:100%;  
+  
+  max-width:420px;  
+  
+  margin-top:22px;  
+  
+  padding:18px;  
+  
+  border:  
+    1px solid  
+    #ffffff24;  
+  
+  border-radius:18px;  
+  
+  background:#ffffff0d;  
+  
+  text-align:left;  
+  
+  line-height:1.7;  
+  
+  font-size:14px;  
+  
+  color:#ffffff;  
+}  
+  
+.panel h3{  
+  
+  color:#ffdb53;  
+  
+  margin-bottom:8px;  
+}  
+  
+  
+/* =====================================================  
+   BUTTON  
+===================================================== */  
+  
+.btn{  
+  
+  margin-top:22px;  
+  
+  padding:  
+    15px 34px;  
+  
+  border:0;  
+  
+  border-radius:50px;  
+  
+  background:  
+    linear-gradient(  
+      110deg,  
+      #ffd83d,  
+      #ff7028  
+    );  
+  
+  color:#241204;  
+  
+  font-size:16px;  
+  
+  font-weight:900;  
+  
+  box-shadow:  
+    0 5px 0 #963c16;  
+  
+  cursor:pointer;  
+}  
+  
+.btn:active{  
+  
+  transform:  
+    translateY(3px);  
+  
+  box-shadow:  
+    0 2px 0 #963c16;  
+}  
+  
+  
+/* =====================================================  
+   CLOSE  
+===================================================== */  
+  
+.close{  
+  
+  position:absolute;  
+  
+  right:15px;  
+  
+  top:15px;  
+  
+  width:38px;  
+  height:38px;  
+  
+  border-radius:50%;  
+  
+  border:  
+    1px solid  
+    #ffffff44;  
+  
+  background:#ffffff15;  
+  
+  color:white;  
+  
+  font-size:25px;  
+  
+  z-index:60;  
+}  
+  
+  
+/* =====================================================  
+   HELP BUTTON  
+===================================================== */  
+  
+.help{  
+  
+  position:absolute;  
+  
+  right:15px;  
+  
+  bottom:18px;  
+  
+  z-index:30;  
+  
+  border:  
+    1px solid  
+    #ffffff44;  
+  
+  background:#132538dd;  
+  
+  color:white;  
+  
+  width:38px;  
+  height:38px;  
+  
+  border-radius:50%;  
+  
+  font-weight:bold;  
+  
+  cursor:pointer;  
+}  
+  
+  
+/* =====================================================  
+   FINAL SCORE  
+===================================================== */  
+  
+.final{  
+  
+  font-size:58px;  
+  
+  font-weight:1000;  
+  
+  margin-top:12px;  
+  
+  color:#ffffff;  
+}  
+  
+  
+/* =====================================================  
+   CONTENT BELOW GAME  
+===================================================== */  
+  
+.site-content{  
+  
+  width:100%;  
+  
+  max-width:900px;  
+  
+  margin:auto;  
+  
+  padding:  
+    25px 16px 0;  
+}  
+  
+  
+/* CONTENT CARD */  
+  
+.content-card{  
+  
+  background:#ffffff;  
+  
+  border-radius:18px;  
+  
+  padding:  
+    24px 20px;  
+  
+  margin-bottom:18px;  
+  
+  box-shadow:  
+    0 5px 22px  
+    rgba(20,50,80,.08);  
+  
+  border:  
+    1px solid  
+    #e5edf5;  
+}  
+  
+  
+.content-card h1,  
+.content-card h2{  
+  
+  color:#102957;  
+  
+  line-height:1.3;  
+  
+  margin-bottom:12px;  
+}  
+  
+  
+.content-card h1{  
+  font-size:28px;  
+}  
+  
+  
+.content-card h2{  
+  font-size:22px;  
+}  
+  
+  
+.content-card p{  
+  
+  font-size:15px;  
+  
+  line-height:1.8;  
+  
+  color:#425466;  
+  
+  margin-bottom:10px;  
+}  
+  
+  
+.content-card ul{  
+  
+  padding-left:22px;  
+}  
+  
+  
+.content-card li{  
+  
+  color:#425466;  
+  
+  line-height:1.8;  
+  
+  margin-bottom:5px;  
+}  
+  
+  
+/* =====================================================  
+   QUICK NAV  
+===================================================== */  
+  
+.quick-nav{  
+  
+  display:flex;  
+  
+  flex-wrap:wrap;  
+  
+  gap:8px;  
+  
+  margin-top:15px;  
+}  
+  
+  
+.quick-nav a{  
+  
+  text-decoration:none;  
+  
+  background:#eef5ff;  
+  
+  color:#1261c9;  
+  
+  padding:  
+    8px 12px;  
+  
+  border-radius:20px;  
+  
+  font-size:13px;  
+  
+  font-weight:bold;  
+}  
+  
+  
+/* =====================================================  
+   FAQ  
+===================================================== */  
+  
+.faq-item{  
+  
+  border-bottom:  
+    1px solid  
+    #e4eaf0;  
+  
+  padding:14px 0;  
+}  
+  
+  
+.faq-item:last-child{  
+  border-bottom:0;  
+}  
+  
+  
+.faq-item summary{  
+  
+  cursor:pointer;  
+  
+  font-weight:bold;  
+  
+  color:#17345c;  
+  
+  font-size:15px;  
+}  
+  
+  
+.faq-item p{  
+  
+  margin-top:10px;  
+  
+  margin-bottom:0;  
+}  
+  
+  
+/* =====================================================  
+   ADSENSE  
+===================================================== */  
+  
+.ad-section{  
+  
+  width:100%;  
+  
+  max-width:900px;  
+  
+  margin:  
+    25px auto 0;  
+  
+  padding:  
+    0 16px 25px;  
+}  
+  
+  
+.ad-box{  
+  
+  min-height:120px;  
+  
+  background:#ffffff;  
+  
+  border:  
+    1px dashed  
+    #b9c8d8;  
+  
+  border-radius:15px;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  text-align:center;  
+  
+  color:#8a99a8;  
+  
+  font-size:12px;  
+  
+  overflow:hidden;  
+}  
+  
+  
+.ad-label{  
+  
+  display:block;  
+  
+  margin-bottom:7px;  
+  
+  color:#9aa7b3;  
+  
+  font-size:10px;  
+  
+  letter-spacing:1px;  
+}  
+  
+  
+/* =====================================================  
+   FOOTER  
+===================================================== */  
+  
+footer{  
+  
+  background:#0b1b2b;  
+  
+  color:#c5d3df;  
+  
+  text-align:center;  
+  
+  padding:  
+    25px 16px 35px;  
+}  
+  
+  
+.footer-logo{  
+  
+  font-size:24px;  
+  
+  font-weight:900;  
+  
+  color:#ffd64a;  
+  
+  margin-bottom:8px;  
+}  
+  
+  
+footer p{  
+  
+  font-size:13px;  
+  
+  line-height:1.7;  
+  
+  margin-bottom:12px;  
+}  
+  
+  
+.footer-links{  
+  
+  display:flex;  
+  
+  justify-content:center;  
+  
+  flex-wrap:wrap;  
+  
+  gap:10px;  
+}  
+  
+  
+.footer-links a{  
+  
+  color:#bcdcff;  
+  
+  text-decoration:none;  
+  
+  font-size:13px;  
+}  
+  
+  
+/* =====================================================  
+   MOBILE  
+===================================================== */  
+  
+@media(max-width:600px){  
+  
+  .hud{  
+  
+    top:18px;  
+  
+    left:20px;  
+  
+    right:20px;  
+  
+    z-index:20;  
+  }  
+  
+  
+  .score{  
+  
+    font-size:42px;  
+  
+    color:#ffffff !important;  
+  
+    -webkit-text-fill-color:#ffffff !important;  
+  
+    font-weight:900;  
+  
+    text-shadow:  
+      0 3px 6px  
+      rgba(0,0,0,.9);  
+  }  
+  
+  
+  .label{  
+  
+    font-size:12px;  
+  
+    color:#ffd34d !important;  
+  
+    -webkit-text-fill-color:#ffd34d !important;  
+  
+    text-shadow:  
+      0 2px 4px  
+      rgba(0,0,0,.9);  
+  }  
+  
+  
+  .combo{  
+  
+    font-size:30px;  
+  
+    color:#b8ff49 !important;  
+  
+    -webkit-text-fill-color:#b8ff49 !important;  
+  
+    text-shadow:  
+      0 3px 6px  
+      rgba(0,0,0,.9);  
+  }  
+  
+  
+  .overlay{  
+    padding:18px;  
+  }  
+  
+  
+  .overlay > div:first-of-type{  
+    font-size:46px !important;  
+  }  
+  
+  
+  .logo{  
+    font-size:43px;  
+  }  
+  
+  
+  .panel{  
+  
+    margin-top:18px;  
+  
+    padding:17px;  
+  
+    font-size:14px;  
+  }  
+  
+  
+  .btn{  
+  
+    padding:  
+      15px 30px;  
+  }  
+  
+  
+  .site-content{  
+  
+    padding:  
+      18px 12px 0;  
+  }  
+  
+  
+  .content-card{  
+  
+    padding:  
+      20px 16px;  
+  
+    border-radius:16px;  
+  }  
+  
+  
+  .content-card h1{  
+    font-size:24px;  
+  }  
+  
+  
+  .content-card h2{  
+    font-size:20px;  
+  }  
+  
+  
+  .content-card p,  
+  .content-card li{  
+    font-size:14px;  
+  }  
+  
+  
+  .ad-section{  
+  
+    padding:  
+      0 12px 20px;  
+  }  
+  
+}  
+  
+  
+/* =====================================================  
+   EXTRA SCORE SAFETY  
+===================================================== */  
+  
+#score{  
+  color:#ffffff !important;  
+  -webkit-text-fill-color:#ffffff !important;  
+}  
+  
+#best{  
+  color:#ffd34d !important;  
+  -webkit-text-fill-color:#ffd34d !important;  
+}  
+  
+#combo{  
+  color:#b8ff49 !important;  
+  -webkit-text-fill-color:#b8ff49 !important;  
+}  
+  
+</style>  </head>  <body>  <!-- =====================================================  
+     GAME  
+===================================================== -->  <div id="game">  <canvas  
+id="canvas"  
+width="600"  
+height="900">
+</canvas>
 
-body{
-  background:#07111c;
-  font-family:Arial,sans-serif;
-  color:#fff;
-  touch-action:none;
-}
+<!-- HUD -->  <div class="hud">    <div>  <div  
+  class="score"  
+  id="score">  
+  0  
+</div>  
 
-#game{
-  position:relative;
-  width:100%;
-  height:100%;
-  max-width:600px;
-  margin:auto;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 20%,#163a52 0%,#07111c 55%,#02070c 100%);
-}
+<div  
+  class="label">  
+  SCORE  
+</div>  
 
-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-/* =========================
-   HUD
-========================= */
-
-#hud{
-  position:absolute;
-  top:12px;
-  left:12px;
-  right:12px;
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  z-index:10;
-  pointer-events:none;
-}
-
-.hudBox{
-  min-width:82px;
-  padding:8px 12px;
-  border-radius:14px;
-  background:rgba(0,0,0,.45);
-  border:1px solid rgba(255,255,255,.15);
-  backdrop-filter:blur(8px);
-  text-align:center;
-  box-shadow:0 5px 20px rgba(0,0,0,.25);
-}
-
-.hudLabel{
-  font-size:11px;
-  opacity:.7;
-}
-
-.hudValue{
-  margin-top:2px;
-  font-size:19px;
-  font-weight:800;
-}
-
-/* =========================
-   OVERLAY
-========================= */
-
-.overlay{
-  position:absolute;
-  inset:0;
-  z-index:20;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(0,0,0,.58);
-  backdrop-filter:blur(7px);
-}
-
-.overlay.hidden{
-  display:none;
-}
-
-.panel{
-  width:min(100%,390px);
-  padding:30px 22px;
-  border-radius:25px;
-  text-align:center;
-  background:
-    linear-gradient(145deg,
-      rgba(17,40,56,.98),
-      rgba(4,13,22,.98));
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.55),
-    inset 0 1px rgba(255,255,255,.08);
-}
-
-.logo{
-  width:92px;
-  height:92px;
-  margin:0 auto 14px;
-  border-radius:25px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:52px;
-  background:linear-gradient(135deg,#0d7cff,#00c6ff);
-  box-shadow:0 12px 35px rgba(0,140,255,.35);
-}
-
-h1{
-  font-size:32px;
-  margin-bottom:8px;
-}
-
-.subtitle{
-  color:#b9c8d5;
-  line-height:1.6;
-  font-size:14px;
-  margin-bottom:20px;
-}
-
-.instructions{
-  text-align:left;
-  padding:14px;
-  margin-bottom:20px;
-  border-radius:16px;
-  background:rgba(255,255,255,.06);
-  color:#dce8ef;
-  font-size:14px;
-  line-height:1.7;
-}
-
-button{
-  width:100%;
-  border:0;
-  border-radius:15px;
-  padding:14px 18px;
-  margin-top:8px;
-  font-size:16px;
-  font-weight:800;
-  color:#fff;
-  cursor:pointer;
-  background:linear-gradient(135deg,#0878f9,#00b8ff);
-  box-shadow:0 9px 25px rgba(0,130,255,.3);
-}
-
-button:active{
-  transform:scale(.97);
-}
-
-.secondary{
-  background:rgba(255,255,255,.09);
-  box-shadow:none;
-}
-
-.scoreBig{
-  font-size:45px;
-  font-weight:900;
-  margin:8px 0 15px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:380px){
-  .panel{
-    padding:24px 18px;
-  }
-
-  h1{
-    font-size:28px;
-  }
-
-  .logo{
-    width:78px;
-    height:78px;
-    font-size:43px;
-  }
-
-  .hudBox{
-    min-width:72px;
-    padding:7px 8px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div id="game">
-
-  <canvas id="canvas"></canvas>
-
-  <!-- HUD -->
-  <div id="hud">
-
-    <div class="hudBox">
-      <div class="hudLabel">SCORE</div>
-      <div class="hudValue" id="score">0</div>
-    </div>
-
-    <div class="hudBox">
-      <div class="hudLabel">COMBO</div>
-      <div class="hudValue" id="combo">0</div>
-    </div>
-
-    <div class="hudBox">
-      <div class="hudLabel">❤️ LIVES</div>
-      <div class="hudValue" id="lives">3</div>
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       START / MENU
-  ========================== -->
-
-  <div class="overlay" id="menu">
-
-    <div class="panel">
-
-      <div class="logo">🍉</div>
-
-      <h1>BD Cut</h1>
-
-      <div class="subtitle">
-        Cut the fruits and make the highest score!
-      </div>
-
-      <div class="instructions">
-        🍉 ফলের ওপর swipe করে কাটুন<br>
-        🍎 একসাথে বেশি ফল কাটলে combo পাবেন<br>
-        💣 Bomb এড়িয়ে চলুন<br>
-        ❤️ আপনার 3টি life আছে<br>
-        🎯 যত বেশি ফল কাটবেন, score তত বেশি
-      </div>
-
-      <button id="start">
-        🎮 START GAME
-      </button>
-
-      <button id="help" class="secondary">
-        📖 HOW TO PLAY
-      </button>
-
-      <button id="close" class="secondary">
-        🏠 HOME
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       GAME OVER
-  ========================== -->
-
-  <div class="overlay hidden" id="over">
-
-    <div class="panel">
-
-      <div class="logo">💥</div>
-
-      <h1>Game Over</h1>
-
-      <div class="subtitle">
-        আপনার খেলা শেষ!
-      </div>
-
-      <div class="scoreBig">
-        <span id="finalScore">0</span>
-      </div>
-
-      <div class="subtitle">
-        Final Score
-      </div>
-
-      <button id="again">
-        🔄 PLAY AGAIN
-      </button>
-
-      <button id="back" class="secondary">
-        📖 START PAGE
-      </button>
-
-    </div>
-
-  </div>
-
+<div  
+  class="label"  
+  id="best">  
+  BEST: 0  
 </div>
 
-
-<script>
-
-/* ==================================================
-   BD CUT GAME
-================================================== */
-
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-const $ = id => document.getElementById(id);
-
-let W = 600;
-let H = 900;
-
-let fruits = [];
-let particles = [];
-let trail = [];
-
-let score = 0;
-let combo = 0;
-let lives = 3;
-
-let running = false;
-let raf = 0;
-
-let lastTime = 0;
-let spawnTimer = 0;
-
-
-/* ==================================================
-   RESIZE
-================================================== */
-
-function resize(){
-
-  const rect = canvas.getBoundingClientRect();
-
-  const dpr = Math.min(window.devicePixelRatio || 1,2);
-
-  W = rect.width;
-  H = rect.height;
-
-  canvas.width = Math.floor(W*dpr);
-  canvas.height = Math.floor(H*dpr);
-
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-
-window.addEventListener("resize",resize);
-resize();
-
-
-/* ==================================================
-   FRUITS
-================================================== */
-
-const fruitTypes = [
-  {emoji:"🍉", color:"#2ecc71"},
-  {emoji:"🍎", color:"#ff3b30"},
-  {emoji:"🍊", color:"#ff9500"},
-  {emoji:"🍋", color:"#ffd60a"},
-  {emoji:"🍓", color:"#ff375f"},
-  {emoji:"🍇", color:"#af52de"},
-  {emoji:"🍍", color:"#ffcc00"}
-];
-
-
-function createFruit(){
-
-  const type =
-    fruitTypes[
-      Math.floor(Math.random()*fruitTypes.length)
-    ];
-
-  const size =
-    Math.max(25,Math.min(42,W*.065));
-
-  return {
-
-    x:size + Math.random()*(W-size*2),
-
-    y:H+size,
-
-    vx:(Math.random()-.5)*5,
-
-    vy:-(11+Math.random()*5),
-
-    gravity:.25,
-
-    size:size,
-
-    emoji:type.emoji,
-
-    color:type.color,
-
-    rotation:Math.random()*Math.PI*2,
-
-    rotSpeed:(Math.random()-.5)*.08,
-
-    sliced:false
-
-  };
-}
-
-
-/* ==================================================
-   BOMB
-================================================== */
-
-function createBomb(){
-
-  const size =
-    Math.max(25,Math.min(40,W*.06));
-
-  return {
-
-    x:size + Math.random()*(W-size*2),
-
-    y:H+size,
-
-    vx:(Math.random()-.5)*5,
-
-    vy:-(11+Math.random()*5),
-
-    gravity:.25,
-
-    size:size,
-
-    emoji:"💣",
-
-    rotation:0,
-
-    rotSpeed:.05,
-
-    bomb:true,
-
-    sliced:false
-
-  };
-}
-
-
-/* ==================================================
-   SPAWN
-================================================== */
-
-function spawn(){
-
-  const count =
-    Math.random() < .35 ? 3 :
-    Math.random() < .65 ? 2 : 1;
-
-  for(let i=0;i<count;i++){
-
-    fruits.push(createFruit());
-
-  }
-
-  // Small chance of bomb
-  if(Math.random() < .10){
-
-    fruits.push(createBomb());
-
-  }
-}
-
-
-/* ==================================================
-   PARTICLES
-================================================== */
-
-function explode(x,y,color){
-
-  for(let i=0;i<14;i++){
-
-    particles.push({
-
-      x:x,
-      y:y,
-
-      vx:(Math.random()-.5)*8,
-      vy:(Math.random()-.5)*8,
-
-      life:1,
-
-      color:color,
-
-      size:2+Math.random()*4
-
-    });
-
-  }
-}
-
-
-/* ==================================================
-   RESET
-================================================== */
-
-function reset(){
-
-  fruits=[];
-  particles=[];
-  trail=[];
-
-  score=0;
-  combo=0;
-  lives=3;
-
-  spawnTimer=0;
-
-  updateHUD();
-}
-
-
-/* ==================================================
-   START GAME
-================================================== */
-
-function startGame(){
-
-  /*
-    Add GAME state.
-
-    This makes:
-
-    MENU
-      ↓
-    GAME
-      ↓ Back
-    MENU
-  */
-
-  if(!history.state || history.state.gwf !== "game"){
-
-    history.pushState(
-      {gwf:"game"},
-      "",
-      location.href
-    );
-
-  }
-
-  cancelAnimationFrame(raf);
-
-  reset();
-
-  running=true;
-
-  $("menu").classList.add("hidden");
-  $("over").classList.add("hidden");
-
-  lastTime=performance.now();
-
-  raf=requestAnimationFrame(loop);
-}
-
-
-/* ==================================================
-   GAME OVER
-================================================== */
-
-function gameOver(){
-
-  running=false;
-
-  cancelAnimationFrame(raf);
-
-  $("finalScore").textContent=score;
-
-  $("over").classList.remove("hidden");
-}
-
-
-/* ==================================================
-   UPDATE HUD
-================================================== */
-
-function updateHUD(){
-
-  $("score").textContent=score;
-
-  $("combo").textContent=combo;
-
-  $("lives").textContent=lives;
-
-}
-
-
-/* ==================================================
-   DRAW
-================================================== */
-
-function draw(){
-
-  ctx.clearRect(0,0,W,H);
-
-
-  /* background */
-
-  const gradient =
-    ctx.createLinearGradient(0,0,0,H);
-
-  gradient.addColorStop(0,"#10283a");
-  gradient.addColorStop(1,"#02070c");
-
-  ctx.fillStyle=gradient;
-
-  ctx.fillRect(0,0,W,H);
-
-
-  /* stars */
-
-  ctx.globalAlpha=.15;
-
-  for(let i=0;i<30;i++){
-
-    const x=(i*83)%W;
-    const y=(i*137)%H;
-
-    ctx.fillStyle="#fff";
-
-    ctx.beginPath();
-
-    ctx.arc(x,y,1.5,0,Math.PI*2);
-
-    ctx.fill();
-
-  }
-
-  ctx.globalAlpha=1;
-
-
-  /* fruits */
-
-  ctx.textAlign="center";
-  ctx.textBaseline="middle";
-
-  for(const f of fruits){
-
-    ctx.save();
-
-    ctx.translate(f.x,f.y);
-
-    ctx.rotate(f.rotation);
-
-    ctx.font=`${f.size*2}px Arial`;
-
-    ctx.fillText(f.emoji,0,0);
-
-    ctx.restore();
-
-  }
-
-
-  /* particles */
-
-  for(const p of particles){
-
-    ctx.globalAlpha=Math.max(0,p.life);
-
-    ctx.fillStyle=p.color;
-
-    ctx.beginPath();
-
-    ctx.arc(
-      p.x,
-      p.y,
-      p.size,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fill();
-
-  }
-
-  ctx.globalAlpha=1;
-
-
-  /* blade trail */
-
-  if(trail.length>1){
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      trail[0].x,
-      trail[0].y
-    );
-
-    for(let i=1;i<trail.length;i++){
-
-      ctx.lineTo(
-        trail[i].x,
-        trail[i].y
-      );
-
-    }
-
-    ctx.strokeStyle="rgba(255,255,255,.9)";
-    ctx.lineWidth=4;
-    ctx.lineCap="round";
-    ctx.shadowBlur=12;
-    ctx.shadowColor="#00c6ff";
-
-    ctx.stroke();
-
-    ctx.shadowBlur=0;
-
-  }
-
-}
-
-
-/* ==================================================
-   UPDATE
-================================================== */
-
-function update(dt){
-
-  spawnTimer+=dt;
-
-  if(spawnTimer>650){
-
-    spawn();
-
-    spawnTimer=0;
-
-  }
-
-
-  for(let i=fruits.length-1;i>=0;i--){
-
-    const f=fruits[i];
-
-    f.vy+=f.gravity;
-
-    f.x+=f.vx;
-    f.y+=f.vy;
-
-    f.rotation+=f.rotSpeed;
-
-
-    /* walls */
-
-    if(f.x<f.size){
-
-      f.x=f.size;
-      f.vx=Math.abs(f.vx);
-
-    }
-
-    if(f.x>W-f.size){
-
-      f.x=W-f.size;
-      f.vx=-Math.abs(f.vx);
-
-    }
-
-
-    /* missed */
-
-    if(f.y>H+f.size){
-
-      if(!f.sliced && !f.bomb){
-
-        lives--;
-
-        combo=0;
-
-        updateHUD();
-
-        if(lives<=0){
-
-          gameOver();
-
-          return;
-
-        }
-
-      }
-
-      fruits.splice(i,1);
-
-    }
-
-  }
-
-
-  /* particles */
-
-  for(let i=particles.length-1;i>=0;i--){
-
-    const p=particles[i];
-
-    p.x+=p.vx;
-    p.y+=p.vy;
-
-    p.vy+=.15;
-
-    p.life-=.035;
-
-    if(p.life<=0){
-
-      particles.splice(i,1);
-
-    }
-
-  }
-
-
-  /* trail */
-
-  for(let i=trail.length-1;i>=0;i--){
-
-    trail[i].life-=.08;
-
-    if(trail[i].life<=0){
-
-      trail.splice(i,1);
-
-    }
-
-  }
-
-}
-
-
-/* ==================================================
-   LOOP
-================================================== */
-
-function loop(now){
-
-  if(!running){
-
-    draw();
-
-    return;
-
-  }
-
-  const dt=Math.min(now-lastTime,40);
-
-  lastTime=now;
-
-  update(dt);
-
-  draw();
-
-  raf=requestAnimationFrame(loop);
-
-}
-
-
-/* ==================================================
-   SLICE
-================================================== */
-
-function sliceAt(x,y){
-
-  if(!running)return;
-
-  trail.push({
-    x:x,
-    y:y,
-    life:1
-  });
-
-
-  let slicedSomething=false;
-
-
-  for(let i=fruits.length-1;i>=0;i--){
-
-    const f=fruits[i];
-
-    const dx=x-f.x;
-    const dy=y-f.y;
-
-    const distance=
-      Math.sqrt(dx*dx+dy*dy);
-
-
-    if(distance < f.size*1.25){
-
-      if(f.bomb){
-
-        explode(
-          f.x,
-          f.y,
-          "#ff453a"
-        );
-
-        lives=0;
-
-        updateHUD();
-
-        gameOver();
-
-        return;
-
-      }
-
-
-      explode(
-        f.x,
-        f.y,
-        f.color
-      );
-
-      fruits.splice(i,1);
-
-      score+=10;
-
-      combo++;
-
-      slicedSomething=true;
-
-    }
-
-  }
-
-
-  if(!slicedSomething){
-
-    combo=0;
-
-  }
-
-  updateHUD();
-
-}
-
-
-/* ==================================================
-   POINTER CONTROLS
-================================================== */
-
-let pointerDown=false;
-
-function pointerPosition(e){
-
-  const rect=canvas.getBoundingClientRect();
-
-  return {
-
-    x:e.clientX-rect.left,
-
-    y:e.clientY-rect.top
-
-  };
-
-}
-
-
-canvas.addEventListener("pointerdown",function(e){
-
-  pointerDown=true;
-
-  const p=pointerPosition(e);
-
-  sliceAt(p.x,p.y);
-
-});
-
-
-canvas.addEventListener("pointermove",function(e){
-
-  if(!pointerDown)return;
-
-  const p=pointerPosition(e);
-
-  sliceAt(p.x,p.y);
-
-});
-
-
-canvas.addEventListener("pointerup",function(){
-
-  pointerDown=false;
-
-});
-
-
-canvas.addEventListener("pointercancel",function(){
-
-  pointerDown=false;
-
-});
-
-
-/* ==================================================
-   BUTTONS
-================================================== */
-
-$("start").onclick=startGame;
-
-$("again").onclick=startGame;
-
-
-/*
-  Game Over → Start Page
-*/
-
-$("back").onclick=function(){
-
-  running=false;
-
-  cancelAnimationFrame(raf);
-
-  $("over").classList.add("hidden");
-
-  $("menu").classList.remove("hidden");
-
-};
-
-
-/*
-  How to Play
-*/
-
-$("help").onclick=function(){
-
-  running=false;
-
-  cancelAnimationFrame(raf);
-
-  $("over").classList.add("hidden");
-
-  $("menu").classList.remove("hidden");
-
-};
-
-
-/*
-  Home button
-*/
-
-$("close").onclick=function(){
-
-  running=false;
-
-  cancelAnimationFrame(raf);
-
-  window.location.href="../index.html";
-
-};
-
-
-/* ==================================================
-   UNIVERSAL GAMEWITHFUN BACK SYSTEM
-================================================== */
-
-(function(){
-
-  const HOME="../index.html";
-
-
-  /*
-    Initial history:
-
-    BASE → MENU
-  */
-
-  history.replaceState(
-    {gwf:"base"},
-    "",
-    location.href
-  );
-
-  history.pushState(
-    {gwf:"menu"},
-    "",
-    location.href
-  );
-
-
-  window.addEventListener("popstate",function(){
-
-    /*
-      GAME → MENU
-    */
-
-    if(running===true){
-
-      running=false;
-
-      cancelAnimationFrame(raf);
-
-
-      const menu=
-        document.getElementById("menu");
-
-      const over=
-        document.getElementById("over");
-
-
-      if(over){
-
-        over.classList.add("hidden");
-
-      }
-
-
-      if(menu){
-
-        menu.classList.remove("hidden");
-
-      }
-
-
-      /*
-        Keep MENU in history.
-
-        Next Back → Homepage
-      */
-
-      history.pushState(
-        {gwf:"menu"},
-        "",
-        location.href
-      );
-
-      return;
-
-    }
-
-
-    /*
-      MENU → HOMEPAGE
-    */
-
-    window.location.href=HOME;
-
-  });
-
-})();
-
-
-/* ==================================================
-   INITIAL DRAW
-================================================== */
-
-updateHUD();
-
-draw();
-
-</script>
-
-</body>
-</html>
+  </div>    <div  
+    style="text-align:right">  <div  
+  class="combo"  
+  id="combo">  
+  x1  
+</div>  
+
+<div  
+  class="label">  
+  COMBO  
+</div>
+
+  </div>  </div>  <!-- HELP -->  <button  
+class="help"  
+id="help">
+?
+</button>
+
+<!-- =====================================================  
+     START MENU  
+===================================================== -->  <div  
+  class="overlay"  
+  id="menu">  <button  
+class="close"  
+id="close">
+×
+</button>
+
+  <div  
+    style="font-size:55px">  
+    🍉🍊🍓  
+  </div>    <div  
+    class="logo">  
+    BD CUT  
+  </div>    <div  
+    class="tag">  
+    MASTER THE BLADE  
+  </div>    <div  
+    class="panel">  <h3>  
+  HOW TO PLAY  
+</h3>  
+
+🍉 ওপর থেকে ফল ধীরে ধীরে পড়বে।<br>  
+
+👆 আঙুল দিয়ে ফলের ওপর স্লাইড করলে ফল কাটা যাবে।<br>  
+
+⚡ একসঙ্গে ২–৩টি ফল আসবে।<br>  
+
+🏆 প্রতিটি ফল কাটলে ১০ পয়েন্ট।<br>  
+
+💣 বোমা কাটলে সঙ্গে সঙ্গে গেম ওভার।<br>  
+
+❤️ ফল মাটিতে পড়ে গেলে একটি জীবন কমবে।
+
+  </div>  <button  
+class="btn"  
+id="start">
+
+START GAME ▶
+
+  </button>  </div>  <!-- =====================================================  
+     GAME OVER  
+===================================================== -->  <div  
+  class="overlay hidden"  
+  id="over">    <div  
+    style="font-size:55px">  
+    💥  
+  </div>    <div  
+    class="logo"  
+    style="font-size:45px">  GAME OVER
+
+  </div>    <div  
+    class="label"  
+    style="margin-top:20px">  YOUR SCORE
+
+  </div>    <div  
+    class="final"  
+    id="final">  0
+
+  </div>    <p  
+    id="reason"  
+    style="  
+      margin-top:8px;  
+      color:#c5d9e7  
+    ">  
+  </p>  <button  
+class="btn"  
+id="again">
+
+PLAY AGAIN ↻
+
+  </button>  <button  
+class="btn"  
+id="back"  
+style="  
+background:#263a4c;  
+color:white;  
+box-shadow:0 4px #111  
+">
+
+HOW TO PLAY
+
+  </button>  </div>  </div>  <!-- =====================================================  
+     SEO CONTENT  
+===================================================== -->  <main class="site-content">  <!-- INTRO -->  <section class="content-card">  <h1>  
+BD Cut 🎮🍉 – Free Fruit Cutting Game Online  
+</h1>  <p>  
+Welcome to <strong>BD Cut</strong>, a fun and simple fruit  
+cutting browser game designed for quick and enjoyable gameplay.  
+Cut falling fruits, create combos, avoid dangerous bombs and  
+try to make your highest score.  
+</p>  <p>  
+BD Cut works directly in your web browser, so you can play  
+without installing a separate application. The game is designed  
+to work comfortably on mobile phones, tablets and desktop  
+browsers.  
+</p>  <div class="quick-nav">  <a href="#how-to-play">  
+How to Play  
+</a>  <a href="#about">  
+About  
+</a>  <a href="#faq">  
+FAQ  
+</a>  <a href="#privacy">  
+Privacy  
+</a>  <a href="#disclaimer">  
+Disclaimer  
+</a>  <a href="#contact">  
+Contact  
+</a>  </div>  </section>  <!-- DESCRIPTION -->  <section class="content-card">  <h2>  
+About BD Cut Fruit Game  
+</h2>  <p>  
+BD Cut is an original HTML5 fruit slicing game where different  
+fruits fall from the top of the game screen. Your goal is to  
+slice the fruits before they reach the bottom.  
+</p>  <p>  
+Each successfully sliced fruit gives you points. Cutting several  
+fruits can increase your combo. However, bombs are mixed with  
+the fruits, so you need to react carefully and avoid slicing them.  
+</p>  <p>  
+The game is made for casual entertainment and short gaming  
+sessions. You can replay the game as many times as you want and  
+try to improve your previous high score.  
+</p>  </section>  <!-- HOW TO PLAY -->  <section  
+  class="content-card"  
+  id="how-to-play">  <h2>  
+How to Play BD Cut  
+</h2>  <p>  
+Playing BD Cut is easy. Follow these simple steps:  
+</p>  <ul>  <li>  
+Press the <strong>START GAME</strong> button.  
+</li>  <li>  
+Wait for fruits to appear from the top.  
+</li>  <li>  
+Swipe your finger across the fruit to cut it.  
+</li>  <li>  
+Each fruit gives you <strong>10 points</strong>.  
+</li>  <li>  
+Cut multiple fruits to build your combo.  
+</li>  <li>  
+Avoid bombs because slicing a bomb ends the game.  
+</li>  <li>  
+Try not to let too many fruits fall to the bottom.  
+</li>  <li>  
+Replay the game and try to beat your best score.  
+</li>  </ul>  </section>  <!-- FEATURES -->  <section class="content-card">  <h2>  
+BD Cut Game Features  
+</h2>  <ul>  <li>  
+🎮 Free browser-based gameplay  
+</li>  <li>  
+🍉 Fun fruit slicing mechanics  
+</li>  <li>  
+⚡ Combo scoring system  
+</li>  <li>  
+💣 Bomb obstacles  
+</li>  <li>  
+🏆 Personal best score  
+</li>  <li>  
+📱 Mobile-friendly controls  
+</li>  <li>  
+💻 Desktop browser support  
+</li>  <li>  
+🚀 No separate game installation required  
+</li>  </ul>  </section>  <!-- ABOUT -->  <section  
+  class="content-card"  
+  id="about">  <h2>  
+About Us  
+</h2>  <p>  
+BD Cut is a browser gaming project focused on creating simple,  
+lightweight and enjoyable games that visitors can play directly  
+from their devices.  
+</p>  <p>  
+Our goal is to provide easy-to-understand games with responsive  
+controls and a clean user experience for casual players.  
+</p>  </section>  <!-- FAQ -->  <section  
+  class="content-card"  
+  id="faq">  <h2>  
+Frequently Asked Questions  
+</h2>  <details class="faq-item">  <summary>  
+What is BD Cut?  
+</summary>  <p>  
+BD Cut is a free online fruit cutting game. Players slice  
+falling fruits and try to achieve a high score while avoiding  
+bombs.  
+</p>  </details>  <details class="faq-item">  <summary>  
+Is BD Cut free to play?  
+</summary>  <p>  
+Yes. BD Cut is designed as a free browser game and does not  
+require a paid game download.  
+</p>  </details>  <details class="faq-item">  <summary>  
+Can I play BD Cut on a mobile phone?  
+</summary>  <p>  
+Yes. The game uses touch-friendly controls and is designed  
+for modern mobile browsers.  
+</p>  </details>  <details class="faq-item">  <summary>  
+How do I get a higher score?  
+</summary>  <p>  
+Slice fruits quickly and accurately, maintain combos and avoid  
+bombs. Your best score is saved locally in your browser.  
+</p>  </details>  <details class="faq-item">  <summary>  
+What happens if I cut a bomb?  
+</summary>  <p>  
+Cutting a bomb immediately ends the current game.  
+</p>  </details>  <details class="faq-item">  <summary>  
+Does BD Cut need to be installed?  
+</summary>  <p>  
+No separate installation is required. You can play the game  
+directly through a supported web browser.  
+</p>  </details>  <details class="faq-item">  <summary>  
+Can I play the game again?  
+</summary>  <p>  
+Yes. After Game Over, simply press the Play Again button to  
+start a new game.  
+</p>  </details>  </section>  <!-- PRIVACY -->  <section  
+  class="content-card"  
+  id="privacy">  <h2>  
+Privacy Policy  
+</h2>  <p>  
+We respect the privacy of our visitors. BD Cut is designed to  
+provide browser-based entertainment without requiring visitors  
+to create an account to play the game.  
+</p>  <p>  
+The game may store gameplay information such as the personal  
+best score locally in your browser using browser storage  
+technology. This information is used to improve the gameplay  
+experience.  
+</p>  <p>  
+If advertising or analytics services are used on this website,  
+those third-party services may collect information according to  
+their own privacy policies.  
+</p>  <p>  
+Visitors should review the privacy policies of any third-party  
+services displayed or used on this website.  
+</p>  </section>  <!-- DISCLAIMER -->  <section  
+  class="content-card"  
+  id="disclaimer">  <h2>  
+Disclaimer  
+</h2>  <p>  
+BD Cut is provided for entertainment purposes. While we try to  
+keep the game working properly, we do not guarantee that the  
+website or game will always be available, error-free or  
+compatible with every browser and device.  
+</p>  <p>  
+Website content may be updated, changed or removed in the  
+future without prior notice.  
+</p>  <p>  
+Any third-party advertisements or external services displayed  
+on the website are provided by their respective providers.  
+We are not responsible for the content or policies of  
+third-party websites.  
+</p>  </section>  <!-- CONTACT -->  <section  
+  class="content-card"  
+  id="contact">  <h2>  
+Contact  
+</h2>  <p>  
+If you have questions, suggestions, feedback or find a problem  
+with BD Cut, you can contact the website owner.  
+</p>  <p>  
+<strong>Email:</strong>  
+awal98136@gmail.com  
+</p>  </section>  </main>  <!-- =====================================================  
+     ADSENSE AREA  
+===================================================== -->  <section class="ad-section">  <div class="ad-box">  <div>  <span class="ad-label">  
+ADVERTISEMENT  
+</span>  <!--  
+==========================================================  
+GOOGLE ADSENSE CODE  
+  
+AdSense approval পাওয়ার পরে Google থেকে পাওয়া  
+official ad code এখানে বসাবেন।  
+  
+উদাহরণ:  
+  
+<ins class="adsbygoogle"  
+     style="display:block"  
+     data-ad-client="ca-pub-XXXXXXXX"  
+     data-ad-slot="XXXXXXXX"  
+     data-ad-format="auto"  
+     data-full-width-responsive="true">  
+</ins>  
+  
+==========================================================  
+-->  <div>  
+Ad Space  
+</div>  </div>  </div>  </section>  <!-- =====================================================  
+     FOOTER  
+===================================================== -->  <footer>  <div class="footer-logo">  
+BD Cut 🎮🍉  
+</div>  <p>  
+Free online games for fun and casual gameplay.  
+</p>  <div class="footer-links">  <a href="#about">  
+About  
+</a>  <a href="#faq">  
+FAQ  
+</a>  <a href="#privacy">  
+Privacy  
+</a>  <a href="#disclaimer">  
+Disclaimer  
+</a>  <a href="#contact">  
+Contact  
+</a>  </div>  <p  
+  style="  
+    margin-top:15px;  
+    margin-bottom:0  
+  ">  © 2026 BD Cut. All rights reserved.
+
+</p>  </footer>  <!-- =====================================================  
+     FAQ STRUCTURED DATA  
+===================================================== -->  <script type="application/ld+json">  
+  
+{  
+  "@context":"https://schema.org",  
+  "@type":"FAQPage",  
+  
+  "mainEntity":[  
+  
+    {  
+      "@type":"Question",  
+      "name":"What is BD Cut?",  
+      "acceptedAnswer":{  
+        "@type":"Answer",  
+        "text":"BD Cut is a free online fruit cutting game where players slice falling fruits, build combos and avoid bombs."  
+      }  
+    },  
+  
+    {  
+      "@type":"Question",  
+      "name":"Is BD Cut free to play?",  
+      "acceptedAnswer":{  
+        "@type":"Answer",  
+        "text":"Yes. BD Cut is designed as a free browser game."  
+      }  
+    },  
+  
+    {  
+      "@type":"Question",  
+      "name":"Can I play BD Cut on mobile?",  
+      "acceptedAnswer":{  
+        "@type":"Answer",  
+        "text":"Yes. BD Cut uses touch-friendly controls and is designed for modern mobile browsers."  
+      }  
+    },  
+  
+    {  
+      "@type":"Question",  
+      "name":"How do I get a higher score?",  
+      "acceptedAnswer":{  
+        "@type":"Answer",  
+        "text":"Slice fruits accurately, maintain combos and avoid bombs to improve your score."  
+      }  
+    }  
+  
+  ]  
+}  
+  
+</script>  <!-- =====================================================  
+     GAME JAVASCRIPT  
+===================================================== -->  <script>  
+  
+const canvas =  
+document.getElementById("canvas");  
+  
+const ctx =  
+canvas.getContext("2d");  
+  
+  
+const W=600;  
+const H=900;  
+  
+  
+let fruits=[];  
+let particles=[];  
+let slashes=[];  
+let texts=[];  
+  
+  
+let running=false;  
+  
+let score=0;  
+  
+let best=0;  
+  
+let lives=3;  
+  
+let combo=0;  
+  
+let spawnTimer=0;  
+  
+let last=0;  
+  
+let raf=0;  
+  
+let drawing=false;  
+  
+let trail=[];  
+  
+let shake=0;  
+  
+  
+try{  
+  
+  best =  
+    Number(  
+      localStorage.getItem(  
+        "bdCutBest"  
+      ) || 0  
+    );  
+  
+}catch(e){}  
+  
+  
+const types=[  
+  
+  {  
+    name:"watermelon",  
+    color:"#ef3048",  
+    dark:"#a91630"  
+  },  
+  
+  {  
+    name:"orange",  
+    color:"#ff9d28",  
+    dark:"#c94b10"  
+  },  
+  
+  {  
+    name:"apple",  
+    color:"#ed3944",  
+    dark:"#9c1727"  
+  },  
+  
+  {  
+    name:"lemon",  
+    color:"#ffdb42",  
+    dark:"#c49a13"  
+  },  
+  
+  {  
+    name:"kiwi",  
+    color:"#86c64c",  
+    dark:"#438c35"  
+  },  
+  
+  {  
+    name:"plum",  
+    color:"#8c6ee7",  
+    dark:"#4e319b"  
+  }  
+  
+];  
+  
+  
+function $(id){  
+  
+  return document.getElementById(id);  
+  
+}  
+  
+  
+/* =====================================================  
+   HUD  
+===================================================== */  
+  
+function updateHUD(){  
+  
+  $("score").textContent =  
+    score;  
+  
+  $("best").textContent =  
+    "BEST: " +  
+    Math.max(best,score);  
+  
+  $("combo").textContent =  
+    "x" +  
+    Math.max(1,combo);  
+  
+}  
+  
+  
+/* =====================================================  
+   RESET  
+===================================================== */  
+  
+function reset(){  
+  
+  fruits=[];  
+  particles=[];  
+  slashes=[];  
+  texts=[];  
+  trail=[];  
+  
+  score=0;  
+  
+  lives=3;  
+  
+  combo=0;  
+  
+  spawnTimer=.8;  
+  
+  shake=0;  
+  
+  updateHUD();  
+  
+}  
+  
+  
+/* =====================================================  
+   START  
+===================================================== */  
+  
+function startGame(){  
+  
+  cancelAnimationFrame(raf);  
+  
+  reset();  
+  
+  running=true;  
+  
+  $("menu")  
+    .classList  
+    .add("hidden");  
+  
+  $("over")  
+    .classList  
+    .add("hidden");  
+  
+  last =  
+    performance.now();  
+  
+  raf =  
+    requestAnimationFrame(loop);  
+  
+}  
+  
+  
+/* =====================================================  
+   GAME OVER  
+===================================================== */  
+  
+function gameOver(reason){  
+  
+  if(!running)return;  
+  
+  running=false;  
+  
+  
+  if(score>best){  
+  
+    best=score;  
+  
+    try{  
+  
+      localStorage.setItem(  
+        "bdCutBest",  
+        best  
+      );  
+  
+    }catch(e){}  
+  
+  }  
+  
+  
+  $("final").textContent =  
+    score;  
+  
+  
+  $("reason").textContent =  
+    reason==="bomb"  
+  
+    ? "💣 তুমি বোমা কেটে ফেলেছ!"  
+  
+    : "❤️ সব জীবন শেষ হয়ে গেছে!";  
+  
+  
+  $("over")  
+    .classList  
+    .remove("hidden");  
+  
+  
+  updateHUD();  
+  
+}  
+  
+  
+/* =====================================================  
+   BUTTONS  
+===================================================== */  
+  
+$("start").onclick =  
+startGame;  
+  
+  
+$("again").onclick =  
+startGame;  
+  
+  
+$("back").onclick = ()=>{  
+  
+  $("over")  
+    .classList  
+    .add("hidden");  
+  
+  $("menu")  
+    .classList  
+    .remove("hidden");  
+  
+};  
+  
+  
+$("help").onclick = ()=>{  
+  
+  running=false;  
+  
+  cancelAnimationFrame(raf);  
+  
+  $("over")  
+    .classList  
+    .add("hidden");  
+  
+  $("menu")  
+    .classList  
+    .remove("hidden");  
+  
+};  
+  
+  
+$("close").onclick = ()=>{  
+  
+  running=false;  
+  
+  cancelAnimationFrame(raf);  
+  
+  $("menu")  
+    .classList  
+    .add("hidden");  
+  
+  $("over")  
+    .classList  
+    .add("hidden");  
+  
+};  
+  
+  
+  
+/* =====================================================  
+   SPAWN FRUIT  
+===================================================== */  
+  
+function spawnFruit(  
+  x,  
+  delay=0  
+){  
+  
+  const bomb =  
+    Math.random()<.10;  
+  
+  
+  const type =  
+    types[  
+      Math.floor(  
+        Math.random() *  
+        types.length  
+      )  
+    ];  
+  
+  
+  fruits.push({  
+  
+    x:x,  
+  
+    y:-70-delay,  
+  
+    vx:  
+      (Math.random()-.5)*25,  
+  
+    vy:  
+      35+  
+      Math.random()*20,  
+  
+    r:  
+      bomb  
+      ?31  
+      :30+  
+       Math.random()*6,  
+  
+    type:type,  
+  
+    bomb:bomb,  
+  
+    rot:  
+      Math.random()*6.28,  
+  
+    spin:  
+      (Math.random()-.5)*1.2,  
+  
+    cut:false  
+  
+  });  
+  
+}  
+  
+  
+/* =====================================================  
+   CREATE GROUP  
+===================================================== */  
+  
+function createGroup(){  
+  
+  const count =  
+    Math.random()<.5  
+    ?2  
+    :3;  
+  
+  
+  const positions =  
+    count===2  
+  
+    ?  
+  
+    [  
+      170+  
+      Math.random()*25,  
+  
+      430+  
+      Math.random()*25  
+    ]  
+  
+    :  
+  
+    [  
+      100+  
+      Math.random()*20,  
+  
+      300+  
+      Math.random()*20,  
+  
+      500+  
+      Math.random()*20  
+    ];  
+  
+  
+  for(  
+    let i=0;  
+    i<count;  
+    i++  
+  ){  
+  
+    spawnFruit(  
+      positions[i],  
+      i*35  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* =====================================================  
+   DRAW FRUIT  
+===================================================== */  
+  
+function drawFruit(f){  
+  
+  ctx.save();  
+  
+  ctx.translate(  
+    f.x,  
+    f.y  
+  );  
+  
+  ctx.rotate(  
+    f.rot  
+  );  
+  
+  
+  if(f.bomb){  
+  
+    drawBomb(f.r);  
+  
+  }else{  
+  
+    drawRoundFruit(f);  
+  
+  }  
+  
+  
+  ctx.restore();  
+  
+}  
+  
+  
+/* =====================================================  
+   ROUND FRUIT  
+===================================================== */  
+  
+function drawRoundFruit(f){  
+  
+  const r=f.r;  
+  
+  const t=f.type;  
+  
+  
+  ctx.shadowColor =  
+    "rgba(0,0,0,.5)";  
+  
+  ctx.shadowBlur=15;  
+  
+  ctx.shadowOffsetY=9;  
+  
+  
+  const g =  
+    ctx.createRadialGradient(  
+      -r*.35,  
+      -r*.4,  
+      2,  
+      r*.1,  
+      r*.1,  
+      r*1.2  
+    );  
+  
+  
+  g.addColorStop(  
+    0,  
+    "#ffffff"  
+  );  
+  
+  
+  g.addColorStop(  
+    .12,  
+    t.color  
+  );  
+  
+  
+  g.addColorStop(  
+    .72,  
+    t.color  
+  );  
+  
+  
+  g.addColorStop(  
+    1,  
+    t.dark  
+  );  
+  
+  
+  ctx.fillStyle=g;  
+  
+  
+  ctx.beginPath();  
+  
+  ctx.arc(  
+    0,  
+    0,  
+    r,  
+    0,  
+    Math.PI*2  
+  );  
+  
+  ctx.fill();  
+  
+  
+  ctx.shadowColor=  
+    "transparent";  
+  
+  ctx.shadowBlur=0;  
+  
+  
+  /* WATERMELON */  
+  
+  if(t.name==="watermelon"){  
+  
+    ctx.strokeStyle=  
+      "#79c84c";  
+  
+    ctx.lineWidth=4;  
+  
+  
+    ctx.beginPath();  
+  
+    ctx.arc(  
+      0,  
+      0,  
+      r-4,  
+      0,  
+      Math.PI*2  
+    );  
+  
+    ctx.stroke();  
+  
+  
+    ctx.fillStyle=  
+      "#171717";  
+  
+  
+    for(  
+      let i=0;  
+      i<7;  
+      i++  
+    ){  
+  
+      const a =  
+        i*Math.PI*2/7;  
+  
+  
+      ctx.beginPath();  
+  
+      ctx.ellipse(  
+  
+        Math.cos(a)*r*.48,  
+  
+        Math.sin(a)*r*.48,  
+  
+        2,  
+  
+        5,  
+  
+        a,  
+  
+        0,  
+  
+        Math.PI*2  
+  
+      );  
+  
+      ctx.fill();  
+  
+    }  
+  
+  }  
+  
+  
+  /* ORANGE */  
+  
+  if(t.name==="orange"){  
+  
+    ctx.strokeStyle=  
+      "#ffc46b";  
+  
+    ctx.lineWidth=1.5;  
+  
+  
+    for(  
+      let i=0;  
+      i<9;  
+      i++  
+    ){  
+  
+      const a =  
+        i*Math.PI*2/9;  
+  
+  
+      ctx.beginPath();  
+  
+      ctx.arc(  
+        0,  
+        0,  
+        r*.72,  
+        a,  
+        a+.7  
+      );  
+  
+      ctx.stroke();  
+  
+    }  
+  
+  
+    ctx.fillStyle=  
+      "#4c8c35";  
+  
+  
+    ctx.beginPath();  
+  
+    ctx.ellipse(  
+      0,  
+      -r*.85,  
+      7,  
+      4,  
+      -.3,  
+      0,  
+      Math.PI*2  
+    );  
+  
+    ctx.fill();  
+  
+  }  
+  
+  
+  /* APPLE */  
+  
+  if(t.name==="apple"){  
+  
+    ctx.fillStyle=  
+      "#694125";  
+  
+  
+    ctx.fillRect(  
+      -2,  
+      -r-7,  
+      4,  
+      12  
+    );  
+  
+  
+    ctx.fillStyle=  
+      "#5da642";  
+  
+  
+    ctx.beginPath();  
+  
+    ctx.ellipse(  
+      6,  
+      -r-4,  
+      10,  
+      5,  
+      -.4,  
+      0,  
+      Math.PI*2  
+    );  
+  
+    ctx.fill();  
+  
+  }  
+  
+  
+  /* LEMON */  
+  
+  if(t.name==="lemon"){  
+  
+    ctx.strokeStyle=  
+      "#ffe991";  
+  
+    ctx.lineWidth=3;  
+  
+  
+    ctx.beginPath();  
+  
+    ctx.arc(  
+      0,  
+      0,  
+      r*.7,  
+      0,  
+      Math.PI*2  
+    );  
+  
+    ctx.stroke();  
+  
+  }  
+  
+  
+  /* KIWI */  
+  
+  if(t.name==="kiwi"){  
+  
+    ctx.fillStyle=  
+      "#f3d59c";  
+  
+  
+    ctx.beginPath();  
+  
+    ctx.arc(  
+      0,  
+      0,  
+      r*.65,  
+      0,  
+      Math.PI*2  
+    );  
+  
+    ctx.fill();  
+  
+  
+    ctx.fillStyle=  
+      "#2c2417";  
+  
+  
+    for(  
+      let i=0;  
+      i<14;  
+      i++  
+    ){  
+  
+      const a =  
+        i*Math.PI*2/14;  
+  
+  
+      ctx.beginPath();  
+  
+      ctx.arc(  
+        Math.cos(a)*r*.48,  
+        Math.sin(a)*r*.48,  
+        2,  
+        0,  
+        Math.PI*2  
+      );  
+  
+      ctx.fill();  
+  
+    }  
+  
+  }  
+  
+  
+  /* PLUM */  
+  
+  if(t.name==="plum"){  
+  
+    ctx.strokeStyle=  
+      "#c5b7ff";  
+  
+    ctx.lineWidth=2;  
+  
+  
+    ctx.beginPath();  
+  
+    ctx.arc(  
+      -3,  
+      -3,  
+      r*.78,  
+      0,  
+      Math.PI*2  
+    );  
+  
+    ctx.stroke();  
+  
+  }  
+  
+  
+  /* SHINE */  
+  
+  ctx.fillStyle=  
+    "rgba(255,255,255,.45)";  
+  
+  
+  ctx.beginPath();  
+  
+  ctx.ellipse(  
+    -r*.34,  
+    -r*.4,  
+    r*.17,  
+    r*.28,  
+    -.6,  
+    0,  
+    Math.PI*2  
+  );  
+  
+  ctx.fill();  
+  
+}  
+  
+  
+/* =====================================================  
+   BOMB  
+===================================================== */  
+  
+function drawBomb(r){  
+  
+  ctx.shadowColor=  
+    "#ff3824";  
+  
+  ctx.shadowBlur=18;  
+  
+  
+  const g =  
+    ctx.createRadialGradient(  
+      -8,  
+      -10,  
+      2,  
+      0,  
+      0,  
+      r  
+    );  
+  
+  
+  g.addColorStop(  
+    0,  
+    "#687683"  
+  );  
+  
+  
+  g.addColorStop(  
+    1,  
+    "#11151b"  
+  );  
+  
+  
+  ctx.fillStyle=g;  
+  
+  
+  ctx.beginPath();  
+  
+  ctx.arc(  
+    0,  
+    0,  
+    r,  
+    0,  
+    Math.PI*2  
+  );  
+  
+  ctx.fill();  
+  
+  
+  ctx.shadowBlur=0;  
+  
+  
+  ctx.strokeStyle=  
+    "#9eabb6";  
+  
+  ctx.lineWidth=3;  
+  
+  ctx.stroke();  
+  
+  
+  ctx.strokeStyle=  
+    "#ff9f25";  
+  
+  ctx.lineWidth=4;  
+  
+  
+  ctx.beginPath();  
+  
+  ctx.moveTo(  
+    -r*.4,  
+    -r*.4  
+  );  
+  
+  ctx.lineTo(  
+    r*.4,  
+    r*.4  
+  );  
+  
+  
+  ctx.moveTo(  
+    r*.4,  
+    -r*.4  
+  );  
+  
+  ctx.lineTo(  
+    -r*.4,  
+    r*.4  
+  );  
+  
+  ctx.stroke();  
+  
+  
+  ctx.strokeStyle=  
+    "#ff6b20";  
+  
+  ctx.lineWidth=5;  
+  
+  
+  ctx.beginPath();  
+  
+  ctx.moveTo(  
+    0,  
+    -r+3  
+  );  
+  
+  
+  ctx.quadraticCurveTo(  
+    10,  
+    -r-22,  
+    22,  
+    -r-25  
+  );  
+  
+  ctx.stroke();  
+  
+}  
+  
+  
+/* =====================================================  
+   BACKGROUND  
+===================================================== */  
+  
+function drawBackground(){  
+  
+  const g =  
+    ctx.createLinearGradient(  
+      0,  
+      0,  
+      0,  
+      H  
+    );  
+  
+  
+  g.addColorStop(  
+    0,  
+    "#162b3c"  
+  );  
+  
+  
+  g.addColorStop(  
+    .5,  
+    "#253c40"  
+  );  
+  
+  
+  g.addColorStop(  
+    1,  
+    "#101a25"  
+  );  
+  
+  
+  ctx.fillStyle=g;  
+  
+  
+  ctx.fillRect(  
+    0,  
+    0,  
+    W,  
+    H  
+  );  
+  
+  
+  ctx.strokeStyle=  
+    "rgba(255,210,140,.08)";  
+  
+  
+  ctx.lineWidth=3;  
+  
+  
+  for(  
+    let x=-100;  
+    x<W+100;  
+    x+=75  
+  ){  
+  
+    ctx.beginPath();  
+  
+    ctx.moveTo(  
+      x,  
+      0  
+    );  
+  
+    ctx.lineTo(  
+      x+45,  
+      H  
+    );  
+  
+    ctx.stroke();  
+  
+  }  
+  
+  
+  for(  
+    let y=0;  
+    y<H;  
+    y+=90  
+  ){  
+  
+    ctx.beginPath();  
+  
+    ctx.moveTo(  
+      0,  
+      y  
+    );  
+  
+    ctx.lineTo(  
+      W,  
+      y  
+    );  
+  
+    ctx.stroke();  
+  
+  }  
+  
+  
+  const glow =  
+    ctx.createRadialGradient(  
+      W/2,  
+      H*.5,  
+      20,  
+      W/2,  
+      H*.5,  
+      450  
+    );  
+  
+  
+  glow.addColorStop(  
+    0,  
+    "rgba(255,180,55,.10)"  
+  );  
+  
+  
+  glow.addColorStop(  
+    1,  
+    "transparent"  
+  );  
+  
+  
+  ctx.fillStyle=glow;  
+  
+  
+  ctx.fillRect(  
+    0,  
+    0,  
+    W,  
+    H  
+  );  
+  
+}  
+  
+  
+/* =====================================================  
+   PARTICLES  
+===================================================== */  
+  
+function burst(  
+  x,  
+  y,  
+  color,  
+  count=22  
+){  
+  
+  for(  
+    let i=0;  
+    i<count;  
+    i++  
+  ){  
+  
+    const a =  
+      Math.random()*  
+      Math.PI*2;  
+  
+  
+    const speed =  
+      80+  
+      Math.random()*280;  
+  
+  
+    particles.push({  
+  
+      x:x,  
+  
+      y:y,  
+  
+      vx:  
+        Math.cos(a)*speed,  
+  
+      vy:  
+        Math.sin(a)*speed-100,  
+  
+      life:  
+        .5+  
+        Math.random()*.5,  
+  
+      size:  
+        2+  
+        Math.random()*6,  
+  
+      color:color  
+  
+    });  
+  
+  }  
+  
+}  
+  
+  
+/* =====================================================  
+   POP TEXT  
+===================================================== */  
+  
+function popText(  
+  x,  
+  y,  
+  text,  
+  color  
+){  
+  
+  texts.push({  
+  
+    x:x,  
+  
+    y:y,  
+  
+    text:text,  
+  
+    color:color,  
+  
+    life:1  
+  
+  });  
+  
+}  
+  
+  
+/* =====================================================  
+   SLICE  
+===================================================== */  
+  
+function slice(f){  
+  
+  if(f.cut)return;  
+  
+  
+  f.cut=true;  
+  
+  
+  if(f.bomb){  
+  
+    burst(  
+      f.x,  
+      f.y,  
+      "#ff9d25",  
+      45  
+    );  
+  
+    shake=22;  
+  
+    gameOver("bomb");  
+  
+    return;  
+  
+  }  
+  
+  
+  score+=10;  
+  
+  combo++;  
+  
+  
+  burst(  
+    f.x,  
+    f.y,  
+    f.type.color,  
+    25  
+  );  
+  
+  
+  popText(  
+    f.x,  
+    f.y,  
+    "+10",  
+    "#ffe16a"  
+  );  
+  
+  
+  if(combo>=3){  
+  
+    popText(  
+      f.x,  
+      f.y-30,  
+      "COMBO x"+combo,  
+      "#aaff50"  
+    );  
+  
+  }  
+  
+  
+  updateHUD();  
+  
+}  
+  
+  
+/* =====================================================  
+   POINTER POSITION  
+===================================================== */  
+  
+function getPoint(e){  
+  
+  const rect =  
+    canvas.getBoundingClientRect();  
+  
+  
+  return {  
+  
+    x:  
+      (e.clientX-rect.left)  
+      *W/rect.width,  
+  
+    y:  
+      (e.clientY-rect.top)  
+      *H/rect.height  
+  
+  };  
+  
+}  
+  
+  
+/* =====================================================  
+   LINE DISTANCE  
+===================================================== */  
+  
+function distanceToLine(  
+  a,  
+  b,  
+  p  
+){  
+  
+  const dx =  
+    b.x-a.x;  
+  
+  
+  const dy =  
+    b.y-a.y;  
+  
+  
+  const len =  
+    dx*dx+  
+    dy*dy;  
+  
+  
+  if(!len){  
+  
+    return Math.hypot(  
+      p.x-a.x,  
+      p.y-a.y  
+    );  
+  
+  }  
+  
+  
+  let t =  
+    (  
+      (p.x-a.x)*dx+  
+      (p.y-a.y)*dy  
+    )/len;  
+  
+  
+  t =  
+    Math.max(  
+      0,  
+      Math.min(1,t)  
+    );  
+  
+  
+  const x =  
+    a.x+t*dx;  
+  
+  
+  const y =  
+    a.y+t*dy;  
+  
+  
+  return Math.hypot(  
+    p.x-x,  
+    p.y-y  
+  );  
+  
+}  
+  
+  
+/* =====================================================  
+   POINTER DOWN  
+===================================================== */  
+  
+function pointerDown(e){  
+  
+  if(!running)return;  
+  
+  
+  e.preventDefault();  
+  
+  
+  drawing=true;  
+  
+  
+  trail=[  
+    getPoint(e)  
+  ];  
+  
+}  
+  
+  
+/* =====================================================  
+   POINTER MOVE  
+===================================================== */  
+  
+function pointerMove(e){  
+  
+  if(  
+    !drawing||  
+    !running  
+  )return;  
+  
+  
+  e.preventDefault();  
+  
+  
+  const p =  
+    getPoint(e);  
+  
+  
+  const old =  
+    trail[  
+      trail.length-1  
+    ];  
+  
+  
+  trail.push(p);  
+  
+  
+  if(trail.length>12){  
+  
+    trail.shift();  
+  
+  }  
+  
+  
+  if(old){  
+  
+    for(  
+      const f of fruits  
+    ){  
+  
+      if(  
+        !f.cut&&  
+        distanceToLine(  
+          old,  
+          p,  
+          f  
+        )<  
+        f.r+10  
+      ){  
+  
+        slice(f);  
+  
+      }  
+  
+    }  
+  
+  
+    slashes.push({  
+  
+      x1:old.x,  
+  
+      y1:old.y,  
+  
+      x2:p.x,  
+  
+      y2:p.y,  
+  
+      life:.35  
+  
+    });  
+  
+  }  
+  
+}  
+  
+  
+/* =====================================================  
+   POINTER UP  
+===================================================== */  
+  
+function pointerUp(){  
+  
+  drawing=false;  
+  
+  trail=[];  
+  
+}  
+  
+  
+canvas.addEventListener(  
+  "pointerdown",  
+  pointerDown  
+);  
+  
+  
+canvas.addEventListener(  
+  "pointermove",  
+  pointerMove  
+);  
+  
+  
+canvas.addEventListener(  
+  "pointerup",  
+  pointerUp  
+);  
+  
+  
+canvas.addEventListener(  
+  "pointercancel",  
+  pointerUp  
+);  
+  
+  
+/* =====================================================  
+   DRAW  
+===================================================== */  
+  
+function draw(){  
+  
+  ctx.save();  
+  
+  
+  if(shake>0){  
+  
+    ctx.translate(  
+  
+      (Math.random()-.5)  
+      *shake,  
+  
+      (Math.random()-.5)  
+      *shake  
+  
+    );  
+  
+  }  
+  
+  
+  drawBackground();  
+  
+  
+  for(  
+    const f of fruits  
+  ){  
+  
+    if(!f.cut){  
+  
+      drawFruit(f);  
+  
+    }  
+  
+  }  
+  
+  
+  /* PARTICLES */  
+  
+  for(  
+    const p of particles  
+  ){  
+  
+    ctx.globalAlpha =  
+      Math.max(  
+        0,  
+        p.life  
+      );  
+  
+  
+    ctx.fillStyle =  
+      p.color;  
+  
+  
+    ctx.beginPath();  
+  
+  
+    ctx.arc(  
+      p.x,  
+      p.y,  
+      p.size,  
+      0,  
+      Math.PI*2  
+    );  
+  
+  
+    ctx.fill();  
+  
+  }  
+  
+  
+  ctx.globalAlpha=1;  
+  
+  
+  /* SLASH */  
+  
+  for(  
+    const s of slashes  
+  ){  
+  
+    ctx.globalAlpha =  
+      Math.max(  
+        0,  
+        s.life  
+      );  
+  
+  
+    ctx.lineCap =  
+      "round";  
+  
+  
+    ctx.strokeStyle =  
+      "rgba(180,245,255,.22)";  
+  
+  
+    ctx.lineWidth=14;  
+  
+  
+    ctx.beginPath();  
+  
+  
+    ctx.moveTo(  
+      s.x1,  
+      s.y1  
+    );  
+  
+  
+    ctx.lineTo(  
+      s.x2,  
+      s.y2  
+    );  
+  
+  
+    ctx.stroke();  
+  
+  
+    ctx.strokeStyle =  
+      "#eaffff";  
+  
+  
+    ctx.lineWidth=3;  
+  
+  
+    ctx.beginPath();  
+  
+  
+    ctx.moveTo(  
+      s.x1,  
+      s.y1  
+    );  
+  
+  
+    ctx.lineTo(  
+      s.x2,  
+      s.y2  
+    );  
+  
+  
+    ctx.stroke();  
+  
+  }  
+  
+  
+  /* TEXT */  
+  
+  for(  
+    const t of texts  
+  ){  
+  
+    ctx.globalAlpha =  
+      Math.max(  
+        0,  
+        t.life  
+      );  
+  
+  
+    ctx.fillStyle =  
+      t.color;  
+  
+  
+    ctx.font =  
+      "900 22px Arial";  
+  
+  
+    ctx.textAlign =  
+      "center";  
+  
+  
+    ctx.fillText(  
+      t.text,  
+      t.x,  
+      t.y  
+    );  
+  
+  }  
+  
+  
+  ctx.globalAlpha=1;  
+  
+  
+  ctx.restore();  
+  
+}  
+  
+  
+/* =====================================================  
+   GAME LOOP  
+===================================================== */  
+  
+function loop(now){  
+  
+  if(!running)return;  
+  
+  
+  const dt =  
+    Math.min(  
+      .035,  
+      (now-last)/1000 ||  
+      .016  
+    );  
+  
+  
+  last=now;  
+  
+  
+  spawnTimer-=dt;  
+  
+  
+  if(spawnTimer<=0){  
+  
+    createGroup();  
+  
+    spawnTimer=1.45;  
+  
+  }  
+  
+  
+  /* FRUITS */  
+  
+  for(  
+    let i=fruits.length-1;  
+    i>=0;  
+    i--  
+  ){  
+  
+    const f =  
+      fruits[i];  
+  
+  
+    f.vy +=  
+      95*dt;  
+  
+  
+    f.x +=  
+      f.vx*dt;  
+  
+  
+    f.y +=  
+      f.vy*dt;  
+  
+  
+    f.rot +=  
+      f.spin*dt;  
+  
+  
+    if(  
+      f.x<f.r||  
+      f.x>W-f.r  
+    ){  
+  
+      f.vx *= -1;  
+  
+    }  
+  
+  
+    if(  
+      f.y>H+70  
+    ){  
+  
+      if(  
+        !f.cut &&  
+        !f.bomb  
+      ){  
+  
+        lives--;  
+  
+        combo=0;  
+  
+        updateHUD();  
+  
+  
+        if(lives<=0){  
+  
+          draw();  
+  
+          gameOver(  
+            "lives"  
+          );  
+  
+          return;  
+  
+        }  
+  
+      }  
+  
+  
+      fruits.splice(  
+        i,  
+        1  
+      );  
+  
+    }  
+  
+  }  
+  
+  
+  /* PARTICLES */  
+  
+  for(  
+    let i=particles.length-1;  
+    i>=0;  
+    i--  
+  ){  
+  
+    const p =  
+      particles[i];  
+  
+  
+    p.x +=  
+      p.vx*dt;  
+  
+  
+    p.y +=  
+      p.vy*dt;  
+  
+  
+    p.vy +=  
+      500*dt;  
+  
+  
+    p.life -=  
+      dt;  
+  
+  
+    if(  
+      p.life<=0  
+    ){  
+  
+      particles.splice(  
+        i,  
+        1  
+      );  
+  
+    }  
+  
+  }  
+  
+  
+  /* SLASHES */  
+  
+  for(  
+    let i=slashes.length-1;  
+    i>=0;  
+    i--  
+  ){  
+  
+    slashes[i].life -=  
+      dt*2.5;  
+  
+  
+    if(  
+      slashes[i].life<=0  
+    ){  
+  
+      slashes.splice(  
+        i,  
+        1  
+      );  
+  
+    }  
+  
+  }  
+  
+  
+  /* TEXTS */  
+  
+  for(  
+    let i=texts.length-1;  
+    i>=0;  
+    i--  
+  ){  
+  
+    texts[i].y -=  
+      35*dt;  
+  
+  
+    texts[i].life -=  
+      dt;  
+  
+  
+    if(  
+      texts[i].life<=0  
+    ){  
+  
+      texts.splice(  
+        i,  
+        1  
+      );  
+  
+    }  
+  
+  }  
+  
+  
+  shake =  
+    Math.max(  
+      0,  
+      shake-dt*60  
+    );  
+  
+  
+  draw();  
+  
+  
+  raf =  
+    requestAnimationFrame(  
+      loop  
+    );  
+  
+}  
+  
+  
+/* =====================================================  
+   INITIAL  
+===================================================== */  
+  
+updateHUD();  
+  
+draw();  
+  
+</script>  </body>  
+        </html>
