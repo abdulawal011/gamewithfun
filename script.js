@@ -107,12 +107,12 @@ const games = [
 
   {
     id: 5,
-    title: "",
-    category: "",
-    icon: "",
-    url: "",
+    title: "Pipe Script",
+    category: "Puzzle",
+    icon: "games/Pipe Script.webp",
+    url: "games/pipe_script.html",
     newGame: false,
-    popular: false
+    popular: true
   },
 
   {
