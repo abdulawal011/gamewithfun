@@ -2,25 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="description" content="Play Shadow Hill Climb by GameWithFun. Drive across challenging hills, collect coins, manage fuel and reach checkpoints in this exciting browser racing game.">
-<meta name="robots" content="index,follow">
-<link rel="icon" href="/favicon.png">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>Shadow Hill Climb - GameWithFun</title>
+
+<meta name="description"
+      content="Play Shadow Hill Climb by GameWithFun. Drive manually across challenging hills, collect coins and fuel, and beat your best distance.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#05070d">
 
 <style>
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
   width:100%;
   min-height:100%;
   font-family:Arial,Helvetica,sans-serif;
-  background:#080b12;
+  background:#070912;
   color:#fff;
 }
 
@@ -28,255 +31,237 @@ body{
   overflow-x:hidden;
 }
 
-button{
-  font-family:inherit;
-  cursor:pointer;
-  border:0;
-}
-
 .page{
   width:100%;
   max-width:1100px;
   margin:auto;
+  padding:18px;
 }
 
-/* START SCREEN */
-
-#startScreen{
-  min-height:100vh;
+.top{
   display:flex;
   align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:
-    radial-gradient(circle at 50% 20%,#26344d 0,#101725 35%,#05070b 80%);
-}
-
-.startBox{
-  width:min(680px,100%);
-  text-align:center;
-  padding:25px 18px;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
 }
 
 .logo{
-  width:90px;
-  height:90px;
+  width:55px;
+  height:55px;
   object-fit:contain;
-  margin-bottom:12px;
-  filter:drop-shadow(0 0 15px rgba(0,180,255,.45));
+  border-radius:14px;
 }
 
-.startBox h1{
-  font-size:clamp(32px,8vw,62px);
-  letter-spacing:2px;
-  text-shadow:0 5px 20px #000;
+.home-btn{
+  text-decoration:none;
+  color:#fff;
+  background:#111827;
+  border:1px solid #293449;
+  padding:11px 16px;
+  border-radius:12px;
+  font-weight:700;
 }
 
-.startBox h1 span{
-  color:#00c8ff;
+h1{
+  text-align:center;
+  font-size:clamp(30px,6vw,58px);
+  margin:12px 0 6px;
 }
 
 .subtitle{
-  margin:10px auto 22px;
-  color:#b9c7d8;
-  font-size:16px;
+  text-align:center;
+  color:#aeb8ca;
+  margin-bottom:20px;
 }
 
-.carPreview{
-  position:relative;
-  height:180px;
-  overflow:hidden;
-  border-radius:25px;
-  border:1px solid #33435a;
+/* START SCREEN */
+.start{
+  text-align:center;
   background:
-    linear-gradient(#182338 0 48%,#25344b 49% 65%,#10151e 66%);
-  margin-bottom:25px;
+    radial-gradient(circle at 50% 0%,#26365d 0%,#101629 42%,#080b13 100%);
+  border:1px solid #28334a;
+  border-radius:25px;
+  padding:28px 18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
 }
 
-.carPreview:before{
+.car-preview{
+  position:relative;
+  width:min(480px,90vw);
+  height:190px;
+  margin:5px auto 20px;
+  overflow:hidden;
+  border-radius:22px;
+  background:
+    linear-gradient(#0b1020,#17233b 60%,#111);
+}
+
+.car-preview:before{
   content:"";
   position:absolute;
   left:-10%;
   right:-10%;
-  bottom:28px;
-  height:100px;
-  background:
-    linear-gradient(155deg,transparent 0 30%,#111822 31% 48%,transparent 49%),
-    linear-gradient(18deg,transparent 0 36%,#111822 37% 58%,transparent 59%);
-  transform:skewX(-8deg);
+  bottom:-60px;
+  height:150px;
+  background:#090b10;
+  transform:rotate(-5deg);
+  box-shadow:0 -10px 25px rgba(80,120,255,.12);
 }
 
-.previewCar{
+.preview-car{
   position:absolute;
-  left:50%;
-  bottom:48px;
-  transform:translateX(-50%);
   width:190px;
-  height:58px;
-  background:linear-gradient(#4c5868,#151b25);
-  border-radius:28px 40px 12px 12px;
-  box-shadow:0 12px 30px #000;
+  height:55px;
+  left:50%;
+  bottom:58px;
+  transform:translateX(-50%) rotate(-5deg);
+  background:linear-gradient(145deg,#242936,#07090e);
+  border-radius:20px 28px 12px 10px;
+  box-shadow:0 12px 25px #000;
 }
 
-.previewCar:before{
+.preview-car:before{
   content:"";
   position:absolute;
   width:78px;
-  height:34px;
-  left:48px;
+  height:36px;
+  left:52px;
   top:-25px;
-  background:#273442;
-  clip-path:polygon(15% 100%,30% 0,78% 0,100% 100%);
-  border-radius:10px;
+  background:#101521;
+  border-radius:45px 45px 8px 8px;
+  border:2px solid #303a4c;
 }
 
-.wheel{
+.preview-wheel{
   position:absolute;
-  width:42px;
-  height:42px;
-  background:#050608;
-  border:6px solid #353d48;
+  width:38px;
+  height:38px;
+  background:#050609;
+  border:7px solid #252b37;
   border-radius:50%;
-  bottom:-18px;
+  bottom:-22px;
 }
 
-.wheel.left{left:20px}
-.wheel.right{right:20px}
+.preview-wheel.one{left:25px}
+.preview-wheel.two{right:25px}
 
-.startBtn{
-  width:min(390px,100%);
-  padding:18px 25px;
-  border-radius:18px;
-  color:white;
-  font-size:22px;
+.start-btn{
+  border:0;
+  background:linear-gradient(135deg,#00d084,#00a66a);
+  color:#00140d;
+  font-size:20px;
   font-weight:900;
-  letter-spacing:1px;
-  background:linear-gradient(135deg,#00b7ff,#006cff);
-  box-shadow:0 8px 30px rgba(0,150,255,.35);
-  transition:.15s;
+  padding:17px 35px;
+  border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,208,132,.22);
 }
 
-.startBtn:active{
+.start-btn:active{
   transform:scale(.96);
 }
 
-.more{
-  margin-top:28px;
-  color:#aebbd0;
-}
-
-.more a{
-  display:inline-block;
-  margin:7px 4px;
-  padding:9px 13px;
-  border-radius:10px;
-  background:#131d2b;
-  color:#cfeaff;
-  text-decoration:none;
-  border:1px solid #27384e;
-  font-size:13px;
+.start-info{
+  margin-top:16px;
+  color:#aeb8ca;
+  line-height:1.7;
 }
 
 /* GAME */
-
-#gamePage{
+.game{
   display:none;
-  width:100%;
-  min-height:100vh;
-  background:#070a10;
+  margin-top:20px;
 }
 
-.gameHeader{
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:7px 10px;
-  background:#0b111b;
-  border-bottom:1px solid #202c3c;
-}
-
-.gameTitle{
-  font-weight:900;
-  color:#00c8ff;
-  font-size:17px;
-}
-
-.headerBtns{
-  display:flex;
-  gap:6px;
-}
-
-.smallBtn{
-  padding:9px 12px;
-  border-radius:9px;
-  color:white;
-  background:#172131;
-  border:1px solid #304055;
-  font-weight:bold;
-}
-
-#gameWrap{
+.gamebox{
   position:relative;
   width:100%;
-  height:min(72vh,650px);
-  min-height:430px;
-  background:#101725;
+  aspect-ratio:5 / 3;
+  min-height:420px;
   overflow:hidden;
+  background:#05070d;
+  border:1px solid #273148;
+  border-radius:22px;
+  box-shadow:0 20px 70px rgba(0,0,0,.5);
 }
 
 canvas{
+  display:block;
   width:100%;
   height:100%;
-  display:block;
   touch-action:none;
 }
 
 /* HUD */
-
 .hud{
   position:absolute;
-  left:10px;
-  right:10px;
-  top:10px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
+  top:12px;
+  left:12px;
+  right:12px;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
   pointer-events:none;
 }
 
-.hudBox{
-  min-width:0;
-  padding:8px 5px;
-  text-align:center;
-  background:rgba(5,9,15,.72);
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.stat{
+  background:rgba(4,7,13,.78);
   border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(8px);
+  padding:8px 11px;
+  border-radius:11px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.hud-buttons{
+  display:flex;
+  gap:7px;
+  pointer-events:auto;
+}
+
+.hud-btn{
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(4,7,13,.8);
+  color:white;
+  padding:9px 12px;
   border-radius:10px;
-  backdrop-filter:blur(5px);
+  font-weight:800;
+  cursor:pointer;
 }
 
-.hudLabel{
-  display:block;
-  font-size:9px;
-  color:#8fa1b9;
-  text-transform:uppercase;
-}
-
-.hudValue{
-  display:block;
-  margin-top:2px;
-  font-size:15px;
-  font-weight:900;
-}
-
-.fuelBar{
+/* FUEL */
+.fuel-wrap{
   position:absolute;
   top:72px;
-  right:10px;
-  width:130px;
-  height:12px;
-  background:#101721;
-  border:1px solid #425064;
+  left:12px;
+  width:150px;
+  z-index:10;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.12);
+  padding:6px;
+  border-radius:9px;
+}
+
+.fuel-label{
+  font-size:10px;
+  margin-bottom:4px;
+  color:#cbd5e1;
+}
+
+.fuel-bar{
+  width:100%;
+  height:7px;
+  background:#202735;
   border-radius:10px;
   overflow:hidden;
 }
@@ -284,181 +269,269 @@ canvas{
 #fuelFill{
   width:100%;
   height:100%;
-  background:linear-gradient(90deg,#ff3d55,#ffc400,#35e47b);
-  transition:width .15s;
+  background:#00d084;
 }
 
-.fuelText{
-  position:absolute;
-  top:87px;
-  right:10px;
-  font-size:10px;
-  color:#b8c5d6;
-}
-
-/* CONTROLS */
-
-.controls{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:14px;
-  display:flex;
-  justify-content:space-between;
-  padding:0 16px;
-  pointer-events:none;
-}
-
-.driveBtn{
-  pointer-events:auto;
-  width:125px;
-  height:65px;
-  border-radius:18px;
-  color:#fff;
-  font-size:14px;
-  font-weight:900;
-  background:rgba(9,16,27,.84);
-  border:2px solid #34455c;
-  box-shadow:0 8px 25px rgba(0,0,0,.4);
-  user-select:none;
-  touch-action:none;
-}
-
-.driveBtn:active{
-  background:#164568;
-  transform:scale(.96);
-}
-
-#pauseOverlay{
+/* GAME MESSAGE */
+.overlay{
   position:absolute;
   inset:0;
+  z-index:20;
   display:none;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,.65);
-  z-index:10;
-}
-
-.pauseBox{
   text-align:center;
-  padding:30px;
+  background:rgba(2,4,9,.72);
+  backdrop-filter:blur(5px);
+}
+
+.overlay-card{
+  width:min(400px,90%);
+  padding:25px;
+  background:#0d1220;
+  border:1px solid #2a354d;
   border-radius:20px;
-  background:#101824;
-  border:1px solid #33445c;
 }
 
-.pauseBox h2{
-  margin-bottom:15px;
+.overlay h2{
+  margin-bottom:10px;
+  font-size:30px;
 }
 
-.overlayBtn{
+.overlay p{
+  color:#aeb8ca;
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+.action-btn{
+  border:0;
+  background:#fff;
+  color:#071018;
   padding:13px 22px;
   border-radius:12px;
-  color:white;
-  background:#0878f9;
   font-weight:900;
+  cursor:pointer;
 }
 
-/* BOTTOM CONTENT */
-
-.content{
-  padding:28px 18px 50px;
-  max-width:900px;
-  margin:auto;
+/* CONTROLS */
+.controls{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  z-index:15;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  pointer-events:none;
 }
 
-.content section{
-  margin-bottom:30px;
+.control-btn{
+  width:125px;
+  height:70px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:18px;
+  background:rgba(5,8,14,.72);
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  backdrop-filter:blur(8px);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
 }
 
-.content h2{
-  color:#00c8ff;
+.control-btn:active{
+  transform:scale(.94);
+  background:rgba(255,255,255,.16);
+}
+
+.left-control{
+  color:#ffcf70;
+}
+
+.right-control{
+  color:#70e8ff;
+}
+
+/* ROTATE MESSAGE */
+.rotate-message{
+  display:none;
+  position:absolute;
+  inset:0;
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
+  background:#05070d;
+}
+
+.rotate-card{
+  max-width:360px;
+}
+
+.rotate-icon{
+  font-size:65px;
   margin-bottom:10px;
 }
 
-.content p,
-.content li{
-  color:#b8c4d4;
-  line-height:1.7;
-  font-size:15px;
+.rotate-card h2{
+  font-size:27px;
+  margin-bottom:8px;
 }
 
-.content ul{
-  padding-left:22px;
+.rotate-card p{
+  color:#aeb8ca;
+  line-height:1.6;
 }
 
-.infoGrid{
+/* CONTENT */
+.section{
+  margin-top:22px;
+  background:#0d1220;
+  border:1px solid #202b40;
+  border-radius:18px;
+  padding:22px;
+}
+
+.section h2{
+  margin-bottom:12px;
+}
+
+.section p,
+.section li{
+  color:#b9c2d2;
+  line-height:1.75;
+}
+
+.section ul{
+  padding-left:20px;
+}
+
+.more-games{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
   gap:10px;
+  margin-top:15px;
 }
 
-.info{
-  padding:14px;
-  border-radius:12px;
-  background:#101824;
-  border:1px solid #202e41;
-}
-
-.info b{
-  display:block;
+.more-games a{
+  text-decoration:none;
   color:#fff;
-  margin-bottom:4px;
-}
-
-.footer{
-  padding:25px;
+  background:#141c2c;
+  border:1px solid #29354b;
+  padding:13px;
+  border-radius:12px;
   text-align:center;
-  color:#75859a;
-  border-top:1px solid #1c2735;
+  font-weight:700;
 }
 
-@media(max-width:600px){
-  #gameWrap{
-    height:70vh;
-    min-height:420px;
+footer{
+  text-align:center;
+  padding:30px 10px;
+  color:#778197;
+}
+
+/* =========================
+   FULLSCREEN PLAY MODE
+========================= */
+
+body.play-mode{
+  overflow:hidden !important;
+  width:100%;
+  height:100%;
+}
+
+body.play-mode .page{
+  width:100%;
+  max-width:none;
+  padding:0;
+  margin:0;
+}
+
+body.play-mode .top,
+body.play-mode > .page > h1,
+body.play-mode > .page > .subtitle,
+body.play-mode > .page > .start,
+body.play-mode > .page > .section,
+body.play-mode > .page > footer{
+  display:none !important;
+}
+
+body.play-mode .game{
+  display:block !important;
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  margin:0;
+  z-index:9999;
+  background:#05070d;
+}
+
+body.play-mode .gamebox{
+  width:100vw;
+  height:100vh;
+  min-height:0;
+  aspect-ratio:auto;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+
+body.play-mode canvas{
+  width:100%;
+  height:100%;
+  object-fit:fill;
+}
+
+body.play-mode .controls{
+  bottom:25px;
+}
+
+body.play-mode .control-btn{
+  width:145px;
+  height:76px;
+}
+
+@media (orientation:portrait){
+  body.play-mode .rotate-message{
+    display:flex;
   }
 
-  .driveBtn{
-    width:115px;
-    height:60px;
-  }
-
-  .infoGrid{
-    grid-template-columns:1fr;
+  body.play-mode .controls,
+  body.play-mode .hud,
+  body.play-mode .fuel-wrap{
+    display:none;
   }
 }
 
-/* LANDSCAPE */
-
-@media(max-height:520px) and (orientation:landscape){
-  .gameHeader{
-    height:45px;
+@media(max-width:650px){
+  .page{
+    padding:10px;
   }
 
-  #gameWrap{
-    height:calc(100vh - 45px);
-    min-height:0;
+  .gamebox{
+    min-height:360px;
   }
 
-  .hud{
-    top:6px;
+  .control-btn{
+    width:105px;
+    height:62px;
+    font-size:13px;
   }
 
-  .fuelBar{
-    top:57px;
+  .stat{
+    font-size:11px;
+    padding:7px 8px;
   }
 
-  .fuelText{
-    top:72px;
-  }
-
-  .controls{
-    bottom:8px;
-  }
-
-  .driveBtn{
-    height:52px;
+  .hud-btn{
+    padding:7px 9px;
+    font-size:11px;
   }
 }
 </style>
@@ -466,454 +539,537 @@ canvas{
 
 <body>
 
-<!-- START SCREEN -->
+<div class="page">
 
-<div id="startScreen">
+  <div class="top">
+    <img src="logo.webp" class="logo" alt="GameWithFun Logo">
 
-  <div class="startBox">
+    <a href="https://gamewithfun.com/" class="home-btn">
+      🏠 Home
+    </a>
+  </div>
 
-    <img src="/logo.webp"
-         class="logo"
-         alt="GameWithFun">
+  <h1>🌑 Shadow Hill Climb</h1>
 
-    <h1>SHADOW <span>HILL CLIMB</span></h1>
+  <div class="subtitle">
+    Manual Hill Climb Racing • Drive • Balance • Survive
+  </div>
 
-    <p class="subtitle">
-      Drive through dangerous hills, collect coins and reach the checkpoints.
-    </p>
+  <!-- START -->
+  <section class="start" id="startScreen">
 
-    <div class="carPreview">
-      <div class="previewCar">
-        <div class="wheel left"></div>
-        <div class="wheel right"></div>
+    <div class="car-preview">
+      <div class="preview-car">
+        <div class="preview-wheel one"></div>
+        <div class="preview-wheel two"></div>
       </div>
     </div>
 
-    <button type="button" id="startBtn" class="startBtn">
+    <button class="start-btn" id="startBtn">
       ▶ START THE GAME
     </button>
 
-    <div class="more">
-      <strong>More Games from GameWithFun</strong><br>
-
-      <a href="/">Home</a>
-      <a href="/p/pipe-script.html">Pipe Script</a>
-      <a href="/p/flag-guess.html">Flag Guess</a>
-      <a href="/p/sliding-puzzle.html">Sliding Puzzle</a>
-      <a href="/p/fruit-frenzy.html">Fruit Frenzy</a>
+    <div class="start-info">
+      <b>Manual Driving Mode</b><br>
+      No automatic driving. You control the vehicle yourself.<br>
+      Press START and play in fullscreen landscape mode.
     </div>
 
-  </div>
+  </section>
 
-</div>
+  <!-- GAME -->
+  <section class="game" id="game">
 
+    <div class="gamebox">
 
-<!-- GAME PAGE -->
+      <canvas id="gameCanvas" width="1000" height="600"></canvas>
 
-<div id="gamePage">
+      <!-- HUD -->
+      <div class="hud">
 
-  <div class="gameHeader">
+        <div class="stats">
+          <div class="stat">🪙 <span id="coinUI">0</span></div>
+          <div class="stat">📏 <span id="distanceUI">0</span>m</div>
+          <div class="stat">⚡ <span id="speedUI">0</span></div>
+          <div class="stat">🏆 <span id="bestUI">0</span></div>
+        </div>
 
-    <div class="gameTitle">
-      🌑 Shadow Hill Climb
-    </div>
+        <div class="hud-buttons">
+          <button class="hud-btn" id="pauseBtn">Ⅱ</button>
+          <button class="hud-btn" id="exitBtn">⛶</button>
+        </div>
 
-    <div class="headerBtns">
-      <button type="button" id="pauseBtn" class="smallBtn">
-        ⏸
-      </button>
-
-      <button type="button" id="exitBtn" class="smallBtn">
-        BACK
-      </button>
-    </div>
-
-  </div>
-
-
-  <div id="gameWrap">
-
-    <canvas id="gameCanvas"></canvas>
-
-    <div class="hud">
-
-      <div class="hudBox">
-        <span class="hudLabel">Distance</span>
-        <span class="hudValue" id="distance">0 m</span>
       </div>
 
-      <div class="hudBox">
-        <span class="hudLabel">Coins</span>
-        <span class="hudValue" id="coins">0</span>
+      <!-- FUEL -->
+      <div class="fuel-wrap">
+        <div class="fuel-label">FUEL</div>
+        <div class="fuel-bar">
+          <div id="fuelFill"></div>
+        </div>
       </div>
 
-      <div class="hudBox">
-        <span class="hudLabel">Speed</span>
-        <span class="hudValue" id="speed">0</span>
+      <!-- GAME MESSAGE -->
+      <div class="overlay" id="overlay">
+
+        <div class="overlay-card">
+
+          <h2 id="overlayTitle">Game Over</h2>
+
+          <p id="overlayText">
+            Your journey has ended.
+          </p>
+
+          <button class="action-btn" id="restartBtn">
+            🔄 PLAY AGAIN
+          </button>
+
+        </div>
+
       </div>
 
-      <div class="hudBox">
-        <span class="hudLabel">Best</span>
-        <span class="hudValue" id="best">0 m</span>
+      <!-- ROTATE -->
+      <div class="rotate-message">
+
+        <div class="rotate-card">
+
+          <div class="rotate-icon">📱↻</div>
+
+          <h2>Rotate Your Phone</h2>
+
+          <p>
+            Please turn your phone sideways to play
+            Shadow Hill Climb in landscape mode.
+          </p>
+
+        </div>
+
       </div>
 
-    </div>
+      <!-- CONTROLS -->
+      <div class="controls">
 
-    <div class="fuelBar">
-      <div id="fuelFill"></div>
-    </div>
+        <button
+          class="control-btn left-control"
+          id="leftBtn">
+          ◀ BRAKE<br>
+          <small>REVERSE</small>
+        </button>
 
-    <div class="fuelText">
-      FUEL
-    </div>
-
-
-    <div class="controls">
-
-      <button type="button"
-              id="leftBtn"
-              class="driveBtn">
-        ◀ BRAKE
-      </button>
-
-      <button type="button"
-              id="rightBtn"
-              class="driveBtn">
-        GAS ▶
-      </button>
-
-    </div>
-
-
-    <div id="pauseOverlay">
-
-      <div class="pauseBox">
-
-        <h2>GAME PAUSED</h2>
-
-        <button type="button"
-                id="resumeBtn"
-                class="overlayBtn">
-          ▶ RESUME
+        <button
+          class="control-btn right-control"
+          id="rightBtn">
+          GAS ▶
         </button>
 
       </div>
 
     </div>
 
-  </div>
+  </section>
 
+  <!-- MORE GAMES -->
+  <section class="section">
 
-  <div class="content">
+    <h2>🎮 More Games from GameWithFun</h2>
 
-    <section>
-      <h2>Shadow Hill Climb</h2>
+    <p>
+      Finished Shadow Hill Climb? Try more free browser games
+      from GameWithFun.
+    </p>
 
-      <p>
-        Shadow Hill Climb is a browser-based hill racing game from
-        GameWithFun. Drive across changing hills, control your speed,
-        collect coins, save fuel and continue your journey as far as
-        possible.
-      </p>
-    </section>
+    <div class="more-games">
 
+      <a href="/p/pipe-script.html">🧩 Pipe Script</a>
+      <a href="/p/flag-guess.html">🌍 Flag Guess</a>
+      <a href="/p/sliding-puzzle.html">🔢 Sliding Puzzle</a>
+      <a href="/p/fruit-frenzy.html">🍉 Fruit Frenzy</a>
+      <a href="/p/shadow-strike.html">🌑 Shadow Strike</a>
 
-    <section>
+    </div>
 
-      <h2>How to Play</h2>
+  </section>
 
-      <ul>
-        <li>Press START THE GAME to begin.</li>
-        <li>Use GAS to accelerate the vehicle.</li>
-        <li>Use BRAKE to slow down or reverse.</li>
-        <li>Collect coins while driving.</li>
-        <li>Collect fuel to keep your journey going.</li>
-        <li>Keep the vehicle balanced on steep hills.</li>
-        <li>Reach checkpoints and try to beat your best distance.</li>
-      </ul>
+  <!-- HOW TO PLAY -->
+  <section class="section">
 
-    </section>
+    <h2>🎮 How to Play Shadow Hill Climb</h2>
 
+    <p>
+      Shadow Hill Climb is a manual hill-climbing driving game.
+      Unlike an automatic runner, your vehicle does not move
+      forward by itself. You must control the vehicle and decide
+      when to accelerate, brake and reverse.
+    </p>
 
-    <section>
+    <br>
 
-      <h2>Mobile Controls</h2>
+    <ul>
+      <li>Tap <b>GAS ▶</b> to accelerate forward.</li>
+      <li>Tap <b>◀ BRAKE / REVERSE</b> to slow down or move backward.</li>
+      <li>When the vehicle becomes airborne, the controls help balance it.</li>
+      <li>Collect coins to increase your score.</li>
+      <li>Collect fuel to continue your journey.</li>
+      <li>Travel as far as possible and beat your best distance.</li>
+    </ul>
 
-      <p>
-        On mobile devices, hold the GAS button to move forward.
-        Use BRAKE when approaching steep slopes or when you need
-        to slow the vehicle.
-      </p>
+  </section>
 
-    </section>
+  <!-- CONTROLS -->
+  <section class="section">
 
+    <h2>🕹️ Controls</h2>
 
-    <section>
+    <p>
+      <b>Mobile:</b> Use the two large buttons shown on the screen.
+    </p>
 
-      <h2>Desktop Controls</h2>
+    <p>
+      <b>Desktop:</b>
+    </p>
 
-      <p>
-        Use the keyboard Arrow Right or D key for GAS.
-        Use Arrow Left or A key for BRAKE and reverse.
-        Press P or the pause button to pause the game.
-      </p>
+    <ul>
+      <li>➡ Arrow Right / D = Gas</li>
+      <li>⬅ Arrow Left / A = Brake / Reverse</li>
+      <li>Space = Pause</li>
+    </ul>
 
-    </section>
+  </section>
 
+  <!-- ABOUT -->
+  <section class="section">
 
-    <section>
+    <h2>🌑 About Shadow Hill Climb</h2>
 
-      <h2>Game Features</h2>
+    <p>
+      Shadow Hill Climb is a browser-based driving game created
+      for GameWithFun. The game uses a dark shadow-inspired
+      visual style combined with procedural hills, coins, fuel
+      pickups and simple physics.
+    </p>
 
-      <ul>
-        <li>Responsive browser gameplay</li>
-        <li>Procedural hill terrain</li>
-        <li>Coins and fuel pickups</li>
-        <li>Distance and speed tracking</li>
-        <li>Best score system</li>
-        <li>Crash detection</li>
-        <li>Mobile touch controls</li>
-        <li>Keyboard controls</li>
-        <li>Pause and restart support</li>
-        <li>No external game library required</li>
-      </ul>
+    <br>
 
-    </section>
+    <p>
+      The main goal is to travel across the hills while keeping
+      control of your vehicle. The terrain changes throughout the
+      journey, so players need to manage their speed carefully.
+    </p>
 
+  </section>
 
-    <section>
+  <!-- FAQ -->
+  <section class="section">
 
-      <h2>About This Game</h2>
+    <h2>❓ Frequently Asked Questions</h2>
 
-      <p>
-        Shadow Hill Climb is designed as a lightweight HTML5 browser
-        game that can be played on modern phones, tablets and desktop
-        browsers. The game uses canvas rendering and JavaScript to
-        create the vehicle, terrain, collectibles and gameplay systems.
-      </p>
+    <h3>Is the car automatic?</h3>
+    <p>
+      No. Shadow Hill Climb uses manual driving. The vehicle will
+      not continuously accelerate by itself.
+    </p>
 
-    </section>
+    <br>
 
+    <h3>Can I play on mobile?</h3>
+    <p>
+      Yes. The game includes large touch controls designed for
+      mobile devices.
+    </p>
 
-    <section>
+    <br>
 
-      <h2>FAQ</h2>
+    <h3>Does the game use fullscreen?</h3>
+    <p>
+      When you press START, the game requests fullscreen and
+      landscape orientation where the browser supports those
+      features.
+    </p>
 
-      <p>
-        <strong>Is Shadow Hill Climb free?</strong><br>
-        Yes. The game is designed to be playable directly in your browser.
-      </p>
+    <br>
 
-      <br>
+    <h3>What happens if landscape lock is not supported?</h3>
+    <p>
+      The game displays a rotate-your-phone message so you can
+      manually turn the device sideways.
+    </p>
 
-      <p>
-        <strong>Do I need to install an app?</strong><br>
-        No installation is required for browser gameplay.
-      </p>
+  </section>
 
-      <br>
+  <!-- GAME INFORMATION -->
+  <section class="section">
 
-      <p>
-        <strong>Can I play on mobile?</strong><br>
-        Yes. Touch controls are included for mobile devices.
-      </p>
+    <h2>ℹ️ Game Information</h2>
 
-      <br>
+    <ul>
+      <li><b>Game:</b> Shadow Hill Climb</li>
+      <li><b>Developer:</b> GameWithFun</li>
+      <li><b>Category:</b> Racing / Adventure</li>
+      <li><b>Mode:</b> Manual Driving</li>
+      <li><b>Platform:</b> Mobile & Desktop Browser</li>
+      <li><b>Levels:</b> Endless</li>
+      <li><b>Controls:</b> Touch / Keyboard</li>
+    </ul>
 
-      <p>
-        <strong>How do I get a higher score?</strong><br>
-        Travel farther, collect coins and manage your fuel carefully.
-      </p>
+  </section>
 
-    </section>
+  <!-- SEO -->
+  <section class="section">
 
+    <h2>Shadow Hill Climb – Free Online Hill Racing Game</h2>
 
-    <section>
+    <p>
+      Shadow Hill Climb is a free online browser racing game from
+      GameWithFun where players drive a shadow-style vehicle across
+      challenging hills. The game focuses on manual control rather
+      than automatic movement, giving players direct control over
+      acceleration, braking and reversing.
+    </p>
 
-      <h2>Game Information</h2>
+    <br>
 
-      <div class="infoGrid">
+    <p>
+      The landscape is designed around rolling hills and changing
+      terrain. Players must carefully manage their speed while
+      driving across slopes. Coins are placed throughout the world
+      and can be collected during the journey. Fuel pickups also
+      appear along the route and help the player continue playing.
+    </p>
 
-        <div class="info">
-          <b>Developer</b>
-          GameWithFun
-        </div>
+    <br>
 
-        <div class="info">
-          <b>Game Type</b>
-          Racing / Driving
-        </div>
+    <p>
+      Shadow Hill Climb is designed for both mobile and desktop
+      browsers. On mobile devices, the game provides large touch
+      controls. On desktop computers, players can use the keyboard.
+      The game also attempts to switch into fullscreen landscape
+      mode when the player starts the game, creating a larger
+      gameplay area.
+    </p>
 
-        <div class="info">
-          <b>Platform</b>
-          Web Browser
-        </div>
+    <br>
 
-        <div class="info">
-          <b>Controls</b>
-          Touch & Keyboard
-        </div>
+    <p>
+      The objective is simple: drive as far as possible, collect
+      coins, manage fuel and keep the vehicle under control. Since
+      the vehicle does not automatically drive forward, every
+      movement is controlled by the player. This makes speed
+      management an important part of the gameplay.
+    </p>
 
-        <div class="info">
-          <b>Game Mode</b>
-          Endless Hill Climb
-        </div>
+  </section>
 
-        <div class="info">
-          <b>Latest Update</b>
-          October 2026
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section>
-
-      <h2>Play More Games</h2>
-
-      <p>
-        Explore more free browser games from GameWithFun including
-        puzzle, racing, arcade, quiz and casual games.
-      </p>
-
-    </section>
-
-  </div>
-
-
-  <div class="footer">
+  <footer>
     © 2026 GameWithFun · Shadow Hill Climb
-  </div>
+  </footer>
 
 </div>
-
 
 <script>
 "use strict";
 
 /* =========================
-   BASIC SETUP
+   ELEMENTS
 ========================= */
 
-var startScreen = document.getElementById("startScreen");
-var gamePage = document.getElementById("gamePage");
-var startBtn = document.getElementById("startBtn");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-var canvas = document.getElementById("gameCanvas");
-var ctx = canvas.getContext("2d");
+const startScreen = document.getElementById("startScreen");
+const game = document.getElementById("game");
 
-var distanceEl = document.getElementById("distance");
-var coinsEl = document.getElementById("coins");
-var speedEl = document.getElementById("speed");
-var bestEl = document.getElementById("best");
-var fuelFill = document.getElementById("fuelFill");
+const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const exitBtn = document.getElementById("exitBtn");
 
-var pauseBtn = document.getElementById("pauseBtn");
-var resumeBtn = document.getElementById("resumeBtn");
-var exitBtn = document.getElementById("exitBtn");
-var pauseOverlay = document.getElementById("pauseOverlay");
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
 
-var leftBtn = document.getElementById("leftBtn");
-var rightBtn = document.getElementById("rightBtn");
+const overlay = document.getElementById("overlay");
+const overlayTitle = document.getElementById("overlayTitle");
+const overlayText = document.getElementById("overlayText");
+
+const coinUI = document.getElementById("coinUI");
+const distanceUI = document.getElementById("distanceUI");
+const speedUI = document.getElementById("speedUI");
+const bestUI = document.getElementById("bestUI");
+const fuelFill = document.getElementById("fuelFill");
 
 
 /* =========================
-   GAME VARIABLES
+   CANVAS
 ========================= */
 
-var running = false;
-var paused = false;
-var gameOver = false;
+const W = 1000;
+const H = 600;
 
-var lastTime = 0;
 
-var worldX = 0;
-var speed = 0;
+/* =========================
+   GAME STATE
+========================= */
 
-var coins = 0;
-var distance = 0;
+let running = false;
+let paused = false;
+let gameOver = false;
 
-var fuel = 100;
+let lastTime = 0;
+let animationId = 0;
 
-var bestDistance = Number(localStorage.getItem("shadowHillBest") || 0);
+let coins = 0;
+let distance = 0;
+let fuel = 100;
 
-var gasPressed = false;
-var brakePressed = false;
+let best = Number(localStorage.getItem("shadowHillBest") || 0);
 
-var car = {
-  x:120,
-  y:0,
-  vx:0,
-  vy:0,
-  angle:0,
-  angularVelocity:0,
-  wheelSpin:0
+
+/* =========================
+   INPUT
+========================= */
+
+let leftPressed = false;
+let rightPressed = false;
+
+
+/* =========================
+   WORLD
+========================= */
+
+const STEP = 60;
+
+let terrain = [];
+let coinList = [];
+let fuelList = [];
+
+let worldLength = 22000;
+
+let cameraX = 0;
+
+
+/* =========================
+   CAR
+========================= */
+
+const car = {
+  x: 120,
+  y: 0,
+
+  vx: 0,
+  vy: 0,
+
+  angle: 0,
+  rotationVelocity: 0,
+
+  grounded: true,
+
+  wheelRotation: 0
 };
 
-var terrain = [];
-var pickups = [];
-
-var cameraX = 0;
-
 
 /* =========================
-   RESIZE
+   TERRAIN GENERATION
 ========================= */
 
-function resizeCanvas(){
-
-  var rect = canvas.getBoundingClientRect();
-
-  canvas.width = Math.max(320, Math.floor(rect.width));
-  canvas.height = Math.max(300, Math.floor(rect.height));
-
-}
-
-window.addEventListener("resize",resizeCanvas);
-
-
-/* =========================
-   TERRAIN
-========================= */
-
-function terrainHeight(x){
-
-  var h = canvas.height * .68;
-
-  h += Math.sin(x * .0035) * 45;
-  h += Math.sin(x * .0075) * 24;
-  h += Math.sin(x * .015) * 12;
-
-  return h;
-}
-
-
-function buildTerrain(){
+function generateWorld(){
 
   terrain = [];
+  coinList = [];
+  fuelList = [];
 
-  var step = 25;
+  let y = 420;
 
-  for(var x=0;x<6000;x+=step){
+  for(let x = 0; x <= worldLength; x += STEP){
+
+    if(x < 500){
+
+      y = 420;
+
+    }else{
+
+      const wave =
+        Math.sin(x * 0.008) * 65 +
+        Math.sin(x * 0.017) * 30 +
+        Math.sin(x * 0.0035) * 85;
+
+      y = 420 + wave;
+
+      y = Math.max(260,Math.min(505,y));
+    }
 
     terrain.push({
       x:x,
-      y:terrainHeight(x)
+      y:y
     });
-
   }
 
+
+  /* Coins */
+
+  for(let x = 700; x < worldLength; x += 360){
+
+    const gy = getGround(x);
+
+    coinList.push({
+      x:x,
+      y:gy - 65,
+      collected:false,
+      spin:Math.random()*Math.PI*2
+    });
+  }
+
+
+  /* Fuel */
+
+  for(let x = 1500; x < worldLength; x += 2100){
+
+    const gy = getGround(x);
+
+    fuelList.push({
+      x:x,
+      y:gy - 70,
+      collected:false
+    });
+  }
 }
 
 
-function getGroundY(x){
+/* =========================
+   GROUND
+========================= */
 
-  var y = terrainHeight(x);
+function getGround(x){
 
-  return y;
+  if(x <= 0){
+    return terrain[0].y;
+  }
 
+  if(x >= worldLength){
+    return terrain[terrain.length-1].y;
+  }
+
+  const index = Math.floor(x / STEP);
+
+  const a = terrain[index];
+  const b = terrain[index + 1];
+
+  if(!a || !b){
+    return 420;
+  }
+
+  const t = (x - a.x) / STEP;
+
+  return a.y + (b.y - a.y) * t;
+}
+
+
+function getSlope(x){
+
+  const d = 5;
+
+  return Math.atan2(
+    getGround(x + d) - getGround(x - d),
+    d * 2
+  );
 }
 
 
@@ -923,709 +1079,537 @@ function getGroundY(x){
 
 function resetGame(){
 
-  resizeCanvas();
-
-  buildTerrain();
-
-  worldX = 0;
-  speed = 0;
+  generateWorld();
 
   coins = 0;
   distance = 0;
   fuel = 100;
 
+  cameraX = 0;
+
+  car.x = 120;
+  car.y = getGround(car.x) - 52;
+
+  car.vx = 0;
+  car.vy = 0;
+
+  car.angle = getSlope(car.x);
+  car.rotationVelocity = 0;
+
+  car.grounded = true;
+  car.wheelRotation = 0;
+
   gameOver = false;
   paused = false;
 
-  gasPressed = false;
-  brakePressed = false;
+  overlay.style.display = "none";
 
-  car.x = 120;
-  car.y = getGroundY(car.x) - 38;
-  car.vx = 0;
-  car.vy = 0;
-  car.angle = 0;
-  car.angularVelocity = 0;
-  car.wheelSpin = 0;
-
-  cameraX = 0;
-
-  createPickups();
-
-  updateHUD();
-
+  updateUI();
 }
 
 
 /* =========================
-   PICKUPS
-========================= */
-
-function createPickups(){
-
-  pickups = [];
-
-  for(var x=450;x<6000;x+=300 + Math.random()*260){
-
-    pickups.push({
-      x:x,
-      y:getGroundY(x)-75,
-      type:Math.random() < .8 ? "coin" : "fuel",
-      collected:false,
-      spin:Math.random()*Math.PI*2
-    });
-
-  }
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-startBtn.onclick = function(){
-
-  startScreen.style.display = "none";
-  gamePage.style.display = "block";
-
-  resetGame();
-
-  running = true;
-  paused = false;
-
-  pauseOverlay.style.display = "none";
-
-  lastTime = performance.now();
-
-  requestAnimationFrame(gameLoop);
-
-};
-
-
-/* =========================
-   PAUSE
-========================= */
-
-function togglePause(){
-
-  if(!running || gameOver) return;
-
-  paused = !paused;
-
-  pauseOverlay.style.display = paused ? "flex" : "none";
-
-  if(!paused){
-
-    lastTime = performance.now();
-
-  }
-
-}
-
-pauseBtn.onclick = togglePause;
-resumeBtn.onclick = togglePause;
-
-
-/* =========================
-   EXIT
-========================= */
-
-exitBtn.onclick = function(){
-
-  running = false;
-
-  gamePage.style.display = "none";
-  startScreen.style.display = "flex";
-
-};
-
-
-/* =========================
-   INPUT
-========================= */
-
-function setGas(value){
-  gasPressed = value;
-}
-
-function setBrake(value){
-  brakePressed = value;
-}
-
-
-/* Mobile GAS */
-
-rightBtn.addEventListener("pointerdown",function(e){
-  e.preventDefault();
-  setGas(true);
-});
-
-rightBtn.addEventListener("pointerup",function(e){
-  e.preventDefault();
-  setGas(false);
-});
-
-rightBtn.addEventListener("pointercancel",function(){
-  setGas(false);
-});
-
-rightBtn.addEventListener("pointerleave",function(){
-  setGas(false);
-});
-
-
-/* Mobile BRAKE */
-
-leftBtn.addEventListener("pointerdown",function(e){
-  e.preventDefault();
-  setBrake(true);
-});
-
-leftBtn.addEventListener("pointerup",function(e){
-  e.preventDefault();
-  setBrake(false);
-});
-
-leftBtn.addEventListener("pointercancel",function(){
-  setBrake(false);
-});
-
-leftBtn.addEventListener("pointerleave",function(){
-  setBrake(false);
-});
-
-
-/* Keyboard */
-
-window.addEventListener("keydown",function(e){
-
-  if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
-    gasPressed = true;
-  }
-
-  if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
-    brakePressed = true;
-  }
-
-  if(e.key.toLowerCase() === "p"){
-    togglePause();
-  }
-
-});
-
-
-window.addEventListener("keyup",function(e){
-
-  if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
-    gasPressed = false;
-  }
-
-  if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
-    brakePressed = false;
-  }
-
-});
-
-
-/* =========================
-   PHYSICS
+   MANUAL PHYSICS
 ========================= */
 
 function update(dt){
 
-  if(gameOver) return;
+  const step = Math.min(dt / 16.67, 2);
 
-  var gravity = 850;
+  /*
+    IMPORTANT:
+    THERE IS NO AUTOMATIC ACCELERATION HERE.
+  */
 
-  var acceleration = 0;
+  if(car.grounded){
 
-  if(gasPressed){
-    acceleration += 470;
-    fuel -= dt * 1.7;
-  }
+    /* GAS */
+    if(rightPressed){
 
-  if(brakePressed){
-    acceleration -= 600;
-  }
+      car.vx += 0.115 * step;
 
-  /* friction */
+    }
 
-  acceleration -= speed * 1.8;
+    /* BRAKE / REVERSE */
+    if(leftPressed){
 
-  speed += acceleration * dt;
+      car.vx -= 0.085 * step;
 
-  if(speed < -90) speed = -90;
-  if(speed > 390) speed = 390;
+    }
 
-  /* fuel drain */
+    /* Natural friction */
 
-  if(Math.abs(speed)>20){
-    fuel -= dt * .18;
-  }
+    if(!leftPressed && !rightPressed){
 
-  if(fuel <= 0){
+      car.vx *= Math.pow(0.982,step);
 
-    fuel = 0;
+    }
 
-    speed *= .985;
+    /* Speed limit */
 
-  }
-
-
-  /* movement */
-
-  worldX += speed * dt;
-
-  if(worldX < 0){
-    worldX = 0;
-    speed = 0;
-  }
-
-
-  /* car position */
-
-  car.x = 120 + worldX * .45;
-
-  var ground = getGroundY(car.x);
-
-  car.vy += gravity * dt;
-
-  car.y += car.vy * dt;
-
-  var targetY = ground - 38;
-
-  if(car.y >= targetY){
-
-    car.y = targetY;
-
-    car.vy = 0;
-
-    /* terrain slope */
-
-    var slope =
-      getGroundY(car.x + 8) -
-      getGroundY(car.x - 8);
-
-    var targetAngle = Math.atan2(slope,16);
-
-    car.angle +=
-      (targetAngle - car.angle) * Math.min(1,dt*8);
+    car.vx = Math.max(-3.2,Math.min(8.0,car.vx));
 
   }else{
 
-    car.angle += car.angularVelocity * dt;
+    /*
+      While airborne:
+      left/right balance the vehicle.
+    */
+
+    if(leftPressed){
+
+      car.rotationVelocity -= 0.018 * step;
+
+    }
+
+    if(rightPressed){
+
+      car.rotationVelocity += 0.018 * step;
+
+    }
+
+    car.angle += car.rotationVelocity * step;
+
+    car.rotationVelocity *= Math.pow(0.97,step);
+  }
+
+
+  /* Gravity */
+
+  car.vy += 0.36 * step;
+
+  car.x += car.vx * step;
+  car.y += car.vy * step;
+
+
+  /* Ground collision */
+
+  const ground = getGround(car.x);
+
+  const carBottom = car.y + 34;
+
+  if(carBottom >= ground){
+
+    car.y = ground - 34;
+
+    car.vy = 0;
+
+    car.grounded = true;
+
+    const targetAngle = getSlope(car.x);
+
+    let angleDiff = targetAngle - car.angle;
+
+    while(angleDiff > Math.PI){
+      angleDiff -= Math.PI * 2;
+    }
+
+    while(angleDiff < -Math.PI){
+      angleDiff += Math.PI * 2;
+    }
+
+    car.angle += angleDiff * 0.18 * step;
+
+    car.rotationVelocity *= 0.75;
+
+  }else{
+
+    car.grounded = false;
 
   }
 
 
-  car.wheelSpin += speed * dt * .08;
+  /* Wheel animation */
+
+  car.wheelRotation += car.vx * 0.12 * step;
 
 
-  /* camera */
+  /* Camera */
 
-  cameraX = worldX - 80;
+  cameraX += ((car.x - 280) - cameraX) * 0.08 * step;
 
-  if(cameraX < 0) cameraX = 0;
-
-
-  /* distance */
-
-  distance = Math.max(0,Math.floor(worldX/10));
+  cameraX = Math.max(0,Math.min(worldLength - W,cameraX));
 
 
-  /* pickups */
+  /* Distance */
 
-  for(var i=0;i<pickups.length;i++){
+  distance = Math.max(
+    distance,
+    Math.floor(Math.max(0,car.x - 120) / 10)
+  );
 
-    var p = pickups[i];
 
-    if(p.collected) continue;
+  /* Fuel */
 
-    var dx = p.x - car.x;
-    var dy = p.y - car.y;
+  if(Math.abs(car.vx) > 0.15){
 
-    if(Math.abs(dx)<38 && Math.abs(dy)<55){
+    fuel -= (0.006 + Math.abs(car.vx) * 0.0018) * step;
 
-      p.collected = true;
+  }
 
-      if(p.type === "coin"){
+  fuel = Math.max(0,fuel);
 
-        coins++;
 
-      }else{
+  /* Coins */
 
-        fuel = Math.min(100,fuel+30);
+  for(const coin of coinList){
 
-      }
+    if(coin.collected) continue;
+
+    const dx = coin.x - car.x;
+    const dy = coin.y - car.y;
+
+    if(Math.hypot(dx,dy) < 55){
+
+      coin.collected = true;
+      coins++;
 
     }
 
   }
 
 
-  /* crash detection */
+  /* Fuel pickups */
 
-  if(car.y > ground + 20){
+  for(const item of fuelList){
 
-    endGame();
+    if(item.collected) continue;
 
-  }
+    const dx = item.x - car.x;
+    const dy = item.y - car.y;
 
+    if(Math.hypot(dx,dy) < 60){
 
-  /* rollover protection */
+      item.collected = true;
 
-  if(Math.abs(car.angle) > Math.PI*.58){
-
-    endGame();
-
-  }
-
-
-  /* best */
-
-  if(distance > bestDistance){
-
-    bestDistance = distance;
-
-    localStorage.setItem(
-      "shadowHillBest",
-      bestDistance
-    );
-
-  }
-
-
-  updateHUD();
-
-}
-
-
-/* =========================
-   END GAME
-========================= */
-
-function endGame(){
-
-  if(gameOver) return;
-
-  gameOver = true;
-  running = false;
-
-  setTimeout(function(){
-
-    var again = confirm(
-      "GAME OVER!\n\nDistance: " +
-      distance +
-      " m\nCoins: " +
-      coins +
-      "\n\nPlay again?"
-    );
-
-    if(again){
-
-      gamePage.style.display = "none";
-      startScreen.style.display = "flex";
-
-    }else{
-
-      gamePage.style.display = "none";
-      startScreen.style.display = "flex";
+      fuel = Math.min(100,fuel + 35);
 
     }
 
-  },300);
+  }
 
+
+  /* End */
+
+  if(fuel <= 0){
+
+    endGame("Out of Fuel","You ran out of fuel.");
+
+  }
+
+
+  if(car.x > worldLength - 100){
+
+    endGame("Journey Complete","You reached the end of the hill!");
+
+  }
+
+
+  if(car.y > H + 150){
+
+    endGame("Vehicle Lost","Try controlling your speed more carefully.");
+
+  }
+
+
+  updateUI();
 }
 
 
 /* =========================
-   HUD
+   DRAW BACKGROUND
 ========================= */
 
-function updateHUD(){
+function drawBackground(){
 
-  distanceEl.textContent =
-    Math.floor(distance) + " m";
+  const sky = ctx.createLinearGradient(0,0,0,H);
 
-  coinsEl.textContent =
-    coins;
+  sky.addColorStop(0,"#070b19");
+  sky.addColorStop(.55,"#111a2c");
+  sky.addColorStop(1,"#05070d");
 
-  speedEl.textContent =
-    Math.max(0,Math.floor(Math.abs(speed)));
-
-  bestEl.textContent =
-    Math.floor(bestDistance) + " m";
-
-  fuelFill.style.width =
-    Math.max(0,Math.min(100,fuel)) + "%";
-
-}
+  ctx.fillStyle = sky;
+  ctx.fillRect(0,0,W,H);
 
 
-/* =========================
-   DRAW SKY
-========================= */
-
-function drawSky(){
-
-  var w = canvas.width;
-  var h = canvas.height;
-
-  var gradient =
-    ctx.createLinearGradient(0,0,0,h);
-
-  gradient.addColorStop(0,"#08101e");
-  gradient.addColorStop(.5,"#17243a");
-  gradient.addColorStop(1,"#26364a");
-
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0,0,w,h);
-
-
-  /* moon */
+  /* Moon */
 
   ctx.beginPath();
 
   ctx.arc(
-    w*.78,
-    h*.18,
-    45,
+    820,
+    105,
+    52,
     0,
-    Math.PI*2
+    Math.PI * 2
   );
 
-  ctx.fillStyle = "rgba(230,245,255,.8)";
+  ctx.fillStyle = "rgba(235,242,255,.9)";
   ctx.fill();
 
 
-  /* stars */
+  /* Moon shadow */
 
-  ctx.fillStyle = "rgba(255,255,255,.7)";
+  ctx.beginPath();
 
-  for(var i=0;i<50;i++){
+  ctx.arc(
+    842,
+    92,
+    48,
+    0,
+    Math.PI * 2
+  );
 
-    var sx =
-      (i*83)%w;
+  ctx.fillStyle = "#10182b";
+  ctx.fill();
 
-    var sy =
-      20 + (i*37)%(h*.35);
 
-    ctx.fillRect(sx,sy,2,2);
+  /* Stars */
+
+  for(let i=0;i<80;i++){
+
+    const x = (i * 137) % W;
+    const y = (i * 71) % 260;
+
+    ctx.fillStyle =
+      i % 3 === 0
+      ? "rgba(255,255,255,.8)"
+      : "rgba(255,255,255,.35)";
+
+    ctx.fillRect(x,y,2,2);
 
   }
 
+
+  /* Mountains */
+
+  drawMountain(
+    380,
+    360,
+    210,
+    150
+  );
+
+  drawMountain(
+    720,
+    330,
+    280,
+    190
+  );
+
+  drawMountain(
+    1100,
+    350,
+    250,
+    170
+  );
+}
+
+
+function drawMountain(cx,base,w,h){
+
+  ctx.beginPath();
+
+  ctx.moveTo(cx-w,base);
+
+  ctx.lineTo(cx,base-h);
+
+  ctx.lineTo(cx+w,base);
+
+  ctx.closePath();
+
+  ctx.fillStyle="#0a1020";
+  ctx.fill();
 }
 
 
 /* =========================
-   DRAW MOUNTAINS
+   DRAW TERRAIN
 ========================= */
 
-function drawMountains(){
-
-  var w = canvas.width;
-  var h = canvas.height;
-
-  ctx.fillStyle = "#101827";
+function drawTerrain(){
 
   ctx.beginPath();
 
-  ctx.moveTo(0,h*.63);
+  ctx.moveTo(0,H);
 
-  for(var x=0;x<=w;x+=45){
+  for(let sx=0;sx<=W;sx+=10){
 
-    var y =
-      h*.47 +
-      Math.sin((x+cameraX*.15)*.012)*45 +
-      Math.sin((x+cameraX*.15)*.026)*18;
+    const wx = cameraX + sx;
 
-    ctx.lineTo(x,y);
+    ctx.lineTo(
+      sx,
+      getGround(wx)
+    );
 
   }
 
-  ctx.lineTo(w,h);
-  ctx.lineTo(0,h);
-
+  ctx.lineTo(W,H);
   ctx.closePath();
+
+  const groundGrad =
+    ctx.createLinearGradient(0,300,0,H);
+
+  groundGrad.addColorStop(0,"#1a222c");
+  groundGrad.addColorStop(.4,"#10151d");
+  groundGrad.addColorStop(1,"#05070b");
+
+  ctx.fillStyle=groundGrad;
   ctx.fill();
 
 
-  ctx.fillStyle = "#0b121e";
+  /* Ground top line */
 
   ctx.beginPath();
 
-  ctx.moveTo(0,h*.72);
+  for(let sx=0;sx<=W;sx+=8){
 
-  for(var x2=0;x2<=w;x2+=35){
+    const wx = cameraX + sx;
 
-    var y2 =
-      h*.59 +
-      Math.sin((x2+cameraX*.25)*.014)*35;
-
-    ctx.lineTo(x2,y2);
-
-  }
-
-  ctx.lineTo(w,h);
-  ctx.lineTo(0,h);
-
-  ctx.closePath();
-  ctx.fill();
-
-}
-
-
-/* =========================
-   DRAW GROUND
-========================= */
-
-function drawGround(){
-
-  var w = canvas.width;
-  var h = canvas.height;
-
-  ctx.beginPath();
-
-  ctx.moveTo(0,h);
-
-  for(var x=0;x<=w;x+=5){
-
-    var wx = cameraX + x;
-
-    var y = getGroundY(wx);
-
-    ctx.lineTo(x,y);
-
-  }
-
-  ctx.lineTo(w,h);
-  ctx.closePath();
-
-  var groundGradient =
-    ctx.createLinearGradient(0,0,0,h);
-
-  groundGradient.addColorStop(0,"#35495a");
-  groundGradient.addColorStop(.15,"#1d2a36");
-  groundGradient.addColorStop(1,"#0b1016");
-
-  ctx.fillStyle = groundGradient;
-  ctx.fill();
-
-
-  /* road edge */
-
-  ctx.beginPath();
-
-  for(var x2=0;x2<=w;x2+=5){
-
-    var wx2 = cameraX + x2;
-
-    var y2 = getGroundY(wx2);
-
-    if(x2===0)
-      ctx.moveTo(x2,y2);
-    else
-      ctx.lineTo(x2,y2);
-
-  }
-
-  ctx.strokeStyle = "#6f879b";
-  ctx.lineWidth = 4;
-  ctx.stroke();
-
-
-  /* grass / marks */
-
-  ctx.strokeStyle = "rgba(120,150,160,.22)";
-  ctx.lineWidth = 2;
-
-  for(var x3=0;x3<=w;x3+=45){
-
-    var wx3 = cameraX+x3;
-    var gy = getGroundY(wx3);
-
-    ctx.beginPath();
-    ctx.moveTo(x3,gy+8);
-    ctx.lineTo(x3+12,gy+22);
-    ctx.stroke();
-
-  }
-
-}
-
-
-/* =========================
-   DRAW PICKUPS
-========================= */
-
-function drawPickups(){
-
-  for(var i=0;i<pickups.length;i++){
-
-    var p = pickups[i];
-
-    if(p.collected) continue;
-
-    var sx = p.x-cameraX;
-
-    if(sx < -50 || sx > canvas.width+50)
-      continue;
-
-    var sy = p.y;
-
-    p.spin += .05;
-
-    if(p.type === "coin"){
-
-      ctx.save();
-
-      ctx.translate(sx,sy);
-
-      ctx.scale(
-        Math.abs(Math.cos(p.spin))*.7+.3,
-        1
-      );
-
-      ctx.beginPath();
-
-      ctx.arc(
-        0,
-        0,
-        15,
-        0,
-        Math.PI*2
-      );
-
-      ctx.fillStyle = "#ffd33d";
-      ctx.fill();
-
-      ctx.strokeStyle = "#fff0a0";
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      ctx.restore();
-
+    if(sx===0){
+      ctx.moveTo(sx,getGround(wx));
     }else{
-
-      ctx.save();
-
-      ctx.translate(sx,sy);
-
-      ctx.fillStyle = "#ef3340";
-
-      ctx.fillRect(-13,-18,26,36);
-
-      ctx.fillStyle = "#fff";
-
-      ctx.fillRect(-7,-27,14,10);
-
-      ctx.restore();
-
+      ctx.lineTo(sx,getGround(wx));
     }
 
   }
 
+  ctx.strokeStyle="#596473";
+  ctx.lineWidth=5;
+  ctx.stroke();
+
+
+  /* Small ground lights */
+
+  for(let sx=0;sx<W;sx+=90){
+
+    const wx=cameraX+sx;
+    const gy=getGround(wx);
+
+    ctx.fillStyle="rgba(80,180,220,.15)";
+    ctx.fillRect(sx,gy+5,45,3);
+
+  }
+}
+
+
+/* =========================
+   DRAW COINS
+========================= */
+
+function drawCoins(){
+
+  for(const coin of coinList){
+
+    if(coin.collected) continue;
+
+    const sx=coin.x-cameraX;
+
+    if(sx < -50 || sx > W+50) continue;
+
+    coin.spin += 0.05;
+
+    const width =
+      Math.abs(Math.cos(coin.spin))*13 + 4;
+
+    ctx.save();
+
+    ctx.translate(
+      sx,
+      coin.y
+    );
+
+    ctx.scale(width/16,1);
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      16,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fillStyle="#ffd54a";
+    ctx.fill();
+
+    ctx.strokeStyle="#fff1a6";
+    ctx.lineWidth=3;
+    ctx.stroke();
+
+    ctx.restore();
+
+  }
+}
+
+
+/* =========================
+   DRAW FUEL
+========================= */
+
+function drawFuel(){
+
+  for(const item of fuelList){
+
+    if(item.collected) continue;
+
+    const sx=item.x-cameraX;
+
+    if(sx < -50 || sx > W+50) continue;
+
+    ctx.save();
+
+    ctx.translate(
+      sx,
+      item.y
+    );
+
+    ctx.fillStyle="#00d084";
+
+    ctx.beginPath();
+
+    ctx.roundRect
+      ? ctx.roundRect(-14,-20,28,40,6)
+      : drawSafeRoundRect(-14,-20,28,40,6);
+
+    ctx.fill();
+
+    ctx.fillStyle="#062015";
+
+    ctx.fillRect(-7,-12,14,8);
+
+    ctx.restore();
+
+  }
+}
+
+
+/* Safe rounded rectangle */
+
+function drawSafeRoundRect(x,y,w,h,r){
+
+  ctx.beginPath();
+
+  ctx.moveTo(x+r,y);
+
+  ctx.lineTo(x+w-r,y);
+
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+
+  ctx.lineTo(x+w,y+h-r);
+
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+
+  ctx.lineTo(x+r,y+h);
+
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+
+  ctx.lineTo(x,y+r);
+
+  ctx.quadraticCurveTo(x,y,x+r,y);
+
+  ctx.closePath();
 }
 
 
@@ -1635,26 +1619,27 @@ function drawPickups(){
 
 function drawCar(){
 
-  var sx = car.x-cameraX;
-  var sy = car.y;
+  const sx=car.x-cameraX;
+
+  const sy=car.y;
 
   ctx.save();
 
   ctx.translate(sx,sy);
+
   ctx.rotate(car.angle);
 
+  /* Shadow */
 
-  /* shadow */
-
-  ctx.fillStyle = "rgba(0,0,0,.35)";
+  ctx.fillStyle="rgba(0,0,0,.35)";
 
   ctx.beginPath();
 
   ctx.ellipse(
     0,
-    35,
-    75,
-    10,
+    45,
+    78,
+    12,
     0,
     0,
     Math.PI*2
@@ -1663,88 +1648,82 @@ function drawCar(){
   ctx.fill();
 
 
-  /* wheels */
+  /* Main body */
 
-  drawWheel(-45,27);
-  drawWheel(45,27);
+  const bodyGrad =
+    ctx.createLinearGradient(
+      -65,-20,
+      65,30
+    );
 
+  bodyGrad.addColorStop(0,"#394252");
+  bodyGrad.addColorStop(.45,"#151a23");
+  bodyGrad.addColorStop(1,"#05070b");
 
-  /* body */
-
-  ctx.fillStyle = "#090c11";
+  ctx.fillStyle=bodyGrad;
 
   ctx.beginPath();
 
-  ctx.moveTo(-75,20);
-  ctx.lineTo(-62,-10);
-  ctx.lineTo(-30,-18);
-  ctx.lineTo(-12,-43);
-  ctx.lineTo(35,-43);
-  ctx.lineTo(62,-12);
-  ctx.lineTo(75,0);
-  ctx.lineTo(70,22);
+  ctx.moveTo(-70,20);
+  ctx.lineTo(-55,-15);
+  ctx.lineTo(-15,-22);
+  ctx.lineTo(8,-50);
+  ctx.lineTo(48,-48);
+  ctx.lineTo(65,-15);
+  ctx.lineTo(78,8);
+  ctx.lineTo(65,30);
+  ctx.lineTo(-58,30);
   ctx.closePath();
 
   ctx.fill();
 
 
-  /* body highlight */
+  /* Window */
 
-  ctx.strokeStyle = "#4e6378";
-  ctx.lineWidth = 3;
+  ctx.fillStyle="#101d30";
+
+  ctx.beginPath();
+
+  ctx.moveTo(-8,-42);
+  ctx.lineTo(12,-61);
+  ctx.lineTo(40,-58);
+  ctx.lineTo(51,-28);
+  ctx.lineTo(5,-28);
+  ctx.closePath();
+
+  ctx.fill();
+
+
+  ctx.strokeStyle="#526276";
+  ctx.lineWidth=2;
   ctx.stroke();
 
 
-  /* windows */
+  /* Light */
 
-  ctx.fillStyle = "#243849";
+  ctx.fillStyle="#bdefff";
 
   ctx.beginPath();
 
-  ctx.moveTo(-20,-18);
-  ctx.lineTo(-8,-36);
-  ctx.lineTo(13,-36);
-  ctx.lineTo(22,-18);
-  ctx.closePath();
+  ctx.ellipse(
+    68,
+    -2,
+    7,
+    4,
+    0,
+    0,
+    Math.PI*2
+  );
 
   ctx.fill();
 
 
-  ctx.fillStyle = "#172734";
+  /* Wheels */
 
-  ctx.beginPath();
-
-  ctx.moveTo(25,-18);
-  ctx.lineTo(18,-36);
-  ctx.lineTo(34,-33);
-  ctx.lineTo(50,-15);
-  ctx.closePath();
-
-  ctx.fill();
-
-
-  /* lights */
-
-  ctx.fillStyle = "#d8f6ff";
-
-  ctx.fillRect(63,-5,8,8);
-
-
-  ctx.fillStyle = "#ff303c";
-
-  ctx.fillRect(-72,3,8,7);
-
-
-  /* bumper */
-
-  ctx.fillStyle = "#46515e";
-
-  ctx.fillRect(-78,17,15,7);
-  ctx.fillRect(65,17,15,7);
-
+  drawWheel(-43,32);
+  drawWheel(43,32);
 
   ctx.restore();
-
 }
 
 
@@ -1754,90 +1733,40 @@ function drawWheel(x,y){
 
   ctx.translate(x,y);
 
-  ctx.rotate(car.wheelSpin);
-
-  ctx.fillStyle = "#030405";
+  ctx.rotate(car.wheelRotation);
 
   ctx.beginPath();
 
   ctx.arc(
     0,
     0,
-    19,
+    21,
     0,
     Math.PI*2
   );
 
+  ctx.fillStyle="#050608";
   ctx.fill();
 
-  ctx.strokeStyle = "#3e4854";
-  ctx.lineWidth = 5;
+  ctx.strokeStyle="#303846";
+  ctx.lineWidth=7;
   ctx.stroke();
 
 
-  ctx.strokeStyle = "#778391";
-  ctx.lineWidth = 2;
+  ctx.beginPath();
 
-  for(var i=0;i<6;i++){
+  ctx.arc(
+    0,
+    0,
+    6,
+    0,
+    Math.PI*2
+  );
 
-    var a =
-      i*Math.PI/3;
-
-    ctx.beginPath();
-
-    ctx.moveTo(0,0);
-
-    ctx.lineTo(
-      Math.cos(a)*13,
-      Math.sin(a)*13
-    );
-
-    ctx.stroke();
-
-  }
+  ctx.fillStyle="#778396";
+  ctx.fill();
 
   ctx.restore();
-
-}
-
-
-/* =========================
-   DRAW CHECKPOINT
-========================= */
-
-function drawCheckpoint(){
-
-  var checkpointX =
-    Math.floor(worldX/1000)*1000 + 1000;
-
-  var sx =
-    checkpointX*.45 + 120-cameraX;
-
-  if(sx < -100 || sx > canvas.width+100)
-    return;
-
-  var ground =
-    getGroundY(120+worldX*.45);
-
-  ctx.strokeStyle = "#00c8ff";
-  ctx.lineWidth = 5;
-
-  ctx.beginPath();
-  ctx.moveTo(sx,ground);
-  ctx.lineTo(sx,ground-100);
-  ctx.stroke();
-
-  ctx.fillStyle = "#00c8ff";
-
-  ctx.beginPath();
-
-  ctx.moveTo(sx,ground-100);
-  ctx.lineTo(sx+65,ground-78);
-  ctx.lineTo(sx,ground-55);
-  ctx.closePath();
-
-  ctx.fill();
-
 }
 
 
@@ -1847,20 +1776,41 @@ function drawCheckpoint(){
 
 function draw(){
 
-  ctx.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  drawSky();
-  drawMountains();
-  drawGround();
-  drawCheckpoint();
-  drawPickups();
+  drawBackground();
+  drawTerrain();
+  drawCoins();
+  drawFuel();
   drawCar();
+}
 
+
+/* =========================
+   UI
+========================= */
+
+function updateUI(){
+
+  coinUI.textContent=coins;
+
+  distanceUI.textContent=distance;
+
+  speedUI.textContent=
+    Math.round(Math.abs(car.vx)*10);
+
+  bestUI.textContent=best;
+
+  fuelFill.style.width =
+    fuel.toFixed(1) + "%";
+
+  if(fuel < 25){
+
+    fuelFill.style.background="#ff5757";
+
+  }else{
+
+    fuelFill.style.background="#00d084";
+
+  }
 }
 
 
@@ -1868,43 +1818,449 @@ function draw(){
    GAME LOOP
 ========================= */
 
-function gameLoop(time){
+function loop(time){
 
-  if(!running) return;
+  if(!running){
+    return;
+  }
 
-  if(!paused){
+  animationId=requestAnimationFrame(loop);
 
-    var dt =
-      (time-lastTime)/1000;
+  if(!lastTime){
+    lastTime=time;
+  }
 
-    if(dt > .04) dt=.04;
+  const dt=Math.min(
+    40,
+    time-lastTime
+  );
 
-    lastTime = time;
+  lastTime=time;
+
+  if(!paused && !gameOver){
 
     update(dt);
-    draw();
-
-  }else{
-
-    lastTime = time;
 
   }
 
-  requestAnimationFrame(gameLoop);
-
+  draw();
 }
 
 
 /* =========================
-   INITIAL
+   END GAME
 ========================= */
 
-resizeCanvas();
+function endGame(title,text){
 
-bestEl.textContent =
-  Math.floor(bestDistance) + " m";
+  if(gameOver){
+    return;
+  }
+
+  gameOver=true;
+
+  if(distance > best){
+
+    best=distance;
+
+    localStorage.setItem(
+      "shadowHillBest",
+      String(best)
+    );
+
+  }
+
+  updateUI();
+
+  overlayTitle.textContent=title;
+
+  overlayText.textContent=
+    text +
+    " Distance: " +
+    distance +
+    "m";
+
+  overlay.style.display="flex";
+}
+
+
+/* =========================
+   START GAME
+========================= */
+
+async function startGame(){
+
+  startScreen.style.display="none";
+
+  game.style.display="block";
+
+  document.body.classList.add("play-mode");
+
+  resetGame();
+
+  running=true;
+  paused=false;
+  gameOver=false;
+
+  lastTime=performance.now();
+
+  /*
+    Fullscreen must be requested
+    from the START button action.
+  */
+
+  try{
+
+    if(document.documentElement.requestFullscreen){
+
+      await document.documentElement.requestFullscreen();
+
+    }
+
+  }catch(error){
+
+    console.log("Fullscreen not available:",error);
+
+  }
+
+
+  /*
+    Try landscape lock.
+    Some browsers do not allow this,
+    so the rotate screen handles fallback.
+  */
+
+  try{
+
+    if(
+      screen.orientation &&
+      screen.orientation.lock
+    ){
+
+      await screen.orientation.lock("landscape");
+
+    }
+
+  }catch(error){
+
+    console.log("Orientation lock not available:",error);
+
+  }
+
+
+  cancelAnimationFrame(animationId);
+
+  lastTime=performance.now();
+
+  animationId=requestAnimationFrame(loop);
+}
+
+
+startBtn.addEventListener(
+  "click",
+  startGame
+);
+
+
+/* =========================
+   RESTART
+========================= */
+
+restartBtn.addEventListener(
+  "click",
+  function(){
+
+    resetGame();
+
+    running=true;
+
+    paused=false;
+
+    lastTime=performance.now();
+
+    cancelAnimationFrame(animationId);
+
+    animationId=requestAnimationFrame(loop);
+
+  }
+);
+
+
+/* =========================
+   PAUSE
+========================= */
+
+function togglePause(){
+
+  if(gameOver){
+    return;
+  }
+
+  paused=!paused;
+
+  pauseBtn.textContent=
+    paused ? "▶" : "Ⅱ";
+}
+
+
+pauseBtn.addEventListener(
+  "click",
+  togglePause
+);
+
+
+/* =========================
+   EXIT FULLSCREEN
+========================= */
+
+async function exitGameMode(){
+
+  running=false;
+
+  leftPressed=false;
+  rightPressed=false;
+
+  document.body.classList.remove("play-mode");
+
+  try{
+
+    if(
+      screen.orientation &&
+      screen.orientation.unlock
+    ){
+
+      screen.orientation.unlock();
+
+    }
+
+  }catch(error){}
+
+
+  try{
+
+    if(document.fullscreenElement){
+
+      await document.exitFullscreen();
+
+    }
+
+  }catch(error){}
+
+
+  game.style.display="none";
+
+  startScreen.style.display="block";
+
+  overlay.style.display="none";
+}
+
+
+exitBtn.addEventListener(
+  "click",
+  exitGameMode
+);
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(
+      e.key==="ArrowLeft" ||
+      e.key.toLowerCase()==="a"
+    ){
+
+      e.preventDefault();
+
+      leftPressed=true;
+
+    }
+
+
+    if(
+      e.key==="ArrowRight" ||
+      e.key.toLowerCase()==="d"
+    ){
+
+      e.preventDefault();
+
+      rightPressed=true;
+
+    }
+
+
+    if(e.code==="Space"){
+
+      e.preventDefault();
+
+      togglePause();
+
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "keyup",
+  function(e){
+
+    if(
+      e.key==="ArrowLeft" ||
+      e.key.toLowerCase()==="a"
+    ){
+
+      leftPressed=false;
+
+    }
+
+
+    if(
+      e.key==="ArrowRight" ||
+      e.key.toLowerCase()==="d"
+    ){
+
+      rightPressed=false;
+
+    }
+
+  }
+);
+
+
+/* =========================
+   TOUCH CONTROLS
+========================= */
+
+function setupTouchButton(
+  button,
+  side
+){
+
+  const down=function(e){
+
+    e.preventDefault();
+
+    if(side==="left"){
+
+      leftPressed=true;
+
+    }else{
+
+      rightPressed=true;
+
+    }
+
+  };
+
+
+  const up=function(e){
+
+    e.preventDefault();
+
+    if(side==="left"){
+
+      leftPressed=false;
+
+    }else{
+
+      rightPressed=false;
+
+    }
+
+  };
+
+
+  button.addEventListener(
+    "touchstart",
+    down,
+    {passive:false}
+  );
+
+  button.addEventListener(
+    "touchend",
+    up,
+    {passive:false}
+  );
+
+  button.addEventListener(
+    "touchcancel",
+    up,
+    {passive:false}
+  );
+
+  button.addEventListener(
+    "mousedown",
+    down
+  );
+
+  button.addEventListener(
+    "mouseup",
+    up
+  );
+
+  button.addEventListener(
+    "mouseleave",
+    up
+  );
+}
+
+
+setupTouchButton(
+  leftBtn,
+  "left"
+);
+
+setupTouchButton(
+  rightBtn,
+  "right"
+);
+
+
+/* =========================
+   STOP INPUT WHEN TAB HIDDEN
+========================= */
+
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    if(document.hidden){
+
+      leftPressed=false;
+      rightPressed=false;
+
+      if(running && !gameOver){
+
+        paused=true;
+
+        pauseBtn.textContent="▶";
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================
+   INITIAL DRAW
+========================= */
+
+generateWorld();
+
+car.y=getGround(car.x)-34;
+
+bestUI.textContent=best;
+
+draw();
 
 </script>
 
 </body>
-</html>
+  </html>
