@@ -148,7 +148,7 @@ const games = [
     id: 20,
     title: "Hill Climb",
     category: "",
-    icon: "",
+    icon: "hill_climb.webp",
     url: "games/hill_climb.html",
     newGame: false,
     popular: true
