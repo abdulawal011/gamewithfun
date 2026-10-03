@@ -144,6 +144,15 @@ const games = [
     newGame: true,
     popular: false
   },
+   {
+    id: 20,
+    title: "check",
+    category: "",
+    icon: "",
+    url: "games/Check.html",
+    newGame: false,
+    popular: true
+  },
 
   {
     id: 1,
