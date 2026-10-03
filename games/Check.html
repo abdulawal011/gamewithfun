@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="description" content="Play Shadow Hill Climb by GameWithFun. Drive across challenging hills, collect coins, manage fuel and reach checkpoints in this exciting browser racing game.">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="/favicon.png">
+<title>Shadow Hill Climb - GameWithFun</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#080b12;
+  color:#fff;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+  border:0;
+}
+
+.page{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* START SCREEN */
+
+#startScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 50% 20%,#26344d 0,#101725 35%,#05070b 80%);
+}
+
+.startBox{
+  width:min(680px,100%);
+  text-align:center;
+  padding:25px 18px;
+}
+
+.logo{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  margin-bottom:12px;
+  filter:drop-shadow(0 0 15px rgba(0,180,255,.45));
+}
+
+.startBox h1{
+  font-size:clamp(32px,8vw,62px);
+  letter-spacing:2px;
+  text-shadow:0 5px 20px #000;
+}
+
+.startBox h1 span{
+  color:#00c8ff;
+}
+
+.subtitle{
+  margin:10px auto 22px;
+  color:#b9c7d8;
+  font-size:16px;
+}
+
+.carPreview{
+  position:relative;
+  height:180px;
+  overflow:hidden;
+  border-radius:25px;
+  border:1px solid #33435a;
+  background:
+    linear-gradient(#182338 0 48%,#25344b 49% 65%,#10151e 66%);
+  margin-bottom:25px;
+}
+
+.carPreview:before{
+  content:"";
+  position:absolute;
+  left:-10%;
+  right:-10%;
+  bottom:28px;
+  height:100px;
+  background:
+    linear-gradient(155deg,transparent 0 30%,#111822 31% 48%,transparent 49%),
+    linear-gradient(18deg,transparent 0 36%,#111822 37% 58%,transparent 59%);
+  transform:skewX(-8deg);
+}
+
+.previewCar{
+  position:absolute;
+  left:50%;
+  bottom:48px;
+  transform:translateX(-50%);
+  width:190px;
+  height:58px;
+  background:linear-gradient(#4c5868,#151b25);
+  border-radius:28px 40px 12px 12px;
+  box-shadow:0 12px 30px #000;
+}
+
+.previewCar:before{
+  content:"";
+  position:absolute;
+  width:78px;
+  height:34px;
+  left:48px;
+  top:-25px;
+  background:#273442;
+  clip-path:polygon(15% 100%,30% 0,78% 0,100% 100%);
+  border-radius:10px;
+}
+
+.wheel{
+  position:absolute;
+  width:42px;
+  height:42px;
+  background:#050608;
+  border:6px solid #353d48;
+  border-radius:50%;
+  bottom:-18px;
+}
+
+.wheel.left{left:20px}
+.wheel.right{right:20px}
+
+.startBtn{
+  width:min(390px,100%);
+  padding:18px 25px;
+  border-radius:18px;
+  color:white;
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:1px;
+  background:linear-gradient(135deg,#00b7ff,#006cff);
+  box-shadow:0 8px 30px rgba(0,150,255,.35);
+  transition:.15s;
+}
+
+.startBtn:active{
+  transform:scale(.96);
+}
+
+.more{
+  margin-top:28px;
+  color:#aebbd0;
+}
+
+.more a{
+  display:inline-block;
+  margin:7px 4px;
+  padding:9px 13px;
+  border-radius:10px;
+  background:#131d2b;
+  color:#cfeaff;
+  text-decoration:none;
+  border:1px solid #27384e;
+  font-size:13px;
+}
+
+/* GAME */
+
+#gamePage{
+  display:none;
+  width:100%;
+  min-height:100vh;
+  background:#070a10;
+}
+
+.gameHeader{
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:7px 10px;
+  background:#0b111b;
+  border-bottom:1px solid #202c3c;
+}
+
+.gameTitle{
+  font-weight:900;
+  color:#00c8ff;
+  font-size:17px;
+}
+
+.headerBtns{
+  display:flex;
+  gap:6px;
+}
+
+.smallBtn{
+  padding:9px 12px;
+  border-radius:9px;
+  color:white;
+  background:#172131;
+  border:1px solid #304055;
+  font-weight:bold;
+}
+
+#gameWrap{
+  position:relative;
+  width:100%;
+  height:min(72vh,650px);
+  min-height:430px;
+  background:#101725;
+  overflow:hidden;
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  touch-action:none;
+}
+
+/* HUD */
+
+.hud{
+  position:absolute;
+  left:10px;
+  right:10px;
+  top:10px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+  pointer-events:none;
+}
+
+.hudBox{
+  min-width:0;
+  padding:8px 5px;
+  text-align:center;
+  background:rgba(5,9,15,.72);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  backdrop-filter:blur(5px);
+}
+
+.hudLabel{
+  display:block;
+  font-size:9px;
+  color:#8fa1b9;
+  text-transform:uppercase;
+}
+
+.hudValue{
+  display:block;
+  margin-top:2px;
+  font-size:15px;
+  font-weight:900;
+}
+
+.fuelBar{
+  position:absolute;
+  top:72px;
+  right:10px;
+  width:130px;
+  height:12px;
+  background:#101721;
+  border:1px solid #425064;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+#fuelFill{
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg,#ff3d55,#ffc400,#35e47b);
+  transition:width .15s;
+}
+
+.fuelText{
+  position:absolute;
+  top:87px;
+  right:10px;
+  font-size:10px;
+  color:#b8c5d6;
+}
+
+/* CONTROLS */
+
+.controls{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:14px;
+  display:flex;
+  justify-content:space-between;
+  padding:0 16px;
+  pointer-events:none;
+}
+
+.driveBtn{
+  pointer-events:auto;
+  width:125px;
+  height:65px;
+  border-radius:18px;
+  color:#fff;
+  font-size:14px;
+  font-weight:900;
+  background:rgba(9,16,27,.84);
+  border:2px solid #34455c;
+  box-shadow:0 8px 25px rgba(0,0,0,.4);
+  user-select:none;
+  touch-action:none;
+}
+
+.driveBtn:active{
+  background:#164568;
+  transform:scale(.96);
+}
+
+#pauseOverlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.65);
+  z-index:10;
+}
+
+.pauseBox{
+  text-align:center;
+  padding:30px;
+  border-radius:20px;
+  background:#101824;
+  border:1px solid #33445c;
+}
+
+.pauseBox h2{
+  margin-bottom:15px;
+}
+
+.overlayBtn{
+  padding:13px 22px;
+  border-radius:12px;
+  color:white;
+  background:#0878f9;
+  font-weight:900;
+}
+
+/* BOTTOM CONTENT */
+
+.content{
+  padding:28px 18px 50px;
+  max-width:900px;
+  margin:auto;
+}
+
+.content section{
+  margin-bottom:30px;
+}
+
+.content h2{
+  color:#00c8ff;
+  margin-bottom:10px;
+}
+
+.content p,
+.content li{
+  color:#b8c4d4;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.content ul{
+  padding-left:22px;
+}
+
+.infoGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.info{
+  padding:14px;
+  border-radius:12px;
+  background:#101824;
+  border:1px solid #202e41;
+}
+
+.info b{
+  display:block;
+  color:#fff;
+  margin-bottom:4px;
+}
+
+.footer{
+  padding:25px;
+  text-align:center;
+  color:#75859a;
+  border-top:1px solid #1c2735;
+}
+
+@media(max-width:600px){
+  #gameWrap{
+    height:70vh;
+    min-height:420px;
+  }
+
+  .driveBtn{
+    width:115px;
+    height:60px;
+  }
+
+  .infoGrid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* LANDSCAPE */
+
+@media(max-height:520px) and (orientation:landscape){
+  .gameHeader{
+    height:45px;
+  }
+
+  #gameWrap{
+    height:calc(100vh - 45px);
+    min-height:0;
+  }
+
+  .hud{
+    top:6px;
+  }
+
+  .fuelBar{
+    top:57px;
+  }
+
+  .fuelText{
+    top:72px;
+  }
+
+  .controls{
+    bottom:8px;
+  }
+
+  .driveBtn{
+    height:52px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+
+<div id="startScreen">
+
+  <div class="startBox">
+
+    <img src="/logo.webp"
+         class="logo"
+         alt="GameWithFun">
+
+    <h1>SHADOW <span>HILL CLIMB</span></h1>
+
+    <p class="subtitle">
+      Drive through dangerous hills, collect coins and reach the checkpoints.
+    </p>
+
+    <div class="carPreview">
+      <div class="previewCar">
+        <div class="wheel left"></div>
+        <div class="wheel right"></div>
+      </div>
+    </div>
+
+    <button type="button" id="startBtn" class="startBtn">
+      ▶ START THE GAME
+    </button>
+
+    <div class="more">
+      <strong>More Games from GameWithFun</strong><br>
+
+      <a href="/">Home</a>
+      <a href="/p/pipe-script.html">Pipe Script</a>
+      <a href="/p/flag-guess.html">Flag Guess</a>
+      <a href="/p/sliding-puzzle.html">Sliding Puzzle</a>
+      <a href="/p/fruit-frenzy.html">Fruit Frenzy</a>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- GAME PAGE -->
+
+<div id="gamePage">
+
+  <div class="gameHeader">
+
+    <div class="gameTitle">
+      🌑 Shadow Hill Climb
+    </div>
+
+    <div class="headerBtns">
+      <button type="button" id="pauseBtn" class="smallBtn">
+        ⏸
+      </button>
+
+      <button type="button" id="exitBtn" class="smallBtn">
+        BACK
+      </button>
+    </div>
+
+  </div>
+
+
+  <div id="gameWrap">
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="hud">
+
+      <div class="hudBox">
+        <span class="hudLabel">Distance</span>
+        <span class="hudValue" id="distance">0 m</span>
+      </div>
+
+      <div class="hudBox">
+        <span class="hudLabel">Coins</span>
+        <span class="hudValue" id="coins">0</span>
+      </div>
+
+      <div class="hudBox">
+        <span class="hudLabel">Speed</span>
+        <span class="hudValue" id="speed">0</span>
+      </div>
+
+      <div class="hudBox">
+        <span class="hudLabel">Best</span>
+        <span class="hudValue" id="best">0 m</span>
+      </div>
+
+    </div>
+
+    <div class="fuelBar">
+      <div id="fuelFill"></div>
+    </div>
+
+    <div class="fuelText">
+      FUEL
+    </div>
+
+
+    <div class="controls">
+
+      <button type="button"
+              id="leftBtn"
+              class="driveBtn">
+        ◀ BRAKE
+      </button>
+
+      <button type="button"
+              id="rightBtn"
+              class="driveBtn">
+        GAS ▶
+      </button>
+
+    </div>
+
+
+    <div id="pauseOverlay">
+
+      <div class="pauseBox">
+
+        <h2>GAME PAUSED</h2>
+
+        <button type="button"
+                id="resumeBtn"
+                class="overlayBtn">
+          ▶ RESUME
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="content">
+
+    <section>
+      <h2>Shadow Hill Climb</h2>
+
+      <p>
+        Shadow Hill Climb is a browser-based hill racing game from
+        GameWithFun. Drive across changing hills, control your speed,
+        collect coins, save fuel and continue your journey as far as
+        possible.
+      </p>
+    </section>
+
+
+    <section>
+
+      <h2>How to Play</h2>
+
+      <ul>
+        <li>Press START THE GAME to begin.</li>
+        <li>Use GAS to accelerate the vehicle.</li>
+        <li>Use BRAKE to slow down or reverse.</li>
+        <li>Collect coins while driving.</li>
+        <li>Collect fuel to keep your journey going.</li>
+        <li>Keep the vehicle balanced on steep hills.</li>
+        <li>Reach checkpoints and try to beat your best distance.</li>
+      </ul>
+
+    </section>
+
+
+    <section>
+
+      <h2>Mobile Controls</h2>
+
+      <p>
+        On mobile devices, hold the GAS button to move forward.
+        Use BRAKE when approaching steep slopes or when you need
+        to slow the vehicle.
+      </p>
+
+    </section>
+
+
+    <section>
+
+      <h2>Desktop Controls</h2>
+
+      <p>
+        Use the keyboard Arrow Right or D key for GAS.
+        Use Arrow Left or A key for BRAKE and reverse.
+        Press P or the pause button to pause the game.
+      </p>
+
+    </section>
+
+
+    <section>
+
+      <h2>Game Features</h2>
+
+      <ul>
+        <li>Responsive browser gameplay</li>
+        <li>Procedural hill terrain</li>
+        <li>Coins and fuel pickups</li>
+        <li>Distance and speed tracking</li>
+        <li>Best score system</li>
+        <li>Crash detection</li>
+        <li>Mobile touch controls</li>
+        <li>Keyboard controls</li>
+        <li>Pause and restart support</li>
+        <li>No external game library required</li>
+      </ul>
+
+    </section>
+
+
+    <section>
+
+      <h2>About This Game</h2>
+
+      <p>
+        Shadow Hill Climb is designed as a lightweight HTML5 browser
+        game that can be played on modern phones, tablets and desktop
+        browsers. The game uses canvas rendering and JavaScript to
+        create the vehicle, terrain, collectibles and gameplay systems.
+      </p>
+
+    </section>
+
+
+    <section>
+
+      <h2>FAQ</h2>
+
+      <p>
+        <strong>Is Shadow Hill Climb free?</strong><br>
+        Yes. The game is designed to be playable directly in your browser.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>Do I need to install an app?</strong><br>
+        No installation is required for browser gameplay.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>Can I play on mobile?</strong><br>
+        Yes. Touch controls are included for mobile devices.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>How do I get a higher score?</strong><br>
+        Travel farther, collect coins and manage your fuel carefully.
+      </p>
+
+    </section>
+
+
+    <section>
+
+      <h2>Game Information</h2>
+
+      <div class="infoGrid">
+
+        <div class="info">
+          <b>Developer</b>
+          GameWithFun
+        </div>
+
+        <div class="info">
+          <b>Game Type</b>
+          Racing / Driving
+        </div>
+
+        <div class="info">
+          <b>Platform</b>
+          Web Browser
+        </div>
+
+        <div class="info">
+          <b>Controls</b>
+          Touch & Keyboard
+        </div>
+
+        <div class="info">
+          <b>Game Mode</b>
+          Endless Hill Climb
+        </div>
+
+        <div class="info">
+          <b>Latest Update</b>
+          October 2026
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section>
+
+      <h2>Play More Games</h2>
+
+      <p>
+        Explore more free browser games from GameWithFun including
+        puzzle, racing, arcade, quiz and casual games.
+      </p>
+
+    </section>
+
+  </div>
+
+
+  <div class="footer">
+    © 2026 GameWithFun · Shadow Hill Climb
+  </div>
+
+</div>
+
+
+<script>
+"use strict";
+
+/* =========================
+   BASIC SETUP
+========================= */
+
+var startScreen = document.getElementById("startScreen");
+var gamePage = document.getElementById("gamePage");
+var startBtn = document.getElementById("startBtn");
+
+var canvas = document.getElementById("gameCanvas");
+var ctx = canvas.getContext("2d");
+
+var distanceEl = document.getElementById("distance");
+var coinsEl = document.getElementById("coins");
+var speedEl = document.getElementById("speed");
+var bestEl = document.getElementById("best");
+var fuelFill = document.getElementById("fuelFill");
+
+var pauseBtn = document.getElementById("pauseBtn");
+var resumeBtn = document.getElementById("resumeBtn");
+var exitBtn = document.getElementById("exitBtn");
+var pauseOverlay = document.getElementById("pauseOverlay");
+
+var leftBtn = document.getElementById("leftBtn");
+var rightBtn = document.getElementById("rightBtn");
+
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
+var running = false;
+var paused = false;
+var gameOver = false;
+
+var lastTime = 0;
+
+var worldX = 0;
+var speed = 0;
+
+var coins = 0;
+var distance = 0;
+
+var fuel = 100;
+
+var bestDistance = Number(localStorage.getItem("shadowHillBest") || 0);
+
+var gasPressed = false;
+var brakePressed = false;
+
+var car = {
+  x:120,
+  y:0,
+  vx:0,
+  vy:0,
+  angle:0,
+  angularVelocity:0,
+  wheelSpin:0
+};
+
+var terrain = [];
+var pickups = [];
+
+var cameraX = 0;
+
+
+/* =========================
+   RESIZE
+========================= */
+
+function resizeCanvas(){
+
+  var rect = canvas.getBoundingClientRect();
+
+  canvas.width = Math.max(320, Math.floor(rect.width));
+  canvas.height = Math.max(300, Math.floor(rect.height));
+
+}
+
+window.addEventListener("resize",resizeCanvas);
+
+
+/* =========================
+   TERRAIN
+========================= */
+
+function terrainHeight(x){
+
+  var h = canvas.height * .68;
+
+  h += Math.sin(x * .0035) * 45;
+  h += Math.sin(x * .0075) * 24;
+  h += Math.sin(x * .015) * 12;
+
+  return h;
+}
+
+
+function buildTerrain(){
+
+  terrain = [];
+
+  var step = 25;
+
+  for(var x=0;x<6000;x+=step){
+
+    terrain.push({
+      x:x,
+      y:terrainHeight(x)
+    });
+
+  }
+
+}
+
+
+function getGroundY(x){
+
+  var y = terrainHeight(x);
+
+  return y;
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetGame(){
+
+  resizeCanvas();
+
+  buildTerrain();
+
+  worldX = 0;
+  speed = 0;
+
+  coins = 0;
+  distance = 0;
+  fuel = 100;
+
+  gameOver = false;
+  paused = false;
+
+  gasPressed = false;
+  brakePressed = false;
+
+  car.x = 120;
+  car.y = getGroundY(car.x) - 38;
+  car.vx = 0;
+  car.vy = 0;
+  car.angle = 0;
+  car.angularVelocity = 0;
+  car.wheelSpin = 0;
+
+  cameraX = 0;
+
+  createPickups();
+
+  updateHUD();
+
+}
+
+
+/* =========================
+   PICKUPS
+========================= */
+
+function createPickups(){
+
+  pickups = [];
+
+  for(var x=450;x<6000;x+=300 + Math.random()*260){
+
+    pickups.push({
+      x:x,
+      y:getGroundY(x)-75,
+      type:Math.random() < .8 ? "coin" : "fuel",
+      collected:false,
+      spin:Math.random()*Math.PI*2
+    });
+
+  }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+startBtn.onclick = function(){
+
+  startScreen.style.display = "none";
+  gamePage.style.display = "block";
+
+  resetGame();
+
+  running = true;
+  paused = false;
+
+  pauseOverlay.style.display = "none";
+
+  lastTime = performance.now();
+
+  requestAnimationFrame(gameLoop);
+
+};
+
+
+/* =========================
+   PAUSE
+========================= */
+
+function togglePause(){
+
+  if(!running || gameOver) return;
+
+  paused = !paused;
+
+  pauseOverlay.style.display = paused ? "flex" : "none";
+
+  if(!paused){
+
+    lastTime = performance.now();
+
+  }
+
+}
+
+pauseBtn.onclick = togglePause;
+resumeBtn.onclick = togglePause;
+
+
+/* =========================
+   EXIT
+========================= */
+
+exitBtn.onclick = function(){
+
+  running = false;
+
+  gamePage.style.display = "none";
+  startScreen.style.display = "flex";
+
+};
+
+
+/* =========================
+   INPUT
+========================= */
+
+function setGas(value){
+  gasPressed = value;
+}
+
+function setBrake(value){
+  brakePressed = value;
+}
+
+
+/* Mobile GAS */
+
+rightBtn.addEventListener("pointerdown",function(e){
+  e.preventDefault();
+  setGas(true);
+});
+
+rightBtn.addEventListener("pointerup",function(e){
+  e.preventDefault();
+  setGas(false);
+});
+
+rightBtn.addEventListener("pointercancel",function(){
+  setGas(false);
+});
+
+rightBtn.addEventListener("pointerleave",function(){
+  setGas(false);
+});
+
+
+/* Mobile BRAKE */
+
+leftBtn.addEventListener("pointerdown",function(e){
+  e.preventDefault();
+  setBrake(true);
+});
+
+leftBtn.addEventListener("pointerup",function(e){
+  e.preventDefault();
+  setBrake(false);
+});
+
+leftBtn.addEventListener("pointercancel",function(){
+  setBrake(false);
+});
+
+leftBtn.addEventListener("pointerleave",function(){
+  setBrake(false);
+});
+
+
+/* Keyboard */
+
+window.addEventListener("keydown",function(e){
+
+  if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
+    gasPressed = true;
+  }
+
+  if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
+    brakePressed = true;
+  }
+
+  if(e.key.toLowerCase() === "p"){
+    togglePause();
+  }
+
+});
+
+
+window.addEventListener("keyup",function(e){
+
+  if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
+    gasPressed = false;
+  }
+
+  if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
+    brakePressed = false;
+  }
+
+});
+
+
+/* =========================
+   PHYSICS
+========================= */
+
+function update(dt){
+
+  if(gameOver) return;
+
+  var gravity = 850;
+
+  var acceleration = 0;
+
+  if(gasPressed){
+    acceleration += 470;
+    fuel -= dt * 1.7;
+  }
+
+  if(brakePressed){
+    acceleration -= 600;
+  }
+
+  /* friction */
+
+  acceleration -= speed * 1.8;
+
+  speed += acceleration * dt;
+
+  if(speed < -90) speed = -90;
+  if(speed > 390) speed = 390;
+
+  /* fuel drain */
+
+  if(Math.abs(speed)>20){
+    fuel -= dt * .18;
+  }
+
+  if(fuel <= 0){
+
+    fuel = 0;
+
+    speed *= .985;
+
+  }
+
+
+  /* movement */
+
+  worldX += speed * dt;
+
+  if(worldX < 0){
+    worldX = 0;
+    speed = 0;
+  }
+
+
+  /* car position */
+
+  car.x = 120 + worldX * .45;
+
+  var ground = getGroundY(car.x);
+
+  car.vy += gravity * dt;
+
+  car.y += car.vy * dt;
+
+  var targetY = ground - 38;
+
+  if(car.y >= targetY){
+
+    car.y = targetY;
+
+    car.vy = 0;
+
+    /* terrain slope */
+
+    var slope =
+      getGroundY(car.x + 8) -
+      getGroundY(car.x - 8);
+
+    var targetAngle = Math.atan2(slope,16);
+
+    car.angle +=
+      (targetAngle - car.angle) * Math.min(1,dt*8);
+
+  }else{
+
+    car.angle += car.angularVelocity * dt;
+
+  }
+
+
+  car.wheelSpin += speed * dt * .08;
+
+
+  /* camera */
+
+  cameraX = worldX - 80;
+
+  if(cameraX < 0) cameraX = 0;
+
+
+  /* distance */
+
+  distance = Math.max(0,Math.floor(worldX/10));
+
+
+  /* pickups */
+
+  for(var i=0;i<pickups.length;i++){
+
+    var p = pickups[i];
+
+    if(p.collected) continue;
+
+    var dx = p.x - car.x;
+    var dy = p.y - car.y;
+
+    if(Math.abs(dx)<38 && Math.abs(dy)<55){
+
+      p.collected = true;
+
+      if(p.type === "coin"){
+
+        coins++;
+
+      }else{
+
+        fuel = Math.min(100,fuel+30);
+
+      }
+
+    }
+
+  }
+
+
+  /* crash detection */
+
+  if(car.y > ground + 20){
+
+    endGame();
+
+  }
+
+
+  /* rollover protection */
+
+  if(Math.abs(car.angle) > Math.PI*.58){
+
+    endGame();
+
+  }
+
+
+  /* best */
+
+  if(distance > bestDistance){
+
+    bestDistance = distance;
+
+    localStorage.setItem(
+      "shadowHillBest",
+      bestDistance
+    );
+
+  }
+
+
+  updateHUD();
+
+}
+
+
+/* =========================
+   END GAME
+========================= */
+
+function endGame(){
+
+  if(gameOver) return;
+
+  gameOver = true;
+  running = false;
+
+  setTimeout(function(){
+
+    var again = confirm(
+      "GAME OVER!\n\nDistance: " +
+      distance +
+      " m\nCoins: " +
+      coins +
+      "\n\nPlay again?"
+    );
+
+    if(again){
+
+      gamePage.style.display = "none";
+      startScreen.style.display = "flex";
+
+    }else{
+
+      gamePage.style.display = "none";
+      startScreen.style.display = "flex";
+
+    }
+
+  },300);
+
+}
+
+
+/* =========================
+   HUD
+========================= */
+
+function updateHUD(){
+
+  distanceEl.textContent =
+    Math.floor(distance) + " m";
+
+  coinsEl.textContent =
+    coins;
+
+  speedEl.textContent =
+    Math.max(0,Math.floor(Math.abs(speed)));
+
+  bestEl.textContent =
+    Math.floor(bestDistance) + " m";
+
+  fuelFill.style.width =
+    Math.max(0,Math.min(100,fuel)) + "%";
+
+}
+
+
+/* =========================
+   DRAW SKY
+========================= */
+
+function drawSky(){
+
+  var w = canvas.width;
+  var h = canvas.height;
+
+  var gradient =
+    ctx.createLinearGradient(0,0,0,h);
+
+  gradient.addColorStop(0,"#08101e");
+  gradient.addColorStop(.5,"#17243a");
+  gradient.addColorStop(1,"#26364a");
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,w,h);
+
+
+  /* moon */
+
+  ctx.beginPath();
+
+  ctx.arc(
+    w*.78,
+    h*.18,
+    45,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fillStyle = "rgba(230,245,255,.8)";
+  ctx.fill();
+
+
+  /* stars */
+
+  ctx.fillStyle = "rgba(255,255,255,.7)";
+
+  for(var i=0;i<50;i++){
+
+    var sx =
+      (i*83)%w;
+
+    var sy =
+      20 + (i*37)%(h*.35);
+
+    ctx.fillRect(sx,sy,2,2);
+
+  }
+
+}
+
+
+/* =========================
+   DRAW MOUNTAINS
+========================= */
+
+function drawMountains(){
+
+  var w = canvas.width;
+  var h = canvas.height;
+
+  ctx.fillStyle = "#101827";
+
+  ctx.beginPath();
+
+  ctx.moveTo(0,h*.63);
+
+  for(var x=0;x<=w;x+=45){
+
+    var y =
+      h*.47 +
+      Math.sin((x+cameraX*.15)*.012)*45 +
+      Math.sin((x+cameraX*.15)*.026)*18;
+
+    ctx.lineTo(x,y);
+
+  }
+
+  ctx.lineTo(w,h);
+  ctx.lineTo(0,h);
+
+  ctx.closePath();
+  ctx.fill();
+
+
+  ctx.fillStyle = "#0b121e";
+
+  ctx.beginPath();
+
+  ctx.moveTo(0,h*.72);
+
+  for(var x2=0;x2<=w;x2+=35){
+
+    var y2 =
+      h*.59 +
+      Math.sin((x2+cameraX*.25)*.014)*35;
+
+    ctx.lineTo(x2,y2);
+
+  }
+
+  ctx.lineTo(w,h);
+  ctx.lineTo(0,h);
+
+  ctx.closePath();
+  ctx.fill();
+
+}
+
+
+/* =========================
+   DRAW GROUND
+========================= */
+
+function drawGround(){
+
+  var w = canvas.width;
+  var h = canvas.height;
+
+  ctx.beginPath();
+
+  ctx.moveTo(0,h);
+
+  for(var x=0;x<=w;x+=5){
+
+    var wx = cameraX + x;
+
+    var y = getGroundY(wx);
+
+    ctx.lineTo(x,y);
+
+  }
+
+  ctx.lineTo(w,h);
+  ctx.closePath();
+
+  var groundGradient =
+    ctx.createLinearGradient(0,0,0,h);
+
+  groundGradient.addColorStop(0,"#35495a");
+  groundGradient.addColorStop(.15,"#1d2a36");
+  groundGradient.addColorStop(1,"#0b1016");
+
+  ctx.fillStyle = groundGradient;
+  ctx.fill();
+
+
+  /* road edge */
+
+  ctx.beginPath();
+
+  for(var x2=0;x2<=w;x2+=5){
+
+    var wx2 = cameraX + x2;
+
+    var y2 = getGroundY(wx2);
+
+    if(x2===0)
+      ctx.moveTo(x2,y2);
+    else
+      ctx.lineTo(x2,y2);
+
+  }
+
+  ctx.strokeStyle = "#6f879b";
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+
+  /* grass / marks */
+
+  ctx.strokeStyle = "rgba(120,150,160,.22)";
+  ctx.lineWidth = 2;
+
+  for(var x3=0;x3<=w;x3+=45){
+
+    var wx3 = cameraX+x3;
+    var gy = getGroundY(wx3);
+
+    ctx.beginPath();
+    ctx.moveTo(x3,gy+8);
+    ctx.lineTo(x3+12,gy+22);
+    ctx.stroke();
+
+  }
+
+}
+
+
+/* =========================
+   DRAW PICKUPS
+========================= */
+
+function drawPickups(){
+
+  for(var i=0;i<pickups.length;i++){
+
+    var p = pickups[i];
+
+    if(p.collected) continue;
+
+    var sx = p.x-cameraX;
+
+    if(sx < -50 || sx > canvas.width+50)
+      continue;
+
+    var sy = p.y;
+
+    p.spin += .05;
+
+    if(p.type === "coin"){
+
+      ctx.save();
+
+      ctx.translate(sx,sy);
+
+      ctx.scale(
+        Math.abs(Math.cos(p.spin))*.7+.3,
+        1
+      );
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        15,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fillStyle = "#ffd33d";
+      ctx.fill();
+
+      ctx.strokeStyle = "#fff0a0";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.restore();
+
+    }else{
+
+      ctx.save();
+
+      ctx.translate(sx,sy);
+
+      ctx.fillStyle = "#ef3340";
+
+      ctx.fillRect(-13,-18,26,36);
+
+      ctx.fillStyle = "#fff";
+
+      ctx.fillRect(-7,-27,14,10);
+
+      ctx.restore();
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   DRAW CAR
+========================= */
+
+function drawCar(){
+
+  var sx = car.x-cameraX;
+  var sy = car.y;
+
+  ctx.save();
+
+  ctx.translate(sx,sy);
+  ctx.rotate(car.angle);
+
+
+  /* shadow */
+
+  ctx.fillStyle = "rgba(0,0,0,.35)";
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    35,
+    75,
+    10,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  /* wheels */
+
+  drawWheel(-45,27);
+  drawWheel(45,27);
+
+
+  /* body */
+
+  ctx.fillStyle = "#090c11";
+
+  ctx.beginPath();
+
+  ctx.moveTo(-75,20);
+  ctx.lineTo(-62,-10);
+  ctx.lineTo(-30,-18);
+  ctx.lineTo(-12,-43);
+  ctx.lineTo(35,-43);
+  ctx.lineTo(62,-12);
+  ctx.lineTo(75,0);
+  ctx.lineTo(70,22);
+  ctx.closePath();
+
+  ctx.fill();
+
+
+  /* body highlight */
+
+  ctx.strokeStyle = "#4e6378";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+
+  /* windows */
+
+  ctx.fillStyle = "#243849";
+
+  ctx.beginPath();
+
+  ctx.moveTo(-20,-18);
+  ctx.lineTo(-8,-36);
+  ctx.lineTo(13,-36);
+  ctx.lineTo(22,-18);
+  ctx.closePath();
+
+  ctx.fill();
+
+
+  ctx.fillStyle = "#172734";
+
+  ctx.beginPath();
+
+  ctx.moveTo(25,-18);
+  ctx.lineTo(18,-36);
+  ctx.lineTo(34,-33);
+  ctx.lineTo(50,-15);
+  ctx.closePath();
+
+  ctx.fill();
+
+
+  /* lights */
+
+  ctx.fillStyle = "#d8f6ff";
+
+  ctx.fillRect(63,-5,8,8);
+
+
+  ctx.fillStyle = "#ff303c";
+
+  ctx.fillRect(-72,3,8,7);
+
+
+  /* bumper */
+
+  ctx.fillStyle = "#46515e";
+
+  ctx.fillRect(-78,17,15,7);
+  ctx.fillRect(65,17,15,7);
+
+
+  ctx.restore();
+
+}
+
+
+function drawWheel(x,y){
+
+  ctx.save();
+
+  ctx.translate(x,y);
+
+  ctx.rotate(car.wheelSpin);
+
+  ctx.fillStyle = "#030405";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    0,
+    0,
+    19,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.strokeStyle = "#3e4854";
+  ctx.lineWidth = 5;
+  ctx.stroke();
+
+
+  ctx.strokeStyle = "#778391";
+  ctx.lineWidth = 2;
+
+  for(var i=0;i<6;i++){
+
+    var a =
+      i*Math.PI/3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(0,0);
+
+    ctx.lineTo(
+      Math.cos(a)*13,
+      Math.sin(a)*13
+    );
+
+    ctx.stroke();
+
+  }
+
+  ctx.restore();
+
+}
+
+
+/* =========================
+   DRAW CHECKPOINT
+========================= */
+
+function drawCheckpoint(){
+
+  var checkpointX =
+    Math.floor(worldX/1000)*1000 + 1000;
+
+  var sx =
+    checkpointX*.45 + 120-cameraX;
+
+  if(sx < -100 || sx > canvas.width+100)
+    return;
+
+  var ground =
+    getGroundY(120+worldX*.45);
+
+  ctx.strokeStyle = "#00c8ff";
+  ctx.lineWidth = 5;
+
+  ctx.beginPath();
+  ctx.moveTo(sx,ground);
+  ctx.lineTo(sx,ground-100);
+  ctx.stroke();
+
+  ctx.fillStyle = "#00c8ff";
+
+  ctx.beginPath();
+
+  ctx.moveTo(sx,ground-100);
+  ctx.lineTo(sx+65,ground-78);
+  ctx.lineTo(sx,ground-55);
+  ctx.closePath();
+
+  ctx.fill();
+
+}
+
+
+/* =========================
+   DRAW
+========================= */
+
+function draw(){
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  drawSky();
+  drawMountains();
+  drawGround();
+  drawCheckpoint();
+  drawPickups();
+  drawCar();
+
+}
+
+
+/* =========================
+   GAME LOOP
+========================= */
+
+function gameLoop(time){
+
+  if(!running) return;
+
+  if(!paused){
+
+    var dt =
+      (time-lastTime)/1000;
+
+    if(dt > .04) dt=.04;
+
+    lastTime = time;
+
+    update(dt);
+    draw();
+
+  }else{
+
+    lastTime = time;
+
+  }
+
+  requestAnimationFrame(gameLoop);
+
+}
+
+
+/* =========================
+   INITIAL
+========================= */
+
+resizeCanvas();
+
+bestEl.textContent =
+  Math.floor(bestDistance) + " m";
+
+</script>
+
+</body>
+</html>
