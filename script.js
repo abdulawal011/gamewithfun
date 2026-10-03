@@ -146,10 +146,10 @@ const games = [
   },
    {
     id: 20,
-    title: "check",
+    title: "Hill Climb",
     category: "",
     icon: "",
-    url: "games/Check.html",
+    url: "games/hill_climb.html",
     newGame: false,
     popular: true
   },
