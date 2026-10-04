@@ -1,1 +1,3475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>Shadow Cat - GameWithFun</title>
+
+<meta name="description"
+content="Play Shadow Cat online at GameWithFun. Run through a magical moonlit forest, collect coins, jump across platforms and defeat shadow enemies.">
+
+<meta name="keywords"
+content="Shadow Cat, Shadow Cat Game, Cat Platformer, Online Cat Game, Platform Game, GameWithFun">
+
+<meta name="robots" content="index,follow">
+
+<link rel="canonical"
+href="https://gamewithfun.com/shadow-cat.html">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    background:#07112f;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+}
+
+.page{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:10px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.top-btn{
+    border:2px solid #287fe8;
+    background:#101c42;
+    color:#fff;
+    border-radius:14px;
+    padding:9px 14px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.logo img{
+    width:145px;
+    max-width:45%;
+}
+
+#startScreen{
+    min-height:700px;
+    position:relative;
+    overflow:hidden;
+    border-radius:25px;
+    border:3px solid #267bea;
+
+    background:
+        radial-gradient(
+            circle at 70% 20%,
+            rgba(255,255,255,.15),
+            transparent 8%
+        ),
+        linear-gradient(
+            180deg,
+            #071e62 0%,
+            #102f80 40%,
+            #07142e 100%
+        );
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+
+    box-shadow:
+        0 0 45px rgba(31,116,255,.35),
+        inset 0 0 100px rgba(0,0,0,.35);
+}
+
+.star{
+    position:absolute;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:white;
+    opacity:.8;
+    animation:twinkle 2s infinite alternate;
+}
+
+.s1{left:8%;top:12%}
+.s2{left:18%;top:26%;animation-delay:.4s}
+.s3{left:31%;top:9%;animation-delay:1s}
+.s4{left:46%;top:18%;animation-delay:.7s}
+.s5{left:57%;top:7%;animation-delay:1.3s}
+.s6{left:82%;top:12%;animation-delay:.3s}
+.s7{left:91%;top:29%;animation-delay:1.1s}
+.s8{left:73%;top:36%;animation-delay:.6s}
+.s9{left:38%;top:32%;animation-delay:1.5s}
+
+@keyframes twinkle{
+    from{opacity:.25}
+    to{opacity:1}
+}
+
+.moon{
+    position:absolute;
+    top:75px;
+    right:12%;
+    width:145px;
+    height:145px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #fff,
+            #d9edff 55%,
+            #9bc9ff 100%
+        );
+
+    box-shadow:
+        0 0 25px #d6edff,
+        0 0 70px rgba(125,193,255,.65);
+}
+
+.cloud{
+    position:absolute;
+    width:180px;
+    height:45px;
+    border-radius:50px;
+    background:rgba(69,120,210,.38);
+    filter:blur(.5px);
+}
+
+.cloud:before,
+.cloud:after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:inherit;
+}
+
+.cloud:before{
+    width:80px;
+    height:80px;
+    left:25px;
+    bottom:0;
+}
+
+.cloud:after{
+    width:70px;
+    height:70px;
+    right:25px;
+    bottom:0;
+}
+
+.cloud1{
+    left:-40px;
+    top:170px;
+}
+
+.cloud2{
+    right:-50px;
+    top:245px;
+    transform:scale(.8);
+}
+
+.cloud3{
+    left:38%;
+    top:210px;
+    transform:scale(.55);
+}
+
+.mountains{
+    position:absolute;
+    bottom:175px;
+    left:0;
+    width:100%;
+    height:220px;
+}
+
+.mountain{
+    position:absolute;
+    bottom:0;
+    width:0;
+    height:0;
+    border-left:150px solid transparent;
+    border-right:150px solid transparent;
+    border-bottom:220px solid #102b6c;
+}
+
+.m1{
+    left:0;
+}
+
+.m2{
+    left:23%;
+    transform:scale(1.25);
+    border-bottom-color:#0d2862;
+}
+
+.m3{
+    right:15%;
+    transform:scale(.9);
+    border-bottom-color:#102d70;
+}
+
+.trees{
+    position:absolute;
+    bottom:125px;
+    left:0;
+    width:100%;
+    height:160px;
+}
+
+.tree{
+    position:absolute;
+    bottom:0;
+    width:0;
+    height:0;
+    border-left:38px solid transparent;
+    border-right:38px solid transparent;
+    border-bottom:110px solid #061b35;
+}
+
+.tree:after{
+    content:"";
+    position:absolute;
+    left:-28px;
+    top:40px;
+    border-left:28px solid transparent;
+    border-right:28px solid transparent;
+    border-bottom:80px solid #061b35;
+}
+
+.t1{left:2%}
+.t2{left:9%;transform:scale(.8)}
+.t3{left:17%;transform:scale(1.2)}
+.t4{left:29%;transform:scale(.75)}
+.t5{right:27%;transform:scale(.9)}
+.t6{right:17%;transform:scale(1.3)}
+.t7{right:8%;transform:scale(.8)}
+.t8{right:1%;transform:scale(1.1)}
+
+.castle{
+    position:absolute;
+    right:4%;
+    bottom:130px;
+    width:150px;
+    height:150px;
+    opacity:.7;
+}
+
+.castle-main{
+    position:absolute;
+    bottom:0;
+    left:35px;
+    width:80px;
+    height:90px;
+    background:#091936;
+}
+
+.tower{
+    position:absolute;
+    bottom:0;
+    width:35px;
+    height:120px;
+    background:#091936;
+}
+
+.tower.left{
+    left:5px;
+}
+
+.tower.right{
+    right:5px;
+}
+
+.roof{
+    position:absolute;
+    top:-42px;
+    left:-8px;
+    width:0;
+    height:0;
+    border-left:25px solid transparent;
+    border-right:25px solid transparent;
+    border-bottom:45px solid #07152e;
+}
+
+.window{
+    position:absolute;
+    width:8px;
+    height:15px;
+    background:#ffd76a;
+    box-shadow:0 0 8px #ffd76a;
+}
+
+.w1{
+    left:18px;
+    top:25px;
+}
+
+.w2{
+    right:18px;
+    top:40px;
+}
+
+.w3{
+    left:38px;
+    top:25px;
+}
+
+.game-title{
+    position:relative;
+    z-index:10;
+
+    font-size:clamp(40px,10vw,78px);
+    font-weight:1000;
+    letter-spacing:4px;
+
+    color:white;
+
+    text-shadow:
+        0 4px 0 #152b72,
+        0 0 15px #49a7ff,
+        0 0 35px rgba(55,150,255,.8);
+}
+
+.game-subtitle{
+    position:relative;
+    z-index:10;
+    color:#bde3ff;
+    font-size:15px;
+    letter-spacing:4px;
+    margin-top:5px;
+}
+
+.cat{
+    position:relative;
+    z-index:20;
+    width:170px;
+    height:170px;
+    margin:25px 0;
+    animation:catIdle 1.8s ease-in-out infinite;
+}
+
+@keyframes catIdle{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+.cat-body{
+    position:absolute;
+    left:45px;
+    top:60px;
+    width:80px;
+    height:85px;
+    border-radius:45% 45% 35% 35%;
+    background:
+        linear-gradient(
+            135deg,
+            #24263c,
+            #070914
+        );
+    box-shadow:
+        0 0 20px rgba(93,142,255,.45);
+}
+
+.cat-head{
+    position:absolute;
+    left:31px;
+    top:20px;
+    width:108px;
+    height:85px;
+    border-radius:48%;
+    background:
+        linear-gradient(
+            145deg,
+            #34384f,
+            #070914
+        );
+    box-shadow:
+        0 0 18px rgba(71,139,255,.45);
+}
+
+.cat-ear{
+    position:absolute;
+    top:-25px;
+    width:45px;
+    height:48px;
+    background:#121629;
+    clip-path:polygon(50% 0,100% 100%,0 100%);
+}
+
+.cat-ear.left{
+    left:0;
+}
+
+.cat-ear.right{
+    right:0;
+}
+
+.cat-eye{
+    position:absolute;
+    top:38px;
+    width:18px;
+    height:8px;
+    background:#65eaff;
+    border-radius:50%;
+    box-shadow:
+        0 0 12px #40dfff,
+        0 0 25px #40dfff;
+}
+
+.cat-eye.left{
+    left:25px;
+}
+
+.cat-eye.right{
+    right:25px;
+}
+
+.cat-nose{
+    position:absolute;
+    top:53px;
+    left:50%;
+    transform:translateX(-50%);
+    width:10px;
+    height:8px;
+    background:#7edcff;
+    clip-path:polygon(50% 100%,0 0,100% 0);
+}
+
+.cat-tail{
+    position:absolute;
+    right:5px;
+    top:78px;
+    width:75px;
+    height:65px;
+    border:10px solid #101326;
+    border-left-color:transparent;
+    border-bottom-color:transparent;
+    border-radius:50%;
+    transform:rotate(-25deg);
+}
+
+.start-btn{
+    position:relative;
+    z-index:30;
+
+    border:3px solid #68c7ff;
+    border-radius:18px;
+
+    padding:16px 42px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #259eff,
+            #1258cf
+        );
+
+    color:white;
+
+    font-size:21px;
+    font-weight:1000;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 6px 0 #073477,
+        0 0 25px rgba(53,166,255,.65);
+
+    transition:.15s;
+}
+
+.start-btn:active{
+    transform:translateY(5px);
+    box-shadow:0 1px 0 #073477;
+}
+
+.more-games{
+    position:relative;
+    z-index:20;
+    margin-top:30px;
+    width:95%;
+}
+
+.more-games h2{
+    font-size:19px;
+    margin-bottom:12px;
+}
+
+.game-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.game-links a{
+    text-decoration:none;
+    color:white;
+    background:rgba(10,25,65,.8);
+    border:1px solid #327fd7;
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:13px;
+}
+
+#gameScreen{
+    display:none;
+}
+
+.game-area{
+    position:relative;
+    width:100%;
+    border:3px solid #247ce0;
+    border-radius:22px;
+    overflow:hidden;
+    background:#071b52;
+    box-shadow:0 0 35px rgba(27,115,255,.35);
+}
+
+canvas{
+    display:block;
+    width:100%;
+    height:auto;
+    touch-action:none;
+}
+
+.hud{
+    position:absolute;
+    left:14px;
+    right:14px;
+    top:12px;
+    z-index:50;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    pointer-events:none;
+}
+
+.hud-box{
+    min-width:110px;
+    height:55px;
+
+    border:3px solid #2789ed;
+    border-radius:18px;
+
+    background:rgba(5,17,48,.88);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+
+    font-weight:1000;
+    font-size:22px;
+
+    box-shadow:0 0 15px rgba(37,137,237,.35);
+}
+
+.hud-right{
+    display:flex;
+    gap:10px;
+}
+
+.pause{
+    pointer-events:auto;
+    width:55px;
+    height:55px;
+    border:3px solid #2789ed;
+    border-radius:18px;
+    background:#091737;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.controls{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:18px;
+    z-index:60;
+
+    display:flex;
+    justify-content:space-between;
+    padding:0 25px;
+
+    pointer-events:none;
+}
+
+.control-group{
+    display:flex;
+    gap:18px;
+}
+
+.control{
+    pointer-events:auto;
+
+    width:82px;
+    height:82px;
+
+    border-radius:50%;
+
+    border:4px solid rgba(225,239,255,.7);
+
+    background:rgba(10,25,65,.78);
+
+    color:#dbe8ff;
+
+    font-size:38px;
+    font-weight:bold;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.35);
+
+    touch-action:none;
+}
+
+.control:active{
+    transform:scale(.92);
+    background:rgba(34,91,177,.9);
+}
+
+.message{
+    text-align:center;
+    padding:10px;
+    color:#a9d8ff;
+    font-weight:bold;
+}
+
+.info{
+    margin-top:15px;
+    background:#091637;
+    border:2px solid #173d7c;
+    border-radius:18px;
+    padding:20px;
+}
+
+.info h2{
+    color:#62c7ff;
+    margin-bottom:8px;
+}
+
+.info p{
+    color:#c0cce4;
+    line-height:1.7;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(1,5,20,.88);
+    padding:20px;
+}
+
+.over-box{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    padding:30px 20px;
+
+    border-radius:25px;
+    border:3px solid #3189ed;
+
+    background:
+        linear-gradient(
+            180deg,
+            #112a67,
+            #07112b
+        );
+
+    box-shadow:0 0 40px rgba(44,142,255,.45);
+}
+
+.over-box h2{
+    font-size:42px;
+    color:#6bcaff;
+    margin-bottom:12px;
+}
+
+.over-box p{
+    color:#c8d6ef;
+    margin:8px;
+}
+
+.restart{
+    border:none;
+    border-radius:14px;
+    padding:14px 25px;
+    background:#1688ed;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+.home{
+    border:2px solid #326cae;
+    border-radius:14px;
+    padding:12px 20px;
+    background:#0c1c40;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-left:7px;
+}
+
+footer{
+    text-align:center;
+    color:#7f8ca8;
+    padding:25px 10px;
+    font-size:13px;
+}
+
+.footer-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-bottom:12px;
+}
+
+.footer-links a{
+    color:#a8bad8;
+    text-decoration:none;
+}
+
+@media(max-width:600px){
+
+    .page{
+        padding:6px;
+    }
+
+    #startScreen{
+        min-height:720px;
+    }
+
+    .moon{
+        width:105px;
+        height:105px;
+        top:55px;
+        right:5%;
+    }
+
+    .castle{
+        transform:scale(.7);
+        right:-10px;
+    }
+
+    .game-title{
+        font-size:43px;
+        letter-spacing:2px;
+    }
+
+    .game-subtitle{
+        font-size:11px;
+        letter-spacing:2px;
+    }
+
+    .cat{
+        transform:scale(.85);
+        margin:15px 0;
+    }
+
+    @keyframes catIdle{
+        0%,100%{
+            transform:scale(.85) translateY(0);
+        }
+        50%{
+            transform:scale(.85) translateY(-8px);
+        }
+    }
+
+    .start-btn{
+        width:90%;
+        max-width:330px;
+    }
+
+    .hud{
+        left:7px;
+        right:7px;
+        top:7px;
+    }
+
+    .hud-box{
+        min-width:78px;
+        height:44px;
+        border-radius:14px;
+        font-size:16px;
+        border-width:2px;
+    }
+
+    .pause{
+        width:44px;
+        height:44px;
+        border-radius:14px;
+        border-width:2px;
+    }
+
+    .controls{
+        padding:0 12px;
+        bottom:12px;
+    }
+
+    .control{
+        width:67px;
+        height:67px;
+        font-size:30px;
+        border-width:3px;
+    }
+
+    .control-group{
+        gap:8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<div class="topbar">
+
+    <button class="top-btn" onclick="goHome()">
+        ← Home
+    </button>
+
+    <button class="top-btn" onclick="toggleSound()">
+        <span id="soundText">🔊 Sound</span>
+    </button>
+
+</div>
+
+<div class="logo">
+    <img src="logo.webp"
+         alt="GameWithFun Logo"
+         onerror="this.style.display='none'">
+</div>
+
+<section id="startScreen">
+
+    <div class="star s1"></div>
+    <div class="star s2"></div>
+    <div class="star s3"></div>
+    <div class="star s4"></div>
+    <div class="star s5"></div>
+    <div class="star s6"></div>
+    <div class="star s7"></div>
+    <div class="star s8"></div>
+    <div class="star s9"></div>
+
+    <div class="moon"></div>
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <div class="mountains">
+
+        <div class="mountain m1"></div>
+        <div class="mountain m2"></div>
+        <div class="mountain m3"></div>
+
+    </div>
+
+    <div class="trees">
+
+        <div class="tree t1"></div>
+        <div class="tree t2"></div>
+        <div class="tree t3"></div>
+        <div class="tree t4"></div>
+        <div class="tree t5"></div>
+        <div class="tree t6"></div>
+        <div class="tree t7"></div>
+        <div class="tree t8"></div>
+
+    </div>
+
+    <div class="castle">
+
+        <div class="castle-main">
+            <div class="window w3"></div>
+        </div>
+
+        <div class="tower left">
+            <div class="roof"></div>
+            <div class="window w1"></div>
+        </div>
+
+        <div class="tower right">
+            <div class="roof"></div>
+            <div class="window w2"></div>
+        </div>
+
+    </div>
+
+    <h1 class="game-title">
+        SHADOW CAT
+    </h1>
+
+    <div class="game-subtitle">
+        MOONLIT FOREST ADVENTURE
+    </div>
+
+    <div class="cat">
+
+        <div class="cat-tail"></div>
+
+        <div class="cat-body"></div>
+
+        <div class="cat-head">
+
+            <div class="cat-ear left"></div>
+            <div class="cat-ear right"></div>
+
+            <div class="cat-eye left"></div>
+            <div class="cat-eye right"></div>
+
+            <div class="cat-nose"></div>
+
+        </div>
+
+    </div>
+
+    <button class="start-btn" onclick="startGame()">
+        ▶ START THE GAME
+    </button>
+
+    <div class="more-games">
+
+        <h2>🎮 More Games from GameWithFun</h2>
+
+        <div class="game-links">
+
+            <a href="/p/flag-guess.html">
+                Flag Guess
+            </a>
+
+            <a href="/p/sliding-puzzle.html">
+                Sliding Puzzle
+            </a>
+
+            <a href="/p/fruit-frenzy.html">
+                Fruit Frenzy
+            </a>
+
+            <a href="/p/shooting-game.html">
+                Shooting Game
+            </a>
+
+            <a href="/p/pipe-script.html">
+                Pipe Script
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="gameScreen">
+
+    <div class="game-area">
+
+        <canvas id="gameCanvas"
+                width="960"
+                height="540">
+        </canvas>
+
+        <div class="hud">
+
+            <div class="hud-box">
+                🐈‍⬛
+                <span>×</span>
+                <span id="lives">3</span>
+            </div>
+
+            <div class="hud-right">
+
+                <div class="hud-box">
+                    🪙
+                    <span id="coins">0</span>
+                </div>
+
+                <button class="pause"
+                        onclick="togglePause()">
+                    ❚❚
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="controls">
+
+            <div class="control-group">
+
+                <button class="control"
+                        id="leftBtn">
+                    ←
+                </button>
+
+                <button class="control"
+                        id="rightBtn">
+                    →
+                </button>
+
+            </div>
+
+            <button class="control"
+                    id="jumpBtn">
+                ↑
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="message"
+         id="message">
+        Collect coins and reach the end of the forest!
+    </div>
+
+</section>
+
+<section class="info">
+
+<h2>How to Play Shadow Cat</h2>
+
+<p>
+Guide the mysterious Shadow Cat through a beautiful moonlit forest. Jump
+across platforms, collect glowing coins and avoid the shadow creatures that
+appear during the adventure. Your main objective is to keep moving forward
+and reach the end of the forest while protecting your three lives. The game
+uses simple controls, making it easy to begin playing while giving you room
+to improve your movement and jumping skills.
+</p>
+
+<br>
+
+<h2>Starting the Adventure</h2>
+
+<p>
+When you first open Shadow Cat, you will see the game's start screen with the
+moonlit forest, the Shadow Cat character and the START THE GAME button. Take
+a moment to read the game information and look at the available controls.
+When you are ready, press START THE GAME. The game will immediately begin.
+On browsers that support fullscreen and screen-orientation features, the
+game will request fullscreen mode and attempt to rotate the device into
+landscape orientation. If your browser does not allow automatic rotation,
+you can manually turn your phone sideways and continue playing.
+</p>
+
+<br>
+
+<h2>Desktop Controls</h2>
+
+<p>
+Desktop players can control Shadow Cat with the keyboard. Press the Left
+Arrow or A key to move left. Press the Right Arrow or D key to move right.
+Press the Up Arrow, W or Space key to jump. Combining movement with jumping
+is important because many coins and floating platforms are positioned above
+the main ground area. Practice short movements first so you can understand
+how quickly the character responds to each key.
+</p>
+
+<br>
+
+<h2>Mobile Controls</h2>
+
+<p>
+Mobile players can use the three on-screen controls displayed inside the
+game. The left button moves Shadow Cat toward the left, the right button
+moves the character toward the right and the upward button makes Shadow Cat
+jump. The controls are designed for touch input, so you do not need a
+physical keyboard. For a wider view, landscape mode is recommended on
+supported phones and tablets.
+</p>
+
+<br>
+
+<h2>Collect Coins</h2>
+
+<p>
+Glowing coins are placed throughout the forest. Move Shadow Cat close to a
+coin to collect it. Every successful collection increases the coin counter
+shown in the HUD. Some parts of the world contain groups of coins, so
+carefully timed jumps can help you collect several coins in one section.
+Coins are not required to finish the adventure, but collecting more of them
+can help you achieve a better score.
+</p>
+
+<br>
+
+<h2>Watch the Shadow Enemies</h2>
+
+<p>
+Shadow creatures can appear as you travel through the forest. They are
+moving obstacles, so pay attention to their position before running into an
+area where an enemy is present. You can often jump over an enemy instead of
+making direct contact. If your timing is good, landing on an enemy can defeat
+it and give you bonus coins. New players should first learn safe movement
+before attempting more difficult enemy jumps.
+</p>
+
+<br>
+
+<h2>Use the Platforms</h2>
+
+<p>
+Floating platforms are an important part of the level. They are placed at
+different heights and distances, creating areas where you need to combine
+horizontal movement with jumping. Some platforms are useful for reaching
+coins, while others provide a safer route around obstacles. Look ahead before
+jumping and try to estimate where Shadow Cat will land.
+</p>
+
+<p>
+Good platforming is mostly about timing. If you jump too early, you may fall
+short of the next platform. If you jump too late, you may pass the platform
+entirely. With practice, you will learn the rhythm of the character's jump
+and movement speed.
+</p>
+
+<br>
+
+<h2>Lives and Game Over</h2>
+
+<p>
+Shadow Cat begins each new game with three lives. The life counter is shown
+at the top of the game screen beside the cat icon. Contact with enemies or
+falling outside the playable area can cost a life. After taking damage, the
+character receives a short protection period so that another collision does
+not immediately remove another life.
+</p>
+
+<p>
+When all three lives are gone, the Game Over screen appears. Your collected
+coins and best result are displayed there. You can select PLAY AGAIN to
+restart the adventure or choose HOME to return to GameWithFun.
+</p>
+
+<br>
+
+<h2>Improve Your Score</h2>
+
+<p>
+If you want to improve your Shadow Cat score, try to collect coins while
+keeping your movement controlled. Avoid unnecessary risks when an enemy is
+nearby. Learn the locations of floating platforms and use your jump at the
+right moment. A smooth run can often produce a better result than simply
+moving as quickly as possible.
+</p>
+
+<p>
+Your best coin score is stored locally in your browser. This allows you to
+play again and challenge your previous result. Try different movement
+patterns, improve your jumps and see whether you can finish another run with
+a higher coin total.
+</p>
+
+<br>
+
+<h2>Pause the Game</h2>
+
+<p>
+If you need to stop temporarily, use the pause button in the upper area of
+the game. Pausing stops active gameplay updates while keeping your current
+game state available. Press the pause button again when you are ready to
+continue. This is useful when you need a short break without ending your
+current attempt.
+</p>
+
+<br>
+
+<h2>Sound Effects</h2>
+
+<p>
+Shadow Cat includes simple browser-generated sound effects for important
+game actions. Sounds can be heard when jumping, collecting coins and during
+other gameplay events. The sound system does not require an external music
+file to run. If you prefer silent gameplay, use the Sound button at the top
+of the page to mute the effects.
+</p>
+
+<br>
+
+<h2>Fullscreen and Landscape Mode</h2>
+
+<p>
+The START THE GAME button is designed to begin the game directly from a
+user action. After the button is pressed, Shadow Cat starts and the browser
+is asked to enter fullscreen mode when that feature is available. The game
+also requests landscape orientation on supported devices. Browser
+permissions vary between devices and browsers, so automatic fullscreen or
+rotation may not always be available.
+</p>
+
+<p>
+If fullscreen or automatic orientation is unavailable, the game can still
+be played normally. On a mobile device, manually rotating the phone
+sideways can provide a wider playing area and make the touch controls easier
+to use.
+</p>
+
+<br>
+
+<h2>About Shadow Cat</h2>
+
+<p>
+Shadow Cat is a browser-based platform adventure created for GameWithFun.
+The game combines a mysterious nighttime forest atmosphere with simple
+platforming, collectible coins, moving shadow creatures and a colorful
+fantasy-inspired visual style. The objective is easy to understand: guide
+the Shadow Cat through the large forest world, collect coins, avoid danger
+and reach the end of the adventure.
+</p>
+
+<p>
+The game is designed for both desktop and mobile browsers. There is no
+separate launcher required. Players can open the game page, press START THE
+GAME and begin playing. The responsive game area allows the experience to
+adapt to different screen sizes while the touch controls provide a simple
+way to play on phones and tablets.
+</p>
+
+<br>
+
+<h2>Shadow Cat Adventure Tips</h2>
+
+<p>
+One of the best ways to play is to look ahead instead of focusing only on
+the character. The camera moves with Shadow Cat as the adventure continues,
+revealing new sections of the forest. Watch for platforms, coins and enemies
+before deciding whether to move quickly or prepare for a jump.
+</p>
+
+<p>
+When approaching an enemy, think about your available space. A controlled
+jump can be safer than moving directly toward the obstacle. When collecting
+coins above the ground, make sure you have enough room to land safely. If
+you are unsure about a jump, practicing the same section during another run
+can help you understand the timing.
+</p>
+
+<br>
+
+<h2>Why Shadow Cat Is Fun to Replay</h2>
+
+<p>
+Shadow Cat is built for short gaming sessions as well as repeated attempts.
+The basic controls are easy to learn, but collecting a large number of coins
+and navigating the entire world successfully requires attention and timing.
+Each new attempt gives you another chance to improve your movement, make
+better jumps and increase your score.
+</p>
+
+<p>
+The combination of a moonlit forest, glowing collectibles, floating
+platforms and shadow enemies gives the adventure its own atmosphere. Whether
+you want a quick browser game or a challenge to beat your previous score,
+Shadow Cat provides a simple way to jump into a platform adventure directly
+from GameWithFun.
+</p>
+
+<br>
+
+<h2>Game Information</h2>
+
+<p>
+Developer: GameWithFun<br>
+Game Name: Shadow Cat<br>
+Genre: Platform / Adventure<br>
+World: Moonlit Forest<br>
+Gameplay: Single Player<br>
+Platform: Web Browser<br>
+Controls: Keyboard + Touch<br>
+Collectibles: Coins<br>
+Lives: 3<br>
+Game Style: Shadow Fantasy Adventure<br>
+Latest Update: October 2026
+</p>
+
+</section>
+
+<footer>
+
+<div class="footer-links">
+
+<a href="https://gamewithfun.com/about.html">
+About Us
+</a>
+
+<a href="https://gamewithfun.com/contact.html">
+Contact Us
+</a>
+
+<a href="https://gamewithfun.com/privacy.html">
+Privacy Policy
+</a>
+
+<a href="https://gamewithfun.com/disclaimer.html">
+Disclaimer
+</a>
+
+</div>
+
+© 2026 GameWithFun · Shadow Cat
+
+</footer>
+
+</div>
+
+<div class="overlay"
+     id="gameOver">
+
+    <div class="over-box">
+
+        <h2>GAME OVER</h2>
+
+        <p>
+            The shadow forest defeated you.
+        </p>
+
+        <p>
+            Coins:
+            <strong id="finalCoins">0</strong>
+        </p>
+
+        <p>
+            Best:
+            <strong id="finalBest">0</strong>
+        </p>
+
+        <button class="restart"
+                onclick="restartGame()">
+            🔄 PLAY AGAIN
+        </button>
+
+        <button class="home"
+                onclick="goHome()">
+            HOME
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const canvas =
+    document.getElementById("gameCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+let gameRunning = false;
+let paused = false;
+
+let coins = 0;
+let lives = 3;
+
+let best =
+    Number(
+        localStorage.getItem("shadowCatBest") || 0
+    );
+
+let soundEnabled = true;
+
+let lastTime = 0;
+
+let cameraX = 0;
+
+let levelWidth = 8000;
+
+let enemyTimer = 0;
+
+let coinTimer = 0;
+
+const keys = {
+    left:false,
+    right:false,
+    jump:false
+};
+
+const player = {
+
+    x:120,
+    y:350,
+
+    w:52,
+    h:55,
+
+    vx:0,
+    vy:0,
+
+    speed:.75,
+    maxSpeed:7,
+
+    jump:-14,
+
+    grounded:false,
+
+    invincible:0,
+
+    direction:1,
+
+    anim:0
+};
+
+let platforms = [];
+let coinObjects = [];
+let enemies = [];
+let particles = [];
+
+let audioCtx = null;
+
+function initAudio(){
+
+    if(!audioCtx){
+
+        try{
+
+            audioCtx =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }catch(e){}
+
+    }
+
+    if(
+        audioCtx &&
+        audioCtx.state === "suspended"
+    ){
+        audioCtx.resume();
+    }
+}
+
+function sound(
+    frequency,
+    duration,
+    type="sine",
+    volume=.035
+){
+
+    if(!soundEnabled) return;
+
+    initAudio();
+
+    if(!audioCtx) return;
+
+    const osc =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+    osc.type = type;
+
+    osc.frequency.value =
+        frequency;
+
+    gain.gain.setValueAtTime(
+        volume,
+        audioCtx.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        audioCtx.currentTime + duration
+    );
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+
+    osc.stop(
+        audioCtx.currentTime + duration
+    );
+}
+
+function toggleSound(){
+
+    soundEnabled =
+        !soundEnabled;
+
+    document.getElementById(
+        "soundText"
+    ).textContent =
+        soundEnabled
+        ? "🔊 Sound"
+        : "🔇 Muted";
+
+    if(soundEnabled){
+        sound(700,.08);
+    }
+}
+
+function goHome(){
+
+    window.location.href =
+        "https://gamewithfun.com/";
+}
+
+function createLevel(){
+
+    platforms = [];
+    coinObjects = [];
+    enemies = [];
+    particles = [];
+
+    platforms.push({
+        x:0,
+        y:455,
+        w:8000,
+        h:85
+    });
+
+    const layouts = [
+
+        [600,350,220],
+        [950,285,180],
+        [1250,370,230],
+        [1650,320,210],
+        [2000,260,190],
+        [2350,360,240],
+        [2800,300,210],
+        [3150,380,180],
+        [3500,275,220],
+        [3900,335,230],
+        [4300,250,190],
+        [4650,350,250],
+        [5100,290,190],
+        [5450,370,230],
+        [5850,260,200],
+        [6200,340,220],
+        [6600,290,180],
+        [7000,360,240],
+        [7400,270,200]
+    ];
+
+    for(const item of layouts){
+
+        platforms.push({
+
+            x:item[0],
+            y:item[1],
+            w:item[2],
+            h:25
+        });
+
+    }
+
+    for(
+        let x=300;
+        x<7800;
+        x+=180
+    ){
+
+        const y =
+            300 +
+            Math.sin(x*.015)*75;
+
+        coinObjects.push({
+
+            x:x,
+            y:Math.max(
+                170,
+                Math.min(390,y)
+            ),
+
+            r:13,
+
+            collected:false,
+
+            spin:
+                Math.random()*6.28
+        });
+    }
+
+    const groups = [
+        [690,300],
+        [740,300],
+        [790,300],
+
+        [1020,230],
+        [1070,230],
+        [1120,230],
+
+        [2030,205],
+        [2080,205],
+        [2130,205],
+
+        [4300,195],
+        [4350,195],
+        [4400,195]
+    ];
+
+    for(const c of groups){
+
+        coinObjects.push({
+
+            x:c[0],
+            y:c[1],
+
+            r:13,
+
+            collected:false,
+
+            spin:0
+        });
+
+    }
+}
+
+function startGame(){
+
+    initAudio();
+
+    document.getElementById(
+        "startScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "gameScreen"
+    ).style.display = "block";
+
+    document.getElementById(
+        "gameOver"
+    ).style.display = "none";
+
+    resetGame();
+
+    gameRunning = true;
+    paused = false;
+
+    lastTime =
+        performance.now();
+
+    requestAnimationFrame(gameLoop);
+
+    /* Request fullscreen after the START button tap. */
+
+    const page =
+        document.documentElement;
+
+    const fullscreenRequest =
+        page.requestFullscreen ||
+        page.webkitRequestFullscreen ||
+        page.msRequestFullscreen;
+
+    if(fullscreenRequest){
+
+        try{
+
+            const result =
+                fullscreenRequest.call(page);
+
+            if(
+                result &&
+                typeof result.then === "function"
+            ){
+
+                result.then(() => {
+
+                    lockLandscape();
+
+                }).catch(() => {
+
+                    lockLandscape();
+
+                });
+
+            }else{
+
+                lockLandscape();
+
+            }
+
+        }catch(error){
+
+            lockLandscape();
+
+        }
+
+    }else{
+
+        lockLandscape();
+
+    }
+
+}
+
+function lockLandscape(){
+
+    try{
+
+        if(
+            screen.orientation &&
+            screen.orientation.lock
+        ){
+
+            screen.orientation.lock(
+                "landscape"
+            ).catch(() => {});
+
+        }
+
+    }catch(error){}
+
+}
+
+function restartGame(){
+
+    document.getElementById(
+        "gameOver"
+    ).style.display = "none";
+
+    resetGame();
+
+    gameRunning = true;
+    paused = false;
+
+    lastTime =
+        performance.now();
+
+    requestAnimationFrame(gameLoop);
+}
+
+function resetGame(){
+
+    coins = 0;
+    lives = 3;
+
+    cameraX = 0;
+
+    player.x = 120;
+    player.y = 350;
+
+    player.vx = 0;
+    player.vy = 0;
+
+    player.invincible = 0;
+
+    createLevel();
+
+    updateHUD();
+}
+
+window.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.code==="ArrowLeft" ||
+            e.code==="KeyA"
+        ){
+            keys.left=true;
+        }
+
+        if(
+            e.code==="ArrowRight" ||
+            e.code==="KeyD"
+        ){
+            keys.right=true;
+        }
+
+        if(
+            e.code==="ArrowUp" ||
+            e.code==="Space" ||
+            e.code==="KeyW"
+        ){
+
+            keys.jump=true;
+
+            e.preventDefault();
+        }
+
+    }
+);
+
+window.addEventListener(
+    "keyup",
+    function(e){
+
+        if(
+            e.code==="ArrowLeft" ||
+            e.code==="KeyA"
+        ){
+            keys.left=false;
+        }
+
+        if(
+            e.code==="ArrowRight" ||
+            e.code==="KeyD"
+        ){
+            keys.right=false;
+        }
+
+        if(
+            e.code==="ArrowUp" ||
+            e.code==="Space" ||
+            e.code==="KeyW"
+        ){
+            keys.jump=false;
+        }
+
+    }
+);
+
+function touchButton(
+    element,
+    key
+){
+
+    element.addEventListener(
+        "pointerdown",
+        function(e){
+
+            e.preventDefault();
+
+            keys[key]=true;
+
+        }
+    );
+
+    element.addEventListener(
+        "pointerup",
+        function(e){
+
+            e.preventDefault();
+
+            keys[key]=false;
+
+        }
+    );
+
+    element.addEventListener(
+        "pointercancel",
+        function(){
+
+            keys[key]=false;
+
+        }
+    );
+
+    element.addEventListener(
+        "pointerleave",
+        function(){
+
+            keys[key]=false;
+
+        }
+    );
+}
+
+touchButton(
+    document.getElementById("leftBtn"),
+    "left"
+);
+
+touchButton(
+    document.getElementById("rightBtn"),
+    "right"
+);
+
+touchButton(
+    document.getElementById("jumpBtn"),
+    "jump"
+);
+
+function togglePause(){
+
+    if(!gameRunning) return;
+
+    paused = !paused;
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        paused
+        ? "⏸ Game Paused"
+        : "Collect coins and reach the end of the forest!";
+}
+
+function updatePlayer(dt){
+
+    const s =
+        dt / 16.67;
+
+    if(keys.left){
+
+        player.vx -=
+            player.speed*s;
+
+        player.direction=-1;
+    }
+
+    if(keys.right){
+
+        player.vx +=
+            player.speed*s;
+
+        player.direction=1;
+    }
+
+    if(
+        !keys.left &&
+        !keys.right
+    ){
+
+        player.vx *=
+            Math.pow(.82,s);
+    }
+
+    player.vx =
+        Math.max(
+            -player.maxSpeed,
+            Math.min(
+                player.maxSpeed,
+                player.vx
+            )
+        );
+
+    if(
+        keys.jump &&
+        player.grounded
+    ){
+
+        player.vy =
+            player.jump;
+
+        player.grounded=false;
+
+        sound(
+            500,
+            .09,
+            "square"
+        );
+    }
+
+    player.vy +=
+        .72*s;
+
+    player.x +=
+        player.vx*s;
+
+    player.y +=
+        player.vy*s;
+
+    if(player.x<10){
+
+        player.x=10;
+        player.vx=0;
+    }
+
+    if(
+        player.x+player.w>
+        levelWidth-50
+    ){
+
+        finishLevel();
+    }
+
+    player.grounded=false;
+
+    for(const p of platforms){
+
+        if(
+
+            player.x+player.w >
+            p.x &&
+
+            player.x <
+            p.x+p.w &&
+
+            player.y+player.h >=
+            p.y &&
+
+            player.y+player.h <=
+            p.y+p.h+15 &&
+
+            player.vy>=0
+
+        ){
+
+            player.y =
+                p.y-player.h;
+
+            player.vy=0;
+
+            player.grounded=true;
+        }
+    }
+
+    if(player.y>650){
+
+        loseLife();
+    }
+
+    if(player.invincible>0){
+
+        player.invincible -=
+            dt;
+    }
+
+    player.anim +=
+        Math.abs(player.vx)*s;
+}
+
+function updateCamera(){
+
+    const target =
+        player.x -
+        canvas.width*.35;
+
+    cameraX +=
+        (target-cameraX)*.08;
+
+    cameraX =
+        Math.max(
+            0,
+            Math.min(
+                levelWidth-canvas.width,
+                cameraX
+            )
+        );
+}
+
+function spawnEnemies(){
+
+    enemyTimer += 16;
+
+    if(enemyTimer<1200) return;
+
+    enemyTimer=0;
+
+    const x =
+        cameraX+
+        canvas.width+
+        80;
+
+    enemies.push({
+
+        x:x,
+
+        y:400,
+
+        w:45,
+        h:45,
+
+        vx:
+            -(2+
+            Math.random()*1.5),
+
+        phase:
+            Math.random()*6.28
+    });
+}
+
+function updateEnemies(dt){
+
+    for(
+        let i=enemies.length-1;
+        i>=0;
+        i--
+    ){
+
+        const e =
+            enemies[i];
+
+        e.x +=
+            e.vx*
+            (dt/16.67);
+
+        e.phase += .08;
+
+        e.y =
+            410+
+            Math.sin(e.phase)*3;
+
+        if(
+            e.x<
+            cameraX-150
+        ){
+
+            enemies.splice(i,1);
+
+            continue;
+        }
+
+        if(
+            player.invincible<=0 &&
+            collision(player,e)
+        ){
+
+            if(
+                player.vy>0 &&
+                player.y+player.h-12<
+                e.y+15
+            ){
+
+                enemies.splice(i,1);
+
+                player.vy=-9;
+
+                coins+=5;
+
+                makeParticles(
+                    e.x+20,
+                    e.y+20,
+                    12,
+                    "#ffd34d"
+                );
+
+                sound(
+                    750,
+                    .08,
+                    "square"
+                );
+
+            }else{
+
+                loseLife();
+
+                enemies.splice(i,1);
+            }
+
+        }
+
+    }
+}
+
+function updateCoins(dt){
+
+    for(
+        const c of coinObjects
+    ){
+
+        if(c.collected) continue;
+
+        c.spin += .08;
+
+        if(
+            circleCollision(
+                c,
+                player
+            )
+        ){
+
+            c.collected=true;
+
+            coins++;
+
+            makeParticles(
+                c.x,
+                c.y,
+                9,
+                "#ffd84d"
+            );
+
+            sound(
+                900,
+                .08,
+                "sine"
+            );
+
+            updateHUD();
+        }
+    }
+}
+
+function loseLife(){
+
+    if(player.invincible>0)
+        return;
+
+    lives--;
+
+    player.invincible=1800;
+
+    player.vx=
+        -player.direction*4;
+
+    player.vy=-8;
+
+    makeParticles(
+        player.x+25,
+        player.y+25,
+        20,
+        "#63d9ff"
+    );
+
+    sound(
+        150,
+        .25,
+        "sawtooth",
+        .06
+    );
+
+    updateHUD();
+
+    if(lives<=0){
+
+        endGame();
+    }
+}
+
+function finishLevel(){
+
+    gameRunning=false;
+
+    if(coins>best){
+
+        best=coins;
+
+        localStorage.setItem(
+            "shadowCatBest",
+            best
+        );
+    }
+
+    document.getElementById(
+        "finalCoins"
+    ).textContent=coins;
+
+    document.getElementById(
+        "finalBest"
+    ).textContent=best;
+
+    document.getElementById(
+        "gameOver"
+    ).style.display="flex";
+
+    document.querySelector(
+        ".over-box h2"
+    ).textContent=
+        "YOU WIN!";
+
+    document.querySelector(
+        ".over-box p"
+    ).textContent=
+        "You reached the end of the Moonlit Forest!";
+
+    sound(
+        1000,
+        .15,
+        "triangle"
+    );
+
+    setTimeout(
+        ()=>sound(1300,.2,"triangle"),
+        150
+    );
+}
+
+function endGame(){
+
+    gameRunning=false;
+
+    if(coins>best){
+
+        best=coins;
+
+        localStorage.setItem(
+            "shadowCatBest",
+            best
+        );
+    }
+
+    document.getElementById(
+        "finalCoins"
+    ).textContent=coins;
+
+    document.getElementById(
+        "finalBest"
+    ).textContent=best;
+
+    document.querySelector(
+        ".over-box h2"
+    ).textContent=
+        "GAME OVER";
+
+    document.querySelector(
+        ".over-box p"
+    ).textContent=
+        "The shadow forest defeated you.";
+
+    document.getElementById(
+        "gameOver"
+    ).style.display="flex";
+}
+
+function makeParticles(
+    x,
+    y,
+    count,
+    color
+){
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        particles.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                (Math.random()-.5)*7,
+
+            vy:
+                (Math.random()-.7)*7,
+
+            life:
+                300+
+                Math.random()*400,
+
+            size:
+                3+
+                Math.random()*5,
+
+            color:color
+        });
+    }
+}
+
+function updateParticles(dt){
+
+    for(
+        let i=particles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p =
+            particles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        p.vy += .16;
+
+        p.life -= dt;
+
+        if(p.life<=0){
+
+            particles.splice(i,1);
+        }
+    }
+}
+
+function collision(a,b){
+
+    return(
+
+        a.x<
+        b.x+b.w &&
+
+        a.x+a.w>
+        b.x &&
+
+        a.y<
+        b.y+b.h &&
+
+        a.y+a.h>
+        b.y
+
+    );
+}
+
+function circleCollision(c,r){
+
+    const closestX =
+        Math.max(
+            r.x,
+            Math.min(
+                c.x,
+                r.x+r.w
+            )
+        );
+
+    const closestY =
+        Math.max(
+            r.y,
+            Math.min(
+                c.y,
+                r.y+r.h
+            )
+        );
+
+    const dx =
+        c.x-closestX;
+
+    const dy =
+        c.y-closestY;
+
+    return(
+        dx*dx+
+        dy*dy<
+        c.r*c.r
+    );
+}
+
+function drawBackground(){
+
+    const g =
+        ctx.createLinearGradient(
+            0,0,
+            0,canvas.height
+        );
+
+    g.addColorStop(
+        0,
+        "#06246e"
+    );
+
+    g.addColorStop(
+        .45,
+        "#113c91"
+    );
+
+    g.addColorStop(
+        1,
+        "#06152f"
+    );
+
+    ctx.fillStyle=g;
+
+    ctx.fillRect(
+        0,0,
+        canvas.width,
+        canvas.height
+    );
+
+    for(
+        let i=0;
+        i<70;
+        i++
+    ){
+
+        const x =
+            ((i*173)%levelWidth)-
+            cameraX*.3;
+
+        const y =
+            (i*71)%280;
+
+        if(
+            x>-10 &&
+            x<canvas.width+10
+        ){
+
+            ctx.fillStyle=
+                "rgba(255,255,255,.8)";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                1.5,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+        }
+    }
+
+    const moonX =
+        760-cameraX*.08;
+
+    const moonY=110;
+
+    const moon =
+        ctx.createRadialGradient(
+            moonX-15,
+            moonY-15,
+            5,
+            moonX,
+            moonY,
+            75
+        );
+
+    moon.addColorStop(
+        0,
+        "#fff"
+    );
+
+    moon.addColorStop(
+        .65,
+        "#d8ecff"
+    );
+
+    moon.addColorStop(
+        1,
+        "rgba(160,210,255,.1)"
+    );
+
+    ctx.fillStyle=moon;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        moonX,
+        moonY,
+        70,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    drawMountain(
+        80,
+        400,
+        260,
+        180,
+        "#12357c"
+    );
+
+    drawMountain(
+        360,
+        400,
+        280,
+        230,
+        "#102f72"
+    );
+
+    drawMountain(
+        650,
+        400,
+        250,
+        170,
+        "#163b84"
+    );
+
+    for(
+        let i=0;
+        i<25;
+        i++
+    ){
+
+        const x =
+            ((i*145)-
+            cameraX*.45)%
+            (canvas.width+200);
+
+        const xx =
+            x<0
+            ?x+canvas.width+200
+            :x;
+
+        drawPine(
+            xx,
+            450,
+            25+
+            (i%3)*10,
+            "#061b39"
+        );
+    }
+}
+
+function drawMountain(
+    x,
+    bottom,
+    width,
+    height,
+    color
+){
+
+    ctx.fillStyle=color;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x-width,
+        bottom
+    );
+
+    ctx.lineTo(
+        x,
+        bottom-height
+    );
+
+    ctx.lineTo(
+        x+width,
+        bottom
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+}
+
+function drawPine(
+    x,
+    y,
+    size,
+    color
+){
+
+    ctx.fillStyle=color;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y-size*3
+    );
+
+    ctx.lineTo(
+        x-size,
+        y
+    );
+
+    ctx.lineTo(
+        x+size,
+        y
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillRect(
+        x-5,
+        y,
+        10,
+        35
+    );
+}
+
+function drawPlatforms(){
+
+    for(
+        const p of platforms
+    ){
+
+        const x =
+            p.x-cameraX;
+
+        if(
+            x+p.w<0 ||
+            x>canvas.width
+        ){
+            continue;
+        }
+
+        const dirt =
+            ctx.createLinearGradient(
+                0,p.y,
+                0,p.y+p.h
+            );
+
+        dirt.addColorStop(
+            0,
+            "#995b31"
+        );
+
+        dirt.addColorStop(
+            1,
+            "#48291d"
+        );
+
+        ctx.fillStyle=dirt;
+
+        ctx.fillRect(
+            x,
+            p.y,
+            p.w,
+            p.h
+        );
+
+        ctx.fillStyle="#4de52e";
+
+        ctx.fillRect(
+            x,
+            p.y,
+            p.w,
+            12
+        );
+
+        ctx.fillStyle="#36b926";
+
+        for(
+            let gx=x;
+            gx<x+p.w;
+            gx+=18
+        ){
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                gx,
+                p.y+12
+            );
+
+            ctx.lineTo(
+                gx+9,
+                p.y+25
+            );
+
+            ctx.lineTo(
+                gx+18,
+                p.y+12
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+        }
+
+        ctx.fillStyle=
+            "rgba(255,190,100,.15)";
+
+        for(
+            let sx=x+20;
+            sx<x+p.w;
+            sx+=55
+        ){
+
+            ctx.beginPath();
+
+            ctx.arc(
+                sx,
+                p.y+35,
+                9,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+        }
+    }
+}
+
+function drawCoins(){
+
+    for(
+        const c of coinObjects
+    ){
+
+        if(c.collected)
+            continue;
+
+        const x =
+            c.x-cameraX;
+
+        if(
+            x< -30 ||
+            x>canvas.width+30
+        )
+            continue;
+
+        const scale =
+            .65+
+            Math.abs(
+                Math.sin(c.spin)
+            )*.35;
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            c.y
+        );
+
+        ctx.scale(
+            scale,
+            1
+        );
+
+        ctx.shadowColor=
+            "#ffd21c";
+
+        ctx.shadowBlur=15;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            c.r,
+            0,
+            Math.PI*2
+        );
+
+        const coin =
+            ctx.createLinearGradient(
+                -12,
+                -12,
+                12,
+                12
+            );
+
+        coin.addColorStop(
+            0,
+            "#fff27a"
+        );
+
+        coin.addColorStop(
+            .35,
+            "#ffc928"
+        );
+
+        coin.addColorStop(
+            1,
+            "#ed8b00"
+        );
+
+        ctx.fillStyle=coin;
+
+        ctx.fill();
+
+        ctx.strokeStyle="#fff3a0";
+
+        ctx.lineWidth=2;
+
+        ctx.stroke();
+
+        ctx.shadowBlur=0;
+
+        ctx.fillStyle="#fff6a0";
+
+        ctx.font="bold 13px Arial";
+
+        ctx.textAlign="center";
+
+        ctx.textBaseline="middle";
+
+        ctx.fillText(
+            "$",
+            0,
+            1
+        );
+
+        ctx.restore();
+    }
+}
+
+function drawEnemies(){
+
+    for(
+        const e of enemies
+    ){
+
+        const x =
+            e.x-cameraX;
+
+        if(
+            x<-70 ||
+            x>canvas.width+70
+        )
+            continue;
+
+        ctx.save();
+
+        ctx.fillStyle="#713d27";
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            x+22,
+            e.y+28,
+            25,
+            19,
+            0,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.fillStyle="#9b5735";
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            x+22,
+            e.y+18,
+            24,
+            17,
+            0,
+            Math.PI,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.strokeStyle="#fff";
+
+        ctx.lineWidth=4;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x+8,
+            e.y+22
+        );
+
+        ctx.lineTo(
+            x+17,
+            e.y+25
+        );
+
+        ctx.stroke();
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x+28,
+            e.y+25
+        );
+
+        ctx.lineTo(
+            x+38,
+            e.y+22
+        );
+
+        ctx.stroke();
+
+        ctx.fillStyle="#111";
+
+        ctx.fillRect(
+            x+11,
+            e.y+27,
+            5,
+            5
+        );
+
+        ctx.fillRect(
+            x+29,
+            e.y+27,
+            5,
+            5
+        );
+
+        ctx.restore();
+    }
+}
+
+function drawPlayer(){
+
+    if(
+        player.invincible>0 &&
+        Math.floor(
+            player.invincible/100
+        )%2===0
+    ){
+        return;
+    }
+
+    const x =
+        player.x-cameraX;
+
+    const y =
+        player.y;
+
+    ctx.save();
+
+    ctx.fillStyle=
+        "rgba(0,0,0,.35)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x+26,
+        y+54,
+        34,
+        7,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle="#15192d";
+
+    ctx.lineWidth=11;
+
+    ctx.lineCap="round";
+
+    ctx.beginPath();
+
+    if(player.direction>0){
+
+        ctx.moveTo(
+            x+38,
+            y+37
+        );
+
+        ctx.bezierCurveTo(
+            x+85,
+            y+5,
+            x+76,
+            y+70,
+            x+43,
+            y+43
+        );
+
+    }else{
+
+        ctx.moveTo(
+            x+14,
+            y+37
+        );
+
+        ctx.bezierCurveTo(
+            x-30,
+            y+5,
+            x-20,
+            y+70,
+            x+10,
+            y+43
+        );
+    }
+
+    ctx.stroke();
+
+    const body =
+        ctx.createLinearGradient(
+            x,
+            y,
+            x+52,
+            y+55
+        );
+
+    body.addColorStop(
+        0,
+        "#39415d"
+    );
+
+    body.addColorStop(
+        .45,
+        "#171b30"
+    );
+
+    body.addColorStop(
+        1,
+        "#060814"
+    );
+
+    ctx.fillStyle=body;
+
+    roundRect(
+        x+7,
+        y+23,
+        38,
+        30,
+        13
+    );
+
+    ctx.fill();
+
+    const head =
+        ctx.createLinearGradient(
+            x,
+            y,
+            x+52,
+            y+42
+        );
+
+    head.addColorStop(
+        0,
+        "#424a68"
+    );
+
+    head.addColorStop(
+        1,
+        "#090b18"
+    );
+
+    ctx.fillStyle=head;
+
+    roundRect(
+        x,
+        y,
+        52,
+        43,
+        17
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle="#171b30";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+3,
+        y+10
+    );
+
+    ctx.lineTo(
+        x+10,
+        y-15
+    );
+
+    ctx.lineTo(
+        x+24,
+        y+7
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+28,
+        y+7
+    );
+
+    ctx.lineTo(
+        x+43,
+        y-15
+    );
+
+    ctx.lineTo(
+        x+50,
+        y+10
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle="#7b355e";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+8,
+        y+4
+    );
+
+    ctx.lineTo(
+        x+11,
+        y-7
+    );
+
+    ctx.lineTo(
+        x+17,
+        y+5
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+34,
+        y+5
+    );
+
+    ctx.lineTo(
+        x+42,
+        y-7
+    );
+
+    ctx.lineTo(
+        x+45,
+        y+5
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.shadowColor="#5ceaff";
+
+    ctx.shadowBlur=13;
+
+    ctx.fillStyle="#71eaff";
+
+    ctx.fillRect(
+        x+11,
+        y+19,
+        11,
+        6
+    );
+
+    ctx.fillRect(
+        x+30,
+        y+19,
+        11,
+        6
+    );
+
+    ctx.shadowBlur=0;
+
+    ctx.fillStyle="#ff7eb7";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+26,
+        y+29
+    );
+
+    ctx.lineTo(
+        x+21,
+        y+25
+    );
+
+    ctx.lineTo(
+        x+31,
+        y+25
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    const step =
+        Math.sin(
+            player.anim*.25
+        )*4;
+
+    ctx.fillStyle="#0a0d19";
+
+    ctx.fillRect(
+        x+11,
+        y+48,
+        9,
+        9+step
+    );
+
+    ctx.fillRect(
+        x+33,
+        y+48,
+        9,
+        9-step
+    );
+
+    ctx.strokeStyle=
+        "rgba(77,198,255,.25)";
+
+    ctx.lineWidth=2;
+
+    ctx.strokeRect(
+        x+1,
+        y+1,
+        50,
+        54
+    );
+
+    ctx.restore();
+}
+
+function drawParticles(){
+
+    for(
+        const p of particles
+    ){
+
+        const x =
+            p.x-cameraX;
+
+        ctx.globalAlpha=
+            Math.max(
+                0,
+                p.life/700
+            );
+
+        ctx.fillStyle=p.color;
+
+        ctx.fillRect(
+            x,
+            p.y,
+            p.size,
+            p.size
+        );
+    }
+
+    ctx.globalAlpha=1;
+}
+
+function roundRect(
+    x,y,w,h,r
+){
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+r,
+        y
+    );
+
+    ctx.lineTo(
+        x+w-r,
+        y
+    );
+
+    ctx.quadraticCurveTo(
+        x+w,
+        y,
+        x+w,
+        y+r
+    );
+
+    ctx.lineTo(
+        x+w,
+        y+h-r
+    );
+
+    ctx.quadraticCurveTo(
+        x+w,
+        y+h,
+        x+w-r,
+        y+h
+    );
+
+    ctx.lineTo(
+        x+r,
+        y+h
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y+h,
+        x,
+        y+h-r
+    );
+
+    ctx.lineTo(
+        x,
+        y+r
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y,
+        x+r,
+        y
+    );
+
+    ctx.closePath();
+}
+
+function updateHUD(){
+
+    document.getElementById(
+        "coins"
+    ).textContent=coins;
+
+    document.getElementById(
+        "lives"
+    ).textContent=lives;
+}
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    drawBackground();
+
+    drawPlatforms();
+
+    drawCoins();
+
+    drawEnemies();
+
+    drawPlayer();
+
+    drawParticles();
+}
+
+function gameLoop(time){
+
+    if(!gameRunning)
+        return;
+
+    const dt =
+        Math.min(
+            35,
+            time-lastTime
+        );
+
+    lastTime=time;
+
+    if(!paused){
+
+        updatePlayer(dt);
+
+        updateCamera();
+
+        updateCoins(dt);
+
+        updateEnemies(dt);
+
+        spawnEnemies();
+
+        updateParticles(dt);
+
+    }
+
+    draw();
+
+    requestAnimationFrame(
+        gameLoop
+    );
+}
+
+updateHUD();
+
+</script>
+
+</body>
+  </html>
