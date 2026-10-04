@@ -158,7 +158,7 @@ const games = [
     title: "c",
     category: "",
     icon: "",
-    url: "ca.html",
+    url: "games/ca.html",
     newGame: false,
     popular: true
   },
