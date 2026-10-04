@@ -4,6 +4,15 @@
 
 const games = [
    {
+    id: 17,
+    title: "Cat Run",
+    category: "",
+    icon: "cat.wedp",
+    url: "games/cat.html",
+    newGame: true,
+    popular: false
+  },
+   {
     id: 16,
     title: "Bubble Shooter",
     category: "Puzzle",
