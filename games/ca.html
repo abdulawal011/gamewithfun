@@ -50,8 +50,6 @@ button{
     padding:10px;
 }
 
-/* TOP */
-
 .topbar{
     display:flex;
     justify-content:space-between;
@@ -69,8 +67,6 @@ button{
     cursor:pointer;
 }
 
-/* LOGO */
-
 .logo{
     text-align:center;
     margin-bottom:10px;
@@ -80,8 +76,6 @@ button{
     width:145px;
     max-width:45%;
 }
-
-/* START SCREEN */
 
 #startScreen{
     min-height:700px;
@@ -114,8 +108,6 @@ button{
         inset 0 0 100px rgba(0,0,0,.35);
 }
 
-/* STARS */
-
 .star{
     position:absolute;
     width:4px;
@@ -141,8 +133,6 @@ button{
     to{opacity:1}
 }
 
-/* MOON */
-
 .moon{
     position:absolute;
     top:75px;
@@ -163,8 +153,6 @@ button{
         0 0 25px #d6edff,
         0 0 70px rgba(125,193,255,.65);
 }
-
-/* CLOUDS */
 
 .cloud{
     position:absolute;
@@ -214,8 +202,6 @@ button{
     transform:scale(.55);
 }
 
-/* MOUNTAINS */
-
 .mountains{
     position:absolute;
     bottom:175px;
@@ -249,8 +235,6 @@ button{
     transform:scale(.9);
     border-bottom-color:#102d70;
 }
-
-/* TREES */
 
 .trees{
     position:absolute;
@@ -288,8 +272,6 @@ button{
 .t6{right:17%;transform:scale(1.3)}
 .t7{right:8%;transform:scale(.8)}
 .t8{right:1%;transform:scale(1.1)}
-
-/* CASTLE */
 
 .castle{
     position:absolute;
@@ -359,8 +341,6 @@ button{
     top:25px;
 }
 
-/* START TITLE */
-
 .game-title{
     position:relative;
     z-index:10;
@@ -385,8 +365,6 @@ button{
     letter-spacing:4px;
     margin-top:5px;
 }
-
-/* CAT */
 
 .cat{
     position:relative;
@@ -501,8 +479,6 @@ button{
     transform:rotate(-25deg);
 }
 
-/* START BUTTON */
-
 .start-btn{
     position:relative;
     z-index:30;
@@ -538,8 +514,6 @@ button{
     box-shadow:0 1px 0 #073477;
 }
 
-/* MORE GAMES */
-
 .more-games{
     position:relative;
     z-index:20;
@@ -569,8 +543,6 @@ button{
     font-size:13px;
 }
 
-/* GAME */
-
 #gameScreen{
     display:none;
 }
@@ -583,16 +555,76 @@ button{
     overflow:hidden;
     background:#071b52;
     box-shadow:0 0 35px rgba(27,115,255,.35);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 canvas{
     display:block;
     width:100%;
     height:auto;
+    max-width:100%;
+    aspect-ratio:16/9;
     touch-action:none;
 }
 
-/* HUD */
+/* FULLSCREEN GAME FIX */
+
+:fullscreen #gameScreen,
+:-webkit-full-screen #gameScreen{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    margin:0;
+    padding:0;
+    background:#07112f;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+:fullscreen .game-area,
+:-webkit-full-screen .game-area{
+    width:100vw;
+    height:100vh;
+
+    max-width:none;
+    max-height:none;
+
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+    background:#07112f;
+}
+
+:fullscreen canvas,
+:-webkit-full-screen canvas{
+    display:block;
+
+    width:min(100vw,177.7777778vh);
+    height:min(100vh,56.25vw);
+
+    max-width:100vw;
+    max-height:100vh;
+
+    aspect-ratio:16/9;
+
+    object-fit:contain;
+    flex:none;
+}
 
 .hud{
     position:absolute;
@@ -643,8 +675,6 @@ canvas{
     font-size:20px;
     cursor:pointer;
 }
-
-/* CONTROLS */
 
 .controls{
     position:absolute;
@@ -700,8 +730,6 @@ canvas{
     font-weight:bold;
 }
 
-/* INFO */
-
 .info{
     margin-top:15px;
     background:#091637;
@@ -719,8 +747,6 @@ canvas{
     color:#c0cce4;
     line-height:1.7;
 }
-
-/* GAME OVER */
 
 .overlay{
     position:fixed;
@@ -786,8 +812,6 @@ canvas{
     margin-left:7px;
 }
 
-/* FOOTER */
-
 footer{
     text-align:center;
     color:#7f8ca8;
@@ -807,8 +831,6 @@ footer{
     color:#a8bad8;
     text-decoration:none;
 }
-
-/* MOBILE */
 
 @media(max-width:600px){
 
@@ -905,8 +927,6 @@ footer{
 
 <div class="page">
 
-<!-- TOP BAR -->
-
 <div class="topbar">
 
     <button class="top-btn" onclick="goHome()">
@@ -919,19 +939,11 @@ footer{
 
 </div>
 
-
-<!-- LOGO -->
-
 <div class="logo">
     <img src="logo.webp"
          alt="GameWithFun Logo"
          onerror="this.style.display='none'">
 </div>
-
-
-<!-- =====================================================
-     START SCREEN
-===================================================== -->
 
 <section id="startScreen">
 
@@ -972,7 +984,6 @@ footer{
 
     </div>
 
-
     <div class="castle">
 
         <div class="castle-main">
@@ -991,7 +1002,6 @@ footer{
 
     </div>
 
-
     <h1 class="game-title">
         SHADOW CAT
     </h1>
@@ -999,9 +1009,6 @@ footer{
     <div class="game-subtitle">
         MOONLIT FOREST ADVENTURE
     </div>
-
-
-    <!-- SHADOW CAT -->
 
     <div class="cat">
 
@@ -1023,11 +1030,9 @@ footer{
 
     </div>
 
-
     <button class="start-btn" onclick="startGame()">
         ▶ START THE GAME
     </button>
-
 
     <div class="more-games">
 
@@ -1061,11 +1066,6 @@ footer{
 
 </section>
 
-
-<!-- =====================================================
-     GAME SCREEN
-===================================================== -->
-
 <section id="gameScreen">
 
     <div class="game-area">
@@ -1074,9 +1074,6 @@ footer{
                 width="960"
                 height="540">
         </canvas>
-
-
-        <!-- HUD -->
 
         <div class="hud">
 
@@ -1101,9 +1098,6 @@ footer{
             </div>
 
         </div>
-
-
-        <!-- MOBILE CONTROLS -->
 
         <div class="controls">
 
@@ -1130,7 +1124,6 @@ footer{
 
     </div>
 
-
     <div class="message"
          id="message">
         Collect coins and reach the end of the forest!
@@ -1138,30 +1131,244 @@ footer{
 
 </section>
 
-
-<!-- =====================================================
-     INFORMATION
-===================================================== -->
-
 <section class="info">
 
 <h2>How to Play Shadow Cat</h2>
 
 <p>
-Guide the mysterious Shadow Cat through a beautiful
-moonlit forest. Jump across platforms, collect glowing
-coins and avoid the dangerous shadow monsters.
-Reach the end of each stage to continue your adventure.
+Guide the mysterious Shadow Cat through a beautiful moonlit forest. Jump
+across platforms, collect glowing coins and avoid the shadow creatures that
+appear during the adventure. Your main objective is to keep moving forward
+and reach the end of the forest while protecting your three lives. The game
+uses simple controls, making it easy to begin playing while giving you room
+to improve your movement and jumping skills.
 </p>
 
 <br>
 
-<h2>Controls</h2>
+<h2>Starting the Adventure</h2>
 
 <p>
-Desktop: Use the Left and Right Arrow Keys or A and D
-to move. Press Space, W or the Up Arrow to jump.
-Mobile players can use the on-screen buttons.
+When you first open Shadow Cat, you will see the game's start screen with the
+moonlit forest, the Shadow Cat character and the START THE GAME button. Take
+a moment to read the game information and look at the available controls.
+When you are ready, press START THE GAME. The game will immediately begin.
+On browsers that support fullscreen and screen-orientation features, the
+game will request fullscreen mode and attempt to rotate the device into
+landscape orientation. If your browser does not allow automatic rotation,
+you can manually turn your phone sideways and continue playing.
+</p>
+
+<br>
+
+<h2>Desktop Controls</h2>
+
+<p>
+Desktop players can control Shadow Cat with the keyboard. Press the Left
+Arrow or A key to move left. Press the Right Arrow or D key to move right.
+Press the Up Arrow, W or Space key to jump. Combining movement with jumping
+is important because many coins and floating platforms are positioned above
+the main ground area. Practice short movements first so you can understand
+how quickly the character responds to each key.
+</p>
+
+<br>
+
+<h2>Mobile Controls</h2>
+
+<p>
+Mobile players can use the three on-screen controls displayed inside the
+game. The left button moves Shadow Cat toward the left, the right button
+moves the character toward the right and the upward button makes Shadow Cat
+jump. The controls are designed for touch input, so you do not need a
+physical keyboard. For a wider view, landscape mode is recommended on
+supported phones and tablets.
+</p>
+
+<br>
+
+<h2>Collect Coins</h2>
+
+<p>
+Glowing coins are placed throughout the forest. Move Shadow Cat close to a
+coin to collect it. Every successful collection increases the coin counter
+shown in the HUD. Some parts of the world contain groups of coins, so
+carefully timed jumps can help you collect several coins in one section.
+Coins are not required to finish the adventure, but collecting more of them
+can help you achieve a better score.
+</p>
+
+<br>
+
+<h2>Watch the Shadow Enemies</h2>
+
+<p>
+Shadow creatures can appear as you travel through the forest. They are
+moving obstacles, so pay attention to their position before running into an
+area where an enemy is present. You can often jump over an enemy instead of
+making direct contact. If your timing is good, landing on an enemy can defeat
+it and give you bonus coins. New players should first learn safe movement
+before attempting more difficult enemy jumps.
+</p>
+
+<br>
+
+<h2>Use the Platforms</h2>
+
+<p>
+Floating platforms are an important part of the level. They are placed at
+different heights and distances, creating areas where you need to combine
+horizontal movement with jumping. Some platforms are useful for reaching
+coins, while others provide a safer route around obstacles. Look ahead before
+jumping and try to estimate where Shadow Cat will land.
+</p>
+
+<p>
+Good platforming is mostly about timing. If you jump too early, you may fall
+short of the next platform. If you jump too late, you may pass the platform
+entirely. With practice, you will learn the rhythm of the character's jump
+and movement speed.
+</p>
+
+<br>
+
+<h2>Lives and Game Over</h2>
+
+<p>
+Shadow Cat begins each new game with three lives. The life counter is shown
+at the top of the game screen beside the cat icon. Contact with enemies or
+falling outside the playable area can cost a life. After taking damage, the
+character receives a short protection period so that another collision does
+not immediately remove another life.
+</p>
+
+<p>
+When all three lives are gone, the Game Over screen appears. Your collected
+coins and best result are displayed there. You can select PLAY AGAIN to
+restart the adventure or choose HOME to return to GameWithFun.
+</p>
+
+<br>
+
+<h2>Improve Your Score</h2>
+
+<p>
+If you want to improve your Shadow Cat score, try to collect coins while
+keeping your movement controlled. Avoid unnecessary risks when an enemy is
+nearby. Learn the locations of floating platforms and use your jump at the
+right moment. A smooth run can often produce a better result than simply
+moving as quickly as possible.
+</p>
+
+<p>
+Your best coin score is stored locally in your browser. This allows you to
+play again and challenge your previous result. Try different movement
+patterns, improve your jumps and see whether you can finish another run with
+a higher coin total.
+</p>
+
+<br>
+
+<h2>Pause the Game</h2>
+
+<p>
+If you need to stop temporarily, use the pause button in the upper area of
+the game. Pausing stops active gameplay updates while keeping your current
+game state available. Press the pause button again when you are ready to
+continue. This is useful when you need a short break without ending your
+current attempt.
+</p>
+
+<br>
+
+<h2>Sound Effects</h2>
+
+<p>
+Shadow Cat includes simple browser-generated sound effects for important
+game actions. Sounds can be heard when jumping, collecting coins and during
+other gameplay events. The sound system does not require an external music
+file to run. If you prefer silent gameplay, use the Sound button at the top
+of the page to mute the effects.
+</p>
+
+<br>
+
+<h2>Fullscreen and Landscape Mode</h2>
+
+<p>
+The START THE GAME button is designed to begin the game directly from a
+user action. After the button is pressed, Shadow Cat starts and the browser
+is asked to enter fullscreen mode when that feature is available. The game
+also requests landscape orientation on supported devices. Browser
+permissions vary between devices and browsers, so automatic fullscreen or
+rotation may not always be available.
+</p>
+
+<p>
+If fullscreen or automatic orientation is unavailable, the game can still
+be played normally. On a mobile device, manually rotating the phone
+sideways can provide a wider playing area and make the touch controls easier
+to use.
+</p>
+
+<br>
+
+<h2>About Shadow Cat</h2>
+
+<p>
+Shadow Cat is a browser-based platform adventure created for GameWithFun.
+The game combines a mysterious nighttime forest atmosphere with simple
+platforming, collectible coins, moving shadow creatures and a colorful
+fantasy-inspired visual style. The objective is easy to understand: guide
+the Shadow Cat through the large forest world, collect coins, avoid danger
+and reach the end of the adventure.
+</p>
+
+<p>
+The game is designed for both desktop and mobile browsers. There is no
+separate launcher required. Players can open the game page, press START THE
+GAME and begin playing. The responsive game area allows the experience to
+adapt to different screen sizes while the touch controls provide a simple
+way to play on phones and tablets.
+</p>
+
+<br>
+
+<h2>Shadow Cat Adventure Tips</h2>
+
+<p>
+One of the best ways to play is to look ahead instead of focusing only on
+the character. The camera moves with Shadow Cat as the adventure continues,
+revealing new sections of the forest. Watch for platforms, coins and enemies
+before deciding whether to move quickly or prepare for a jump.
+</p>
+
+<p>
+When approaching an enemy, think about your available space. A controlled
+jump can be safer than moving directly toward the obstacle. When collecting
+coins above the ground, make sure you have enough room to land safely. If you
+are unsure about a jump, practicing the same section during another run can
+help you understand the timing.
+</p>
+
+<br>
+
+<h2>Why Shadow Cat Is Fun to Replay</h2>
+
+<p>
+Shadow Cat is built for short gaming sessions as well as repeated attempts.
+The basic controls are easy to learn, but collecting a large number of coins
+and navigating the entire world successfully requires attention and timing.
+Each new attempt gives you another chance to improve your movement, make
+better jumps and increase your score.
+</p>
+
+<p>
+The combination of a moonlit forest, glowing collectibles, floating
+platforms and shadow enemies gives the adventure its own atmosphere. Whether
+you want a quick browser game or a challenge to beat your previous score,
+Shadow Cat provides a simple way to jump into a platform adventure directly
+from GameWithFun.
 </p>
 
 <br>
@@ -1170,18 +1377,19 @@ Mobile players can use the on-screen buttons.
 
 <p>
 Developer: GameWithFun<br>
-Game: Shadow Cat<br>
-Category: Platform / Adventure<br>
-Levels: Endless Adventure<br>
+Game Name: Shadow Cat<br>
+Genre: Platform / Adventure<br>
+World: Moonlit Forest<br>
+Gameplay: Single Player<br>
 Platform: Web Browser<br>
 Controls: Keyboard + Touch<br>
+Collectibles: Coins<br>
+Lives: 3<br>
+Game Style: Shadow Fantasy Adventure<br>
 Latest Update: October 2026
 </p>
 
 </section>
-
-
-<!-- FOOTER -->
 
 <footer>
 
@@ -1210,9 +1418,6 @@ Disclaimer
 </footer>
 
 </div>
-
-
-<!-- GAME OVER -->
 
 <div class="overlay"
      id="gameOver">
@@ -1249,19 +1454,13 @@ Disclaimer
 
 </div>
 
-
 <script>
-
-/* =====================================================
-   SHADOW CAT PLATFORMER
-===================================================== */
 
 const canvas =
     document.getElementById("gameCanvas");
 
 const ctx =
     canvas.getContext("2d");
-
 
 let gameRunning = false;
 let paused = false;
@@ -1286,17 +1485,11 @@ let enemyTimer = 0;
 
 let coinTimer = 0;
 
-
-/* INPUT */
-
 const keys = {
     left:false,
     right:false,
     jump:false
 };
-
-
-/* PLAYER */
 
 const player = {
 
@@ -1323,16 +1516,10 @@ const player = {
     anim:0
 };
 
-
-/* OBJECTS */
-
 let platforms = [];
 let coinObjects = [];
 let enemies = [];
 let particles = [];
-
-
-/* SOUND */
 
 let audioCtx = null;
 
@@ -1359,7 +1546,6 @@ function initAudio(){
         audioCtx.resume();
     }
 }
-
 
 function sound(
     frequency,
@@ -1405,7 +1591,6 @@ function sound(
     );
 }
 
-
 function toggleSound(){
 
     soundEnabled =
@@ -1423,19 +1608,11 @@ function toggleSound(){
     }
 }
 
-
-/* HOME */
-
 function goHome(){
 
     window.location.href =
         "https://gamewithfun.com/";
 }
-
-
-/* =====================================================
-   CREATE LEVEL
-===================================================== */
 
 function createLevel(){
 
@@ -1444,19 +1621,12 @@ function createLevel(){
     enemies = [];
     particles = [];
 
-    /* Ground */
-
     platforms.push({
         x:0,
         y:455,
         w:8000,
         h:85
     });
-
-
-    /*
-       Floating platform layout
-    */
 
     const layouts = [
 
@@ -1493,9 +1663,6 @@ function createLevel(){
 
     }
 
-
-    /* Coins */
-
     for(
         let x=300;
         x<7800;
@@ -1509,6 +1676,7 @@ function createLevel(){
         coinObjects.push({
 
             x:x,
+
             y:Math.max(
                 170,
                 Math.min(390,y)
@@ -1522,9 +1690,6 @@ function createLevel(){
                 Math.random()*6.28
         });
     }
-
-
-    /* Special coin groups */
 
     const groups = [
         [690,300],
@@ -1561,11 +1726,6 @@ function createLevel(){
     }
 }
 
-
-/* =====================================================
-   START
-===================================================== */
-
 function startGame(){
 
     initAudio();
@@ -1591,8 +1751,80 @@ function startGame(){
         performance.now();
 
     requestAnimationFrame(gameLoop);
+
+    /*
+      Request fullscreen on the actual game screen.
+      This keeps the start page outside fullscreen.
+    */
+
+    const gameScreen =
+        document.getElementById("gameScreen");
+
+    const fullscreenRequest =
+        gameScreen.requestFullscreen ||
+        gameScreen.webkitRequestFullscreen ||
+        gameScreen.msRequestFullscreen;
+
+    if(fullscreenRequest){
+
+        try{
+
+            const result =
+                fullscreenRequest.call(gameScreen);
+
+            if(
+                result &&
+                typeof result.then === "function"
+            ){
+
+                result.then(() => {
+
+                    lockLandscape();
+
+                }).catch(() => {
+
+                    lockLandscape();
+
+                });
+
+            }else{
+
+                lockLandscape();
+
+            }
+
+        }catch(error){
+
+            lockLandscape();
+
+        }
+
+    }else{
+
+        lockLandscape();
+
+    }
+
 }
 
+function lockLandscape(){
+
+    try{
+
+        if(
+            screen.orientation &&
+            screen.orientation.lock
+        ){
+
+            screen.orientation.lock(
+                "landscape"
+            ).catch(() => {});
+
+        }
+
+    }catch(error){}
+
+}
 
 function restartGame(){
 
@@ -1610,7 +1842,6 @@ function restartGame(){
 
     requestAnimationFrame(gameLoop);
 }
-
 
 function resetGame(){
 
@@ -1631,11 +1862,6 @@ function resetGame(){
 
     updateHUD();
 }
-
-
-/* =====================================================
-   INPUT
-===================================================== */
 
 window.addEventListener(
     "keydown",
@@ -1669,7 +1895,6 @@ window.addEventListener(
     }
 );
 
-
 window.addEventListener(
     "keyup",
     function(e){
@@ -1698,9 +1923,6 @@ window.addEventListener(
 
     }
 );
-
-
-/* TOUCH */
 
 function touchButton(
     element,
@@ -1748,7 +1970,6 @@ function touchButton(
     );
 }
 
-
 touchButton(
     document.getElementById("leftBtn"),
     "left"
@@ -1764,11 +1985,6 @@ touchButton(
     "jump"
 );
 
-
-/* =====================================================
-   PAUSE
-===================================================== */
-
 function togglePause(){
 
     if(!gameRunning) return;
@@ -1783,18 +1999,10 @@ function togglePause(){
         : "Collect coins and reach the end of the forest!";
 }
 
-
-/* =====================================================
-   PLAYER UPDATE
-===================================================== */
-
 function updatePlayer(dt){
 
     const s =
         dt / 16.67;
-
-
-    /* MOVEMENT */
 
     if(keys.left){
 
@@ -1812,7 +2020,6 @@ function updatePlayer(dt){
         player.direction=1;
     }
 
-
     if(
         !keys.left &&
         !keys.right
@@ -1822,7 +2029,6 @@ function updatePlayer(dt){
             Math.pow(.82,s);
     }
 
-
     player.vx =
         Math.max(
             -player.maxSpeed,
@@ -1831,9 +2037,6 @@ function updatePlayer(dt){
                 player.vx
             )
         );
-
-
-    /* JUMP */
 
     if(
         keys.jump &&
@@ -1852,12 +2055,8 @@ function updatePlayer(dt){
         );
     }
 
-
-    /* GRAVITY */
-
     player.vy +=
         .72*s;
-
 
     player.x +=
         player.vx*s;
@@ -1865,15 +2064,11 @@ function updatePlayer(dt){
     player.y +=
         player.vy*s;
 
-
-    /* WORLD LIMIT */
-
     if(player.x<10){
 
         player.x=10;
         player.vx=0;
     }
-
 
     if(
         player.x+player.w>
@@ -1882,9 +2077,6 @@ function updatePlayer(dt){
 
         finishLevel();
     }
-
-
-    /* PLATFORM COLLISION */
 
     player.grounded=false;
 
@@ -1917,14 +2109,10 @@ function updatePlayer(dt){
         }
     }
 
-
-    /* FALL */
-
     if(player.y>650){
 
         loseLife();
     }
-
 
     if(player.invincible>0){
 
@@ -1932,15 +2120,9 @@ function updatePlayer(dt){
             dt;
     }
 
-
     player.anim +=
         Math.abs(player.vx)*s;
 }
-
-
-/* =====================================================
-   CAMERA
-===================================================== */
 
 function updateCamera(){
 
@@ -1960,11 +2142,6 @@ function updateCamera(){
             )
         );
 }
-
-
-/* =====================================================
-   ENEMIES
-===================================================== */
 
 function spawnEnemies(){
 
@@ -1997,7 +2174,6 @@ function spawnEnemies(){
     });
 }
 
-
 function updateEnemies(dt){
 
     for(
@@ -2019,7 +2195,6 @@ function updateEnemies(dt){
             410+
             Math.sin(e.phase)*3;
 
-
         if(
             e.x<
             cameraX-150
@@ -2030,15 +2205,10 @@ function updateEnemies(dt){
             continue;
         }
 
-
         if(
             player.invincible<=0 &&
             collision(player,e)
         ){
-
-            /*
-              Jumping on enemy defeats it.
-            */
 
             if(
                 player.vy>0 &&
@@ -2076,11 +2246,6 @@ function updateEnemies(dt){
 
     }
 }
-
-
-/* =====================================================
-   COINS
-===================================================== */
 
 function updateCoins(dt){
 
@@ -2121,11 +2286,6 @@ function updateCoins(dt){
     }
 }
 
-
-/* =====================================================
-   LIFE
-===================================================== */
-
 function loseLife(){
 
     if(player.invincible>0)
@@ -2161,7 +2321,6 @@ function loseLife(){
         endGame();
     }
 }
-
 
 function finishLevel(){
 
@@ -2211,7 +2370,6 @@ function finishLevel(){
     );
 }
 
-
 function endGame(){
 
     gameRunning=false;
@@ -2248,11 +2406,6 @@ function endGame(){
         "gameOver"
     ).style.display="flex";
 }
-
-
-/* =====================================================
-   PARTICLES
-===================================================== */
 
 function makeParticles(
     x,
@@ -2292,7 +2445,6 @@ function makeParticles(
     }
 }
 
-
 function updateParticles(dt){
 
     for(
@@ -2318,11 +2470,6 @@ function updateParticles(dt){
     }
 }
 
-
-/* =====================================================
-   COLLISION
-===================================================== */
-
 function collision(a,b){
 
     return(
@@ -2341,7 +2488,6 @@ function collision(a,b){
 
     );
 }
-
 
 function circleCollision(c,r){
 
@@ -2376,11 +2522,6 @@ function circleCollision(c,r){
     );
 }
 
-
-/* =====================================================
-   DRAW BACKGROUND
-===================================================== */
-
 function drawBackground(){
 
     const g =
@@ -2411,9 +2552,6 @@ function drawBackground(){
         canvas.width,
         canvas.height
     );
-
-
-    /* stars */
 
     for(
         let i=0;
@@ -2449,9 +2587,6 @@ function drawBackground(){
             ctx.fill();
         }
     }
-
-
-    /* moon */
 
     const moonX =
         760-cameraX*.08;
@@ -2497,9 +2632,6 @@ function drawBackground(){
 
     ctx.fill();
 
-
-    /* mountains */
-
     drawMountain(
         80,
         400,
@@ -2523,9 +2655,6 @@ function drawBackground(){
         170,
         "#163b84"
     );
-
-
-    /* forest */
 
     for(
         let i=0;
@@ -2552,7 +2681,6 @@ function drawBackground(){
         );
     }
 }
-
 
 function drawMountain(
     x,
@@ -2585,7 +2713,6 @@ function drawMountain(
 
     ctx.fill();
 }
-
 
 function drawPine(
     x,
@@ -2625,11 +2752,6 @@ function drawPine(
     );
 }
 
-
-/* =====================================================
-   DRAW PLATFORMS
-===================================================== */
-
 function drawPlatforms(){
 
     for(
@@ -2645,9 +2767,6 @@ function drawPlatforms(){
         ){
             continue;
         }
-
-
-        /* dirt */
 
         const dirt =
             ctx.createLinearGradient(
@@ -2674,9 +2793,6 @@ function drawPlatforms(){
             p.h
         );
 
-
-        /* grass */
-
         ctx.fillStyle="#4de52e";
 
         ctx.fillRect(
@@ -2685,9 +2801,6 @@ function drawPlatforms(){
             p.w,
             12
         );
-
-
-        /* grass spikes */
 
         ctx.fillStyle="#36b926";
 
@@ -2719,9 +2832,6 @@ function drawPlatforms(){
             ctx.fill();
         }
 
-
-        /* dirt stones */
-
         ctx.fillStyle=
             "rgba(255,190,100,.15)";
 
@@ -2746,11 +2856,6 @@ function drawPlatforms(){
     }
 }
 
-
-/* =====================================================
-   DRAW COINS
-===================================================== */
-
 function drawCoins(){
 
     for(
@@ -2769,13 +2874,11 @@ function drawCoins(){
         )
             continue;
 
-
         const scale =
             .65+
             Math.abs(
                 Math.sin(c.spin)
             )*.35;
-
 
         ctx.save();
 
@@ -2789,12 +2892,10 @@ function drawCoins(){
             1
         );
 
-
         ctx.shadowColor=
             "#ffd21c";
 
         ctx.shadowBlur=15;
-
 
         ctx.beginPath();
 
@@ -2833,16 +2934,13 @@ function drawCoins(){
 
         ctx.fill();
 
-
         ctx.strokeStyle="#fff3a0";
 
         ctx.lineWidth=2;
 
         ctx.stroke();
 
-
         ctx.shadowBlur=0;
-
 
         ctx.fillStyle="#fff6a0";
 
@@ -2858,15 +2956,9 @@ function drawCoins(){
             1
         );
 
-
         ctx.restore();
     }
 }
-
-
-/* =====================================================
-   DRAW ENEMIES
-===================================================== */
 
 function drawEnemies(){
 
@@ -2883,11 +2975,7 @@ function drawEnemies(){
         )
             continue;
 
-
         ctx.save();
-
-
-        /* body */
 
         ctx.fillStyle="#713d27";
 
@@ -2905,9 +2993,6 @@ function drawEnemies(){
 
         ctx.fill();
 
-
-        /* top */
-
         ctx.fillStyle="#9b5735";
 
         ctx.beginPath();
@@ -2923,9 +3008,6 @@ function drawEnemies(){
         );
 
         ctx.fill();
-
-
-        /* angry eyes */
 
         ctx.strokeStyle="#fff";
 
@@ -2945,7 +3027,6 @@ function drawEnemies(){
 
         ctx.stroke();
 
-
         ctx.beginPath();
 
         ctx.moveTo(
@@ -2959,9 +3040,6 @@ function drawEnemies(){
         );
 
         ctx.stroke();
-
-
-        /* eyes */
 
         ctx.fillStyle="#111";
 
@@ -2979,15 +3057,9 @@ function drawEnemies(){
             5
         );
 
-
         ctx.restore();
     }
 }
-
-
-/* =====================================================
-   DRAW PLAYER
-===================================================== */
 
 function drawPlayer(){
 
@@ -3000,20 +3072,13 @@ function drawPlayer(){
         return;
     }
 
-
     const x =
         player.x-cameraX;
 
     const y =
         player.y;
 
-
     ctx.save();
-
-
-    /*
-      Shadow under cat
-    */
 
     ctx.fillStyle=
         "rgba(0,0,0,.35)";
@@ -3031,11 +3096,6 @@ function drawPlayer(){
     );
 
     ctx.fill();
-
-
-    /*
-      Tail
-    */
 
     ctx.strokeStyle="#15192d";
 
@@ -3080,11 +3140,6 @@ function drawPlayer(){
 
     ctx.stroke();
 
-
-    /*
-      Body
-    */
-
     const body =
         ctx.createLinearGradient(
             x,
@@ -3120,11 +3175,6 @@ function drawPlayer(){
 
     ctx.fill();
 
-
-    /*
-      Head
-    */
-
     const head =
         ctx.createLinearGradient(
             x,
@@ -3155,11 +3205,6 @@ function drawPlayer(){
 
     ctx.fill();
 
-
-    /*
-      Ears
-    */
-
     ctx.fillStyle="#171b30";
 
     ctx.beginPath();
@@ -3183,7 +3228,6 @@ function drawPlayer(){
 
     ctx.fill();
 
-
     ctx.beginPath();
 
     ctx.moveTo(
@@ -3204,11 +3248,6 @@ function drawPlayer(){
     ctx.closePath();
 
     ctx.fill();
-
-
-    /*
-      Ear highlights
-    */
 
     ctx.fillStyle="#7b355e";
 
@@ -3233,7 +3272,6 @@ function drawPlayer(){
 
     ctx.fill();
 
-
     ctx.beginPath();
 
     ctx.moveTo(
@@ -3254,11 +3292,6 @@ function drawPlayer(){
     ctx.closePath();
 
     ctx.fill();
-
-
-    /*
-      Eyes
-    */
 
     ctx.shadowColor="#5ceaff";
 
@@ -3281,11 +3314,6 @@ function drawPlayer(){
     );
 
     ctx.shadowBlur=0;
-
-
-    /*
-      Nose
-    */
 
     ctx.fillStyle="#ff7eb7";
 
@@ -3310,16 +3338,10 @@ function drawPlayer(){
 
     ctx.fill();
 
-
-    /*
-      Legs animation
-    */
-
     const step =
         Math.sin(
             player.anim*.25
         )*4;
-
 
     ctx.fillStyle="#0a0d19";
 
@@ -3337,11 +3359,6 @@ function drawPlayer(){
         9-step
     );
 
-
-    /*
-      Blue glow
-    */
-
     ctx.strokeStyle=
         "rgba(77,198,255,.25)";
 
@@ -3354,14 +3371,8 @@ function drawPlayer(){
         54
     );
 
-
     ctx.restore();
 }
-
-
-/* =====================================================
-   PARTICLES
-===================================================== */
 
 function drawParticles(){
 
@@ -3390,11 +3401,6 @@ function drawParticles(){
 
     ctx.globalAlpha=1;
 }
-
-
-/* =====================================================
-   ROUND RECT
-===================================================== */
 
 function roundRect(
     x,y,w,h,r
@@ -3458,11 +3464,6 @@ function roundRect(
     ctx.closePath();
 }
 
-
-/* =====================================================
-   HUD
-===================================================== */
-
 function updateHUD(){
 
     document.getElementById(
@@ -3473,11 +3474,6 @@ function updateHUD(){
         "lives"
     ).textContent=lives;
 }
-
-
-/* =====================================================
-   DRAW
-===================================================== */
 
 function draw(){
 
@@ -3501,11 +3497,6 @@ function draw(){
     drawParticles();
 }
 
-
-/* =====================================================
-   GAME LOOP
-===================================================== */
-
 function gameLoop(time){
 
     if(!gameRunning)
@@ -3518,7 +3509,6 @@ function gameLoop(time){
         );
 
     lastTime=time;
-
 
     if(!paused){
 
@@ -3536,21 +3526,16 @@ function gameLoop(time){
 
     }
 
-
     draw();
-
 
     requestAnimationFrame(
         gameLoop
     );
 }
 
-
-/* INITIAL */
-
 updateHUD();
 
 </script>
 
 </body>
-</html>
+    </html>
