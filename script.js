@@ -7,7 +7,7 @@ const games = [
     id: 17,
     title: "Cat Run",
     category: "",
-    icon: "games/cat.wedp",
+    icon: "games/cat.webp",
     url: "games/cat.html",
     newGame: true,
     popular: false
