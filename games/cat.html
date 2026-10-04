@@ -9,10 +9,10 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
 <title>Shadow Cat - GameWithFun</title>
 
 <meta name="description"
-content="Play Shadow Cat online at GameWithFun. Run through a magical moonlit forest, collect coins, jump across platforms and defeat shadow enemies.">
+content="Play Shadow Cat endless online at GameWithFun. Run through a magical moonlit forest, collect coins, jump across platforms and avoid shadow enemies.">
 
 <meta name="keywords"
-content="Shadow Cat, Shadow Cat Game, Cat Platformer, Online Cat Game, Platform Game, GameWithFun">
+content="Shadow Cat, Shadow Cat Game, Endless Cat Game, Cat Platformer, Online Cat Game, Platform Game, GameWithFun">
 
 <meta name="robots" content="index,follow">
 
@@ -555,13 +555,75 @@ button{
     overflow:hidden;
     background:#071b52;
     box-shadow:0 0 35px rgba(27,115,255,.35);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 canvas{
     display:block;
     width:100%;
     height:auto;
+    max-width:100%;
+    aspect-ratio:16/9;
     touch-action:none;
+}
+
+/* ===== FULLSCREEN FIX ===== */
+
+:fullscreen #gameScreen,
+:-webkit-full-screen #gameScreen{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    margin:0;
+    padding:0;
+    background:#07112f;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+:fullscreen .game-area,
+:-webkit-full-screen .game-area{
+    width:100vw;
+    height:100vh;
+
+    max-width:none;
+    max-height:none;
+
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+    background:#07112f;
+}
+
+:fullscreen canvas,
+:-webkit-full-screen canvas{
+    display:block;
+
+    width:min(100vw,177.7777778vh);
+    height:min(100vh,56.25vw);
+
+    max-width:100vw;
+    max-height:100vh;
+
+    aspect-ratio:16/9;
+
+    object-fit:contain;
+    flex:none;
 }
 
 .hud{
@@ -945,7 +1007,7 @@ footer{
     </h1>
 
     <div class="game-subtitle">
-        MOONLIT FOREST ADVENTURE
+        MOONLIT FOREST ENDLESS ADVENTURE
     </div>
 
     <div class="cat">
@@ -1064,7 +1126,7 @@ footer{
 
     <div class="message"
          id="message">
-        Collect coins and reach the end of the forest!
+        Run as far as you can and collect coins!
     </div>
 
 </section>
@@ -1074,12 +1136,11 @@ footer{
 <h2>How to Play Shadow Cat</h2>
 
 <p>
-Guide the mysterious Shadow Cat through a beautiful moonlit forest. Jump
-across platforms, collect glowing coins and avoid the shadow creatures that
-appear during the adventure. Your main objective is to keep moving forward
-and reach the end of the forest while protecting your three lives. The game
-uses simple controls, making it easy to begin playing while giving you room
-to improve your movement and jumping skills.
+Guide the mysterious Shadow Cat through an endless moonlit forest. Your
+adventure has no fixed finish line. Keep running forward, jump across
+platforms, collect glowing coins and avoid the shadow creatures that appear
+along the way. The longer you survive and the farther you travel, the more
+challenging the adventure becomes.
 </p>
 
 <br>
@@ -1087,12 +1148,15 @@ to improve your movement and jumping skills.
 <h2>Starting the Adventure</h2>
 
 <p>
-When you first open Shadow Cat, you will see the game's start screen with the
-moonlit forest, the Shadow Cat character and the START THE GAME button. Take
-a moment to read the game information and look at the available controls.
-When you are ready, press START THE GAME. The game will immediately begin.
+When you first open Shadow Cat, you will see the game's start screen with
+the moonlit forest, the Shadow Cat character and the START THE GAME button.
+When you are ready, press START THE GAME. The game immediately begins and
+the forest starts generating new sections as you move forward.
+</p>
+
+<p>
 On browsers that support fullscreen and screen-orientation features, the
-game will request fullscreen mode and attempt to rotate the device into
+game requests fullscreen mode and attempts to rotate the device into
 landscape orientation. If your browser does not allow automatic rotation,
 you can manually turn your phone sideways and continue playing.
 </p>
@@ -1105,9 +1169,8 @@ you can manually turn your phone sideways and continue playing.
 Desktop players can control Shadow Cat with the keyboard. Press the Left
 Arrow or A key to move left. Press the Right Arrow or D key to move right.
 Press the Up Arrow, W or Space key to jump. Combining movement with jumping
-is important because many coins and floating platforms are positioned above
-the main ground area. Practice short movements first so you can understand
-how quickly the character responds to each key.
+is important because coins and floating platforms can appear at different
+heights.
 </p>
 
 <br>
@@ -1118,9 +1181,25 @@ how quickly the character responds to each key.
 Mobile players can use the three on-screen controls displayed inside the
 game. The left button moves Shadow Cat toward the left, the right button
 moves the character toward the right and the upward button makes Shadow Cat
-jump. The controls are designed for touch input, so you do not need a
-physical keyboard. For a wider view, landscape mode is recommended on
-supported phones and tablets.
+jump. The controls are designed for touch input and landscape mode gives
+the game a wider view on supported devices.
+</p>
+
+<br>
+
+<h2>Endless Forest</h2>
+
+<p>
+Unlike a traditional platform level with a fixed ending, Shadow Cat now
+uses an endless world. New platforms, coins and enemies are generated as
+you continue moving forward. The forest can continue far beyond the
+starting area, so there is no final level or fixed finish point.
+</p>
+
+<p>
+The game keeps your journey active until you lose all three lives. Your
+objective is to travel as far as possible while collecting as many coins as
+you can.
 </p>
 
 <br>
@@ -1128,12 +1207,10 @@ supported phones and tablets.
 <h2>Collect Coins</h2>
 
 <p>
-Glowing coins are placed throughout the forest. Move Shadow Cat close to a
-coin to collect it. Every successful collection increases the coin counter
-shown in the HUD. Some parts of the world contain groups of coins, so
-carefully timed jumps can help you collect several coins in one section.
-Coins are not required to finish the adventure, but collecting more of them
-can help you achieve a better score.
+Glowing coins appear throughout the forest. Move Shadow Cat close to a coin
+to collect it. Every collected coin increases the counter displayed in the
+HUD. Coins can appear on the ground or above platforms, encouraging you to
+use carefully timed jumps.
 </p>
 
 <br>
@@ -1141,12 +1218,10 @@ can help you achieve a better score.
 <h2>Watch the Shadow Enemies</h2>
 
 <p>
-Shadow creatures can appear as you travel through the forest. They are
-moving obstacles, so pay attention to their position before running into an
-area where an enemy is present. You can often jump over an enemy instead of
-making direct contact. If your timing is good, landing on an enemy can defeat
-it and give you bonus coins. New players should first learn safe movement
-before attempting more difficult enemy jumps.
+Shadow creatures can appear as you travel through the forest. Pay attention
+to their position and use your jump to move over them when there is enough
+space. As you travel farther, the adventure gradually becomes more
+challenging, so staying focused is important.
 </p>
 
 <br>
@@ -1154,18 +1229,9 @@ before attempting more difficult enemy jumps.
 <h2>Use the Platforms</h2>
 
 <p>
-Floating platforms are an important part of the level. They are placed at
-different heights and distances, creating areas where you need to combine
-horizontal movement with jumping. Some platforms are useful for reaching
-coins, while others provide a safer route around obstacles. Look ahead before
-jumping and try to estimate where Shadow Cat will land.
-</p>
-
-<p>
-Good platforming is mostly about timing. If you jump too early, you may fall
-short of the next platform. If you jump too late, you may pass the platform
-entirely. With practice, you will learn the rhythm of the character's jump
-and movement speed.
+Floating platforms appear throughout the endless forest. They provide
+additional routes and places where coins can be found. Watch the position
+of the next platform before jumping and try to land safely.
 </p>
 
 <br>
@@ -1173,17 +1239,15 @@ and movement speed.
 <h2>Lives and Game Over</h2>
 
 <p>
-Shadow Cat begins each new game with three lives. The life counter is shown
-at the top of the game screen beside the cat icon. Contact with enemies or
-falling outside the playable area can cost a life. After taking damage, the
-character receives a short protection period so that another collision does
-not immediately remove another life.
+Shadow Cat begins every run with three lives. The life counter is displayed
+at the top of the game screen. Contact with enemies or falling outside the
+playable area can cost a life.
 </p>
 
 <p>
 When all three lives are gone, the Game Over screen appears. Your collected
-coins and best result are displayed there. You can select PLAY AGAIN to
-restart the adventure or choose HOME to return to GameWithFun.
+coins and best result are displayed. You can select PLAY AGAIN to begin a
+new endless run or HOME to return to GameWithFun.
 </p>
 
 <br>
@@ -1191,18 +1255,15 @@ restart the adventure or choose HOME to return to GameWithFun.
 <h2>Improve Your Score</h2>
 
 <p>
-If you want to improve your Shadow Cat score, try to collect coins while
-keeping your movement controlled. Avoid unnecessary risks when an enemy is
-nearby. Learn the locations of floating platforms and use your jump at the
-right moment. A smooth run can often produce a better result than simply
-moving as quickly as possible.
+The main challenge of the endless version is improving your personal best.
+Try to travel farther while collecting coins and avoiding unnecessary
+mistakes. A successful run can continue for a long time, allowing you to
+challenge yourself again and again.
 </p>
 
 <p>
-Your best coin score is stored locally in your browser. This allows you to
-play again and challenge your previous result. Try different movement
-patterns, improve your jumps and see whether you can finish another run with
-a higher coin total.
+Your best coin score is stored locally in your browser. This means you can
+restart the game and try to beat your previous score.
 </p>
 
 <br>
@@ -1210,11 +1271,9 @@ a higher coin total.
 <h2>Pause the Game</h2>
 
 <p>
-If you need to stop temporarily, use the pause button in the upper area of
-the game. Pausing stops active gameplay updates while keeping your current
-game state available. Press the pause button again when you are ready to
-continue. This is useful when you need a short break without ending your
-current attempt.
+If you need a break, use the pause button at the top of the game. Pausing
+stops active gameplay updates while keeping your current run available.
+Press the button again when you are ready to continue.
 </p>
 
 <br>
@@ -1222,11 +1281,9 @@ current attempt.
 <h2>Sound Effects</h2>
 
 <p>
-Shadow Cat includes simple browser-generated sound effects for important
-game actions. Sounds can be heard when jumping, collecting coins and during
-other gameplay events. The sound system does not require an external music
-file to run. If you prefer silent gameplay, use the Sound button at the top
-of the page to mute the effects.
+Shadow Cat includes simple browser-generated sound effects for gameplay
+events such as jumping and collecting coins. If you prefer silent gameplay,
+use the Sound button at the top of the page to mute the effects.
 </p>
 
 <br>
@@ -1234,19 +1291,16 @@ of the page to mute the effects.
 <h2>Fullscreen and Landscape Mode</h2>
 
 <p>
-The START THE GAME button is designed to begin the game directly from a
-user action. After the button is pressed, Shadow Cat starts and the browser
-is asked to enter fullscreen mode when that feature is available. The game
-also requests landscape orientation on supported devices. Browser
-permissions vary between devices and browsers, so automatic fullscreen or
-rotation may not always be available.
+The START THE GAME button begins the game directly from a user action. After
+the button is pressed, Shadow Cat requests fullscreen mode when supported
+and attempts to lock the device into landscape orientation.
 </p>
 
 <p>
-If fullscreen or automatic orientation is unavailable, the game can still
-be played normally. On a mobile device, manually rotating the phone
-sideways can provide a wider playing area and make the touch controls easier
-to use.
+The fullscreen game maintains its original 16:9 ratio so the complete game
+remains visible without cropping. If automatic fullscreen or orientation
+is unavailable on a particular browser, the game can still be played
+normally.
 </p>
 
 <br>
@@ -1254,20 +1308,17 @@ to use.
 <h2>About Shadow Cat</h2>
 
 <p>
-Shadow Cat is a browser-based platform adventure created for GameWithFun.
-The game combines a mysterious nighttime forest atmosphere with simple
-platforming, collectible coins, moving shadow creatures and a colorful
-fantasy-inspired visual style. The objective is easy to understand: guide
-the Shadow Cat through the large forest world, collect coins, avoid danger
-and reach the end of the adventure.
+Shadow Cat is an endless browser platform adventure created for GameWithFun.
+The game combines a mysterious nighttime forest atmosphere with a Shadow Cat
+character, collectible coins, floating platforms and moving shadow
+creatures.
 </p>
 
 <p>
-The game is designed for both desktop and mobile browsers. There is no
-separate launcher required. Players can open the game page, press START THE
-GAME and begin playing. The responsive game area allows the experience to
-adapt to different screen sizes while the touch controls provide a simple
-way to play on phones and tablets.
+The endless design means there is no fixed final level. Instead, the world
+continues generating new sections while you move forward. This gives the
+game a simple replayable structure where every run can become a new attempt
+to achieve a better result.
 </p>
 
 <br>
@@ -1275,18 +1326,15 @@ way to play on phones and tablets.
 <h2>Shadow Cat Adventure Tips</h2>
 
 <p>
-One of the best ways to play is to look ahead instead of focusing only on
-the character. The camera moves with Shadow Cat as the adventure continues,
-revealing new sections of the forest. Watch for platforms, coins and enemies
-before deciding whether to move quickly or prepare for a jump.
+Look ahead whenever possible. New sections of the forest are generated as
+the character progresses, so preparing for the next platform or enemy can
+make your run smoother.
 </p>
 
 <p>
-When approaching an enemy, think about your available space. A controlled
-jump can be safer than moving directly toward the obstacle. When collecting
-coins above the ground, make sure you have enough room to land safely. If
-you are unsure about a jump, practicing the same section during another run
-can help you understand the timing.
+Do not focus only on collecting every coin. Sometimes the safest route is
+more important than a difficult coin. Good timing, controlled movement and
+careful jumping can help you survive longer.
 </p>
 
 <br>
@@ -1294,19 +1342,15 @@ can help you understand the timing.
 <h2>Why Shadow Cat Is Fun to Replay</h2>
 
 <p>
-Shadow Cat is built for short gaming sessions as well as repeated attempts.
-The basic controls are easy to learn, but collecting a large number of coins
-and navigating the entire world successfully requires attention and timing.
-Each new attempt gives you another chance to improve your movement, make
-better jumps and increase your score.
+Shadow Cat is designed for repeated attempts. Because the forest continues
+instead of ending at a fixed point, every run gives you another opportunity
+to improve your distance, collect more coins and beat your personal best.
 </p>
 
 <p>
-The combination of a moonlit forest, glowing collectibles, floating
-platforms and shadow enemies gives the adventure its own atmosphere. Whether
-you want a quick browser game or a challenge to beat your previous score,
-Shadow Cat provides a simple way to jump into a platform adventure directly
-from GameWithFun.
+The combination of a moonlit forest, glowing collectibles, platforms and
+shadow enemies creates a simple adventure that can be played directly in a
+web browser without installing a separate game launcher.
 </p>
 
 <br>
@@ -1316,14 +1360,15 @@ from GameWithFun.
 <p>
 Developer: GameWithFun<br>
 Game Name: Shadow Cat<br>
-Genre: Platform / Adventure<br>
-World: Moonlit Forest<br>
+Genre: Endless Platform / Adventure<br>
+World: Endless Moonlit Forest<br>
 Gameplay: Single Player<br>
 Platform: Web Browser<br>
 Controls: Keyboard + Touch<br>
 Collectibles: Coins<br>
-Lives: 3<br>
+Starting Lives: 3<br>
 Game Style: Shadow Fantasy Adventure<br>
+World Type: Endless<br>
 Latest Update: October 2026
 </p>
 
@@ -1365,7 +1410,7 @@ Disclaimer
         <h2>GAME OVER</h2>
 
         <p>
-            The shadow forest defeated you.
+            Your endless run is over.
         </p>
 
         <p>
@@ -1417,11 +1462,13 @@ let lastTime = 0;
 
 let cameraX = 0;
 
-let levelWidth = 8000;
+/* Endless world settings */
+let worldEnd = 1800;
+let nextPlatformX = 600;
+let nextCoinX = 300;
+let nextEnemyX = 950;
 
 let enemyTimer = 0;
-
-let coinTimer = 0;
 
 const keys = {
     left:false,
@@ -1552,6 +1599,10 @@ function goHome(){
         "https://gamewithfun.com/";
 }
 
+/* =========================
+   ENDLESS WORLD GENERATOR
+========================= */
+
 function createLevel(){
 
     platforms = [];
@@ -1559,109 +1610,313 @@ function createLevel(){
     enemies = [];
     particles = [];
 
+    worldEnd = 1800;
+
+    nextPlatformX = 600;
+    nextCoinX = 300;
+    nextEnemyX = 950;
+
+    /*
+      Starting ground.
+      The ground is extended automatically
+      whenever the player gets close to its end.
+    */
+
     platforms.push({
         x:0,
         y:455,
-        w:8000,
+        w:1800,
         h:85
     });
 
-    const layouts = [
+    /*
+      Initial platforms.
+    */
 
-        [600,350,220],
-        [950,285,180],
-        [1250,370,230],
-        [1650,320,210],
-        [2000,260,190],
-        [2350,360,240],
-        [2800,300,210],
-        [3150,380,180],
-        [3500,275,220],
-        [3900,335,230],
-        [4300,250,190],
-        [4650,350,250],
-        [5100,290,190],
-        [5450,370,230],
-        [5850,260,200],
-        [6200,340,220],
-        [6600,290,180],
-        [7000,360,240],
-        [7400,270,200]
-    ];
+    addPlatform(600,350,220);
+    addPlatform(950,285,180);
+    addPlatform(1250,370,230);
+    addPlatform(1600,320,210);
 
-    for(const item of layouts){
+    /*
+      Initial coins.
+    */
+
+    addCoin(300,350);
+    addCoin(480,300);
+    addCoin(690,300);
+    addCoin(740,300);
+    addCoin(790,300);
+    addCoin(1020,230);
+    addCoin(1070,230);
+    addCoin(1120,230);
+    addCoin(1350,300);
+    addCoin(1650,250);
+
+    /*
+      Initial enemies.
+    */
+
+    addEnemy(900);
+    addEnemy(1450);
+}
+
+function addPlatform(
+    x,
+    y,
+    w
+){
+
+    platforms.push({
+
+        x:x,
+        y:y,
+        w:w,
+        h:25
+    });
+}
+
+function addCoin(
+    x,
+    y
+){
+
+    coinObjects.push({
+
+        x:x,
+        y:y,
+
+        r:13,
+
+        collected:false,
+
+        spin:
+            Math.random()*6.28
+    });
+}
+
+function addEnemy(x){
+
+    enemies.push({
+
+        x:x,
+
+        y:400,
+
+        w:45,
+        h:45,
+
+        vx:
+            -(2+
+            Math.random()*1.5),
+
+        phase:
+            Math.random()*6.28
+    });
+}
+
+/*
+  Generate new terrain ahead of the player.
+*/
+
+function generateEndlessWorld(){
+
+    const generateUntil =
+        player.x + canvas.width + 1800;
+
+    /*
+      Keep the ground going forever.
+    */
+
+    while(
+        worldEnd <
+        generateUntil
+    ){
+
+        const oldEnd =
+            worldEnd;
+
+        const groundWidth =
+            900 +
+            Math.random()*900;
 
         platforms.push({
 
-            x:item[0],
-            y:item[1],
-            w:item[2],
-            h:25
+            x:oldEnd,
+            y:455,
+            w:groundWidth,
+            h:85
         });
 
-    }
+        worldEnd += groundWidth;
 
-    for(
-        let x=300;
-        x<7800;
-        x+=180
-    ){
+        /*
+          Add several floating platforms
+          inside the newly generated area.
+        */
 
-        const y =
-            300 +
-            Math.sin(x*.015)*75;
+        const platformCount =
+            2 +
+            Math.floor(
+                Math.random()*3
+            );
 
-        coinObjects.push({
+        for(
+            let i=0;
+            i<platformCount;
+            i++
+        ){
 
-            x:x,
-            y:Math.max(
-                170,
-                Math.min(390,y)
-            ),
+            const px =
+                oldEnd +
+                150 +
+                Math.random() *
+                Math.max(
+                    250,
+                    groundWidth-300
+                );
 
-            r:13,
+            const py =
+                240 +
+                Math.random()*150;
 
-            collected:false,
+            const pw =
+                150 +
+                Math.random()*120;
 
-            spin:
-                Math.random()*6.28
-        });
-    }
+            addPlatform(
+                px,
+                py,
+                pw
+            );
 
-    const groups = [
-        [690,300],
-        [740,300],
-        [790,300],
+            /*
+              Coins above generated platforms.
+            */
 
-        [1020,230],
-        [1070,230],
-        [1120,230],
+            addCoin(
+                px+pw*.35,
+                py-55
+            );
 
-        [2030,205],
-        [2080,205],
-        [2130,205],
+            addCoin(
+                px+pw*.65,
+                py-55
+            );
+        }
 
-        [4300,195],
-        [4350,195],
-        [4400,195]
-    ];
+        /*
+          Add ground-level coin groups.
+        */
 
-    for(const c of groups){
+        const coinCount =
+            3 +
+            Math.floor(
+                Math.random()*5
+            );
 
-        coinObjects.push({
+        for(
+            let i=0;
+            i<coinCount;
+            i++
+        ){
 
-            x:c[0],
-            y:c[1],
+            const cx =
+                oldEnd +
+                100 +
+                Math.random() *
+                Math.max(
+                    300,
+                    groundWidth-200
+                );
 
-            r:13,
+            const cy =
+                300 +
+                Math.random()*90;
 
-            collected:false,
+            addCoin(cx,cy);
+        }
 
-            spin:0
-        });
+        /*
+          Add enemies.
+        */
 
+        const enemyCount =
+            1 +
+            Math.floor(
+                Math.random()*2
+            );
+
+        for(
+            let i=0;
+            i<enemyCount;
+            i++
+        ){
+
+            const ex =
+                oldEnd +
+                300 +
+                Math.random() *
+                Math.max(
+                    350,
+                    groundWidth-350
+                );
+
+            addEnemy(ex);
+        }
     }
 }
+
+function cleanupWorld(){
+
+    /*
+      Remove objects far behind the camera.
+      This keeps the endless game efficient.
+    */
+
+    const removeBefore =
+        cameraX - 1000;
+
+    if(
+        platforms.length > 20
+    ){
+
+        platforms =
+            platforms.filter(
+                p =>
+                    p.x+p.w >
+                    removeBefore
+            );
+    }
+
+    if(
+        coinObjects.length > 40
+    ){
+
+        coinObjects =
+            coinObjects.filter(
+                c =>
+                    c.x >
+                    removeBefore
+            );
+    }
+
+    if(
+        enemies.length > 15
+    ){
+
+        enemies =
+            enemies.filter(
+                e =>
+                    e.x+e.w >
+                    removeBefore
+            );
+    }
+}
+
+/* =========================
+   START GAME
+========================= */
 
 function startGame(){
 
@@ -1689,26 +1944,33 @@ function startGame(){
 
     requestAnimationFrame(gameLoop);
 
-    /* Request fullscreen after the START button tap. */
+    /*
+      Fullscreen on the actual game screen.
+    */
 
-    const page =
-        document.documentElement;
+    const gameScreen =
+        document.getElementById(
+            "gameScreen"
+        );
 
     const fullscreenRequest =
-        page.requestFullscreen ||
-        page.webkitRequestFullscreen ||
-        page.msRequestFullscreen;
+        gameScreen.requestFullscreen ||
+        gameScreen.webkitRequestFullscreen ||
+        gameScreen.msRequestFullscreen;
 
     if(fullscreenRequest){
 
         try{
 
             const result =
-                fullscreenRequest.call(page);
+                fullscreenRequest.call(
+                    gameScreen
+                );
 
             if(
                 result &&
-                typeof result.then === "function"
+                typeof result.then ===
+                "function"
             ){
 
                 result.then(() => {
@@ -1738,7 +2000,6 @@ function startGame(){
         lockLandscape();
 
     }
-
 }
 
 function lockLandscape(){
@@ -1796,6 +2057,10 @@ function resetGame(){
 
     updateHUD();
 }
+
+/* =========================
+   KEYBOARD
+========================= */
 
 window.addEventListener(
     "keydown",
@@ -1858,6 +2123,10 @@ window.addEventListener(
     }
 );
 
+/* =========================
+   TOUCH CONTROLS
+========================= */
+
 function touchButton(
     element,
     key
@@ -1919,6 +2188,10 @@ touchButton(
     "jump"
 );
 
+/* =========================
+   PAUSE
+========================= */
+
 function togglePause(){
 
     if(!gameRunning) return;
@@ -1930,8 +2203,12 @@ function togglePause(){
     ).textContent =
         paused
         ? "⏸ Game Paused"
-        : "Collect coins and reach the end of the forest!";
+        : "Run as far as you can and collect coins!";
 }
+
+/* =========================
+   PLAYER
+========================= */
 
 function updatePlayer(dt){
 
@@ -2004,13 +2281,10 @@ function updatePlayer(dt){
         player.vx=0;
     }
 
-    if(
-        player.x+player.w>
-        levelWidth-50
-    ){
-
-        finishLevel();
-    }
+    /*
+      Endless world:
+      There is no finishLevel anymore.
+    */
 
     player.grounded=false;
 
@@ -2058,6 +2332,10 @@ function updatePlayer(dt){
         Math.abs(player.vx)*s;
 }
 
+/* =========================
+   CAMERA
+========================= */
+
 function updateCamera(){
 
     const target =
@@ -2070,42 +2348,36 @@ function updateCamera(){
     cameraX =
         Math.max(
             0,
-            Math.min(
-                levelWidth-canvas.width,
-                cameraX
-            )
+            cameraX
         );
 }
 
+/* =========================
+   ENEMIES
+========================= */
+
 function spawnEnemies(){
+
+    /*
+      Endless enemies are already
+      generated with the terrain.
+      This function slowly adds extra
+      enemies during very long runs.
+    */
 
     enemyTimer += 16;
 
-    if(enemyTimer<1200) return;
+    if(enemyTimer<1800) return;
 
     enemyTimer=0;
 
     const x =
-        cameraX+
+        player.x+
         canvas.width+
-        80;
+        300+
+        Math.random()*700;
 
-    enemies.push({
-
-        x:x,
-
-        y:400,
-
-        w:45,
-        h:45,
-
-        vx:
-            -(2+
-            Math.random()*1.5),
-
-        phase:
-            Math.random()*6.28
-    });
+    addEnemy(x);
 }
 
 function updateEnemies(dt){
@@ -2131,7 +2403,7 @@ function updateEnemies(dt){
 
         if(
             e.x<
-            cameraX-150
+            cameraX-300
         ){
 
             enemies.splice(i,1);
@@ -2169,6 +2441,8 @@ function updateEnemies(dt){
                     "square"
                 );
 
+                updateHUD();
+
             }else{
 
                 loseLife();
@@ -2180,6 +2454,10 @@ function updateEnemies(dt){
 
     }
 }
+
+/* =========================
+   COINS
+========================= */
 
 function updateCoins(dt){
 
@@ -2220,6 +2498,10 @@ function updateCoins(dt){
     }
 }
 
+/* =========================
+   LIFE SYSTEM
+========================= */
+
 function loseLife(){
 
     if(player.invincible>0)
@@ -2256,54 +2538,6 @@ function loseLife(){
     }
 }
 
-function finishLevel(){
-
-    gameRunning=false;
-
-    if(coins>best){
-
-        best=coins;
-
-        localStorage.setItem(
-            "shadowCatBest",
-            best
-        );
-    }
-
-    document.getElementById(
-        "finalCoins"
-    ).textContent=coins;
-
-    document.getElementById(
-        "finalBest"
-    ).textContent=best;
-
-    document.getElementById(
-        "gameOver"
-    ).style.display="flex";
-
-    document.querySelector(
-        ".over-box h2"
-    ).textContent=
-        "YOU WIN!";
-
-    document.querySelector(
-        ".over-box p"
-    ).textContent=
-        "You reached the end of the Moonlit Forest!";
-
-    sound(
-        1000,
-        .15,
-        "triangle"
-    );
-
-    setTimeout(
-        ()=>sound(1300,.2,"triangle"),
-        150
-    );
-}
-
 function endGame(){
 
     gameRunning=false;
@@ -2334,12 +2568,16 @@ function endGame(){
     document.querySelector(
         ".over-box p"
     ).textContent=
-        "The shadow forest defeated you.";
+        "Your endless run is over.";
 
     document.getElementById(
         "gameOver"
     ).style.display="flex";
 }
+
+/* =========================
+   PARTICLES
+========================= */
 
 function makeParticles(
     x,
@@ -2404,6 +2642,10 @@ function updateParticles(dt){
     }
 }
 
+/* =========================
+   COLLISION
+========================= */
+
 function collision(a,b){
 
     return(
@@ -2456,6 +2698,10 @@ function circleCollision(c,r){
     );
 }
 
+/* =========================
+   BACKGROUND
+========================= */
+
 function drawBackground(){
 
     const g =
@@ -2494,7 +2740,7 @@ function drawBackground(){
     ){
 
         const x =
-            ((i*173)%levelWidth)-
+            ((i*173)%10000)-
             cameraX*.3;
 
         const y =
@@ -2686,6 +2932,10 @@ function drawPine(
     );
 }
 
+/* =========================
+   PLATFORMS
+========================= */
+
 function drawPlatforms(){
 
     for(
@@ -2789,6 +3039,10 @@ function drawPlatforms(){
         }
     }
 }
+
+/* =========================
+   COINS DRAW
+========================= */
 
 function drawCoins(){
 
@@ -2894,6 +3148,10 @@ function drawCoins(){
     }
 }
 
+/* =========================
+   ENEMIES DRAW
+========================= */
+
 function drawEnemies(){
 
     for(
@@ -2994,6 +3252,10 @@ function drawEnemies(){
         ctx.restore();
     }
 }
+
+/* =========================
+   PLAYER DRAW
+========================= */
 
 function drawPlayer(){
 
@@ -3308,6 +3570,10 @@ function drawPlayer(){
     ctx.restore();
 }
 
+/* =========================
+   PARTICLES DRAW
+========================= */
+
 function drawParticles(){
 
     for(
@@ -3398,6 +3664,10 @@ function roundRect(
     ctx.closePath();
 }
 
+/* =========================
+   HUD
+========================= */
+
 function updateHUD(){
 
     document.getElementById(
@@ -3408,6 +3678,10 @@ function updateHUD(){
         "lives"
     ).textContent=lives;
 }
+
+/* =========================
+   DRAW
+========================= */
 
 function draw(){
 
@@ -3431,6 +3705,10 @@ function draw(){
     drawParticles();
 }
 
+/* =========================
+   ENDLESS GAME LOOP
+========================= */
+
 function gameLoop(time){
 
     if(!gameRunning)
@@ -3446,6 +3724,12 @@ function gameLoop(time){
 
     if(!paused){
 
+        /*
+          Generate new world continuously.
+        */
+
+        generateEndlessWorld();
+
         updatePlayer(dt);
 
         updateCamera();
@@ -3458,6 +3742,7 @@ function gameLoop(time){
 
         updateParticles(dt);
 
+        cleanupWorld();
     }
 
     draw();
@@ -3472,4 +3757,4 @@ updateHUD();
 </script>
 
 </body>
-  </html>
+    </html>
