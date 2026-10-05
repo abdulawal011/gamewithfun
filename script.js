@@ -35,7 +35,7 @@ const games = [
     title: "",
     category: "",
     icon: "",
-    url: "games/dragon.html",
+    url: "games/dragongame.html",
     newGame: false,
     popular: true
   },
