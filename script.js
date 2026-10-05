@@ -17,7 +17,7 @@ const games = [
     title: "",
     category: "",
     icon: "",
-    url: "games/mini_knight.html",
+    url: "",
     newGame: false,
     popular: true
   },
@@ -26,7 +26,7 @@ const games = [
     title: "",
     category: "",
     icon: "",
-    url: "games/lava_escape.html",
+    url: "",
     newGame: false,
     popular: true
   },
