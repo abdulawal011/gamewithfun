@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <title>Dragon Mountain - GameWithFun</title>
 <meta name="description" content="Play Dragon Mountain by GameWithFun. Battle monsters, collect crystals and face the mighty Ancient Dragon in a high-quality mountain adventure.">
 <meta name="robots" content="index,follow">
@@ -33,10 +37,50 @@ button{
   font:inherit;
   border:0;
   cursor:pointer;
+
+  /* Disable copy / text selection */
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+
+  -webkit-touch-callout:none;
+  -webkit-user-drag:none;
+  -webkit-tap-highlight-color:transparent;
+
+  touch-action:manipulation;
 }
 
 .page{
   min-height:100vh;
+}
+
+/* ================= DISABLE COPY ON ALL GAME BUTTONS ================= */
+
+button,
+.startButton,
+.homeBtn,
+.smallBtn,
+.controlBtn,
+.actionBtn{
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  -webkit-touch-callout:none;
+  -webkit-user-drag:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.controlBtn{
+  touch-action:none;
+}
+
+.startButton,
+.homeBtn,
+.smallBtn,
+.actionBtn{
+  touch-action:manipulation;
 }
 
 /* ================= START SCREEN ================= */
@@ -224,29 +268,46 @@ button{
   border-radius:12px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.1);
+
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
 }
 
 /* ================= GAME ================= */
 
 #gamePage{
   display:none;
-  min-height:100vh;
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100dvh;
+  min-height:100dvh;
   background:#020308;
+  overflow:hidden;
+  z-index:5000;
 }
 
 .gameWrap{
   width:100%;
-  max-width:1250px;
-  margin:auto;
+  height:100%;
+  max-width:none;
+  margin:0;
   position:relative;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
 
 .gameTop{
   height:64px;
+  min-height:64px;
+  flex-shrink:0;
   display:flex;
   align-items:center;
   gap:10px;
   padding:8px 12px;
+  padding-top:max(8px,env(safe-area-inset-top));
   background:rgba(5,7,13,.96);
   border-bottom:1px solid rgba(255,255,255,.08);
   position:relative;
@@ -276,6 +337,10 @@ button{
   gap:7px;
   flex-wrap:wrap;
   justify-content:flex-end;
+
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
 }
 
 .hudBox{
@@ -294,15 +359,19 @@ button{
   font-size:15px;
 }
 
+/* ================= CANVAS ================= */
+
 #gameCanvas{
   width:100%;
   height:auto;
+  flex:1 1 auto;
+  min-height:0;
   display:block;
   background:#070b13;
   touch-action:none;
 }
 
-/* Boss */
+/* ================= BOSS ================= */
 
 .bossUI{
   position:absolute;
@@ -338,7 +407,7 @@ button{
   transition:width .12s;
 }
 
-/* Controls */
+/* ================= CONTROLS ================= */
 
 .controls{
   position:absolute;
@@ -351,12 +420,20 @@ button{
   align-items:flex-end;
   padding:0 18px;
   pointer-events:none;
+
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
 }
 
 .controlGroup{
   display:flex;
   gap:10px;
   pointer-events:auto;
+
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
 }
 
 .controlBtn{
@@ -370,7 +447,17 @@ button{
   backdrop-filter:blur(8px);
   font-size:25px;
   font-weight:900;
+
   user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+
+  -webkit-touch-callout:none;
+  -webkit-user-drag:none;
+  -webkit-tap-highlight-color:transparent;
+
+  touch-action:none;
 }
 
 .controlBtn:active{
@@ -387,7 +474,7 @@ button{
   font-size:28px;
 }
 
-/* Rotate */
+/* ================= ROTATE ================= */
 
 #rotateMessage{
   display:none;
@@ -425,7 +512,7 @@ button{
   50%{transform:rotate(90deg)}
 }
 
-/* Overlay */
+/* ================= OVERLAY ================= */
 
 .overlay{
   position:absolute;
@@ -466,9 +553,14 @@ button{
   background:#f04b1d;
   color:#fff;
   font-weight:900;
+
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+  touch-action:manipulation;
 }
 
-/* Info */
+/* ================= INFO ================= */
 
 .info{
   padding:45px 18px 60px;
@@ -499,14 +591,18 @@ button{
 }
 
 @media(max-width:800px){
+
   .startInfo{
     grid-template-columns:1fr;
   }
+
 }
 
 @media(max-width:650px){
+
   .gameTop{
     height:58px;
+    min-height:58px;
   }
 
   .homeBtn{
@@ -571,8 +667,6 @@ button{
     </button>
 
   </div>
-
-  <!-- FIRST PAGE GAME BRIEFING -->
 
   <div class="startInfo">
 
@@ -692,6 +786,7 @@ button{
 
     <div class="bossUI" id="bossUI">
       <div class="bossTitle">🐉 ANCIENT DRAGON</div>
+
       <div class="bossBar">
         <div id="bossHealth"></div>
       </div>
@@ -702,13 +797,27 @@ button{
     <div class="controls">
 
       <div class="controlGroup">
-        <button class="controlBtn" id="leftBtn">◀</button>
-        <button class="controlBtn" id="rightBtn">▶</button>
+
+        <button class="controlBtn" id="leftBtn">
+          ◀
+        </button>
+
+        <button class="controlBtn" id="rightBtn">
+          ▶
+        </button>
+
       </div>
 
       <div class="controlGroup">
-        <button class="controlBtn" id="jumpBtn">⬆</button>
-        <button class="controlBtn attackBtn" id="attackBtn">⚔</button>
+
+        <button class="controlBtn" id="jumpBtn">
+          ⬆
+        </button>
+
+        <button class="controlBtn attackBtn" id="attackBtn">
+          ⚔
+        </button>
+
       </div>
 
     </div>
@@ -717,7 +826,9 @@ button{
 
       <div class="overlayCard">
 
-        <h2 id="overlayTitle">Level Complete!</h2>
+        <h2 id="overlayTitle">
+          Level Complete!
+        </h2>
 
         <p id="overlayText">
           You defeated the enemies.
@@ -825,33 +936,33 @@ button{
    Existing game mechanics preserved
    ========================================================= */
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("gameCanvas");
+const ctx=canvas.getContext("2d");
 
-let W = canvas.width;
-let H = canvas.height;
+let W=canvas.width;
+let H=canvas.height;
 
-let running = false;
-let gameOver = false;
-let level = 1;
+let running=false;
+let gameOver=false;
+let level=1;
 
-let score = 0;
-let coins = 0;
-let crystals = 0;
+let score=0;
+let coins=0;
+let crystals=0;
 
-let cameraX = 0;
-let worldWidth = 6000;
+let cameraX=0;
+let worldWidth=6000;
 
-let lastTime = 0;
+let lastTime=0;
 
-const keys = {
+const keys={
   left:false,
   right:false,
   jump:false,
   attack:false
 };
 
-const player = {
+const player={
   x:350,
   y:480,
   w:46,
@@ -869,13 +980,13 @@ const player = {
   inv:0
 };
 
-let platforms = [];
-let enemies = [];
-let items = [];
-let particles = [];
-let lava = [];
+let platforms=[];
+let enemies=[];
+let items=[];
+let particles=[];
+let lava=[];
 
-let boss = {
+let boss={
   active:false,
   x:5200,
   y:330,
@@ -900,11 +1011,11 @@ function clamp(v,min,max){
 }
 
 function rectHit(a,b){
-  return (
-    a.x < b.x+b.w &&
-    a.x+a.w > b.x &&
-    a.y < b.y+b.h &&
-    a.y+a.h > b.y
+  return(
+    a.x<b.x+b.w &&
+    a.x+a.w>b.x &&
+    a.y<b.y+b.h &&
+    a.y+a.h>b.y
   );
 }
 
@@ -923,7 +1034,7 @@ function createWorld(){
   particles=[];
   lava=[];
 
-  worldWidth = 6000;
+  worldWidth=6000;
 
   platforms.push({
     x:0,
@@ -1067,6 +1178,7 @@ function drawParticles(){
     ctx.fillStyle=p.color;
 
     ctx.beginPath();
+
     ctx.arc(
       p.x-cameraX,
       p.y,
@@ -1095,7 +1207,9 @@ window.addEventListener("keydown",e=>{
   }
 
   if(e.code==="ArrowUp"||e.code==="Space"){
+
     keys.jump=true;
+
     e.preventDefault();
   }
 
@@ -1126,17 +1240,23 @@ window.addEventListener("keyup",e=>{
 });
 
 
+/* ================= MOBILE BUTTON INPUT ================= */
+
 function holdButton(id,key){
 
   const el=document.getElementById(id);
 
   const down=e=>{
+
     e.preventDefault();
+
     keys[key]=true;
   };
 
   const up=e=>{
+
     e.preventDefault();
+
     keys[key]=false;
   };
 
@@ -1214,7 +1334,11 @@ function updatePlayer(){
   player.x+=player.vx;
   player.y+=player.vy;
 
-  player.x=clamp(player.x,0,worldWidth-player.w);
+  player.x=clamp(
+    player.x,
+    0,
+    worldWidth-player.w
+  );
 
   player.grounded=false;
 
@@ -1258,7 +1382,11 @@ function updatePlayer(){
 
   cameraX=player.x-W*.38;
 
-  cameraX=clamp(cameraX,0,worldWidth-W);
+  cameraX=clamp(
+    cameraX,
+    0,
+    Math.max(0,worldWidth-W)
+  );
 }
 
 
@@ -1326,9 +1454,7 @@ function playerAttack(){
     if(rectHit(bHit,boss)){
 
       boss.hp-=28;
-
       boss.hitTimer=8;
-
       score+=50;
 
       burst(
@@ -1372,7 +1498,11 @@ function updateEnemies(){
 
     enemy.x+=enemy.vx;
 
-    enemy.x=clamp(enemy.x,0,worldWidth-enemy.w);
+    enemy.x=clamp(
+      enemy.x,
+      0,
+      worldWidth-enemy.w
+    );
 
     enemy.y+=4;
 
@@ -1466,6 +1596,7 @@ function damagePlayer(amount){
   if(player.hp<=0){
 
     player.hp=0;
+
     endGame();
   }
 }
@@ -1489,11 +1620,15 @@ function updateBoss(){
 
   if(!boss.active)return;
 
-  boss.hitTimer=Math.max(0,boss.hitTimer-1);
+  boss.hitTimer=Math.max(
+    0,
+    boss.hitTimer-1
+  );
 
   const dx=player.x-boss.x;
 
   if(Math.abs(dx)<500){
+
     boss.x+=Math.sign(dx)*.7;
   }
 
@@ -1506,9 +1641,16 @@ function updateBoss(){
     dragonFire();
   }
 
-  const percent=clamp(boss.hp/boss.maxHp,0,1)*100;
+  const percent=
+    clamp(
+      boss.hp/boss.maxHp,
+      0,
+      1
+    )*100;
 
-  document.getElementById("bossHealth").style.width=percent+"%";
+  document.getElementById(
+    "bossHealth"
+  ).style.width=percent+"%";
 
   if(
     rectHit(player,{
@@ -1571,7 +1713,9 @@ function updateProjectiles(){
     particle(
       p.x,
       p.y,
-      Math.random()<.5?"#ff4b1c":"#ffd34d",
+      Math.random()<.5
+        ?"#ff4b1c"
+        :"#ffd34d",
       rand(3,7)
     );
 
@@ -1583,7 +1727,9 @@ function updateProjectiles(){
     ){
 
       damagePlayer(15);
+
       projectiles.splice(i,1);
+
       continue;
     }
 
@@ -1597,7 +1743,9 @@ function bossDefeated(){
 
   boss.active=false;
 
-  document.getElementById("bossUI").style.display="none";
+  document.getElementById(
+    "bossUI"
+  ).style.display="none";
 
   score+=5000;
 
@@ -1621,7 +1769,9 @@ function bossDefeated(){
 
 function drawSky(){
 
-  const g=ctx.createLinearGradient(0,0,0,H);
+  const g=ctx.createLinearGradient(
+    0,0,0,H
+  );
 
   g.addColorStop(0,"#07142e");
   g.addColorStop(.45,"#27365b");
@@ -1635,7 +1785,15 @@ function drawSky(){
   ctx.fillStyle="#ffe7bd";
 
   ctx.beginPath();
-  ctx.arc(W*.78,100,48,0,Math.PI*2);
+
+  ctx.arc(
+    W*.78,
+    100,
+    48,
+    0,
+    Math.PI*2
+  );
+
   ctx.fill();
 
   ctx.globalAlpha=1;
@@ -1645,21 +1803,51 @@ function drawSky(){
     const x=(i*137-cameraX*.03)%W;
     const y=(i*53)%280;
 
-    ctx.fillStyle=i%3===0?"#fff0c2":"#ffffff";
+    ctx.fillStyle=
+      i%3===0
+        ?"#fff0c2"
+        :"#ffffff";
 
     ctx.globalAlpha=.55;
 
-    ctx.fillRect(x,y,2,2);
+    ctx.fillRect(
+      x,
+      y,
+      2,
+      2
+    );
   }
 
   ctx.globalAlpha=1;
 
-  drawMountainRange(0,360,0.12,"#182238");
-  drawMountainRange(0,430,0.22,"#101827");
-  drawMountainRange(0,500,0.35,"#0b101b");
+  drawMountainRange(
+    0,
+    360,
+    .12,
+    "#182238"
+  );
+
+  drawMountainRange(
+    0,
+    430,
+    .22,
+    "#101827"
+  );
+
+  drawMountainRange(
+    0,
+    500,
+    .35,
+    "#0b101b"
+  );
 }
 
-function drawMountainRange(offset,y,parallax,color){
+function drawMountainRange(
+  offset,
+  y,
+  parallax,
+  color
+){
 
   ctx.fillStyle=color;
 
@@ -1667,13 +1855,19 @@ function drawMountainRange(offset,y,parallax,color){
 
   ctx.moveTo(0,H);
 
-  for(let x=-100;x<W+200;x+=120){
+  for(
+    let x=-100;
+    x<W+200;
+    x+=120
+  ){
 
     const wx=x+cameraX*parallax;
 
     const peak=
       y-
-      Math.abs(Math.sin(wx*.006))*120-
+      Math.abs(
+        Math.sin(wx*.006)
+      )*120-
       40;
 
     ctx.lineTo(x,peak);
@@ -1697,7 +1891,10 @@ function drawLava(){
     if(x+l.w<0||x>W)continue;
 
     const g=ctx.createLinearGradient(
-      x,l.y,x,l.y+l.h
+      x,
+      l.y,
+      x,
+      l.y+l.h
     );
 
     g.addColorStop(0,"#ffcf43");
@@ -1706,7 +1903,12 @@ function drawLava(){
 
     ctx.fillStyle=g;
 
-    ctx.fillRect(x,l.y,l.w,l.h);
+    ctx.fillRect(
+      x,
+      l.y,
+      l.w,
+      l.h
+    );
 
     for(let j=0;j<4;j++){
 
@@ -1739,10 +1941,19 @@ function drawPlatforms(){
     if(x+p.w<0||x>W)continue;
 
     ctx.fillStyle="rgba(0,0,0,.35)";
-    ctx.fillRect(x+5,p.y+8,p.w,p.h);
+
+    ctx.fillRect(
+      x+5,
+      p.y+8,
+      p.w,
+      p.h
+    );
 
     const g=ctx.createLinearGradient(
-      x,p.y,x,p.y+p.h
+      x,
+      p.y,
+      x,
+      p.y+p.h
     );
 
     g.addColorStop(0,"#536273");
@@ -1805,7 +2016,15 @@ function drawItems(){
       ctx.fillStyle=g;
 
       ctx.beginPath();
-      ctx.arc(x,y,item.r,0,Math.PI*2);
+
+      ctx.arc(
+        x,
+        y,
+        item.r,
+        0,
+        Math.PI*2
+      );
+
       ctx.fill();
 
       ctx.strokeStyle="#fff0a1";
@@ -1820,7 +2039,8 @@ function drawItems(){
       ctx.rotate(Math.PI/4);
 
       const g=ctx.createLinearGradient(
-        -10,-10,10,10
+        -10,-10,
+        10,10
       );
 
       g.addColorStop(0,"#eaffff");
@@ -1832,7 +2052,12 @@ function drawItems(){
       ctx.shadowColor="#3de8ff";
       ctx.shadowBlur=15;
 
-      ctx.fillRect(-8,-8,16,16);
+      ctx.fillRect(
+        -8,
+        -8,
+        16,
+        16
+      );
 
       ctx.restore();
     }
@@ -1847,7 +2072,10 @@ function drawPlayer(){
   const x=player.x-cameraX;
   const y=player.y;
 
-  if(player.inv>0 && Math.floor(player.inv/4)%2===0){
+  if(
+    player.inv>0 &&
+    Math.floor(player.inv/4)%2===0
+  ){
     return;
   }
 
@@ -1862,7 +2090,9 @@ function drawPlayer(){
     y+player.h+5,
     30,
     9,
-    0,0,Math.PI*2
+    0,
+    0,
+    Math.PI*2
   );
 
   ctx.fill();
@@ -1874,12 +2104,16 @@ function drawPlayer(){
   ctx.moveTo(x+9,y+27);
   ctx.lineTo(x-5,y+70);
   ctx.lineTo(x+25,y+61);
+
   ctx.closePath();
 
   ctx.fill();
 
   const body=ctx.createLinearGradient(
-    x,y+20,x+player.w,y+70
+    x,
+    y+20,
+    x+player.w,
+    y+70
   );
 
   body.addColorStop(0,"#596d87");
@@ -1921,7 +2155,15 @@ function drawPlayer(){
   ctx.fillStyle=head;
 
   ctx.beginPath();
-  ctx.arc(x+24,y+18,16,0,Math.PI*2);
+
+  ctx.arc(
+    x+24,
+    y+18,
+    16,
+    0,
+    Math.PI*2
+  );
+
   ctx.fill();
 
   ctx.fillStyle="#263c59";
@@ -1949,8 +2191,19 @@ function drawPlayer(){
 
   ctx.fillStyle="#182131";
 
-  ctx.fillRect(x+10,y+61,10,13);
-  ctx.fillRect(x+27,y+61,10,13);
+  ctx.fillRect(
+    x+10,
+    y+61,
+    10,
+    13
+  );
+
+  ctx.fillRect(
+    x+27,
+    y+61,
+    10,
+    13
+  );
 
   if(player.attackTimer>0){
 
@@ -1961,7 +2214,10 @@ function drawPlayer(){
       y+40
     );
 
-    ctx.scale(player.facing,1);
+    ctx.scale(
+      player.facing,
+      1
+    );
 
     ctx.rotate(-.45);
 
@@ -1985,10 +2241,17 @@ function drawPlayer(){
     ctx.lineTo(-5,-70);
 
     ctx.closePath();
+
     ctx.fill();
 
     ctx.fillStyle="#d99b36";
-    ctx.fillRect(-9,-13,18,5);
+
+    ctx.fillRect(
+      -9,
+      -13,
+      18,
+      5
+    );
 
     ctx.restore();
 
@@ -2044,22 +2307,29 @@ function drawEnemies(){
       y+e.h+4,
       27,
       8,
-      0,0,Math.PI*2
+      0,
+      0,
+      Math.PI*2
     );
 
     ctx.fill();
 
-    let main=e.type===0?"#70403b":
-             e.type===1?"#425f49":
-             "#4d405f";
+    let main=
+      e.type===0
+        ?"#70403b"
+        :e.type===1
+          ?"#425f49"
+          :"#4d405f";
 
     ctx.fillStyle=main;
 
     ctx.beginPath();
 
     ctx.roundRect(
-      x+5,y+18,
-      e.w-10,e.h-20,
+      x+5,
+      y+18,
+      e.w-10,
+      e.h-20,
       14
     );
 
@@ -2072,33 +2342,68 @@ function drawEnemies(){
     ctx.moveTo(x+9,y+22);
     ctx.lineTo(x+2,y+3);
     ctx.lineTo(x+17,y+16);
+
     ctx.closePath();
 
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(x+e.w-9,y+22);
-    ctx.lineTo(x+e.w-2,y+3);
-    ctx.lineTo(x+e.w-18,y+16);
+    ctx.moveTo(
+      x+e.w-9,
+      y+22
+    );
+
+    ctx.lineTo(
+      x+e.w-2,
+      y+3
+    );
+
+    ctx.lineTo(
+      x+e.w-18,
+      y+16
+    );
+
     ctx.closePath();
 
     ctx.fill();
 
     ctx.fillStyle="#ff3e2e";
 
-    ctx.fillRect(x+13,y+26,5,4);
-    ctx.fillRect(x+28,y+26,5,4);
+    ctx.fillRect(
+      x+13,
+      y+26,
+      5,
+      4
+    );
+
+    ctx.fillRect(
+      x+28,
+      y+26,
+      5,
+      4
+    );
 
     ctx.fillStyle="#180b0d";
-    ctx.fillRect(x+3,y-8,e.w-6,5);
+
+    ctx.fillRect(
+      x+3,
+      y-8,
+      e.w-6,
+      5
+    );
 
     ctx.fillStyle="#ff4938";
 
     ctx.fillRect(
       x+3,
       y-8,
-      (e.w-6)*clamp(e.hp/e.maxHp,0,1),
+      (e.w-6)*
+      clamp(
+        e.hp/e.maxHp,
+        0,
+        1
+      ),
       5
     );
 
@@ -2133,13 +2438,18 @@ function drawDragon(){
     y+boss.h+20,
     100,
     25,
-    0,0,Math.PI*2
+    0,
+    0,
+    Math.PI*2
   );
 
   ctx.fill();
 
   const wingGrad=ctx.createLinearGradient(
-    x,y,x+boss.w,y+boss.h
+    x,
+    y,
+    x+boss.w,
+    y+boss.h
   );
 
   wingGrad.addColorStop(0,"#6d1720");
@@ -2161,10 +2471,25 @@ function drawDragon(){
 
   ctx.beginPath();
 
-  ctx.moveTo(x+125,y+55);
-  ctx.lineTo(x+boss.w+100,y-25);
-  ctx.lineTo(x+boss.w+45,y+105);
-  ctx.lineTo(x+135,y+125);
+  ctx.moveTo(
+    x+125,
+    y+55
+  );
+
+  ctx.lineTo(
+    x+boss.w+100,
+    y-25
+  );
+
+  ctx.lineTo(
+    x+boss.w+45,
+    y+105
+  );
+
+  ctx.lineTo(
+    x+135,
+    y+125
+  );
 
   ctx.closePath();
 
@@ -2255,6 +2580,7 @@ function drawDragon(){
   ctx.lineTo(x+94,y-32);
 
   ctx.closePath();
+
   ctx.fill();
 
   ctx.beginPath();
@@ -2264,6 +2590,7 @@ function drawDragon(){
   ctx.lineTo(x+137,y-10);
 
   ctx.closePath();
+
   ctx.fill();
 
   ctx.shadowColor="#ffde36";
@@ -2274,9 +2601,13 @@ function drawDragon(){
   ctx.beginPath();
 
   ctx.ellipse(
-    x+84,y-2,
-    7,4,
-    0,0,Math.PI*2
+    x+84,
+    y-2,
+    7,
+    4,
+    0,
+    0,
+    Math.PI*2
   );
 
   ctx.fill();
@@ -2284,9 +2615,13 @@ function drawDragon(){
   ctx.beginPath();
 
   ctx.ellipse(
-    x+123,y-2,
-    7,4,
-    0,0,Math.PI*2
+    x+123,
+    y-2,
+    7,
+    4,
+    0,
+    0,
+    Math.PI*2
   );
 
   ctx.fill();
@@ -2298,11 +2633,16 @@ function drawDragon(){
 
   ctx.beginPath();
 
-  ctx.moveTo(x+77,y+20);
+  ctx.moveTo(
+    x+77,
+    y+20
+  );
 
   ctx.quadraticCurveTo(
-    x+105,y+40,
-    x+137,y+18
+    x+105,
+    y+40,
+    x+137,
+    y+18
   );
 
   ctx.stroke();
@@ -2310,8 +2650,12 @@ function drawDragon(){
   ctx.globalAlpha=.3;
 
   const fire=ctx.createRadialGradient(
-    x+150,y+25,2,
-    x+150,y+25,70
+    x+150,
+    y+25,
+    2,
+    x+150,
+    y+25,
+    70
   );
 
   fire.addColorStop(0,"#fff1a0");
@@ -2321,7 +2665,15 @@ function drawDragon(){
   ctx.fillStyle=fire;
 
   ctx.beginPath();
-  ctx.arc(x+150,y+25,70,0,Math.PI*2);
+
+  ctx.arc(
+    x+150,
+    y+25,
+    70,
+    0,
+    Math.PI*2
+  );
+
   ctx.fill();
 
   ctx.globalAlpha=1;
@@ -2331,9 +2683,13 @@ function drawDragon(){
   ctx.beginPath();
 
   ctx.ellipse(
-    x+55,y+160,
-    25,14,
-    0,0,Math.PI*2
+    x+55,
+    y+160,
+    25,
+    14,
+    0,
+    0,
+    Math.PI*2
   );
 
   ctx.fill();
@@ -2341,9 +2697,13 @@ function drawDragon(){
   ctx.beginPath();
 
   ctx.ellipse(
-    x+135,y+160,
-    25,14,
-    0,0,Math.PI*2
+    x+135,
+    y+160,
+    25,
+    14,
+    0,
+    0,
+    Math.PI*2
   );
 
   ctx.fill();
@@ -2361,8 +2721,12 @@ function drawProjectiles(){
     const x=p.x-cameraX;
 
     const g=ctx.createRadialGradient(
-      x,p.y,1,
-      x,p.y,18
+      x,
+      p.y,
+      1,
+      x,
+      p.y,
+      18
     );
 
     g.addColorStop(0,"#fffbd1");
@@ -2374,7 +2738,13 @@ function drawProjectiles(){
 
     ctx.beginPath();
 
-    ctx.arc(x,p.y,18,0,Math.PI*2);
+    ctx.arc(
+      x,
+      p.y,
+      18,
+      0,
+      Math.PI*2
+    );
 
     ctx.fill();
   }
@@ -2385,7 +2755,12 @@ function drawProjectiles(){
 
 function draw(){
 
-  ctx.clearRect(0,0,W,H);
+  ctx.clearRect(
+    0,
+    0,
+    W,
+    H
+  );
 
   drawSky();
 
@@ -2399,15 +2774,32 @@ function draw(){
   drawParticles();
 
   const vignette=ctx.createRadialGradient(
-    W/2,H/2,100,
-    W/2,H/2,Math.max(W,H)*.7
+    W/2,
+    H/2,
+    100,
+    W/2,
+    H/2,
+    Math.max(W,H)*.7
   );
 
-  vignette.addColorStop(0,"transparent");
-  vignette.addColorStop(1,"rgba(0,0,0,.48)");
+  vignette.addColorStop(
+    0,
+    "transparent"
+  );
+
+  vignette.addColorStop(
+    1,
+    "rgba(0,0,0,.48)"
+  );
 
   ctx.fillStyle=vignette;
-  ctx.fillRect(0,0,W,H);
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
 }
 
 
@@ -2448,11 +2840,28 @@ function update(dt){
 
 function updateHUD(){
 
-  document.getElementById("levelText").textContent=level;
-  document.getElementById("hpText").textContent=Math.max(0,Math.floor(player.hp));
-  document.getElementById("crystalText").textContent=crystals;
-  document.getElementById("coinText").textContent=coins;
-  document.getElementById("scoreText").textContent=score;
+  document.getElementById(
+    "levelText"
+  ).textContent=level;
+
+  document.getElementById(
+    "hpText"
+  ).textContent=Math.max(
+    0,
+    Math.floor(player.hp)
+  );
+
+  document.getElementById(
+    "crystalText"
+  ).textContent=crystals;
+
+  document.getElementById(
+    "coinText"
+  ).textContent=coins;
+
+  document.getElementById(
+    "scoreText"
+  ).textContent=score;
 }
 
 
@@ -2460,7 +2869,10 @@ function updateHUD(){
 
 function loop(time){
 
-  const dt=Math.min(40,time-lastTime);
+  const dt=Math.min(
+    40,
+    time-lastTime
+  );
 
   lastTime=time;
 
@@ -2477,8 +2889,13 @@ requestAnimationFrame(loop);
 
 async function startGame(){
 
-  document.getElementById("startScreen").style.display="none";
-  document.getElementById("gamePage").style.display="block";
+  document.getElementById(
+    "startScreen"
+  ).style.display="none";
+
+  document.getElementById(
+    "gamePage"
+  ).style.display="block";
 
   resetGame();
 
@@ -2486,26 +2903,57 @@ async function startGame(){
 
   window.scrollTo(0,0);
 
-  /*
-   * Try native fullscreen.
-   * This works when the browser allows fullscreen
-   * from the user's START button interaction.
-   */
-
   try{
 
     if(!document.fullscreenElement){
 
-      await document.documentElement.requestFullscreen();
+      const gamePage=
+        document.getElementById(
+          "gamePage"
+        );
 
+      if(gamePage.requestFullscreen){
+
+        await gamePage.requestFullscreen();
+
+      }else if(
+        document.documentElement.requestFullscreen
+      ){
+
+        await document.documentElement.requestFullscreen();
+
+      }
     }
 
   }catch(error){
 
-    console.log("Fullscreen not available:",error);
-
+    console.log(
+      "Fullscreen not available:",
+      error
+    );
   }
 
+  try{
+
+    if(
+      screen.orientation &&
+      screen.orientation.lock
+    ){
+
+      await screen.orientation.lock(
+        "landscape"
+      );
+    }
+
+  }catch(error){
+
+    console.log(
+      "Landscape lock not available:",
+      error
+    );
+  }
+
+  resizeGameCanvas();
   updateOrientation();
 }
 
@@ -2531,8 +2979,13 @@ function resetGame(){
 
   createWorld();
 
-  document.getElementById("overlay").style.display="none";
-  document.getElementById("bossUI").style.display="none";
+  document.getElementById(
+    "overlay"
+  ).style.display="none";
+
+  document.getElementById(
+    "bossUI"
+  ).style.display="none";
 
   running=true;
 
@@ -2557,21 +3010,40 @@ function endGame(){
 
 /* ================= OVERLAY ================= */
 
-function showOverlay(title,text,button,callback){
+function showOverlay(
+  title,
+  text,
+  button,
+  callback
+){
 
-  document.getElementById("overlayTitle").textContent=title;
-  document.getElementById("overlayText").textContent=text;
+  document.getElementById(
+    "overlayTitle"
+  ).textContent=title;
 
-  const btn=document.getElementById("overlayButton");
+  document.getElementById(
+    "overlayText"
+  ).textContent=text;
+
+  const btn=
+    document.getElementById(
+      "overlayButton"
+    );
 
   btn.textContent=button;
 
   btn.onclick=()=>{
-    document.getElementById("overlay").style.display="none";
+
+    document.getElementById(
+      "overlay"
+    ).style.display="none";
+
     callback();
   };
 
-  document.getElementById("overlay").style.display="flex";
+  document.getElementById(
+    "overlay"
+  ).style.display="flex";
 }
 
 
@@ -2581,16 +3053,41 @@ function goHome(){
 
   running=false;
 
+  keys.left=false;
+  keys.right=false;
+  keys.jump=false;
+  keys.attack=false;
+
+  try{
+
+    if(
+      screen.orientation &&
+      screen.orientation.unlock
+    ){
+
+      screen.orientation.unlock();
+    }
+
+  }catch(error){}
+
   if(document.fullscreenElement){
 
-    document.exitFullscreen().catch(()=>{});
-
+    document.exitFullscreen().catch(
+      ()=>{}
+    );
   }
 
-  document.getElementById("gamePage").style.display="none";
-  document.getElementById("startScreen").style.display="flex";
+  document.getElementById(
+    "gamePage"
+  ).style.display="none";
 
-  document.getElementById("rotateMessage").style.display="none";
+  document.getElementById(
+    "startScreen"
+  ).style.display="flex";
+
+  document.getElementById(
+    "rotateMessage"
+  ).style.display="none";
 
   window.scrollTo(0,0);
 }
@@ -2600,11 +3097,14 @@ function goHome(){
 
 function updateOrientation(){
 
-  const rotate=document.getElementById("rotateMessage");
+  const rotate=
+    document.getElementById(
+      "rotateMessage"
+    );
 
   if(
     running &&
-    window.innerWidth < window.innerHeight
+    window.innerWidth<window.innerHeight
   ){
 
     rotate.style.display="flex";
@@ -2612,76 +3112,251 @@ function updateOrientation(){
   }else{
 
     rotate.style.display="none";
-
   }
 }
 
-window.addEventListener("resize",updateOrientation);
 
-window.addEventListener("orientationchange",()=>{
+/* ================= FULLSCREEN CANVAS RESIZE ================= */
 
-  setTimeout(updateOrientation,150);
+function resizeGameCanvas(){
 
-});
+  if(
+    !running &&
+    document.getElementById(
+      "gamePage"
+    ).style.display!=="block"
+  ){
 
+    return;
+  }
 
-/* ================= RESIZE ================= */
+  const gamePage=
+    document.getElementById(
+      "gamePage"
+    );
 
-function resizeCanvas(){
+  const gameWrap=
+    document.querySelector(
+      ".gameWrap"
+    );
 
-  canvas.style.width="100%";
-  canvas.style.height="auto";
+  const gameTop=
+    document.querySelector(
+      ".gameTop"
+    );
+
+  if(
+    !gamePage ||
+    !gameWrap ||
+    !gameTop
+  ){
+
+    return;
+  }
+
+  const rect=
+    gameWrap.getBoundingClientRect();
+
+  const topHeight=
+    gameTop.getBoundingClientRect().height;
+
+  const availableWidth=
+    rect.width;
+
+  const availableHeight=
+    Math.max(
+      1,
+      rect.height-topHeight
+    );
+
+  const dpr=
+    Math.min(
+      window.devicePixelRatio||1,
+      2
+    );
+
+  /*
+   * Keep original 1200x700
+   * game coordinate system.
+   */
+
+  W=1200;
+  H=700;
+
+  canvas.width=
+    Math.floor(W*dpr);
+
+  canvas.height=
+    Math.floor(H*dpr);
+
+  canvas.style.width=
+    availableWidth+"px";
+
+  canvas.style.height=
+    availableHeight+"px";
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+  cameraX=clamp(
+    player.x-W*.38,
+    0,
+    Math.max(
+      0,
+      worldWidth-W
+    )
+  );
 }
 
-window.addEventListener("resize",resizeCanvas);
 
-resizeCanvas();
+/* ================= RESIZE / ORIENTATION ================= */
+
+window.addEventListener(
+  "resize",
+  ()=>{
+
+    resizeGameCanvas();
+    updateOrientation();
+
+  }
+);
+
+window.addEventListener(
+  "orientationchange",
+  ()=>{
+
+    setTimeout(
+      ()=>{
+
+        resizeGameCanvas();
+        updateOrientation();
+
+      },
+      150
+    );
+
+  }
+);
+
+document.addEventListener(
+  "fullscreenchange",
+  ()=>{
+
+    setTimeout(
+      ()=>{
+
+        resizeGameCanvas();
+        updateOrientation();
+
+      },
+      100
+    );
+
+  }
+);
 
 
 /* ================= PREVENT MOBILE GESTURES ================= */
 
-document.addEventListener("touchmove",function(e){
+document.addEventListener(
+  "touchmove",
+  function(e){
 
-  if(
-    e.target===canvas ||
-    running
-  ){
+    if(
+      e.target===canvas ||
+      running
+    ){
 
-    e.preventDefault();
+      e.preventDefault();
+    }
 
+  },
+  {
+    passive:false
   }
+);
 
-},{passive:false});
+
+/* ================= PREVENT ALL BUTTON COPY ================= */
+
+document.querySelectorAll(
+  "button"
+).forEach(btn=>{
+
+  /* Chrome / Android long press menu */
+  btn.addEventListener(
+    "contextmenu",
+    e=>{
+      e.preventDefault();
+    }
+  );
+
+  /* Prevent text selection */
+  btn.addEventListener(
+    "selectstart",
+    e=>{
+      e.preventDefault();
+    }
+  );
+
+  /* Prevent drag */
+  btn.addEventListener(
+    "dragstart",
+    e=>{
+      e.preventDefault();
+    }
+  );
+
+});
 
 
 /* ================= BACK BUTTON ================= */
 
-history.pushState(null,"",location.href);
+history.pushState(
+  null,
+  "",
+  location.href
+);
 
-window.addEventListener("popstate",function(){
+window.addEventListener(
+  "popstate",
+  function(){
 
-  if(
-    document.getElementById("gamePage").style.display==="block"
-  ){
+    if(
+      document.getElementById(
+        "gamePage"
+      ).style.display==="block"
+    ){
 
-    goHome();
+      goHome();
 
-    history.pushState(null,"",location.href);
+      history.pushState(
+        null,
+        "",
+        location.href
+      );
 
-  }else{
+    }else{
 
-    history.back();
+      history.back();
+    }
 
   }
-
-});
+);
 
 
 /* ================= INITIAL WORLD ================= */
 
 createWorld();
 draw();
+
 </script>
 
 </body>
-</html>
+  </html>
