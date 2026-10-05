@@ -13,6 +13,24 @@ const games = [
     popular: false
   },
    {
+    id: 18,
+    title: "",
+    category: "",
+    icon: "",
+    url: "games/mini_knight.html",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 19,
+    title: "",
+    category: "",
+    icon: "",
+    url: "games/lava_escape.html",
+    newGame: false,
+    popular: true
+  },
+   {
     id: 16,
     title: "Bubble Shooter",
     category: "Puzzle",
