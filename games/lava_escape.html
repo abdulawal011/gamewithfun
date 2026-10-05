@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 
-<title>Lava Escape - GameWithFun</title>
-
-<meta name="description" content="Play Lava Escape by GameWithFun. Run through a dangerous volcanic temple, jump over traps, collect crystals and escape the rising lava.">
-<meta name="keywords" content="Lava Escape, GameWithFun, online game, browser game, lava game, running game, arcade game">
+<title>Lava Escape V2 - GameWithFun</title>
+<meta name="description" content="Play Lava Escape V2 by GameWithFun. Run through a volcanic temple, jump across safe platforms, collect crystals, defeat monsters and escape the rising lava.">
+<meta name="keywords" content="Lava Escape, Lava Escape V2, GameWithFun, browser game, online game, platform game, lava game, arcade game">
 <meta name="robots" content="index,follow">
-<meta name="theme-color" content="#15101c">
-
+<meta name="theme-color" content="#130912">
 <link rel="canonical" href="https://gamewithfun.com/p/lava-escape.html">
 
 <style>
@@ -23,7 +21,7 @@ html,body{
   margin:0;
   width:100%;
   min-height:100%;
-  background:#09070d;
+  background:#07050a;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
   overflow-x:hidden;
@@ -36,116 +34,149 @@ body{
 button{
   font:inherit;
   cursor:pointer;
+  border:0;
 }
 
-.page{
-  width:100%;
-  min-height:100vh;
+a{
+  -webkit-tap-highlight-color:transparent;
 }
 
-/* =========================
-   START SCREEN
-========================= */
+/* =========================================================
+START SCREEN
+========================================================= */
 
 #startScreen{
   min-height:100vh;
+  min-height:100svh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px 14px;
+  padding:18px 12px;
   position:relative;
   overflow:hidden;
+
   background:
-    radial-gradient(circle at 50% 25%,rgba(255,93,0,.25),transparent 32%),
-    linear-gradient(180deg,#170b19 0%,#0b080e 65%,#050407 100%);
+    radial-gradient(circle at 50% 18%,rgba(255,91,0,.30),transparent 30%),
+    radial-gradient(circle at 20% 70%,rgba(255,31,0,.08),transparent 25%),
+    linear-gradient(180deg,#190b1b 0%,#0d080f 62%,#050407 100%);
 }
 
 .startGlow{
   position:absolute;
-  width:500px;
-  height:500px;
+  width:480px;
+  height:480px;
   border-radius:50%;
-  background:rgba(255,65,0,.12);
-  filter:blur(70px);
+  background:rgba(255,62,0,.13);
+  filter:blur(75px);
   animation:pulseGlow 3s infinite alternate;
 }
 
 @keyframes pulseGlow{
-  from{transform:scale(.85);opacity:.45}
-  to{transform:scale(1.15);opacity:.8}
+  from{
+    transform:scale(.82);
+    opacity:.4;
+  }
+  to{
+    transform:scale(1.16);
+    opacity:.85;
+  }
 }
 
 .startCard{
   position:relative;
+  z-index:2;
   width:min(680px,100%);
   text-align:center;
-  padding:28px 18px 24px;
-  border:1px solid rgba(255,153,55,.25);
+  padding:28px 18px 25px;
   border-radius:28px;
-  background:rgba(20,14,22,.86);
+
+  border:1px solid rgba(255,157,67,.25);
+
+  background:rgba(20,13,22,.90);
+
   box-shadow:
-    0 30px 80px rgba(0,0,0,.65),
-    inset 0 0 50px rgba(255,72,0,.04);
-  backdrop-filter:blur(12px);
-  z-index:2;
+    0 30px 90px rgba(0,0,0,.72),
+    inset 0 0 55px rgba(255,72,0,.045);
+
+  backdrop-filter:blur(14px);
 }
 
 .brand{
-  font-size:15px;
-  font-weight:800;
+  color:#ffb94f;
+  font-size:14px;
+  font-weight:900;
   letter-spacing:3px;
-  color:#ffb347;
   margin-bottom:8px;
-}
-
-.gameLogo{
-  font-size:clamp(42px,10vw,78px);
-  line-height:.95;
-  font-weight:1000;
-  letter-spacing:-3px;
-  text-transform:uppercase;
-  text-shadow:
-    0 5px 0 #761700,
-    0 10px 28px rgba(255,60,0,.45);
-  background:linear-gradient(180deg,#fff18c,#ffb52e 45%,#ff4b00 85%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
 }
 
 .logoIcon{
   display:block;
-  font-size:54px;
-  margin-bottom:3px;
+  font-size:55px;
+  line-height:1;
+  margin-bottom:5px;
   animation:floatIcon 1.7s ease-in-out infinite alternate;
 }
 
 @keyframes floatIcon{
-  from{transform:translateY(0) rotate(-3deg)}
-  to{transform:translateY(-8px) rotate(3deg)}
+  from{
+    transform:translateY(0) rotate(-3deg);
+  }
+  to{
+    transform:translateY(-8px) rotate(3deg);
+  }
+}
+
+.gameLogo{
+  font-size:clamp(43px,10vw,80px);
+  line-height:.88;
+  font-weight:1000;
+  letter-spacing:-4px;
+  text-transform:uppercase;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff49a 0%,
+      #ffc33d 40%,
+      #ff7000 70%,
+      #ff2600 100%
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+
+  text-shadow:
+    0 6px 0 #781800,
+    0 12px 30px rgba(255,63,0,.45);
 }
 
 .tagline{
-  color:#ddd;
+  max-width:510px;
+  margin:17px auto 21px;
+  color:#d9d6db;
   font-size:16px;
-  margin:15px auto 20px;
-  max-width:500px;
   line-height:1.55;
 }
 
 .startButton{
-  border:0;
-  color:white;
-  font-weight:1000;
-  font-size:20px;
-  padding:17px 34px;
+  min-width:245px;
+  padding:17px 32px;
+
   border-radius:18px;
-  background:linear-gradient(180deg,#ffb52e,#ff5a00);
+
+  color:#fff;
+  font-size:20px;
+  font-weight:1000;
+
+  background:
+    linear-gradient(180deg,#ffc044,#ff5b00);
+
   box-shadow:
-    0 8px 0 #9f2600,
-    0 15px 35px rgba(255,69,0,.35);
+    0 8px 0 #982500,
+    0 15px 40px rgba(255,69,0,.35);
+
   transition:.15s;
-  min-width:240px;
 }
 
 .startButton:hover{
@@ -154,33 +185,33 @@ button{
 
 .startButton:active{
   transform:translateY(5px);
-  box-shadow:0 3px 0 #9f2600;
+  box-shadow:0 3px 0 #982500;
 }
 
 .startInfo{
-  margin:28px 0 0;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:9px;
+  margin-top:28px;
 }
 
 .infoBox{
+  padding:12px 7px;
+  border-radius:14px;
   background:rgba(255,255,255,.045);
   border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:12px 7px;
 }
 
 .infoBox b{
   display:block;
-  color:#ffb347;
-  font-size:19px;
+  color:#ffb84b;
+  font-size:20px;
   margin-bottom:3px;
 }
 
 .infoBox span{
-  font-size:11px;
   color:#aaa;
+  font-size:11px;
 }
 
 .moreGames{
@@ -189,8 +220,8 @@ button{
 }
 
 .moreGames h3{
-  text-align:center;
   margin:0 0 12px;
+  text-align:center;
   font-size:16px;
 }
 
@@ -201,37 +232,39 @@ button{
 }
 
 .gameLinks a{
-  text-decoration:none;
   color:#fff;
+  text-decoration:none;
   padding:12px;
   border-radius:13px;
+
   background:rgba(255,255,255,.055);
   border:1px solid rgba(255,255,255,.08);
+
   font-size:13px;
   transition:.2s;
 }
 
 .gameLinks a:hover{
-  background:rgba(255,92,0,.15);
-  border-color:rgba(255,128,40,.35);
+  background:rgba(255,90,0,.15);
+  border-color:rgba(255,130,40,.35);
 }
 
-/* =========================
-   GAME AREA
-========================= */
+/* =========================================================
+GAME
+========================================================= */
 
 #gameScreen{
   display:none;
   width:100%;
   min-height:100vh;
-  background:#08070a;
+  background:#07060a;
 }
 
 .gameWrap{
   width:100%;
-  max-width:1100px;
+  max-width:1150px;
   margin:auto;
-  padding:8px;
+  padding:7px;
 }
 
 .topbar{
@@ -243,82 +276,98 @@ button{
 }
 
 .topBtn{
-  border:1px solid rgba(255,255,255,.1);
-  color:white;
-  background:rgba(255,255,255,.07);
-  border-radius:12px;
   height:44px;
   min-width:44px;
+
+  border-radius:12px;
+
+  color:#fff;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.11);
+
+  font-size:17px;
   font-weight:900;
 }
 
 .topBtn:active{
-  transform:scale(.95);
+  transform:scale(.94);
 }
 
 .stats{
   flex:1;
   height:44px;
+
   display:flex;
-  justify-content:space-around;
   align-items:center;
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.055);
+  justify-content:space-around;
+
   border-radius:12px;
+
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+
   overflow:hidden;
 }
 
 .stat{
   flex:1;
   text-align:center;
-  font-size:11px;
+
   color:#999;
+  font-size:10px;
 }
 
 .stat strong{
   display:block;
+  margin-top:2px;
+
   color:#fff;
   font-size:16px;
-  margin-top:1px;
 }
 
 #healthText{
-  color:#ff6040;
+  color:#ff6645;
 }
-
-/* Canvas */
 
 .canvasBox{
   position:relative;
   width:100%;
   aspect-ratio:16/9;
-  max-height:72vh;
-  border-radius:18px;
+  max-height:76vh;
+
   overflow:hidden;
-  background:#171018;
-  border:2px solid rgba(255,125,35,.18);
+
+  border-radius:18px;
+
+  background:#120c15;
+
+  border:2px solid rgba(255,122,30,.20);
+
   box-shadow:
-    0 20px 60px rgba(0,0,0,.65),
-    0 0 45px rgba(255,69,0,.08);
+    0 22px 65px rgba(0,0,0,.70),
+    0 0 50px rgba(255,67,0,.10);
 }
 
 #gameCanvas{
   display:block;
   width:100%;
   height:100%;
-  touch-action:none;
-}
 
-/* Overlay */
+  touch-action:none;
+  user-select:none;
+}
 
 .overlay{
   position:absolute;
   inset:0;
+
   display:none;
   align-items:center;
   justify-content:center;
-  background:rgba(5,3,7,.68);
-  backdrop-filter:blur(5px);
+
+  background:rgba(4,2,6,.72);
+  backdrop-filter:blur(6px);
+
   z-index:20;
 }
 
@@ -327,84 +376,102 @@ button{
 }
 
 .overlayCard{
-  width:min(420px,90%);
+  width:min(430px,90%);
+
+  padding:27px 18px;
+
   text-align:center;
-  padding:25px 18px;
+
   border-radius:22px;
-  background:rgba(24,16,25,.96);
-  border:1px solid rgba(255,130,50,.22);
-  box-shadow:0 25px 70px rgba(0,0,0,.7);
+
+  background:rgba(23,14,25,.97);
+
+  border:1px solid rgba(255,132,48,.25);
+
+  box-shadow:0 25px 80px rgba(0,0,0,.75);
 }
 
 .overlayCard h2{
   margin:0 0 8px;
-  font-size:32px;
+  font-size:31px;
 }
 
 .overlayCard p{
+  margin:9px 0 20px;
   color:#bbb;
-  line-height:1.5;
-  margin:8px 0 20px;
+  line-height:1.55;
 }
 
 .actionBtn{
-  border:0;
-  border-radius:14px;
   padding:13px 22px;
   margin:4px;
+
+  border-radius:14px;
+
   color:#fff;
-  background:linear-gradient(180deg,#ff9e24,#ff4d00);
   font-weight:900;
+
+  background:linear-gradient(180deg,#ffab2d,#ff4d00);
 }
 
 .actionBtn.secondary{
-  background:#29232c;
+  background:#29232d;
 }
-
-/* Mobile controls */
 
 .controls{
   display:flex;
   justify-content:center;
   gap:13px;
+
   padding:11px 4px 4px;
+
   touch-action:none;
 }
 
 .controlBtn{
-  width:74px;
+  width:76px;
   height:58px;
-  border:1px solid rgba(255,255,255,.13);
+
   border-radius:17px;
+
   color:#fff;
-  background:linear-gradient(180deg,#302833,#18141b);
-  box-shadow:0 5px 0 #0b090d;
-  font-size:24px;
+
+  background:
+    linear-gradient(180deg,#302833,#17131a);
+
+  border:1px solid rgba(255,255,255,.13);
+
+  box-shadow:0 5px 0 #09070c;
+
+  font-size:23px;
   font-weight:1000;
+
   user-select:none;
   touch-action:none;
 }
 
 .controlBtn.jump{
   width:125px;
-  background:linear-gradient(180deg,#ff9e28,#ff4d00);
+
+  background:
+    linear-gradient(180deg,#ffad2c,#ff4d00);
 }
 
 .controlBtn:active{
   transform:translateY(4px);
-  box-shadow:0 1px 0 #0b090d;
+  box-shadow:0 1px 0 #09070c;
 }
 
 .hint{
+  margin-top:5px;
   text-align:center;
   color:#777;
   font-size:11px;
-  margin-top:5px;
 }
 
-/* =========================
-   CONTENT
-========================= */
+/* =========================================================
+CONTENT
+========================================================= */
 
 .content{
   max-width:1000px;
@@ -413,16 +480,21 @@ button{
 }
 
 .content section{
-  margin-bottom:26px;
+  margin-bottom:25px;
   padding:20px;
+
   border-radius:18px;
+
   background:#111016;
+
   border:1px solid rgba(255,255,255,.06);
 }
 
 .content h2{
   margin:0 0 12px;
+
   color:#ffad3b;
+
   font-size:23px;
 }
 
@@ -433,39 +505,29 @@ button{
 .content p,
 .content li{
   color:#b8b5ba;
-  line-height:1.7;
   font-size:14px;
+  line-height:1.7;
 }
 
 .content ul{
   padding-left:20px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
 @media(max-width:600px){
 
   #startScreen{
     padding:12px;
+    align-items:flex-start;
   }
 
   .startCard{
-    border-radius:22px;
+    margin-top:8px;
     padding:23px 13px 20px;
+    border-radius:22px;
   }
 
   .startInfo{
     gap:5px;
-  }
-
-  .infoBox{
-    padding:10px 4px;
-  }
-
-  .infoBox b{
-    font-size:16px;
   }
 
   .gameLinks{
@@ -477,7 +539,7 @@ button{
   }
 
   .topbar{
-    height:52px;
+    height:51px;
   }
 
   .topBtn{
@@ -491,7 +553,7 @@ button{
   }
 
   .stat{
-    font-size:9px;
+    font-size:8px;
   }
 
   .stat strong{
@@ -499,8 +561,8 @@ button{
   }
 
   .canvasBox{
-    border-radius:12px;
     aspect-ratio:16/10;
+    border-radius:12px;
   }
 
   .controlBtn{
@@ -510,6 +572,10 @@ button{
 
   .controlBtn.jump{
     width:110px;
+  }
+
+  .content section{
+    padding:17px;
   }
 }
 
@@ -523,9 +589,9 @@ button{
 
 <body>
 
-<!-- =========================
-     START SCREEN
-========================= -->
+<!-- =======================================================
+START SCREEN
+======================================================= -->
 
 <div id="startScreen">
 
@@ -537,11 +603,14 @@ button{
 
     <div class="logoIcon">🌋</div>
 
-    <div class="gameLogo">LAVA<br>ESCAPE</div>
+    <div class="gameLogo">
+      LAVA<br>ESCAPE
+    </div>
 
     <div class="tagline">
       Run through the ancient volcanic temple,
-      escape the rising lava and survive as long as you can!
+      collect glowing crystals, survive dangerous monsters
+      and escape before the lava catches you!
     </div>
 
     <button class="startButton" id="startBtn">
@@ -549,6 +618,7 @@ button{
     </button>
 
     <div class="startInfo">
+
       <div class="infoBox">
         <b>🏃</b>
         <span>RUN & JUMP</span>
@@ -563,9 +633,11 @@ button{
         <b>🌋</b>
         <span>ESCAPE</span>
       </div>
+
     </div>
 
     <div class="moreGames">
+
       <h3>🎮 More Games from GameWithFun</h3>
 
       <div class="gameLinks">
@@ -576,15 +648,17 @@ button{
         <a href="/p/flag-guess.html">🌍 Flag Guess</a>
         <a href="/">🎮 View All Games</a>
       </div>
+
     </div>
 
   </div>
+
 </div>
 
 
-<!-- =========================
-     GAME SCREEN
-========================= -->
+<!-- =======================================================
+GAME SCREEN
+======================================================= -->
 
 <div id="gameScreen">
 
@@ -592,7 +666,7 @@ button{
 
     <div class="topbar">
 
-      <button class="topBtn" id="homeBtn" title="GameWithFun Home">
+      <button class="topBtn" id="homeBtn" title="Home">
         ↩
       </button>
 
@@ -620,11 +694,11 @@ button{
 
       </div>
 
-      <button class="topBtn" id="soundBtn" title="Sound">
+      <button class="topBtn" id="soundBtn">
         🔊
       </button>
 
-      <button class="topBtn" id="pauseBtn" title="Pause">
+      <button class="topBtn" id="pauseBtn">
         ❚❚
       </button>
 
@@ -634,8 +708,6 @@ button{
     <div class="canvasBox">
 
       <canvas id="gameCanvas"></canvas>
-
-      <!-- Overlay -->
 
       <div class="overlay" id="overlay">
 
@@ -662,8 +734,6 @@ button{
     </div>
 
 
-    <!-- Mobile controls -->
-
     <div class="controls">
 
       <button class="controlBtn" id="leftBtn">
@@ -681,139 +751,177 @@ button{
     </div>
 
     <div class="hint">
-      Desktop: Arrow Keys / A-D / Space &nbsp; • &nbsp;
+      Desktop: Arrow Keys / A-D / Space
+      &nbsp; • &nbsp;
       Mobile: Use the buttons
     </div>
 
   </div>
 
 
-  <!-- =========================
-       SEO CONTENT
-  ========================= -->
+  <!-- =====================================================
+  SEO CONTENT
+  ===================================================== -->
 
   <div class="content">
 
     <section>
+
       <h2>🔥 Lava Escape</h2>
 
       <p>
-        Lava Escape is a fast-paced browser adventure game from
-        GameWithFun. Run through an ancient volcanic temple while
-        dangerous lava rises behind you. Jump across platforms,
-        avoid traps, collect crystals and survive for as long as possible.
+        Lava Escape is a fast-paced volcanic platform adventure
+        created for GameWithFun. Guide your explorer through an
+        ancient temple while a dangerous river of lava rises below.
+        Jump between platforms, collect glowing crystals and avoid
+        traps and mysterious volcanic monsters.
       </p>
 
       <p>
-        Every run becomes more challenging as the temple gets faster
-        and the lava rises higher. Your goal is simple: keep moving,
-        stay alive and achieve the highest score possible.
+        Each level is generated with a guaranteed playable route.
+        As the adventure continues, platforms become more challenging,
+        enemies become more common and the lava becomes faster.
       </p>
+
     </section>
 
 
     <section>
+
       <h2>🎮 How to Play</h2>
 
       <ul>
-        <li>Move left and right to control your explorer.</li>
-        <li>Jump over gaps, rocks and dangerous traps.</li>
-        <li>Use double jump when you need extra height.</li>
-        <li>Collect crystals to increase your score.</li>
-        <li>Avoid lava and dangerous enemies.</li>
-        <li>Keep moving because the lava continuously rises.</li>
-        <li>Reach the end of each level to continue your adventure.</li>
+        <li>Move left and right across the volcanic platforms.</li>
+        <li>Jump over gaps and dangerous obstacles.</li>
+        <li>Use your double jump when necessary.</li>
+        <li>Collect blue crystals for bonus points.</li>
+        <li>Jump on monsters to defeat them.</li>
+        <li>Avoid spikes and the rising lava.</li>
+        <li>Reach the glowing portal at the end of each level.</li>
+        <li>Complete all levels to escape the volcanic temple.</li>
       </ul>
+
     </section>
 
 
     <section>
+
       <h2>🕹️ Controls</h2>
 
       <h3>Desktop</h3>
 
       <p>
-        Use the Left and Right arrow keys or A and D to move.
+        Use the Left and Right Arrow keys or A and D to move.
         Press Space, W or the Up Arrow to jump.
+        You can jump twice while airborne.
       </p>
 
       <h3>Mobile</h3>
 
       <p>
-        Use the on-screen Left, Jump and Right buttons.
-        The game is designed to work on phones and tablets.
+        Hold the Left or Right button to move.
+        Tap the Jump button to jump.
       </p>
+
     </section>
 
 
     <section>
-      <h2>💎 Collect Crystals</h2>
+
+      <h2>💎 Crystal Collection</h2>
 
       <p>
-        Glowing crystals are scattered throughout the volcanic temple.
-        Collecting them increases your score. Try to collect as many
-        as possible without putting your character in danger.
+        Glowing crystals are placed along the safest routes and
+        optional areas. Each collected crystal gives bonus points.
+        Try to collect them while keeping enough distance from the
+        rising lava.
       </p>
+
     </section>
 
 
     <section>
+
       <h2>🌋 Rising Lava</h2>
 
       <p>
-        The lava is the biggest danger in Lava Escape. It slowly rises
-        from below and forces you to keep moving. Standing still for
-        too long can quickly turn a safe situation into a dangerous one.
+        The lava slowly rises during every level. It creates pressure
+        and prevents the player from waiting indefinitely on one
+        platform. Higher levels increase the lava speed, so quick
+        movement becomes increasingly important.
       </p>
+
     </section>
 
 
     <section>
+
+      <h2>👹 Volcanic Monsters</h2>
+
+      <p>
+        Later levels contain roaming volcanic monsters. Jumping on
+        top of a monster defeats it and awards bonus points. Touching
+        one from the side costs a life.
+      </p>
+
+    </section>
+
+
+    <section>
+
       <h2>🏆 High Score</h2>
 
       <p>
-        Your best score is saved directly in your browser using local
-        storage. Try to beat your previous record and become the
-        ultimate Lava Escape champion.
+        Lava Escape automatically saves your best score in the
+        browser's local storage. Collect crystals, defeat monsters
+        and finish levels quickly to improve your score.
       </p>
+
     </section>
 
 
     <section>
+
       <h2>❓ FAQ</h2>
 
       <h3>Is Lava Escape free?</h3>
+
       <p>
-        Yes. Lava Escape is designed as a free browser game on GameWithFun.
+        Yes. Lava Escape is designed as a free browser game on
+        GameWithFun.
       </p>
 
       <h3>Can I play on mobile?</h3>
+
       <p>
-        Yes. The game includes touch controls for smartphones and tablets.
+        Yes. The game includes touch controls for phones and tablets.
       </p>
 
-      <h3>Do I need to install an app?</h3>
+      <h3>Do I need to install anything?</h3>
+
       <p>
         No. The game runs directly in a modern web browser.
       </p>
 
-      <h3>Does the game save my high score?</h3>
+      <h3>Does the game save my score?</h3>
+
       <p>
-        Yes. Your best score is saved locally in your browser.
+        Yes. Your best score is stored locally in your browser.
       </p>
+
     </section>
 
 
     <section>
+
       <h2>📖 About Lava Escape</h2>
 
       <p>
-        Lava Escape combines classic platforming with an exciting
-        survival challenge. The volcanic environment is filled with
-        glowing lava, ancient stone platforms, crystals and dangerous
-        obstacles. The simple controls make the game easy to start,
-        while increasing speed and difficulty provide a challenge for
-        players who want to improve their score.
+        Lava Escape combines platforming, exploration and survival
+        gameplay inside a colorful volcanic environment. The game
+        features safe procedural level generation, crystals,
+        monsters, spike traps, double jumping, rising lava and
+        progressive difficulty.
       </p>
 
       <p>
@@ -821,8 +929,10 @@ button{
         Category: Arcade / Adventure<br>
         Platform: Web Browser<br>
         Controls: Keyboard and Touch<br>
+        Levels: 20<br>
         Latest Update: October 2026
       </p>
+
     </section>
 
   </div>
@@ -831,9 +941,31 @@ button{
 
 
 <script>
+"use strict";
+
 /* =========================================================
-   LAVA ESCAPE
-   GAMEWITHFUN
+LAVA ESCAPE V2
+GAMEWITHFUN
+
+Major fixes:
+- Guaranteed playable platform route
+- Stable physics
+- Proper fall detection
+- Proper lava damage
+- Checkpoint system
+- Reliable level completion
+- 20 level progression
+- Better enemy collision
+- Accurate spike collision
+- Camera boundaries
+- Mobile pointer controls
+- Keyboard reset on blur
+- Final victory screen
+========================================================= */
+
+
+/* =========================================================
+DOM
 ========================================================= */
 
 const canvas = document.getElementById("gameCanvas");
@@ -844,8 +976,8 @@ const gameScreen = document.getElementById("gameScreen");
 
 const startBtn = document.getElementById("startBtn");
 const homeBtn = document.getElementById("homeBtn");
-const pauseBtn = document.getElementById("pauseBtn");
 const soundBtn = document.getElementById("soundBtn");
+const pauseBtn = document.getElementById("pauseBtn");
 
 const overlay = document.getElementById("overlay");
 const overlayTitle = document.getElementById("overlayTitle");
@@ -860,32 +992,39 @@ const levelText = document.getElementById("levelText");
 
 
 /* =========================================================
-   CANVAS
+CANVAS
 ========================================================= */
 
 let W = 960;
 let H = 540;
 
+let dpr = 1;
+
 function resizeCanvas(){
 
   const rect = canvas.getBoundingClientRect();
 
-  const dpr = Math.min(window.devicePixelRatio || 1,2);
+  dpr = Math.min(window.devicePixelRatio || 1,2);
 
-  canvas.width = Math.floor(rect.width * dpr);
-  canvas.height = Math.floor(rect.height * dpr);
+  canvas.width = Math.max(1,Math.floor(rect.width*dpr));
+  canvas.height = Math.max(1,Math.floor(rect.height*dpr));
 
-  W = canvas.width / dpr;
-  H = canvas.height / dpr;
+  W = rect.width;
+  H = rect.height;
 
   ctx.setTransform(dpr,0,0,dpr,0,0);
+
+  if(running && platforms.length){
+    /* Keep the active player inside the visible game. */
+    player.y = Math.min(player.y,H-80);
+  }
 }
 
 window.addEventListener("resize",resizeCanvas);
 
 
 /* =========================================================
-   AUDIO
+AUDIO
 ========================================================= */
 
 let audioCtx = null;
@@ -896,181 +1035,250 @@ function initAudio(){
   if(!audioCtx){
 
     try{
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      audioCtx =
+        new (window.AudioContext ||
+        window.webkitAudioContext)();
     }catch(e){}
   }
 
-  if(audioCtx && audioCtx.state === "suspended"){
+  if(audioCtx && audioCtx.state==="suspended"){
     audioCtx.resume();
   }
 }
 
-function beep(freq,duration,type="square",volume=.045){
+function beep(freq,duration,type="square",volume=.04){
 
   if(!soundOn || !audioCtx) return;
 
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
+  try{
 
-  osc.type = type;
-  osc.frequency.value = freq;
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
 
-  gain.gain.setValueAtTime(volume,audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(
-    .001,
-    audioCtx.currentTime + duration
-  );
+    osc.type=type;
+    osc.frequency.value=freq;
 
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
+    gain.gain.setValueAtTime(
+      volume,
+      audioCtx.currentTime
+    );
 
-  osc.start();
-  osc.stop(audioCtx.currentTime + duration);
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioCtx.currentTime+duration
+    );
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+
+    osc.stop(
+      audioCtx.currentTime+duration
+    );
+
+  }catch(e){}
 }
 
 
 /* =========================================================
-   GAME STATE
+GAME STATE
 ========================================================= */
 
-let running = false;
-let paused = false;
-let gameOver = false;
+const TOTAL_LEVELS = 20;
 
-let score = 0;
-let crystals = 0;
-let lives = 3;
-let level = 1;
+let running=false;
+let paused=false;
+let gameOver=false;
+let victory=false;
 
-let cameraX = 0;
-let worldTime = 0;
+let score=0;
+let crystals=0;
+let lives=3;
+let level=1;
 
-let lavaY = 500;
-let lavaSpeed = .12;
+let cameraX=0;
+let worldTime=0;
 
-let levelDistance = 0;
-let nextLevelDistance = 4000;
+let lavaY=500;
+let lavaSpeed=0.1;
 
-let lastTime = 0;
+let worldWidth=5000;
+
+let checkpointX=120;
+let checkpointY=300;
+
+let levelStartX=120;
+
+let lastTime=0;
+
+let shake=0;
 
 
 /* =========================================================
-   PLAYER
+PLAYER
 ========================================================= */
 
-const player = {
+const player={
+
   x:120,
   y:300,
+
   w:38,
   h:54,
 
   vx:0,
   vy:0,
 
-  speed:4.2,
-  jumpPower:12.2,
+  speed:4.4,
+  jumpPower:12.8,
 
   grounded:false,
   jumps:0,
 
   invincible:0,
 
-  face:1
+  face:1,
+
+  anim:0
 };
 
 
 /* =========================================================
-   WORLD OBJECTS
+WORLD
 ========================================================= */
 
-let platforms = [];
-let crystalsList = [];
-let enemies = [];
-let traps = [];
-let particles = [];
+let platforms=[];
+let crystalsList=[];
+let enemies=[];
+let traps=[];
+let particles=[];
+
+let finishPortal=null;
 
 
 /* =========================================================
-   INPUT
+INPUT
 ========================================================= */
 
-const keys = {};
+const keys={};
+
+let previousJump=false;
 
 window.addEventListener("keydown",e=>{
 
-  keys[e.key.toLowerCase()] = true;
+  const key=e.key.toLowerCase();
 
-  if(
-    ["arrowleft","arrowright","arrowup"," ","w","a","d"].includes(
-      e.key.toLowerCase()
-    )
-  ){
+  keys[key]=true;
+
+  if([
+    "arrowleft",
+    "arrowright",
+    "arrowup",
+    "a",
+    "d",
+    "w",
+    " "
+  ].includes(key)){
     e.preventDefault();
   }
 
-  if(e.key === "Escape"){
+  if(key==="escape"){
     togglePause();
   }
-
 });
 
 window.addEventListener("keyup",e=>{
-  keys[e.key.toLowerCase()] = false;
+
+  keys[e.key.toLowerCase()]=false;
+});
+
+window.addEventListener("blur",()=>{
+
+  for(const k in keys){
+    keys[k]=false;
+  }
+
+  previousJump=false;
 });
 
 
+function clearInput(){
+
+  for(const k in keys){
+    keys[k]=false;
+  }
+
+  previousJump=false;
+}
+
+
+/* =========================================================
+JUMP
+========================================================= */
+
 function jump(){
 
-  if(!running || paused || gameOver) return;
+  if(!running || paused || gameOver || victory){
+    return;
+  }
 
-  if(player.jumps < 2){
+  if(player.jumps<2){
 
-    player.vy = -player.jumpPower;
+    player.vy=-player.jumpPower;
 
     player.jumps++;
 
-    beep(520,.08,"square",.04);
+    beep(530,.08,"square",.035);
 
     for(let i=0;i<7;i++){
+
       createParticle(
-        player.x + player.w/2,
-        player.y + player.h,
+        player.x+player.w/2,
+        player.y+player.h,
         "#d8d0c8",
-        -1 + Math.random()*2,
-        Math.random()*-1.5
+        -1.4+Math.random()*2.8,
+        -1-Math.random()*2
       );
     }
   }
 }
 
 
-/* Keyboard jump detection */
-
-let previousJump = false;
+/* =========================================================
+INPUT UPDATE
+========================================================= */
 
 function updateInput(){
 
-  const left =
+  const left=
     keys["arrowleft"] ||
     keys["a"];
 
-  const right =
+  const right=
     keys["arrowright"] ||
     keys["d"];
 
-  player.vx = 0;
+  if(left && !right){
 
-  if(left){
-    player.vx = -player.speed;
-    player.face = -1;
+    player.vx=-player.speed;
+    player.face=-1;
+
+  }else if(right && !left){
+
+    player.vx=player.speed;
+    player.face=1;
+
+  }else{
+
+    player.vx*=0.72;
+
+    if(Math.abs(player.vx)<.05){
+      player.vx=0;
+    }
   }
 
-  if(right){
-    player.vx = player.speed;
-    player.face = 1;
-  }
-
-  const jumpPressed =
+  const jumpPressed=
     keys["arrowup"] ||
     keys["w"] ||
     keys[" "];
@@ -1079,172 +1287,315 @@ function updateInput(){
     jump();
   }
 
-  previousJump = jumpPressed;
+  previousJump=jumpPressed;
 }
 
 
 /* =========================================================
-   TOUCH CONTROLS
+MOBILE CONTROLS
 ========================================================= */
 
 function holdButton(id,key){
 
-  const btn = document.getElementById(id);
+  const btn=document.getElementById(id);
+
+  let pointerId=null;
 
   btn.addEventListener("pointerdown",e=>{
+
     e.preventDefault();
-    keys[key] = true;
-    btn.setPointerCapture?.(e.pointerId);
+
+    pointerId=e.pointerId;
+
+    keys[key]=true;
+
+    try{
+      btn.setPointerCapture(e.pointerId);
+    }catch(err){}
   });
 
-  btn.addEventListener("pointerup",e=>{
-    e.preventDefault();
-    keys[key] = false;
-  });
+  const release=e=>{
 
-  btn.addEventListener("pointercancel",()=>{
-    keys[key] = false;
-  });
+    if(pointerId===null || e.pointerId===pointerId){
 
-  btn.addEventListener("pointerleave",()=>{
-    keys[key] = false;
+      keys[key]=false;
+      pointerId=null;
+    }
+  };
+
+  btn.addEventListener("pointerup",release);
+  btn.addEventListener("pointercancel",release);
+  btn.addEventListener("lostpointercapture",()=>{
+
+    keys[key]=false;
+    pointerId=null;
   });
 }
 
 holdButton("leftBtn","arrowleft");
 holdButton("rightBtn","arrowright");
 
-document.getElementById("jumpBtn").addEventListener("pointerdown",e=>{
+document.getElementById("jumpBtn")
+.addEventListener("pointerdown",e=>{
+
   e.preventDefault();
+
   jump();
 });
 
 
 /* =========================================================
-   LEVEL GENERATION
+LEVEL GENERATION
 ========================================================= */
 
 function resetWorld(){
 
-  platforms = [];
-  crystalsList = [];
-  enemies = [];
-  traps = [];
-  particles = [];
+  platforms=[];
+  crystalsList=[];
+  enemies=[];
+  traps=[];
+  particles=[];
 
-  cameraX = 0;
-  levelDistance = 0;
+  finishPortal=null;
 
-  lavaY = H - 45;
+  cameraX=0;
 
-  /* Starting floor */
+  levelStartX=100;
+
+  checkpointX=100;
+  checkpointY=250;
+
+  /*
+    IMPORTANT:
+    Instead of random impossible platforms,
+    create a guaranteed forward path.
+  */
+
+  const groundY=H-76;
 
   platforms.push({
-    x:-500,
-    y:H-75,
-    w:800,
-    h:75
+    x:-400,
+    y:groundY,
+    w:560,
+    h:76,
+    safe:true
   });
 
-  let x = 500;
+  let currentX=160;
+  let currentY=groundY-20;
 
-  const total = 85 + level * 10;
+  const segmentCount=
+    25+
+    level*2;
 
-  for(let i=0;i<total;i++){
+  for(let i=0;i<segmentCount;i++){
 
-    const gap = 80 + Math.random()*110;
+    /*
+      Difficulty increases gradually.
+      Gaps stay inside jump capability.
+    */
 
-    x += gap;
+    const maxGap=
+      Math.min(
+        95+level*1.5,
+        125
+      );
 
-    const width =
-      100 +
-      Math.random()*150;
+    const gap=
+      45+
+      Math.random()*maxGap;
 
-    const baseY =
-      H - 110 -
-      Math.random()*135;
+    currentX+=gap;
 
-    platforms.push({
-      x,
-      y:baseY,
+    /*
+      Vertical movement is deliberately limited.
+      This guarantees the next platform remains reachable.
+    */
+
+    const verticalShift=
+      (Math.random()-.5)*
+      Math.min(80,35+level*2);
+
+    currentY+=verticalShift;
+
+    const minY=H-285;
+    const maxY=H-100;
+
+    currentY=Math.max(
+      minY,
+      Math.min(maxY,currentY)
+    );
+
+    const width=
+      135+
+      Math.random()*85;
+
+    const p={
+      x:currentX,
+      y:currentY,
       w:width,
-      h:26
-    });
+      h:28,
+      safe:true
+    };
 
-    /* Crystal */
+    platforms.push(p);
 
-    if(Math.random() < .72){
+    /*
+      Crystal.
+    */
+
+    if(Math.random()<.75){
 
       crystalsList.push({
-        x:x + width*.5,
-        y:baseY - 30,
+
+        x:p.x+p.w*.5,
+
+        y:p.y-29,
+
         r:10,
+
         collected:false,
+
         spin:Math.random()*Math.PI*2
       });
-
     }
 
-    /* Trap */
+    /*
+      Traps only after level 2.
+      Never place one across the entire platform.
+    */
 
-    if(Math.random() < .26 && level > 1){
+    if(level>=2 && Math.random()<.25){
+
+      const tw=30;
 
       traps.push({
-        x:x + 20 + Math.random()*Math.max(10,width-40),
-        y:baseY - 17,
-        w:28,
-        h:17
-      });
 
+        x:p.x+p.w*.5-tw*.5,
+
+        y:p.y-18,
+
+        w:tw,
+
+        h:18
+      });
     }
 
-    /* Enemy */
+    /*
+      Enemies after level 3.
+    */
 
-    if(Math.random() < .16 && level > 1){
+    if(level>=3 && Math.random()<.17){
 
       enemies.push({
-        x:x + width*.5,
-        y:baseY - 48,
-        w:36,
-        h:40,
-        vx:level*.25 + .3,
-        left:x + 10,
-        right:x + width - 45,
-        alive:true,
-        phase:Math.random()*5
-      });
 
+        x:p.x+p.w*.65,
+
+        y:p.y-42,
+
+        w:38,
+
+        h:42,
+
+        vx:.65+level*.045,
+
+        minX:p.x+15,
+
+        maxX:p.x+p.w-53,
+
+        alive:true,
+
+        phase:Math.random()*6
+      });
     }
+
+    /*
+      Every few platforms create a checkpoint.
+    */
+
+    if(i>0 && i%6===0){
+
+      checkpointX=p.x+p.w*.5;
+      checkpointY=p.y-70;
+
+      p.checkpoint=true;
+    }
+
+    currentX+=width;
   }
 
-  /* Final platform */
+  /*
+    Final landing platform.
+  */
+
+  const finalX=currentX+65;
 
   platforms.push({
-    x:x+120,
-    y:H-150,
-    w:350,
+
+    x:finalX,
+
+    y:H-190,
+
+    w:330,
+
     h:30,
+
+    safe:true,
+
     finish:true
   });
 
-  nextLevelDistance = x + 300;
+  finishPortal={
+
+    x:finalX+165,
+
+    y:H-190-66,
+
+    w:55,
+
+    h:66
+  };
+
+  worldWidth=finalX+330;
+
+  /*
+    Lava starts below the player.
+  */
+
+  lavaY=H-20;
+
+  lavaSpeed=
+    .045+
+    level*.006;
 
 }
 
 
 /* =========================================================
-   PARTICLES
+PARTICLES
 ========================================================= */
 
-function createParticle(x,y,color,vx,vy){
+function createParticle(
+  x,
+  y,
+  color,
+  vx,
+  vy
+){
 
   particles.push({
+
     x,
     y,
+
     vx,
     vy,
+
     life:1,
-    size:2+Math.random()*5,
+
+    size:2+
+      Math.random()*4,
+
     color
   });
 }
@@ -1254,133 +1605,253 @@ function updateParticles(dt){
 
   for(let i=particles.length-1;i>=0;i--){
 
-    const p = particles[i];
+    const p=particles[i];
 
-    p.x += p.vx * dt * 60;
-    p.y += p.vy * dt * 60;
+    p.x+=p.vx*dt*60;
+    p.y+=p.vy*dt*60;
 
-    p.vy += .08 * dt * 60;
+    p.vy+=.08*dt*60;
 
-    p.life -= .025 * dt * 60;
+    p.life-=.028*dt*60;
 
-    if(p.life <= 0){
+    if(p.life<=0){
       particles.splice(i,1);
     }
+  }
+
+  if(particles.length>600){
+    particles.splice(0,particles.length-600);
   }
 }
 
 
 /* =========================================================
-   COLLISION
+COLLISION
 ========================================================= */
 
 function overlap(a,b){
 
-  return (
-    a.x < b.x+b.w &&
-    a.x+a.w > b.x &&
-    a.y < b.y+b.h &&
-    a.y+a.h > b.y
+  return(
+    a.x<b.x+b.w &&
+    a.x+a.w>b.x &&
+    a.y<b.y+b.h &&
+    a.y+a.h>b.y
   );
 }
 
 
 /* =========================================================
-   UPDATE PLAYER
+PLAYER UPDATE
 ========================================================= */
 
 function updatePlayer(dt){
 
   updateInput();
 
-  player.x += player.vx * dt * 60;
+  const oldX=player.x;
+  const oldY=player.y;
+  const oldBottom=oldY+player.h;
 
-  player.vy += .55 * dt * 60;
+  /*
+    Horizontal movement.
+  */
 
-  if(player.vy > 18){
-    player.vy = 18;
+  player.x+=player.vx*dt*60;
+
+  if(player.x<0){
+    player.x=0;
+    player.vx=0;
   }
 
-  const oldBottom = player.y + player.h;
+  /*
+    Gravity.
+  */
 
-  player.y += player.vy * dt * 60;
+  player.vy+=.55*dt*60;
 
-  player.grounded = false;
+  if(player.vy>18){
+    player.vy=18;
+  }
 
-  /* Platform collision */
+  player.y+=player.vy*dt*60;
 
-  for(const p of platforms){
+  player.grounded=false;
 
-    if(
-      player.x + player.w > p.x &&
-      player.x < p.x + p.w &&
-      oldBottom <= p.y + 5 &&
-      player.y + player.h >= p.y &&
-      player.vy >= 0
-    ){
+  /*
+    Landing collision.
+  */
 
-      player.y = p.y - player.h;
+  if(player.vy>=0){
 
-      player.vy = 0;
+    let landing=null;
 
-      player.grounded = true;
+    for(const p of platforms){
 
-      player.jumps = 0;
+      const horizontal=
+        player.x+player.w>p.x &&
+        player.x<p.x+p.w;
 
-      if(p.finish){
-        finishLevel();
+      const crossed=
+        oldBottom<=p.y+7 &&
+        player.y+player.h>=p.y;
+
+      if(horizontal && crossed){
+
+        if(
+          !landing ||
+          p.y<landing.y
+        ){
+          landing=p;
+        }
+      }
+    }
+
+    if(landing){
+
+      player.y=
+        landing.y-player.h;
+
+      player.vy=0;
+
+      player.grounded=true;
+
+      player.jumps=0;
+
+      /*
+        Checkpoint.
+      */
+
+      if(landing.checkpoint){
+
+        checkpointX=
+          landing.x+landing.w*.5;
+
+        checkpointY=
+          landing.y-player.h;
+
+        createCheckpointEffect(
+          checkpointX,
+          landing.y
+        );
+      }
+
+      /*
+        Finish.
+      */
+
+      if(landing.finish){
+
+        completeLevel();
+        return;
       }
     }
   }
 
-  /* Boundaries */
+  /*
+    World fall protection.
+  */
 
-  if(player.x < 10){
-    player.x = 10;
+  if(player.y>H+150){
+
+    damagePlayer("fall");
+
+    return;
   }
 
-  /* Camera */
+  /*
+    Lava collision.
+  */
 
-  const targetCamera = player.x - W*.32;
+  if(
+    player.y+player.h >
+    lavaY-4
+  ){
 
-  cameraX +=
-    (targetCamera-cameraX) *
-    Math.min(1,dt*5);
+    damagePlayer("lava");
 
-  if(cameraX < 0){
-    cameraX = 0;
+    return;
   }
 
-  /* Distance */
+  /*
+    Invincibility timer.
+  */
 
-  levelDistance = Math.max(
-    levelDistance,
-    player.x
-  );
+  if(player.invincible>0){
 
-  /* Lava */
+    player.invincible-=dt;
 
-  lavaSpeed =
-    .10 +
-    level*.012 +
-    Math.min(.12,levelDistance/50000);
-
-  lavaY -= lavaSpeed * dt * 60;
-
-  if(player.y + player.h > lavaY){
-
-    hurtPlayer();
+    if(player.invincible<0){
+      player.invincible=0;
+    }
   }
 
-  if(player.invincible > 0){
-    player.invincible -= dt;
-  }
+  /*
+    Animation.
+  */
 
+  player.anim+=
+    dt*
+    (player.grounded ?
+      Math.abs(player.vx)*2.5 :
+      5);
+
+  /*
+    Camera.
+  */
+
+  updateCamera(dt);
+}
+
+
+function updateCamera(dt){
+
+  const maxCamera=
+    Math.max(0,worldWidth-W);
+
+  const target=
+    player.x-W*.34;
+
+  const wanted=
+    Math.max(
+      0,
+      Math.min(maxCamera,target)
+    );
+
+  cameraX+=
+    (wanted-cameraX)*
+    Math.min(1,dt*7);
+
+  cameraX=
+    Math.max(
+      0,
+      Math.min(maxCamera,cameraX)
+    );
 }
 
 
 /* =========================================================
-   CRYSTALS
+CHECKPOINT EFFECT
+========================================================= */
+
+function createCheckpointEffect(x,y){
+
+  beep(680,.07,"sine",.035);
+
+  for(let i=0;i<16;i++){
+
+    createParticle(
+      x,
+      y,
+      "#ffcf4a",
+      -2+Math.random()*4,
+      -3+Math.random()*2
+    );
+  }
+}
+
+
+/* =========================================================
+CRYSTALS
 ========================================================= */
 
 function updateCrystals(){
@@ -1389,38 +1860,38 @@ function updateCrystals(){
 
     if(c.collected) continue;
 
-    c.spin += .08;
+    c.spin+=.075;
 
-    const box = {
-      x:c.x-c.r,
-      y:c.y-c.r,
-      w:c.r*2,
-      h:c.r*2
+    const box={
+
+      x:c.x-c.r-4,
+      y:c.y-c.r-4,
+      w:(c.r+4)*2,
+      h:(c.r+4)*2
     };
 
     if(overlap(player,box)){
 
-      c.collected = true;
+      c.collected=true;
 
       crystals++;
 
-      score += 100;
+      score+=100;
 
-      crystalText.textContent = crystals;
-      scoreText.textContent = score;
+      crystalText.textContent=crystals;
+      scoreText.textContent=score;
 
-      beep(900,.07,"sine",.045);
+      beep(880,.08,"sine",.04);
 
-      for(let i=0;i<12;i++){
+      for(let i=0;i<13;i++){
 
         createParticle(
           c.x,
           c.y,
-          "#64e8ff",
-          -2+Math.random()*4,
-          -2+Math.random()*4
+          "#58eaff",
+          -2.5+Math.random()*5,
+          -3+Math.random()*5
         );
-
       }
     }
   }
@@ -1428,7 +1899,7 @@ function updateCrystals(){
 
 
 /* =========================================================
-   ENEMIES
+ENEMIES
 ========================================================= */
 
 function updateEnemies(dt){
@@ -1437,54 +1908,79 @@ function updateEnemies(dt){
 
     if(!e.alive) continue;
 
-    e.phase += dt*5;
+    e.phase+=dt*5;
 
-    e.x += e.vx * dt * 60;
+    e.x+=e.vx*dt*60;
 
-    if(e.x < e.left || e.x > e.right){
-      e.vx *= -1;
+    if(e.x<=e.minX){
+
+      e.x=e.minX;
+      e.vx=Math.abs(e.vx);
+
+    }else if(e.x>=e.maxX){
+
+      e.x=e.maxX;
+      e.vx=-Math.abs(e.vx);
     }
 
-    const box = {
-      x:e.x,
-      y:e.y + Math.sin(e.phase)*4,
-      w:e.w,
-      h:e.h
+    const bob=
+      Math.sin(e.phase)*3;
+
+    const box={
+
+      x:e.x+3,
+
+      y:e.y+bob+4,
+
+      w:e.w-6,
+
+      h:e.h-4
     };
 
     if(overlap(player,box)){
 
-      /* Jumping on enemy */
+      /*
+        Player lands on enemy.
+      */
 
-      if(
-        player.vy > 0 &&
-        player.y + player.h < e.y + 18
-      ){
+      const playerBottom=
+        player.y+player.h;
 
-        e.alive = false;
+      const enemyTop=
+        e.y+bob;
 
-        player.vy = -8;
+      const stomp=
+        player.vy>0 &&
+        playerBottom-enemyTop<22;
 
-        score += 150;
+      if(stomp){
 
-        scoreText.textContent = score;
+        e.alive=false;
 
-        beep(220,.12,"square",.06);
+        player.vy=-9;
 
-        for(let i=0;i<14;i++){
+        score+=150;
+
+        scoreText.textContent=score;
+
+        shake=.18;
+
+        beep(240,.12,"square",.05);
+
+        for(let i=0;i<18;i++){
 
           createParticle(
             e.x+e.w/2,
-            e.y+e.h/2,
-            "#a85cff",
-            -2+Math.random()*4,
+            enemyTop+e.h/2,
+            "#b56cff",
+            -3+Math.random()*6,
             -3+Math.random()*4
           );
         }
 
       }else{
 
-        hurtPlayer();
+        damagePlayer("enemy");
       }
     }
   }
@@ -1492,133 +1988,399 @@ function updateEnemies(dt){
 
 
 /* =========================================================
-   TRAPS
+TRAPS
 ========================================================= */
 
 function updateTraps(){
 
   for(const t of traps){
 
-    if(
-      player.x + player.w > t.x &&
-      player.x < t.x+t.w &&
-      player.y + player.h > t.y &&
-      player.y < t.y+t.h
-    ){
+    /*
+      Smaller hitbox than visual spike base.
+    */
 
-      hurtPlayer();
+    const hit={
+
+      x:t.x+5,
+
+      y:t.y+5,
+
+      w:t.w-10,
+
+      h:t.h-5
+    };
+
+    if(overlap(player,hit)){
+
+      damagePlayer("trap");
+
+      return;
     }
   }
 }
 
 
 /* =========================================================
-   DAMAGE
+DAMAGE
 ========================================================= */
 
-function hurtPlayer(){
+function damagePlayer(reason){
 
-  if(player.invincible > 0) return;
-
-  player.invincible = 1.2;
+  if(player.invincible>0){
+    return;
+  }
 
   lives--;
 
-  healthText.textContent = lives;
+  healthText.textContent=lives;
 
-  beep(110,.16,"sawtooth",.07);
+  player.invincible=1.35;
 
-  for(let i=0;i<18;i++){
+  shake=.28;
+
+  beep(105,.16,"sawtooth",.06);
+
+  for(let i=0;i<20;i++){
 
     createParticle(
       player.x+player.w/2,
       player.y+player.h/2,
-      "#ff5b2d",
+      reason==="lava"
+        ? "#ff6a20"
+        : "#ff4e3a",
       -3+Math.random()*6,
-      -3+Math.random()*6
+      -3+Math.random()*5
     );
-
   }
 
-  if(lives <= 0){
+  if(lives<=0){
 
     endGame();
 
+    return;
+  }
+
+  /*
+    Respawn at checkpoint.
+  */
+
+  player.x=
+    Math.max(
+      50,
+      checkpointX-player.w/2
+    );
+
+  player.y=
+    checkpointY;
+
+  player.vx=0;
+  player.vy=-8;
+
+  /*
+    Reset lava so respawn is fair.
+  */
+
+  lavaY=
+    Math.min(
+      H-35,
+      player.y+player.h+115
+    );
+
+  updateCamera(.2);
+}
+
+
+/* =========================================================
+LEVEL COMPLETE
+========================================================= */
+
+let levelTransition=false;
+
+function completeLevel(){
+
+  if(levelTransition) return;
+
+  levelTransition=true;
+
+  score+=500;
+
+  scoreText.textContent=score;
+
+  beep(700,.1,"sine",.045);
+
+  setTimeout(()=>{
+    beep(960,.12,"sine",.045);
+  },100);
+
+  for(let i=0;i<35;i++){
+
+    createParticle(
+      finishPortal.x+finishPortal.w/2,
+      finishPortal.y+finishPortal.h/2,
+      i%2
+        ? "#66efff"
+        : "#ffd14a",
+      -4+Math.random()*8,
+      -5+Math.random()*5
+    );
+  }
+
+  if(level>=TOTAL_LEVELS){
+
+    setTimeout(showVictory,650);
+
+    return;
+  }
+
+  level++;
+
+  levelText.textContent=level;
+
+  setTimeout(()=>{
+
+    player.x=120;
+    player.y=220;
+    player.vx=0;
+    player.vy=0;
+    player.jumps=0;
+    player.invincible=.8;
+
+    resetWorld();
+
+    levelTransition=false;
+
+  },650);
+}
+
+
+/* =========================================================
+VICTORY
+========================================================= */
+
+function showVictory(){
+
+  victory=true;
+  running=false;
+  paused=false;
+
+  const oldBest=
+    Number(
+      localStorage.getItem("lavaEscapeBest")||0
+    );
+
+  const isNew=
+    score>oldBest;
+
+  if(isNew){
+
+    localStorage.setItem(
+      "lavaEscapeBest",
+      String(score)
+    );
+  }
+
+  overlayTitle.textContent=
+    isNew
+      ? "🏆 TEMPLE ESCAPED!"
+      : "🌋 YOU ESCAPED!";
+
+  overlayText.innerHTML=
+    "All 20 levels completed!<br><br>"+
+    "Score: <b>"+score+"</b><br>"+
+    "Crystals: <b>"+crystals+"</b><br>"+
+    "Best: <b>"+Math.max(score,oldBest)+"</b>";
+
+  resumeBtn.style.display="none";
+
+  overlay.classList.add("show");
+
+  beep(520,.12,"sine",.04);
+
+  setTimeout(()=>{
+    beep(780,.12,"sine",.04);
+  },120);
+
+  setTimeout(()=>{
+    beep(1040,.16,"sine",.04);
+  },250);
+}
+
+
+/* =========================================================
+GAME OVER
+========================================================= */
+
+function endGame(){
+
+  gameOver=true;
+  running=false;
+  paused=false;
+
+  const oldBest=
+    Number(
+      localStorage.getItem("lavaEscapeBest")||0
+    );
+
+  const isNew=
+    score>oldBest;
+
+  if(isNew){
+
+    localStorage.setItem(
+      "lavaEscapeBest",
+      String(score)
+    );
+  }
+
+  overlayTitle.textContent=
+    isNew
+      ? "🏆 NEW HIGH SCORE!"
+      : "🔥 GAME OVER";
+
+  overlayText.innerHTML=
+    "Score: <b>"+score+"</b><br>"+
+    "Crystals: <b>"+crystals+"</b><br>"+
+    "Level: <b>"+level+"</b><br>"+
+    "Best: <b>"+Math.max(score,oldBest)+"</b>";
+
+  resumeBtn.style.display="none";
+
+  overlay.classList.add("show");
+
+  beep(85,.28,"sawtooth",.06);
+}
+
+
+/* =========================================================
+PAUSE
+========================================================= */
+
+function togglePause(){
+
+  if(gameOver || victory || !running){
+    return;
+  }
+
+  paused=!paused;
+
+  clearInput();
+
+  if(paused){
+
+    overlayTitle.textContent="⏸ PAUSED";
+
+    overlayText.textContent=
+      "The lava is waiting...";
+
+    resumeBtn.style.display="inline-block";
+
+    overlay.classList.add("show");
+
   }else{
 
-    player.x = Math.max(50,player.x-180);
+    overlay.classList.remove("show");
 
-    player.y -= 100;
-
-    player.vy = -8;
+    lastTime=performance.now();
   }
 }
 
 
 /* =========================================================
-   LEVEL COMPLETE
-========================================================= */
-
-function finishLevel(){
-
-  if(levelDistance < nextLevelDistance) return;
-
-  level++;
-
-  score += 500;
-
-  levelText.textContent = level;
-  scoreText.textContent = score;
-
-  beep(780,.1,"sine",.05);
-  setTimeout(()=>beep(1040,.12,"sine",.05),100);
-
-  player.x = 120;
-  player.y = 200;
-  player.vy = 0;
-
-  resetWorld();
-}
-
-
-/* =========================================================
-   GAME LOOP
+GAME UPDATE
 ========================================================= */
 
 function update(dt){
 
-  if(!running || paused || gameOver) return;
+  if(!running || paused || gameOver || victory){
+    return;
+  }
 
-  worldTime += dt;
+  worldTime+=dt;
 
   updatePlayer(dt);
+
+  if(gameOver || victory){
+    return;
+  }
+
   updateCrystals();
+
   updateEnemies(dt);
+
+  if(gameOver){
+    return;
+  }
+
   updateTraps();
+
   updateParticles(dt);
 
-  score += Math.floor(dt * 8);
+  /*
+    Lava rises independently but remains fair.
+  */
 
-  scoreText.textContent = score;
+  lavaSpeed=
+    .045+
+    level*.006+
+    Math.min(.045,player.x/90000);
 
+  lavaY-=lavaSpeed*dt*60;
+
+  /*
+    Don't allow lava to instantly pass the player
+    due to an extremely difficult generated section.
+  */
+
+  if(
+    lavaY<
+    H-25
+  ){
+    lavaY=Math.max(
+      lavaY,
+      H-230
+    );
+  }
+
+  /*
+    Small continuous score.
+  */
+
+  score+=dt*7;
+
+  scoreText.textContent=
+    Math.floor(score);
+
+  if(shake>0){
+    shake-=dt;
+
+    if(shake<0){
+      shake=0;
+    }
+  }
 }
 
+
+/* =========================================================
+GAME LOOP
+========================================================= */
 
 function gameLoop(timestamp){
 
   if(!lastTime){
-    lastTime = timestamp;
+    lastTime=timestamp;
   }
 
-  let dt = (timestamp-lastTime)/1000;
+  let dt=
+    (timestamp-lastTime)/1000;
 
-  if(dt > .05){
-    dt = .05;
+  if(dt>.05){
+    dt=.05;
   }
 
-  lastTime = timestamp;
+  lastTime=timestamp;
 
   update(dt);
+
   draw();
 
   requestAnimationFrame(gameLoop);
@@ -1626,7 +2388,7 @@ function gameLoop(timestamp){
 
 
 /* =========================================================
-   DRAWING
+DRAW
 ========================================================= */
 
 function draw(){
@@ -1639,12 +2401,33 @@ function draw(){
 
   ctx.save();
 
+  if(shake>0){
+
+    const amount=
+      shake*18;
+
+    ctx.translate(
+      (Math.random()-.5)*amount,
+      (Math.random()-.5)*amount
+    );
+  }
+
   ctx.translate(-cameraX,0);
 
+  drawBackgroundTemple();
+
   drawPlatforms();
+
+  drawCheckpointFlags();
+
   drawTraps();
+
   drawCrystals();
+
   drawEnemies();
+
+  drawPortal();
+
   drawParticles();
 
   drawPlayer();
@@ -1655,103 +2438,166 @@ function draw(){
 
   drawLavaGlow();
 
-  if(player.invincible > 0){
+  drawHUDWorld();
 
-    ctx.fillStyle =
-      Math.floor(worldTime*12)%2 === 0
-      ? "rgba(255,255,255,.15)"
-      : "rgba(255,255,255,0)";
+  if(
+    player.invincible>0 &&
+    !gameOver &&
+    !victory
+  ){
 
-    ctx.fillRect(0,0,W,H);
+    if(
+      Math.floor(worldTime*14)%2===0
+    ){
+
+      ctx.fillStyle=
+        "rgba(255,255,255,.10)";
+
+      ctx.fillRect(0,0,W,H);
+    }
   }
 }
 
 
-/* ================= SKY ================= */
+/* =========================================================
+SKY
+========================================================= */
 
 function drawSky(){
 
-  const g = ctx.createLinearGradient(0,0,0,H);
+  const g=
+    ctx.createLinearGradient(
+      0,0,0,H
+    );
 
-  g.addColorStop(0,"#12091d");
-  g.addColorStop(.45,"#2a1020");
-  g.addColorStop(1,"#4b1a14");
+  g.addColorStop(0,"#10071a");
+  g.addColorStop(.42,"#2a0f20");
+  g.addColorStop(1,"#591b12");
 
   ctx.fillStyle=g;
+
   ctx.fillRect(0,0,W,H);
 
-  /* moon */
+  /*
+    Moon.
+  */
 
   ctx.beginPath();
-  ctx.arc(W*.78,H*.18,40,0,Math.PI*2);
 
-  ctx.fillStyle="rgba(255,181,91,.12)";
+  ctx.arc(
+    W*.78,
+    H*.18,
+    42,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fillStyle=
+    "rgba(255,196,105,.13)";
+
   ctx.fill();
 
   ctx.beginPath();
-  ctx.arc(W*.78,H*.18,25,0,Math.PI*2);
 
-  ctx.fillStyle="rgba(255,207,129,.18)";
+  ctx.arc(
+    W*.78,
+    H*.18,
+    27,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fillStyle=
+    "rgba(255,221,152,.20)";
+
   ctx.fill();
 
-  /* stars */
+  /*
+    Stars.
+  */
 
-  for(let i=0;i<45;i++){
+  for(let i=0;i<48;i++){
 
-    const x =
-      ((i*173)%W);
+    const x=
+      (i*173)%W;
 
-    const y =
-      ((i*79)%(H*.55));
+    const y=
+      (i*79)%(H*.55);
 
-    const a =
-      .25 + .25*Math.sin(worldTime*2+i);
+    const a=
+      .18+
+      .20*
+      Math.sin(worldTime*2+i);
 
-    ctx.fillStyle=`rgba(255,220,170,${a})`;
+    ctx.fillStyle=
+      "rgba(255,225,180,"+
+      a+
+      ")";
 
     ctx.fillRect(x,y,2,2);
   }
 }
 
 
-/* ================= MOUNTAINS ================= */
+/* =========================================================
+MOUNTAINS
+========================================================= */
 
 function drawMountains(){
 
-  const offset = cameraX*.12;
+  const offset=cameraX*.12;
 
   ctx.save();
+
   ctx.translate(-offset,0);
 
   for(let layer=0;layer<3;layer++){
 
     ctx.beginPath();
 
-    const base=H-100+layer*28;
+    const base=
+      H-105+
+      layer*30;
 
-    ctx.moveTo(-100,base);
+    ctx.moveTo(-200,base);
 
-    for(let x=-100;x<W+300;x+=90){
+    for(
+      let x=-200;
+      x<W+500;
+      x+=100
+    ){
 
-      const peak =
-        base -
-        80 -
-        Math.abs(Math.sin(x*.015+layer))*90;
+      const peak=
+        base-
+        70-
+        Math.abs(
+          Math.sin(
+            x*.013+layer*1.8
+          )
+        )*105;
 
-      ctx.lineTo(x+45,peak);
-      ctx.lineTo(x+100,base);
+      ctx.lineTo(
+        x+50,
+        peak
+      );
+
+      ctx.lineTo(
+        x+110,
+        base
+      );
     }
 
-    ctx.lineTo(W+500,H);
-    ctx.lineTo(-100,H);
+    ctx.lineTo(W+800,H);
+    ctx.lineTo(-200,H);
+
     ctx.closePath();
 
-    ctx.fillStyle =
+    ctx.fillStyle=
       layer===0
-      ? "#160f1b"
-      : layer===1
-      ? "#20121a"
-      : "#2b1517";
+        ? "#150c19"
+        : layer===1
+          ? "#21111a"
+          : "#301513";
 
     ctx.fill();
   }
@@ -1760,24 +2606,77 @@ function drawMountains(){
 }
 
 
-/* ================= PLATFORMS ================= */
+/* =========================================================
+BACKGROUND TEMPLE
+========================================================= */
+
+function drawBackgroundTemple(){
+
+  /*
+    Large distant temple pillars create depth.
+  */
+
+  const start=
+    Math.floor(cameraX/180)*180-400;
+
+  for(
+    let x=start;
+    x<cameraX+W+500;
+    x+=180
+  ){
+
+    const h=
+      100+
+      ((Math.abs(x)%260));
+
+    ctx.fillStyle=
+      "rgba(16,11,17,.75)";
+
+    ctx.fillRect(
+      x,
+      H-75-h,
+      42,
+      h
+    );
+
+    ctx.fillStyle=
+      "rgba(255,74,20,.10)";
+
+    ctx.fillRect(
+      x+8,
+      H-75-h+15,
+      7,
+      h-30
+    );
+  }
+}
+
+
+/* =========================================================
+PLATFORMS
+========================================================= */
 
 function drawPlatforms(){
 
   for(const p of platforms){
 
     if(
-      p.x+p.w < cameraX-100 ||
-      p.x > cameraX+W+100
-    ) continue;
+      p.x+p.w<cameraX-120 ||
+      p.x>cameraX+W+120
+    ){
+      continue;
+    }
 
-    /* shadow */
+    /*
+      Shadow.
+    */
 
-    ctx.fillStyle="rgba(0,0,0,.35)";
+    ctx.fillStyle=
+      "rgba(0,0,0,.38)";
 
     roundRect(
-      p.x+4,
-      p.y+7,
+      p.x+5,
+      p.y+8,
       p.w,
       p.h,
       8
@@ -1785,15 +2684,32 @@ function drawPlatforms(){
 
     ctx.fill();
 
-    /* rock */
+    /*
+      Main rock.
+    */
 
-    const g = ctx.createLinearGradient(
-      0,p.y,0,p.y+p.h
+    const g=
+      ctx.createLinearGradient(
+        0,p.y,
+        0,p.y+p.h
+      );
+
+    g.addColorStop(
+      0,
+      p.finish
+        ? "#486c75"
+        : "#69555b"
     );
 
-    g.addColorStop(0,"#66545a");
-    g.addColorStop(.4,"#40353d");
-    g.addColorStop(1,"#241e26");
+    g.addColorStop(
+      .45,
+      "#40343d"
+    );
+
+    g.addColorStop(
+      1,
+      "#241d25"
+    );
 
     ctx.fillStyle=g;
 
@@ -1802,56 +2718,153 @@ function drawPlatforms(){
       p.y,
       p.w,
       p.h,
-      7
+      8
     );
 
     ctx.fill();
 
-    /* top lava glow */
+    /*
+      Top edge.
+    */
 
-    ctx.fillStyle =
+    ctx.fillStyle=
       p.finish
-      ? "#8ff4ff"
-      : "#9a3c23";
+        ? "#78efff"
+        : "#a23c22";
 
     ctx.fillRect(
       p.x+5,
       p.y,
-      p.w-10,
+      Math.max(0,p.w-10),
       4
     );
 
-    /* cracks */
+    /*
+      Cracks.
+    */
 
-    ctx.strokeStyle="rgba(0,0,0,.35)";
+    ctx.strokeStyle=
+      "rgba(0,0,0,.38)";
+
     ctx.lineWidth=2;
 
     for(let j=0;j<2;j++){
 
-      const cx =
-        p.x+25+j*(p.w/3);
+      const cx=
+        p.x+
+        25+
+        j*(p.w/3);
 
       ctx.beginPath();
-      ctx.moveTo(cx,p.y+8);
-      ctx.lineTo(cx+8,p.y+15);
-      ctx.lineTo(cx+2,p.y+22);
+
+      ctx.moveTo(
+        cx,
+        p.y+8
+      );
+
+      ctx.lineTo(
+        cx+8,
+        p.y+15
+      );
+
+      ctx.lineTo(
+        cx+2,
+        p.y+23
+      );
+
       ctx.stroke();
+    }
+
+    /*
+      Finish platform markings.
+    */
+
+    if(p.finish){
+
+      ctx.fillStyle=
+        "rgba(112,240,255,.20)";
+
+      for(
+        let x=p.x+15;
+        x<p.x+p.w-10;
+        x+=35
+      ){
+
+        ctx.fillRect(
+          x,
+          p.y+9,
+          18,
+          4
+        );
+      }
     }
   }
 }
 
 
-/* ================= TRAPS ================= */
+/* =========================================================
+CHECKPOINT FLAGS
+========================================================= */
+
+function drawCheckpointFlags(){
+
+  for(const p of platforms){
+
+    if(!p.checkpoint) continue;
+
+    const x=
+      p.x+p.w*.5;
+
+    const y=p.y;
+
+    ctx.strokeStyle="#d5d5d5";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(x,y);
+    ctx.lineTo(x,y-48);
+
+    ctx.stroke();
+
+    ctx.fillStyle="#ffd44b";
+
+    ctx.beginPath();
+
+    ctx.moveTo(x,y-47);
+    ctx.lineTo(x+26,y-39);
+    ctx.lineTo(x,y-31);
+
+    ctx.closePath();
+
+    ctx.fill();
+  }
+}
+
+
+/* =========================================================
+TRAPS
+========================================================= */
 
 function drawTraps(){
 
   for(const t of traps){
 
-    ctx.fillStyle="#e33a20";
+    if(
+      t.x+t.w<cameraX-100 ||
+      t.x>cameraX+W+100
+    ){
+      continue;
+    }
+
+    ctx.fillStyle="#ef351e";
 
     ctx.beginPath();
 
-    ctx.moveTo(t.x,t.y+t.h);
+    ctx.moveTo(
+      t.x,
+      t.y+t.h
+    );
 
     ctx.lineTo(
       t.x+t.w*.25,
@@ -1877,7 +2890,8 @@ function drawTraps(){
 
     ctx.fill();
 
-    ctx.fillStyle="rgba(255,185,50,.45)";
+    ctx.fillStyle=
+      "rgba(255,196,56,.55)";
 
     ctx.fillRect(
       t.x+3,
@@ -1889,7 +2903,9 @@ function drawTraps(){
 }
 
 
-/* ================= CRYSTALS ================= */
+/* =========================================================
+CRYSTALS
+========================================================= */
 
 function drawCrystals(){
 
@@ -1897,27 +2913,35 @@ function drawCrystals(){
 
     if(c.collected) continue;
 
-    const scale =
-      .85 + Math.sin(c.spin)*.15;
+    const scale=
+      .86+
+      Math.sin(c.spin)*.14;
 
     ctx.save();
 
-    ctx.translate(c.x,c.y);
-    ctx.scale(scale,scale);
+    ctx.translate(
+      c.x,
+      c.y
+    );
 
-    ctx.shadowBlur=18;
+    ctx.scale(
+      scale,
+      scale
+    );
+
+    ctx.shadowBlur=20;
     ctx.shadowColor="#50eaff";
 
-    ctx.fillStyle="#56e8ff";
+    ctx.fillStyle="#52e9ff";
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-14);
-    ctx.lineTo(10,-3);
-    ctx.lineTo(6,12);
-    ctx.lineTo(0,17);
-    ctx.lineTo(-6,12);
-    ctx.lineTo(-10,-3);
+    ctx.moveTo(0,-15);
+    ctx.lineTo(11,-4);
+    ctx.lineTo(7,12);
+    ctx.lineTo(0,18);
+    ctx.lineTo(-7,12);
+    ctx.lineTo(-11,-4);
 
     ctx.closePath();
 
@@ -1925,12 +2949,16 @@ function drawCrystals(){
 
     ctx.shadowBlur=0;
 
-    ctx.strokeStyle="rgba(255,255,255,.8)";
+    ctx.strokeStyle=
+      "rgba(255,255,255,.85)";
+
     ctx.lineWidth=2;
 
     ctx.beginPath();
-    ctx.moveTo(0,-10);
-    ctx.lineTo(0,10);
+
+    ctx.moveTo(0,-11);
+    ctx.lineTo(0,11);
+
     ctx.stroke();
 
     ctx.restore();
@@ -1938,7 +2966,9 @@ function drawCrystals(){
 }
 
 
-/* ================= ENEMIES ================= */
+/* =========================================================
+ENEMIES DRAW
+========================================================= */
 
 function drawEnemies(){
 
@@ -1946,21 +2976,24 @@ function drawEnemies(){
 
     if(!e.alive) continue;
 
-    const bob =
-      Math.sin(e.phase)*4;
+    const bob=
+      Math.sin(e.phase)*3;
 
     ctx.save();
 
-    ctx.translate(e.x,e.y+bob);
+    ctx.translate(
+      e.x,
+      e.y+bob
+    );
 
-    /* glow */
+    ctx.shadowBlur=17;
+    ctx.shadowColor="#a145ff";
 
-    ctx.shadowBlur=15;
-    ctx.shadowColor="#9d45ff";
+    /*
+      Body.
+    */
 
-    /* body */
-
-    ctx.fillStyle="#62339b";
+    ctx.fillStyle="#65369d";
 
     roundRect(
       0,
@@ -1974,48 +3007,179 @@ function drawEnemies(){
 
     ctx.shadowBlur=0;
 
-    /* horns */
+    /*
+      Horns.
+    */
 
-    ctx.fillStyle="#d7b1ff";
+    ctx.fillStyle="#dcbaff";
 
     ctx.beginPath();
-    ctx.moveTo(5,11);
-    ctx.lineTo(0,0);
-    ctx.lineTo(13,7);
+
+    ctx.moveTo(7,11);
+    ctx.lineTo(1,0);
+    ctx.lineTo(14,7);
+
     ctx.fill();
 
     ctx.beginPath();
-    ctx.moveTo(e.w-5,11);
-    ctx.lineTo(e.w,0);
-    ctx.lineTo(e.w-13,7);
+
+    ctx.moveTo(e.w-7,11);
+    ctx.lineTo(e.w-1,0);
+    ctx.lineTo(e.w-14,7);
+
     ctx.fill();
 
-    /* eyes */
+    /*
+      Eyes.
+    */
 
-    ctx.fillStyle="#ffdb48";
+    ctx.fillStyle="#ffe052";
 
-    ctx.fillRect(8,17,6,6);
-    ctx.fillRect(22,17,6,6);
+    ctx.fillRect(
+      8,17,6,6
+    );
 
-    /* mouth */
+    ctx.fillRect(
+      24,17,6,6
+    );
 
-    ctx.fillStyle="#160c22";
-    ctx.fillRect(10,30,17,4);
+    /*
+      Mouth.
+    */
+
+    ctx.fillStyle="#180d25";
+
+    ctx.fillRect(
+      9,31,20,4
+    );
+
+    /*
+      Feet.
+    */
+
+    ctx.fillStyle="#39205e";
+
+    ctx.fillRect(
+      4,
+      e.h+1,
+      10,
+      5
+    );
+
+    ctx.fillRect(
+      24,
+      e.h+1,
+      10,
+      5
+    );
 
     ctx.restore();
   }
 }
 
 
-/* ================= PLAYER ================= */
+/* =========================================================
+PORTAL
+========================================================= */
+
+function drawPortal(){
+
+  if(!finishPortal) return;
+
+  const p=finishPortal;
+
+  const pulse=
+    1+
+    Math.sin(worldTime*5)*.08;
+
+  ctx.save();
+
+  ctx.translate(
+    p.x+p.w/2,
+    p.y+p.h/2
+  );
+
+  ctx.scale(
+    pulse,
+    pulse
+  );
+
+  ctx.shadowBlur=30;
+  ctx.shadowColor="#58efff";
+
+  /*
+    Outer ring.
+  */
+
+  ctx.strokeStyle="#6cefff";
+  ctx.lineWidth=7;
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    0,
+    25,
+    32,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.stroke();
+
+  /*
+    Inner.
+  */
+
+  ctx.fillStyle=
+    "rgba(50,190,255,.20)";
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    0,
+    17,
+    25,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.shadowBlur=0;
+
+  ctx.fillStyle="#fff";
+
+  ctx.font="bold 10px Arial";
+
+  ctx.textAlign="center";
+
+  ctx.fillText(
+    "EXIT",
+    0,
+    4
+  );
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+PLAYER DRAW
+========================================================= */
 
 function drawPlayer(){
 
-  const blink =
-    player.invincible > 0 &&
-    Math.floor(worldTime*14)%2===0;
+  const blink=
+    player.invincible>0 &&
+    Math.floor(worldTime*15)%2===0;
 
-  if(blink) return;
+  if(blink){
+    return;
+  }
 
   ctx.save();
 
@@ -2024,18 +3188,37 @@ function drawPlayer(){
     player.y+player.h/2
   );
 
-  ctx.scale(player.face,1);
+  ctx.scale(
+    player.face,
+    1
+  );
 
-  /* shadow */
+  /*
+    Running animation.
+  */
 
-  ctx.fillStyle="rgba(0,0,0,.35)";
+  const runningAnim=
+    player.grounded &&
+    Math.abs(player.vx)>.2;
+
+  const legMove=
+    runningAnim
+      ? Math.sin(player.anim*2)*5
+      : 0;
+
+  /*
+    Ground shadow.
+  */
+
+  ctx.fillStyle=
+    "rgba(0,0,0,.38)";
 
   ctx.beginPath();
 
   ctx.ellipse(
     0,
-    player.h/2+5,
-    22,
+    player.h/2+6,
+    23,
     6,
     0,
     0,
@@ -2044,31 +3227,45 @@ function drawPlayer(){
 
   ctx.fill();
 
-  /* cape */
+  /*
+    Cape.
+  */
 
-  ctx.fillStyle="#d92323";
+  ctx.fillStyle="#dc2428";
 
   ctx.beginPath();
 
-  ctx.moveTo(-10,-4);
-  ctx.lineTo(-24,25);
+  ctx.moveTo(-10,-5);
+  ctx.lineTo(-26,26);
   ctx.lineTo(-6,18);
-  ctx.lineTo(4,28);
-  ctx.lineTo(7,-2);
+  ctx.lineTo(5,29);
+  ctx.lineTo(8,-3);
 
   ctx.closePath();
 
   ctx.fill();
 
-  /* body */
+  /*
+    Body.
+  */
 
-  const bodyGradient =
-    ctx.createLinearGradient(-15,-10,15,20);
+  const body=
+    ctx.createLinearGradient(
+      -15,-10,
+      15,22
+    );
 
-  bodyGradient.addColorStop(0,"#49b6ff");
-  bodyGradient.addColorStop(1,"#18599e");
+  body.addColorStop(
+    0,
+    "#58c5ff"
+  );
 
-  ctx.fillStyle=bodyGradient;
+  body.addColorStop(
+    1,
+    "#17549a"
+  );
+
+  ctx.fillStyle=body;
 
   roundRect(
     -15,
@@ -2080,17 +3277,42 @@ function drawPlayer(){
 
   ctx.fill();
 
-  /* head */
+  /*
+    Belt.
+  */
 
-  ctx.fillStyle="#ffc486";
+  ctx.fillStyle="#f4a82a";
+
+  ctx.fillRect(
+    -15,
+    13,
+    30,
+    5
+  );
+
+  /*
+    Head.
+  */
+
+  ctx.fillStyle="#ffc487";
 
   ctx.beginPath();
-  ctx.arc(0,-20,15,0,Math.PI*2);
+
+  ctx.arc(
+    0,
+    -20,
+    15,
+    0,
+    Math.PI*2
+  );
+
   ctx.fill();
 
-  /* hair */
+  /*
+    Hair.
+  */
 
-  ctx.fillStyle="#40251b";
+  ctx.fillStyle="#3d251b";
 
   ctx.beginPath();
 
@@ -2104,133 +3326,95 @@ function drawPlayer(){
 
   ctx.fill();
 
-  /* helmet */
+  /*
+    Helmet.
+  */
 
-  ctx.fillStyle="#e8a42a";
+  ctx.fillStyle="#e6a32b";
 
-  ctx.fillRect(-15,-27,30,5);
+  ctx.fillRect(
+    -16,
+    -28,
+    32,
+    5
+  );
 
-  /* eye */
+  ctx.fillStyle="#f5c553";
 
-  ctx.fillStyle="#16121a";
-  ctx.fillRect(5,-21,4,4);
+  ctx.fillRect(
+    -9,
+    -33,
+    18,
+    6
+  );
 
-  /* legs */
+  /*
+    Eye.
+  */
 
-  ctx.fillStyle="#28384d";
+  ctx.fillStyle="#15121a";
 
-  const legMove =
-    Math.sin(worldTime*12)*4;
+  ctx.fillRect(
+    5,
+    -21,
+    4,
+    4
+  );
 
-  ctx.fillRect(-12,21,9,16+legMove);
-  ctx.fillRect(3,21,9,16-legMove);
+  /*
+    Legs.
+  */
 
-  /* boots */
+  ctx.fillStyle="#28394f";
 
-  ctx.fillStyle="#16131a";
+  ctx.fillRect(
+    -12,
+    21,
+    9,
+    16+legMove
+  );
 
-  ctx.fillRect(-15,34+legMove,12,6);
-  ctx.fillRect(4,34-legMove,12,6);
+  ctx.fillRect(
+    3,
+    21,
+    9,
+    16-legMove
+  );
+
+  /*
+    Boots.
+  */
+
+  ctx.fillStyle="#17141b";
+
+  ctx.fillRect(
+    -15,
+    34+legMove,
+    12,
+    6
+  );
+
+  ctx.fillRect(
+    4,
+    34-legMove,
+    12,
+    6
+  );
 
   ctx.restore();
 }
 
 
-/* ================= LAVA ================= */
-
-function drawLava(){
-
-  const wave =
-    Math.sin(worldTime*4)*4;
-
-  const top = lavaY + wave;
-
-  const g = ctx.createLinearGradient(
-    0,top,0,H
-  );
-
-  g.addColorStop(0,"#ffdb3b");
-  g.addColorStop(.08,"#ff7a00");
-  g.addColorStop(.38,"#ef2d00");
-  g.addColorStop(1,"#7b0800");
-
-  ctx.fillStyle=g;
-
-  ctx.beginPath();
-
-  ctx.moveTo(0,top);
-
-  for(let x=0;x<=W;x+=25){
-
-    const y =
-      top +
-      Math.sin(x*.025+worldTime*4)*5 +
-      Math.sin(x*.06-worldTime*2)*3;
-
-    ctx.lineTo(x,y);
-  }
-
-  ctx.lineTo(W,H);
-  ctx.lineTo(0,H);
-  ctx.closePath();
-
-  ctx.fill();
-
-  /* lava bubbles */
-
-  for(let i=0;i<18;i++){
-
-    const x =
-      ((i*97+worldTime*30)%W);
-
-    const y =
-      top+20+
-      ((i*43)%Math.max(30,H-top-20));
-
-    const r =
-      2+((i*7)%5);
-
-    ctx.fillStyle="rgba(255,218,71,.65)";
-
-    ctx.beginPath();
-    ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fill();
-  }
-}
-
-
-function drawLavaGlow(){
-
-  const glow =
-    ctx.createLinearGradient(
-      0,
-      lavaY-60,
-      0,
-      lavaY+20
-    );
-
-  glow.addColorStop(0,"rgba(255,65,0,0)");
-  glow.addColorStop(.65,"rgba(255,80,0,.12)");
-  glow.addColorStop(1,"rgba(255,130,0,.22)");
-
-  ctx.fillStyle=glow;
-
-  ctx.fillRect(
-    0,
-    lavaY-70,
-    W,
-    100
-  );
-}
-
-
-/* ================= PARTICLES ================= */
+/* =========================================================
+PARTICLES DRAW
+========================================================= */
 
 function drawParticles(){
 
   for(const p of particles){
 
-    ctx.globalAlpha=Math.max(0,p.life);
+    ctx.globalAlpha=
+      Math.max(0,p.life);
 
     ctx.fillStyle=p.color;
 
@@ -2251,31 +3435,283 @@ function drawParticles(){
 }
 
 
-/* ================= ROUND RECT ================= */
+/* =========================================================
+LAVA
+========================================================= */
 
-function roundRect(x,y,w,h,r){
+function drawLava(){
 
-  const radius=Math.min(r,w/2,h/2);
+  const wave=
+    Math.sin(worldTime*4)*4;
+
+  const top=
+    lavaY+wave;
+
+  const g=
+    ctx.createLinearGradient(
+      0,
+      top,
+      0,
+      H
+    );
+
+  g.addColorStop(
+    0,
+    "#ffe04a"
+  );
+
+  g.addColorStop(
+    .08,
+    "#ff7900"
+  );
+
+  g.addColorStop(
+    .38,
+    "#ed2c00"
+  );
+
+  g.addColorStop(
+    1,
+    "#750700"
+  );
+
+  ctx.fillStyle=g;
 
   ctx.beginPath();
 
-  ctx.moveTo(x+radius,y);
-  ctx.arcTo(x+w,y,x+w,y+h,radius);
-  ctx.arcTo(x+w,y+h,x,y+h,radius);
-  ctx.arcTo(x,y+h,x,y,radius);
-  ctx.arcTo(x,y,x+w,y,radius);
+  ctx.moveTo(
+    0,
+    top
+  );
+
+  for(
+    let x=0;
+    x<=W;
+    x+=22
+  ){
+
+    const y=
+      top+
+      Math.sin(
+        x*.025+
+        worldTime*4
+      )*5+
+      Math.sin(
+        x*.06-
+        worldTime*2
+      )*3;
+
+    ctx.lineTo(x,y);
+  }
+
+  ctx.lineTo(W,H);
+  ctx.lineTo(0,H);
+
+  ctx.closePath();
+
+  ctx.fill();
+
+  /*
+    Lava bubbles.
+  */
+
+  for(let i=0;i<20;i++){
+
+    const x=
+      (i*97+
+      worldTime*34)%W;
+
+    const available=
+      Math.max(
+        30,
+        H-top-20
+      );
+
+    const y=
+      top+
+      20+
+      ((i*43)%available);
+
+    const r=
+      2+
+      ((i*7)%5);
+
+    ctx.fillStyle=
+      "rgba(255,222,71,.65)";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,
+      y,
+      r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+  }
+}
+
+
+function drawLavaGlow(){
+
+  const glow=
+    ctx.createLinearGradient(
+      0,
+      lavaY-70,
+      0,
+      lavaY+25
+    );
+
+  glow.addColorStop(
+    0,
+    "rgba(255,55,0,0)"
+  );
+
+  glow.addColorStop(
+    .65,
+    "rgba(255,80,0,.13)"
+  );
+
+  glow.addColorStop(
+    1,
+    "rgba(255,140,0,.25)"
+  );
+
+  ctx.fillStyle=glow;
+
+  ctx.fillRect(
+    0,
+    lavaY-70,
+    W,
+    100
+  );
+}
+
+
+/* =========================================================
+WORLD HUD
+========================================================= */
+
+function drawHUDWorld(){
+
+  /*
+    Exit indicator when near the final area.
+  */
+
+  if(!finishPortal) return;
+
+  const distance=
+    finishPortal.x-player.x;
+
+  if(
+    distance>0 &&
+    distance<700
+  ){
+
+    const x=
+      W/2;
+
+    ctx.fillStyle=
+      "rgba(0,0,0,.45)";
+
+    roundRect(
+      x-80,
+      12,
+      160,
+      30,
+      15
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle="#7cefff";
+
+    ctx.font="bold 12px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+      "⚡ EXIT AHEAD",
+      x,
+      32
+    );
+  }
+}
+
+
+/* =========================================================
+ROUND RECT
+========================================================= */
+
+function roundRect(
+  x,
+  y,
+  w,
+  h,
+  r
+){
+
+  const radius=
+    Math.min(
+      r,
+      w/2,
+      h/2
+    );
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x+radius,
+    y
+  );
+
+  ctx.arcTo(
+    x+w,
+    y,
+    x+w,
+    y+h,
+    radius
+  );
+
+  ctx.arcTo(
+    x+w,
+    y+h,
+    x,
+    y+h,
+    radius
+  );
+
+  ctx.arcTo(
+    x,
+    y+h,
+    x,
+    y,
+    radius
+  );
+
+  ctx.arcTo(
+    x,
+    y,
+    x+w,
+    y,
+    radius
+  );
 
   ctx.closePath();
 }
 
 
 /* =========================================================
-   GAME START
+START GAME
 ========================================================= */
 
 function startGame(){
 
   initAudio();
+
+  clearInput();
 
   startScreen.style.display="none";
   gameScreen.style.display="block";
@@ -2283,6 +3719,8 @@ function startGame(){
   running=true;
   paused=false;
   gameOver=false;
+  victory=false;
+  levelTransition=false;
 
   score=0;
   crystals=0;
@@ -2293,11 +3731,14 @@ function startGame(){
   worldTime=0;
 
   player.x=120;
-  player.y=250;
+  player.y=220;
   player.vx=0;
   player.vy=0;
   player.jumps=0;
-  player.invincible=0;
+  player.grounded=false;
+  player.invincible=.7;
+  player.face=1;
+  player.anim=0;
 
   scoreText.textContent="0";
   crystalText.textContent="0";
@@ -2310,127 +3751,103 @@ function startGame(){
 
   resetWorld();
 
-  lastTime=performance.now();
+  lastTime=
+    performance.now();
 
-  beep(440,.08,"sine",.04);
-  setTimeout(
-    ()=>beep(660,.1,"sine",.04),
-    80
+  beep(
+    440,
+    .08,
+    "sine",
+    .035
   );
+
+  setTimeout(()=>{
+    if(soundOn){
+      beep(
+        660,
+        .10,
+        "sine",
+        .035
+      );
+    }
+  },90);
 }
 
 
 /* =========================================================
-   GAME OVER
+BUTTONS
 ========================================================= */
 
-function endGame(){
+startBtn.addEventListener(
+  "click",
+  startGame
+);
 
-  gameOver=true;
-  running=false;
+pauseBtn.addEventListener(
+  "click",
+  togglePause
+);
 
-  const oldBest =
-    Number(localStorage.getItem("lavaEscapeBest") || 0);
+resumeBtn.addEventListener(
+  "click",
+  ()=>{
 
-  const isNewBest =
-    score > oldBest;
+    if(gameOver || victory){
+      return;
+    }
 
-  if(isNewBest){
+    paused=false;
 
-    localStorage.setItem(
-      "lavaEscapeBest",
-      String(score)
-    );
-  }
-
-  overlayTitle.textContent =
-    isNewBest
-    ? "🏆 NEW HIGH SCORE!"
-    : "🔥 GAME OVER";
-
-  overlayText.innerHTML =
-    `Score: <b>${score}</b><br>`+
-    `Crystals: <b>${crystals}</b><br>`+
-    `Best: <b>${Math.max(score,oldBest)}</b>`;
-
-  resumeBtn.style.display="none";
-  overlay.classList.add("show");
-
-  beep(90,.3,"sawtooth",.06);
-}
-
-
-/* =========================================================
-   PAUSE
-========================================================= */
-
-function togglePause(){
-
-  if(!running && !gameOver) return;
-
-  if(gameOver) return;
-
-  paused=!paused;
-
-  if(paused){
-
-    overlayTitle.textContent="⏸ PAUSED";
-    overlayText.textContent=
-      "Take a breath. The lava is waiting.";
-    resumeBtn.style.display="inline-block";
-    overlay.classList.add("show");
-
-  }else{
+    clearInput();
 
     overlay.classList.remove("show");
+
+    lastTime=
+      performance.now();
   }
-}
+);
+
+restartBtn.addEventListener(
+  "click",
+  startGame
+);
+
+soundBtn.addEventListener(
+  "click",
+  ()=>{
+
+    soundOn=!soundOn;
+
+    soundBtn.textContent=
+      soundOn
+        ? "🔊"
+        : "🔇";
+
+    if(soundOn){
+
+      initAudio();
+
+      beep(
+        600,
+        .06,
+        "sine",
+        .035
+      );
+    }
+  }
+);
+
+homeBtn.addEventListener(
+  "click",
+  ()=>{
+
+    window.location.href="/";
+  }
+);
 
 
 /* =========================================================
-   BUTTONS
-========================================================= */
-
-startBtn.addEventListener("click",startGame);
-
-pauseBtn.addEventListener("click",togglePause);
-
-resumeBtn.addEventListener("click",()=>{
-
-  if(gameOver) return;
-
-  paused=false;
-  overlay.classList.remove("show");
-});
-
-restartBtn.addEventListener("click",()=>{
-
-  startGame();
-});
-
-
-soundBtn.addEventListener("click",()=>{
-
-  soundOn=!soundOn;
-
-  soundBtn.textContent =
-    soundOn ? "🔊" : "🔇";
-
-  if(soundOn){
-    initAudio();
-    beep(600,.06,"sine",.04);
-  }
-});
-
-
-homeBtn.addEventListener("click",()=>{
-
-  window.location.href="/";
-});
-
-
-/* =========================================================
-   INITIALIZATION
+INITIALIZE
 ========================================================= */
 
 resizeCanvas();
@@ -2442,4 +3859,4 @@ requestAnimationFrame(gameLoop);
 </script>
 
 </body>
-</html>
+  </html>
