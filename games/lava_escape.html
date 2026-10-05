@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<title>Lava Escape - GameWithFun</title>
+
+<meta name="description" content="Play Lava Escape by GameWithFun. Run through a dangerous volcanic temple, jump over traps, collect crystals and escape the rising lava.">
+<meta name="keywords" content="Lava Escape, GameWithFun, online game, browser game, lava game, running game, arcade game">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#15101c">
+
+<link rel="canonical" href="https://gamewithfun.com/p/lava-escape.html">
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  background:#09070d;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+body{
+  min-height:100vh;
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
+}
+
+.page{
+  width:100%;
+  min-height:100vh;
+}
+
+/* =========================
+   START SCREEN
+========================= */
+
+#startScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px 14px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 25%,rgba(255,93,0,.25),transparent 32%),
+    linear-gradient(180deg,#170b19 0%,#0b080e 65%,#050407 100%);
+}
+
+.startGlow{
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:rgba(255,65,0,.12);
+  filter:blur(70px);
+  animation:pulseGlow 3s infinite alternate;
+}
+
+@keyframes pulseGlow{
+  from{transform:scale(.85);opacity:.45}
+  to{transform:scale(1.15);opacity:.8}
+}
+
+.startCard{
+  position:relative;
+  width:min(680px,100%);
+  text-align:center;
+  padding:28px 18px 24px;
+  border:1px solid rgba(255,153,55,.25);
+  border-radius:28px;
+  background:rgba(20,14,22,.86);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.65),
+    inset 0 0 50px rgba(255,72,0,.04);
+  backdrop-filter:blur(12px);
+  z-index:2;
+}
+
+.brand{
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:#ffb347;
+  margin-bottom:8px;
+}
+
+.gameLogo{
+  font-size:clamp(42px,10vw,78px);
+  line-height:.95;
+  font-weight:1000;
+  letter-spacing:-3px;
+  text-transform:uppercase;
+  text-shadow:
+    0 5px 0 #761700,
+    0 10px 28px rgba(255,60,0,.45);
+  background:linear-gradient(180deg,#fff18c,#ffb52e 45%,#ff4b00 85%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.logoIcon{
+  display:block;
+  font-size:54px;
+  margin-bottom:3px;
+  animation:floatIcon 1.7s ease-in-out infinite alternate;
+}
+
+@keyframes floatIcon{
+  from{transform:translateY(0) rotate(-3deg)}
+  to{transform:translateY(-8px) rotate(3deg)}
+}
+
+.tagline{
+  color:#ddd;
+  font-size:16px;
+  margin:15px auto 20px;
+  max-width:500px;
+  line-height:1.55;
+}
+
+.startButton{
+  border:0;
+  color:white;
+  font-weight:1000;
+  font-size:20px;
+  padding:17px 34px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffb52e,#ff5a00);
+  box-shadow:
+    0 8px 0 #9f2600,
+    0 15px 35px rgba(255,69,0,.35);
+  transition:.15s;
+  min-width:240px;
+}
+
+.startButton:hover{
+  transform:translateY(-2px);
+}
+
+.startButton:active{
+  transform:translateY(5px);
+  box-shadow:0 3px 0 #9f2600;
+}
+
+.startInfo{
+  margin:28px 0 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.infoBox{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:12px 7px;
+}
+
+.infoBox b{
+  display:block;
+  color:#ffb347;
+  font-size:19px;
+  margin-bottom:3px;
+}
+
+.infoBox span{
+  font-size:11px;
+  color:#aaa;
+}
+
+.moreGames{
+  margin-top:28px;
+  text-align:left;
+}
+
+.moreGames h3{
+  text-align:center;
+  margin:0 0 12px;
+  font-size:16px;
+}
+
+.gameLinks{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.gameLinks a{
+  text-decoration:none;
+  color:#fff;
+  padding:12px;
+  border-radius:13px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+  transition:.2s;
+}
+
+.gameLinks a:hover{
+  background:rgba(255,92,0,.15);
+  border-color:rgba(255,128,40,.35);
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+#gameScreen{
+  display:none;
+  width:100%;
+  min-height:100vh;
+  background:#08070a;
+}
+
+.gameWrap{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  padding:8px;
+}
+
+.topbar{
+  height:58px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:7px;
+}
+
+.topBtn{
+  border:1px solid rgba(255,255,255,.1);
+  color:white;
+  background:rgba(255,255,255,.07);
+  border-radius:12px;
+  height:44px;
+  min-width:44px;
+  font-weight:900;
+}
+
+.topBtn:active{
+  transform:scale(.95);
+}
+
+.stats{
+  flex:1;
+  height:44px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.055);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.stat{
+  flex:1;
+  text-align:center;
+  font-size:11px;
+  color:#999;
+}
+
+.stat strong{
+  display:block;
+  color:#fff;
+  font-size:16px;
+  margin-top:1px;
+}
+
+#healthText{
+  color:#ff6040;
+}
+
+/* Canvas */
+
+.canvasBox{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  max-height:72vh;
+  border-radius:18px;
+  overflow:hidden;
+  background:#171018;
+  border:2px solid rgba(255,125,35,.18);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.65),
+    0 0 45px rgba(255,69,0,.08);
+}
+
+#gameCanvas{
+  display:block;
+  width:100%;
+  height:100%;
+  touch-action:none;
+}
+
+/* Overlay */
+
+.overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(5,3,7,.68);
+  backdrop-filter:blur(5px);
+  z-index:20;
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.overlayCard{
+  width:min(420px,90%);
+  text-align:center;
+  padding:25px 18px;
+  border-radius:22px;
+  background:rgba(24,16,25,.96);
+  border:1px solid rgba(255,130,50,.22);
+  box-shadow:0 25px 70px rgba(0,0,0,.7);
+}
+
+.overlayCard h2{
+  margin:0 0 8px;
+  font-size:32px;
+}
+
+.overlayCard p{
+  color:#bbb;
+  line-height:1.5;
+  margin:8px 0 20px;
+}
+
+.actionBtn{
+  border:0;
+  border-radius:14px;
+  padding:13px 22px;
+  margin:4px;
+  color:#fff;
+  background:linear-gradient(180deg,#ff9e24,#ff4d00);
+  font-weight:900;
+}
+
+.actionBtn.secondary{
+  background:#29232c;
+}
+
+/* Mobile controls */
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:13px;
+  padding:11px 4px 4px;
+  touch-action:none;
+}
+
+.controlBtn{
+  width:74px;
+  height:58px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:17px;
+  color:#fff;
+  background:linear-gradient(180deg,#302833,#18141b);
+  box-shadow:0 5px 0 #0b090d;
+  font-size:24px;
+  font-weight:1000;
+  user-select:none;
+  touch-action:none;
+}
+
+.controlBtn.jump{
+  width:125px;
+  background:linear-gradient(180deg,#ff9e28,#ff4d00);
+}
+
+.controlBtn:active{
+  transform:translateY(4px);
+  box-shadow:0 1px 0 #0b090d;
+}
+
+.hint{
+  text-align:center;
+  color:#777;
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+  max-width:1000px;
+  margin:30px auto 0;
+  padding:0 12px 50px;
+}
+
+.content section{
+  margin-bottom:26px;
+  padding:20px;
+  border-radius:18px;
+  background:#111016;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.content h2{
+  margin:0 0 12px;
+  color:#ffad3b;
+  font-size:23px;
+}
+
+.content h3{
+  color:#eee;
+}
+
+.content p,
+.content li{
+  color:#b8b5ba;
+  line-height:1.7;
+  font-size:14px;
+}
+
+.content ul{
+  padding-left:20px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:600px){
+
+  #startScreen{
+    padding:12px;
+  }
+
+  .startCard{
+    border-radius:22px;
+    padding:23px 13px 20px;
+  }
+
+  .startInfo{
+    gap:5px;
+  }
+
+  .infoBox{
+    padding:10px 4px;
+  }
+
+  .infoBox b{
+    font-size:16px;
+  }
+
+  .gameLinks{
+    grid-template-columns:1fr;
+  }
+
+  .gameWrap{
+    padding:5px;
+  }
+
+  .topbar{
+    height:52px;
+  }
+
+  .topBtn{
+    height:40px;
+    min-width:40px;
+    font-size:14px;
+  }
+
+  .stats{
+    height:40px;
+  }
+
+  .stat{
+    font-size:9px;
+  }
+
+  .stat strong{
+    font-size:14px;
+  }
+
+  .canvasBox{
+    border-radius:12px;
+    aspect-ratio:16/10;
+  }
+
+  .controlBtn{
+    width:67px;
+    height:55px;
+  }
+
+  .controlBtn.jump{
+    width:110px;
+  }
+}
+
+@media(min-width:800px){
+  .controls{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     START SCREEN
+========================= -->
+
+<div id="startScreen">
+
+  <div class="startGlow"></div>
+
+  <div class="startCard">
+
+    <div class="brand">GAMEWITHFUN PRESENTS</div>
+
+    <div class="logoIcon">🌋</div>
+
+    <div class="gameLogo">LAVA<br>ESCAPE</div>
+
+    <div class="tagline">
+      Run through the ancient volcanic temple,
+      escape the rising lava and survive as long as you can!
+    </div>
+
+    <button class="startButton" id="startBtn">
+      ▶ START THE GAME
+    </button>
+
+    <div class="startInfo">
+      <div class="infoBox">
+        <b>🏃</b>
+        <span>RUN & JUMP</span>
+      </div>
+
+      <div class="infoBox">
+        <b>💎</b>
+        <span>COLLECT</span>
+      </div>
+
+      <div class="infoBox">
+        <b>🌋</b>
+        <span>ESCAPE</span>
+      </div>
+    </div>
+
+    <div class="moreGames">
+      <h3>🎮 More Games from GameWithFun</h3>
+
+      <div class="gameLinks">
+        <a href="/p/dragon-mountain.html">🐉 Dragon Mountain</a>
+        <a href="/p/island-survivor.html">🏝️ Island Survivor</a>
+        <a href="/p/shadow-ninja.html">🥷 Shadow Ninja</a>
+        <a href="/p/sliding-puzzle.html">🧩 Sliding Puzzle</a>
+        <a href="/p/flag-guess.html">🌍 Flag Guess</a>
+        <a href="/">🎮 View All Games</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- =========================
+     GAME SCREEN
+========================= -->
+
+<div id="gameScreen">
+
+  <div class="gameWrap">
+
+    <div class="topbar">
+
+      <button class="topBtn" id="homeBtn" title="GameWithFun Home">
+        ↩
+      </button>
+
+      <div class="stats">
+
+        <div class="stat">
+          SCORE
+          <strong id="scoreText">0</strong>
+        </div>
+
+        <div class="stat">
+          💎
+          <strong id="crystalText">0</strong>
+        </div>
+
+        <div class="stat">
+          ❤️
+          <strong id="healthText">3</strong>
+        </div>
+
+        <div class="stat">
+          LEVEL
+          <strong id="levelText">1</strong>
+        </div>
+
+      </div>
+
+      <button class="topBtn" id="soundBtn" title="Sound">
+        🔊
+      </button>
+
+      <button class="topBtn" id="pauseBtn" title="Pause">
+        ❚❚
+      </button>
+
+    </div>
+
+
+    <div class="canvasBox">
+
+      <canvas id="gameCanvas"></canvas>
+
+      <!-- Overlay -->
+
+      <div class="overlay" id="overlay">
+
+        <div class="overlayCard">
+
+          <h2 id="overlayTitle">PAUSED</h2>
+
+          <p id="overlayText">
+            The temple is waiting...
+          </p>
+
+          <button class="actionBtn" id="resumeBtn">
+            ▶ RESUME
+          </button>
+
+          <button class="actionBtn secondary" id="restartBtn">
+            ↻ RESTART
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Mobile controls -->
+
+    <div class="controls">
+
+      <button class="controlBtn" id="leftBtn">
+        ◀
+      </button>
+
+      <button class="controlBtn jump" id="jumpBtn">
+        ⬆ JUMP
+      </button>
+
+      <button class="controlBtn" id="rightBtn">
+        ▶
+      </button>
+
+    </div>
+
+    <div class="hint">
+      Desktop: Arrow Keys / A-D / Space &nbsp; • &nbsp;
+      Mobile: Use the buttons
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SEO CONTENT
+  ========================= -->
+
+  <div class="content">
+
+    <section>
+      <h2>🔥 Lava Escape</h2>
+
+      <p>
+        Lava Escape is a fast-paced browser adventure game from
+        GameWithFun. Run through an ancient volcanic temple while
+        dangerous lava rises behind you. Jump across platforms,
+        avoid traps, collect crystals and survive for as long as possible.
+      </p>
+
+      <p>
+        Every run becomes more challenging as the temple gets faster
+        and the lava rises higher. Your goal is simple: keep moving,
+        stay alive and achieve the highest score possible.
+      </p>
+    </section>
+
+
+    <section>
+      <h2>🎮 How to Play</h2>
+
+      <ul>
+        <li>Move left and right to control your explorer.</li>
+        <li>Jump over gaps, rocks and dangerous traps.</li>
+        <li>Use double jump when you need extra height.</li>
+        <li>Collect crystals to increase your score.</li>
+        <li>Avoid lava and dangerous enemies.</li>
+        <li>Keep moving because the lava continuously rises.</li>
+        <li>Reach the end of each level to continue your adventure.</li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h2>🕹️ Controls</h2>
+
+      <h3>Desktop</h3>
+
+      <p>
+        Use the Left and Right arrow keys or A and D to move.
+        Press Space, W or the Up Arrow to jump.
+      </p>
+
+      <h3>Mobile</h3>
+
+      <p>
+        Use the on-screen Left, Jump and Right buttons.
+        The game is designed to work on phones and tablets.
+      </p>
+    </section>
+
+
+    <section>
+      <h2>💎 Collect Crystals</h2>
+
+      <p>
+        Glowing crystals are scattered throughout the volcanic temple.
+        Collecting them increases your score. Try to collect as many
+        as possible without putting your character in danger.
+      </p>
+    </section>
+
+
+    <section>
+      <h2>🌋 Rising Lava</h2>
+
+      <p>
+        The lava is the biggest danger in Lava Escape. It slowly rises
+        from below and forces you to keep moving. Standing still for
+        too long can quickly turn a safe situation into a dangerous one.
+      </p>
+    </section>
+
+
+    <section>
+      <h2>🏆 High Score</h2>
+
+      <p>
+        Your best score is saved directly in your browser using local
+        storage. Try to beat your previous record and become the
+        ultimate Lava Escape champion.
+      </p>
+    </section>
+
+
+    <section>
+      <h2>❓ FAQ</h2>
+
+      <h3>Is Lava Escape free?</h3>
+      <p>
+        Yes. Lava Escape is designed as a free browser game on GameWithFun.
+      </p>
+
+      <h3>Can I play on mobile?</h3>
+      <p>
+        Yes. The game includes touch controls for smartphones and tablets.
+      </p>
+
+      <h3>Do I need to install an app?</h3>
+      <p>
+        No. The game runs directly in a modern web browser.
+      </p>
+
+      <h3>Does the game save my high score?</h3>
+      <p>
+        Yes. Your best score is saved locally in your browser.
+      </p>
+    </section>
+
+
+    <section>
+      <h2>📖 About Lava Escape</h2>
+
+      <p>
+        Lava Escape combines classic platforming with an exciting
+        survival challenge. The volcanic environment is filled with
+        glowing lava, ancient stone platforms, crystals and dangerous
+        obstacles. The simple controls make the game easy to start,
+        while increasing speed and difficulty provide a challenge for
+        players who want to improve their score.
+      </p>
+
+      <p>
+        Developer: GameWithFun<br>
+        Category: Arcade / Adventure<br>
+        Platform: Web Browser<br>
+        Controls: Keyboard and Touch<br>
+        Latest Update: October 2026
+      </p>
+    </section>
+
+  </div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   LAVA ESCAPE
+   GAMEWITHFUN
+========================================================= */
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
+
+const startBtn = document.getElementById("startBtn");
+const homeBtn = document.getElementById("homeBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const soundBtn = document.getElementById("soundBtn");
+
+const overlay = document.getElementById("overlay");
+const overlayTitle = document.getElementById("overlayTitle");
+const overlayText = document.getElementById("overlayText");
+const resumeBtn = document.getElementById("resumeBtn");
+const restartBtn = document.getElementById("restartBtn");
+
+const scoreText = document.getElementById("scoreText");
+const crystalText = document.getElementById("crystalText");
+const healthText = document.getElementById("healthText");
+const levelText = document.getElementById("levelText");
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+let W = 960;
+let H = 540;
+
+function resizeCanvas(){
+
+  const rect = canvas.getBoundingClientRect();
+
+  const dpr = Math.min(window.devicePixelRatio || 1,2);
+
+  canvas.width = Math.floor(rect.width * dpr);
+  canvas.height = Math.floor(rect.height * dpr);
+
+  W = canvas.width / dpr;
+  H = canvas.height / dpr;
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+
+window.addEventListener("resize",resizeCanvas);
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+let audioCtx = null;
+let soundOn = true;
+
+function initAudio(){
+
+  if(!audioCtx){
+
+    try{
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }catch(e){}
+  }
+
+  if(audioCtx && audioCtx.state === "suspended"){
+    audioCtx.resume();
+  }
+}
+
+function beep(freq,duration,type="square",volume=.045){
+
+  if(!soundOn || !audioCtx) return;
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = type;
+  osc.frequency.value = freq;
+
+  gain.gain.setValueAtTime(volume,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioCtx.currentTime + duration
+  );
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let running = false;
+let paused = false;
+let gameOver = false;
+
+let score = 0;
+let crystals = 0;
+let lives = 3;
+let level = 1;
+
+let cameraX = 0;
+let worldTime = 0;
+
+let lavaY = 500;
+let lavaSpeed = .12;
+
+let levelDistance = 0;
+let nextLevelDistance = 4000;
+
+let lastTime = 0;
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+const player = {
+  x:120,
+  y:300,
+  w:38,
+  h:54,
+
+  vx:0,
+  vy:0,
+
+  speed:4.2,
+  jumpPower:12.2,
+
+  grounded:false,
+  jumps:0,
+
+  invincible:0,
+
+  face:1
+};
+
+
+/* =========================================================
+   WORLD OBJECTS
+========================================================= */
+
+let platforms = [];
+let crystalsList = [];
+let enemies = [];
+let traps = [];
+let particles = [];
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+const keys = {};
+
+window.addEventListener("keydown",e=>{
+
+  keys[e.key.toLowerCase()] = true;
+
+  if(
+    ["arrowleft","arrowright","arrowup"," ","w","a","d"].includes(
+      e.key.toLowerCase()
+    )
+  ){
+    e.preventDefault();
+  }
+
+  if(e.key === "Escape"){
+    togglePause();
+  }
+
+});
+
+window.addEventListener("keyup",e=>{
+  keys[e.key.toLowerCase()] = false;
+});
+
+
+function jump(){
+
+  if(!running || paused || gameOver) return;
+
+  if(player.jumps < 2){
+
+    player.vy = -player.jumpPower;
+
+    player.jumps++;
+
+    beep(520,.08,"square",.04);
+
+    for(let i=0;i<7;i++){
+      createParticle(
+        player.x + player.w/2,
+        player.y + player.h,
+        "#d8d0c8",
+        -1 + Math.random()*2,
+        Math.random()*-1.5
+      );
+    }
+  }
+}
+
+
+/* Keyboard jump detection */
+
+let previousJump = false;
+
+function updateInput(){
+
+  const left =
+    keys["arrowleft"] ||
+    keys["a"];
+
+  const right =
+    keys["arrowright"] ||
+    keys["d"];
+
+  player.vx = 0;
+
+  if(left){
+    player.vx = -player.speed;
+    player.face = -1;
+  }
+
+  if(right){
+    player.vx = player.speed;
+    player.face = 1;
+  }
+
+  const jumpPressed =
+    keys["arrowup"] ||
+    keys["w"] ||
+    keys[" "];
+
+  if(jumpPressed && !previousJump){
+    jump();
+  }
+
+  previousJump = jumpPressed;
+}
+
+
+/* =========================================================
+   TOUCH CONTROLS
+========================================================= */
+
+function holdButton(id,key){
+
+  const btn = document.getElementById(id);
+
+  btn.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    keys[key] = true;
+    btn.setPointerCapture?.(e.pointerId);
+  });
+
+  btn.addEventListener("pointerup",e=>{
+    e.preventDefault();
+    keys[key] = false;
+  });
+
+  btn.addEventListener("pointercancel",()=>{
+    keys[key] = false;
+  });
+
+  btn.addEventListener("pointerleave",()=>{
+    keys[key] = false;
+  });
+}
+
+holdButton("leftBtn","arrowleft");
+holdButton("rightBtn","arrowright");
+
+document.getElementById("jumpBtn").addEventListener("pointerdown",e=>{
+  e.preventDefault();
+  jump();
+});
+
+
+/* =========================================================
+   LEVEL GENERATION
+========================================================= */
+
+function resetWorld(){
+
+  platforms = [];
+  crystalsList = [];
+  enemies = [];
+  traps = [];
+  particles = [];
+
+  cameraX = 0;
+  levelDistance = 0;
+
+  lavaY = H - 45;
+
+  /* Starting floor */
+
+  platforms.push({
+    x:-500,
+    y:H-75,
+    w:800,
+    h:75
+  });
+
+  let x = 500;
+
+  const total = 85 + level * 10;
+
+  for(let i=0;i<total;i++){
+
+    const gap = 80 + Math.random()*110;
+
+    x += gap;
+
+    const width =
+      100 +
+      Math.random()*150;
+
+    const baseY =
+      H - 110 -
+      Math.random()*135;
+
+    platforms.push({
+      x,
+      y:baseY,
+      w:width,
+      h:26
+    });
+
+    /* Crystal */
+
+    if(Math.random() < .72){
+
+      crystalsList.push({
+        x:x + width*.5,
+        y:baseY - 30,
+        r:10,
+        collected:false,
+        spin:Math.random()*Math.PI*2
+      });
+
+    }
+
+    /* Trap */
+
+    if(Math.random() < .26 && level > 1){
+
+      traps.push({
+        x:x + 20 + Math.random()*Math.max(10,width-40),
+        y:baseY - 17,
+        w:28,
+        h:17
+      });
+
+    }
+
+    /* Enemy */
+
+    if(Math.random() < .16 && level > 1){
+
+      enemies.push({
+        x:x + width*.5,
+        y:baseY - 48,
+        w:36,
+        h:40,
+        vx:level*.25 + .3,
+        left:x + 10,
+        right:x + width - 45,
+        alive:true,
+        phase:Math.random()*5
+      });
+
+    }
+  }
+
+  /* Final platform */
+
+  platforms.push({
+    x:x+120,
+    y:H-150,
+    w:350,
+    h:30,
+    finish:true
+  });
+
+  nextLevelDistance = x + 300;
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createParticle(x,y,color,vx,vy){
+
+  particles.push({
+    x,
+    y,
+    vx,
+    vy,
+    life:1,
+    size:2+Math.random()*5,
+    color
+  });
+}
+
+
+function updateParticles(dt){
+
+  for(let i=particles.length-1;i>=0;i--){
+
+    const p = particles[i];
+
+    p.x += p.vx * dt * 60;
+    p.y += p.vy * dt * 60;
+
+    p.vy += .08 * dt * 60;
+
+    p.life -= .025 * dt * 60;
+
+    if(p.life <= 0){
+      particles.splice(i,1);
+    }
+  }
+}
+
+
+/* =========================================================
+   COLLISION
+========================================================= */
+
+function overlap(a,b){
+
+  return (
+    a.x < b.x+b.w &&
+    a.x+a.w > b.x &&
+    a.y < b.y+b.h &&
+    a.y+a.h > b.y
+  );
+}
+
+
+/* =========================================================
+   UPDATE PLAYER
+========================================================= */
+
+function updatePlayer(dt){
+
+  updateInput();
+
+  player.x += player.vx * dt * 60;
+
+  player.vy += .55 * dt * 60;
+
+  if(player.vy > 18){
+    player.vy = 18;
+  }
+
+  const oldBottom = player.y + player.h;
+
+  player.y += player.vy * dt * 60;
+
+  player.grounded = false;
+
+  /* Platform collision */
+
+  for(const p of platforms){
+
+    if(
+      player.x + player.w > p.x &&
+      player.x < p.x + p.w &&
+      oldBottom <= p.y + 5 &&
+      player.y + player.h >= p.y &&
+      player.vy >= 0
+    ){
+
+      player.y = p.y - player.h;
+
+      player.vy = 0;
+
+      player.grounded = true;
+
+      player.jumps = 0;
+
+      if(p.finish){
+        finishLevel();
+      }
+    }
+  }
+
+  /* Boundaries */
+
+  if(player.x < 10){
+    player.x = 10;
+  }
+
+  /* Camera */
+
+  const targetCamera = player.x - W*.32;
+
+  cameraX +=
+    (targetCamera-cameraX) *
+    Math.min(1,dt*5);
+
+  if(cameraX < 0){
+    cameraX = 0;
+  }
+
+  /* Distance */
+
+  levelDistance = Math.max(
+    levelDistance,
+    player.x
+  );
+
+  /* Lava */
+
+  lavaSpeed =
+    .10 +
+    level*.012 +
+    Math.min(.12,levelDistance/50000);
+
+  lavaY -= lavaSpeed * dt * 60;
+
+  if(player.y + player.h > lavaY){
+
+    hurtPlayer();
+  }
+
+  if(player.invincible > 0){
+    player.invincible -= dt;
+  }
+
+}
+
+
+/* =========================================================
+   CRYSTALS
+========================================================= */
+
+function updateCrystals(){
+
+  for(const c of crystalsList){
+
+    if(c.collected) continue;
+
+    c.spin += .08;
+
+    const box = {
+      x:c.x-c.r,
+      y:c.y-c.r,
+      w:c.r*2,
+      h:c.r*2
+    };
+
+    if(overlap(player,box)){
+
+      c.collected = true;
+
+      crystals++;
+
+      score += 100;
+
+      crystalText.textContent = crystals;
+      scoreText.textContent = score;
+
+      beep(900,.07,"sine",.045);
+
+      for(let i=0;i<12;i++){
+
+        createParticle(
+          c.x,
+          c.y,
+          "#64e8ff",
+          -2+Math.random()*4,
+          -2+Math.random()*4
+        );
+
+      }
+    }
+  }
+}
+
+
+/* =========================================================
+   ENEMIES
+========================================================= */
+
+function updateEnemies(dt){
+
+  for(const e of enemies){
+
+    if(!e.alive) continue;
+
+    e.phase += dt*5;
+
+    e.x += e.vx * dt * 60;
+
+    if(e.x < e.left || e.x > e.right){
+      e.vx *= -1;
+    }
+
+    const box = {
+      x:e.x,
+      y:e.y + Math.sin(e.phase)*4,
+      w:e.w,
+      h:e.h
+    };
+
+    if(overlap(player,box)){
+
+      /* Jumping on enemy */
+
+      if(
+        player.vy > 0 &&
+        player.y + player.h < e.y + 18
+      ){
+
+        e.alive = false;
+
+        player.vy = -8;
+
+        score += 150;
+
+        scoreText.textContent = score;
+
+        beep(220,.12,"square",.06);
+
+        for(let i=0;i<14;i++){
+
+          createParticle(
+            e.x+e.w/2,
+            e.y+e.h/2,
+            "#a85cff",
+            -2+Math.random()*4,
+            -3+Math.random()*4
+          );
+        }
+
+      }else{
+
+        hurtPlayer();
+      }
+    }
+  }
+}
+
+
+/* =========================================================
+   TRAPS
+========================================================= */
+
+function updateTraps(){
+
+  for(const t of traps){
+
+    if(
+      player.x + player.w > t.x &&
+      player.x < t.x+t.w &&
+      player.y + player.h > t.y &&
+      player.y < t.y+t.h
+    ){
+
+      hurtPlayer();
+    }
+  }
+}
+
+
+/* =========================================================
+   DAMAGE
+========================================================= */
+
+function hurtPlayer(){
+
+  if(player.invincible > 0) return;
+
+  player.invincible = 1.2;
+
+  lives--;
+
+  healthText.textContent = lives;
+
+  beep(110,.16,"sawtooth",.07);
+
+  for(let i=0;i<18;i++){
+
+    createParticle(
+      player.x+player.w/2,
+      player.y+player.h/2,
+      "#ff5b2d",
+      -3+Math.random()*6,
+      -3+Math.random()*6
+    );
+
+  }
+
+  if(lives <= 0){
+
+    endGame();
+
+  }else{
+
+    player.x = Math.max(50,player.x-180);
+
+    player.y -= 100;
+
+    player.vy = -8;
+  }
+}
+
+
+/* =========================================================
+   LEVEL COMPLETE
+========================================================= */
+
+function finishLevel(){
+
+  if(levelDistance < nextLevelDistance) return;
+
+  level++;
+
+  score += 500;
+
+  levelText.textContent = level;
+  scoreText.textContent = score;
+
+  beep(780,.1,"sine",.05);
+  setTimeout(()=>beep(1040,.12,"sine",.05),100);
+
+  player.x = 120;
+  player.y = 200;
+  player.vy = 0;
+
+  resetWorld();
+}
+
+
+/* =========================================================
+   GAME LOOP
+========================================================= */
+
+function update(dt){
+
+  if(!running || paused || gameOver) return;
+
+  worldTime += dt;
+
+  updatePlayer(dt);
+  updateCrystals();
+  updateEnemies(dt);
+  updateTraps();
+  updateParticles(dt);
+
+  score += Math.floor(dt * 8);
+
+  scoreText.textContent = score;
+
+}
+
+
+function gameLoop(timestamp){
+
+  if(!lastTime){
+    lastTime = timestamp;
+  }
+
+  let dt = (timestamp-lastTime)/1000;
+
+  if(dt > .05){
+    dt = .05;
+  }
+
+  lastTime = timestamp;
+
+  update(dt);
+  draw();
+
+  requestAnimationFrame(gameLoop);
+}
+
+
+/* =========================================================
+   DRAWING
+========================================================= */
+
+function draw(){
+
+  ctx.clearRect(0,0,W,H);
+
+  drawSky();
+
+  drawMountains();
+
+  ctx.save();
+
+  ctx.translate(-cameraX,0);
+
+  drawPlatforms();
+  drawTraps();
+  drawCrystals();
+  drawEnemies();
+  drawParticles();
+
+  drawPlayer();
+
+  ctx.restore();
+
+  drawLava();
+
+  drawLavaGlow();
+
+  if(player.invincible > 0){
+
+    ctx.fillStyle =
+      Math.floor(worldTime*12)%2 === 0
+      ? "rgba(255,255,255,.15)"
+      : "rgba(255,255,255,0)";
+
+    ctx.fillRect(0,0,W,H);
+  }
+}
+
+
+/* ================= SKY ================= */
+
+function drawSky(){
+
+  const g = ctx.createLinearGradient(0,0,0,H);
+
+  g.addColorStop(0,"#12091d");
+  g.addColorStop(.45,"#2a1020");
+  g.addColorStop(1,"#4b1a14");
+
+  ctx.fillStyle=g;
+  ctx.fillRect(0,0,W,H);
+
+  /* moon */
+
+  ctx.beginPath();
+  ctx.arc(W*.78,H*.18,40,0,Math.PI*2);
+
+  ctx.fillStyle="rgba(255,181,91,.12)";
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(W*.78,H*.18,25,0,Math.PI*2);
+
+  ctx.fillStyle="rgba(255,207,129,.18)";
+  ctx.fill();
+
+  /* stars */
+
+  for(let i=0;i<45;i++){
+
+    const x =
+      ((i*173)%W);
+
+    const y =
+      ((i*79)%(H*.55));
+
+    const a =
+      .25 + .25*Math.sin(worldTime*2+i);
+
+    ctx.fillStyle=`rgba(255,220,170,${a})`;
+
+    ctx.fillRect(x,y,2,2);
+  }
+}
+
+
+/* ================= MOUNTAINS ================= */
+
+function drawMountains(){
+
+  const offset = cameraX*.12;
+
+  ctx.save();
+  ctx.translate(-offset,0);
+
+  for(let layer=0;layer<3;layer++){
+
+    ctx.beginPath();
+
+    const base=H-100+layer*28;
+
+    ctx.moveTo(-100,base);
+
+    for(let x=-100;x<W+300;x+=90){
+
+      const peak =
+        base -
+        80 -
+        Math.abs(Math.sin(x*.015+layer))*90;
+
+      ctx.lineTo(x+45,peak);
+      ctx.lineTo(x+100,base);
+    }
+
+    ctx.lineTo(W+500,H);
+    ctx.lineTo(-100,H);
+    ctx.closePath();
+
+    ctx.fillStyle =
+      layer===0
+      ? "#160f1b"
+      : layer===1
+      ? "#20121a"
+      : "#2b1517";
+
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+
+/* ================= PLATFORMS ================= */
+
+function drawPlatforms(){
+
+  for(const p of platforms){
+
+    if(
+      p.x+p.w < cameraX-100 ||
+      p.x > cameraX+W+100
+    ) continue;
+
+    /* shadow */
+
+    ctx.fillStyle="rgba(0,0,0,.35)";
+
+    roundRect(
+      p.x+4,
+      p.y+7,
+      p.w,
+      p.h,
+      8
+    );
+
+    ctx.fill();
+
+    /* rock */
+
+    const g = ctx.createLinearGradient(
+      0,p.y,0,p.y+p.h
+    );
+
+    g.addColorStop(0,"#66545a");
+    g.addColorStop(.4,"#40353d");
+    g.addColorStop(1,"#241e26");
+
+    ctx.fillStyle=g;
+
+    roundRect(
+      p.x,
+      p.y,
+      p.w,
+      p.h,
+      7
+    );
+
+    ctx.fill();
+
+    /* top lava glow */
+
+    ctx.fillStyle =
+      p.finish
+      ? "#8ff4ff"
+      : "#9a3c23";
+
+    ctx.fillRect(
+      p.x+5,
+      p.y,
+      p.w-10,
+      4
+    );
+
+    /* cracks */
+
+    ctx.strokeStyle="rgba(0,0,0,.35)";
+    ctx.lineWidth=2;
+
+    for(let j=0;j<2;j++){
+
+      const cx =
+        p.x+25+j*(p.w/3);
+
+      ctx.beginPath();
+      ctx.moveTo(cx,p.y+8);
+      ctx.lineTo(cx+8,p.y+15);
+      ctx.lineTo(cx+2,p.y+22);
+      ctx.stroke();
+    }
+  }
+}
+
+
+/* ================= TRAPS ================= */
+
+function drawTraps(){
+
+  for(const t of traps){
+
+    ctx.fillStyle="#e33a20";
+
+    ctx.beginPath();
+
+    ctx.moveTo(t.x,t.y+t.h);
+
+    ctx.lineTo(
+      t.x+t.w*.25,
+      t.y
+    );
+
+    ctx.lineTo(
+      t.x+t.w*.5,
+      t.y+t.h
+    );
+
+    ctx.lineTo(
+      t.x+t.w*.75,
+      t.y
+    );
+
+    ctx.lineTo(
+      t.x+t.w,
+      t.y+t.h
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle="rgba(255,185,50,.45)";
+
+    ctx.fillRect(
+      t.x+3,
+      t.y+t.h-3,
+      t.w-6,
+      3
+    );
+  }
+}
+
+
+/* ================= CRYSTALS ================= */
+
+function drawCrystals(){
+
+  for(const c of crystalsList){
+
+    if(c.collected) continue;
+
+    const scale =
+      .85 + Math.sin(c.spin)*.15;
+
+    ctx.save();
+
+    ctx.translate(c.x,c.y);
+    ctx.scale(scale,scale);
+
+    ctx.shadowBlur=18;
+    ctx.shadowColor="#50eaff";
+
+    ctx.fillStyle="#56e8ff";
+
+    ctx.beginPath();
+
+    ctx.moveTo(0,-14);
+    ctx.lineTo(10,-3);
+    ctx.lineTo(6,12);
+    ctx.lineTo(0,17);
+    ctx.lineTo(-6,12);
+    ctx.lineTo(-10,-3);
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+    ctx.strokeStyle="rgba(255,255,255,.8)";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(0,-10);
+    ctx.lineTo(0,10);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+}
+
+
+/* ================= ENEMIES ================= */
+
+function drawEnemies(){
+
+  for(const e of enemies){
+
+    if(!e.alive) continue;
+
+    const bob =
+      Math.sin(e.phase)*4;
+
+    ctx.save();
+
+    ctx.translate(e.x,e.y+bob);
+
+    /* glow */
+
+    ctx.shadowBlur=15;
+    ctx.shadowColor="#9d45ff";
+
+    /* body */
+
+    ctx.fillStyle="#62339b";
+
+    roundRect(
+      0,
+      8,
+      e.w,
+      e.h-8,
+      12
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+    /* horns */
+
+    ctx.fillStyle="#d7b1ff";
+
+    ctx.beginPath();
+    ctx.moveTo(5,11);
+    ctx.lineTo(0,0);
+    ctx.lineTo(13,7);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(e.w-5,11);
+    ctx.lineTo(e.w,0);
+    ctx.lineTo(e.w-13,7);
+    ctx.fill();
+
+    /* eyes */
+
+    ctx.fillStyle="#ffdb48";
+
+    ctx.fillRect(8,17,6,6);
+    ctx.fillRect(22,17,6,6);
+
+    /* mouth */
+
+    ctx.fillStyle="#160c22";
+    ctx.fillRect(10,30,17,4);
+
+    ctx.restore();
+  }
+}
+
+
+/* ================= PLAYER ================= */
+
+function drawPlayer(){
+
+  const blink =
+    player.invincible > 0 &&
+    Math.floor(worldTime*14)%2===0;
+
+  if(blink) return;
+
+  ctx.save();
+
+  ctx.translate(
+    player.x+player.w/2,
+    player.y+player.h/2
+  );
+
+  ctx.scale(player.face,1);
+
+  /* shadow */
+
+  ctx.fillStyle="rgba(0,0,0,.35)";
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    player.h/2+5,
+    22,
+    6,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  /* cape */
+
+  ctx.fillStyle="#d92323";
+
+  ctx.beginPath();
+
+  ctx.moveTo(-10,-4);
+  ctx.lineTo(-24,25);
+  ctx.lineTo(-6,18);
+  ctx.lineTo(4,28);
+  ctx.lineTo(7,-2);
+
+  ctx.closePath();
+
+  ctx.fill();
+
+  /* body */
+
+  const bodyGradient =
+    ctx.createLinearGradient(-15,-10,15,20);
+
+  bodyGradient.addColorStop(0,"#49b6ff");
+  bodyGradient.addColorStop(1,"#18599e");
+
+  ctx.fillStyle=bodyGradient;
+
+  roundRect(
+    -15,
+    -7,
+    30,
+    31,
+    9
+  );
+
+  ctx.fill();
+
+  /* head */
+
+  ctx.fillStyle="#ffc486";
+
+  ctx.beginPath();
+  ctx.arc(0,-20,15,0,Math.PI*2);
+  ctx.fill();
+
+  /* hair */
+
+  ctx.fillStyle="#40251b";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    0,
+    -24,
+    15,
+    Math.PI,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  /* helmet */
+
+  ctx.fillStyle="#e8a42a";
+
+  ctx.fillRect(-15,-27,30,5);
+
+  /* eye */
+
+  ctx.fillStyle="#16121a";
+  ctx.fillRect(5,-21,4,4);
+
+  /* legs */
+
+  ctx.fillStyle="#28384d";
+
+  const legMove =
+    Math.sin(worldTime*12)*4;
+
+  ctx.fillRect(-12,21,9,16+legMove);
+  ctx.fillRect(3,21,9,16-legMove);
+
+  /* boots */
+
+  ctx.fillStyle="#16131a";
+
+  ctx.fillRect(-15,34+legMove,12,6);
+  ctx.fillRect(4,34-legMove,12,6);
+
+  ctx.restore();
+}
+
+
+/* ================= LAVA ================= */
+
+function drawLava(){
+
+  const wave =
+    Math.sin(worldTime*4)*4;
+
+  const top = lavaY + wave;
+
+  const g = ctx.createLinearGradient(
+    0,top,0,H
+  );
+
+  g.addColorStop(0,"#ffdb3b");
+  g.addColorStop(.08,"#ff7a00");
+  g.addColorStop(.38,"#ef2d00");
+  g.addColorStop(1,"#7b0800");
+
+  ctx.fillStyle=g;
+
+  ctx.beginPath();
+
+  ctx.moveTo(0,top);
+
+  for(let x=0;x<=W;x+=25){
+
+    const y =
+      top +
+      Math.sin(x*.025+worldTime*4)*5 +
+      Math.sin(x*.06-worldTime*2)*3;
+
+    ctx.lineTo(x,y);
+  }
+
+  ctx.lineTo(W,H);
+  ctx.lineTo(0,H);
+  ctx.closePath();
+
+  ctx.fill();
+
+  /* lava bubbles */
+
+  for(let i=0;i<18;i++){
+
+    const x =
+      ((i*97+worldTime*30)%W);
+
+    const y =
+      top+20+
+      ((i*43)%Math.max(30,H-top-20));
+
+    const r =
+      2+((i*7)%5);
+
+    ctx.fillStyle="rgba(255,218,71,.65)";
+
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+
+function drawLavaGlow(){
+
+  const glow =
+    ctx.createLinearGradient(
+      0,
+      lavaY-60,
+      0,
+      lavaY+20
+    );
+
+  glow.addColorStop(0,"rgba(255,65,0,0)");
+  glow.addColorStop(.65,"rgba(255,80,0,.12)");
+  glow.addColorStop(1,"rgba(255,130,0,.22)");
+
+  ctx.fillStyle=glow;
+
+  ctx.fillRect(
+    0,
+    lavaY-70,
+    W,
+    100
+  );
+}
+
+
+/* ================= PARTICLES ================= */
+
+function drawParticles(){
+
+  for(const p of particles){
+
+    ctx.globalAlpha=Math.max(0,p.life);
+
+    ctx.fillStyle=p.color;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      p.x,
+      p.y,
+      p.size,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+  }
+
+  ctx.globalAlpha=1;
+}
+
+
+/* ================= ROUND RECT ================= */
+
+function roundRect(x,y,w,h,r){
+
+  const radius=Math.min(r,w/2,h/2);
+
+  ctx.beginPath();
+
+  ctx.moveTo(x+radius,y);
+  ctx.arcTo(x+w,y,x+w,y+h,radius);
+  ctx.arcTo(x+w,y+h,x,y+h,radius);
+  ctx.arcTo(x,y+h,x,y,radius);
+  ctx.arcTo(x,y,x+w,y,radius);
+
+  ctx.closePath();
+}
+
+
+/* =========================================================
+   GAME START
+========================================================= */
+
+function startGame(){
+
+  initAudio();
+
+  startScreen.style.display="none";
+  gameScreen.style.display="block";
+
+  running=true;
+  paused=false;
+  gameOver=false;
+
+  score=0;
+  crystals=0;
+  lives=3;
+  level=1;
+
+  cameraX=0;
+  worldTime=0;
+
+  player.x=120;
+  player.y=250;
+  player.vx=0;
+  player.vy=0;
+  player.jumps=0;
+  player.invincible=0;
+
+  scoreText.textContent="0";
+  crystalText.textContent="0";
+  healthText.textContent="3";
+  levelText.textContent="1";
+
+  overlay.classList.remove("show");
+
+  resizeCanvas();
+
+  resetWorld();
+
+  lastTime=performance.now();
+
+  beep(440,.08,"sine",.04);
+  setTimeout(
+    ()=>beep(660,.1,"sine",.04),
+    80
+  );
+}
+
+
+/* =========================================================
+   GAME OVER
+========================================================= */
+
+function endGame(){
+
+  gameOver=true;
+  running=false;
+
+  const oldBest =
+    Number(localStorage.getItem("lavaEscapeBest") || 0);
+
+  const isNewBest =
+    score > oldBest;
+
+  if(isNewBest){
+
+    localStorage.setItem(
+      "lavaEscapeBest",
+      String(score)
+    );
+  }
+
+  overlayTitle.textContent =
+    isNewBest
+    ? "🏆 NEW HIGH SCORE!"
+    : "🔥 GAME OVER";
+
+  overlayText.innerHTML =
+    `Score: <b>${score}</b><br>`+
+    `Crystals: <b>${crystals}</b><br>`+
+    `Best: <b>${Math.max(score,oldBest)}</b>`;
+
+  resumeBtn.style.display="none";
+  overlay.classList.add("show");
+
+  beep(90,.3,"sawtooth",.06);
+}
+
+
+/* =========================================================
+   PAUSE
+========================================================= */
+
+function togglePause(){
+
+  if(!running && !gameOver) return;
+
+  if(gameOver) return;
+
+  paused=!paused;
+
+  if(paused){
+
+    overlayTitle.textContent="⏸ PAUSED";
+    overlayText.textContent=
+      "Take a breath. The lava is waiting.";
+    resumeBtn.style.display="inline-block";
+    overlay.classList.add("show");
+
+  }else{
+
+    overlay.classList.remove("show");
+  }
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+startBtn.addEventListener("click",startGame);
+
+pauseBtn.addEventListener("click",togglePause);
+
+resumeBtn.addEventListener("click",()=>{
+
+  if(gameOver) return;
+
+  paused=false;
+  overlay.classList.remove("show");
+});
+
+restartBtn.addEventListener("click",()=>{
+
+  startGame();
+});
+
+
+soundBtn.addEventListener("click",()=>{
+
+  soundOn=!soundOn;
+
+  soundBtn.textContent =
+    soundOn ? "🔊" : "🔇";
+
+  if(soundOn){
+    initAudio();
+    beep(600,.06,"sine",.04);
+  }
+});
+
+
+homeBtn.addEventListener("click",()=>{
+
+  window.location.href="/";
+});
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+resizeCanvas();
+
+draw();
+
+requestAnimationFrame(gameLoop);
+
+</script>
+
+</body>
+</html>
