@@ -170,7 +170,52 @@ const games = [
     url: "games/careering.html",
     newGame: true,
     popular: false
-  }
+  },
+   {
+    id: 101,
+    title: "Dragon",
+    category: "",
+    icon: "",
+    url: "games/dragon_mountain.html",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+   {
+    id: 10,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
 ];
 
 
