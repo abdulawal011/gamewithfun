@@ -198,7 +198,7 @@ const games = [
     id: 104,
     title: "Devil's Trap",
     category: "",
-    icon: "devil's_trap.webp",
+    icon: "games/devil's_trap.webp",
     url: "games/devils_trap.html",
     newGame: false,
     popular: true
