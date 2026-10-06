@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>3D Airplane Storm - GameWithFun</title>
+
+<meta name="description"
+      content="Play 3D Airplane Storm online for free at GameWithFun. Fly through a dangerous lightning storm, collect energy rings, dodge obstacles and survive as long as possible.">
+
+<meta name="keywords"
+      content="airplane game, 3D airplane game, flying game, storm game, lightning game, browser game, GameWithFun">
+
+<meta name="theme-color" content="#06152d">
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#020817;
+  font-family:Arial,Helvetica,sans-serif;
+  touch-action:none;
+}
+
+body{
+  color:#fff;
+}
+
+#game{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  background:#06152d;
+}
+
+#hud{
+  position:fixed;
+  top:max(12px,env(safe-area-inset-top));
+  left:50%;
+  transform:translateX(-50%);
+  width:min(96%,720px);
+  display:none;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  z-index:10;
+  pointer-events:none;
+}
+
+.stat{
+  min-width:0;
+  padding:8px 5px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:13px;
+  background:rgba(3,13,30,.62);
+  backdrop-filter:blur(8px);
+  box-shadow:0 5px 20px rgba(0,0,0,.18);
+}
+
+.stat small{
+  display:block;
+  font-size:9px;
+  color:#9bb8dc;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.stat b{
+  display:block;
+  margin-top:2px;
+  font-size:16px;
+}
+
+#livesBox b{
+  color:#ff566e;
+  letter-spacing:1px;
+}
+
+#power{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  z-index:12;
+  display:none;
+  padding:7px 14px;
+  border-radius:30px;
+  background:rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.15);
+  font-size:12px;
+  font-weight:bold;
+  backdrop-filter:blur(8px);
+}
+
+#screen{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(32,112,200,.25),transparent 35%),
+    linear-gradient(180deg,rgba(2,10,25,.28),rgba(1,5,14,.72));
+}
+
+.panel{
+  width:min(94%,500px);
+  padding:28px 22px 24px;
+  text-align:center;
+  border-radius:28px;
+  background:rgba(4,15,34,.78);
+  border:1px solid rgba(127,207,255,.25);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.5),
+    inset 0 0 50px rgba(35,150,255,.04);
+  backdrop-filter:blur(16px);
+}
+
+.logoPlane{
+  width:95px;
+  height:95px;
+  margin:0 auto 10px;
+  position:relative;
+  filter:drop-shadow(0 10px 20px rgba(0,174,255,.4));
+}
+
+.logoPlane:before{
+  content:"✈";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:72px;
+  transform:rotate(-12deg);
+}
+
+h1{
+  margin:0;
+  font-size:clamp(30px,8vw,54px);
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-2px;
+  background:linear-gradient(180deg,#fff,#64d8ff 48%,#1689ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 8px 30px rgba(0,153,255,.2);
+}
+
+.subtitle{
+  margin:12px 0 20px;
+  color:#a9c7e8;
+  font-size:14px;
+  line-height:1.5;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  color:#fff;
+  font-family:inherit;
+}
+
+.startBtn{
+  width:100%;
+  min-height:58px;
+  border-radius:18px;
+  font-size:19px;
+  font-weight:1000;
+  letter-spacing:.5px;
+  background:linear-gradient(135deg,#08b8ff,#0867ff);
+  box-shadow:
+    0 10px 30px rgba(0,125,255,.35),
+    inset 0 1px 0 rgba(255,255,255,.35);
+  transition:.15s;
+}
+
+.startBtn:active{
+  transform:scale(.97);
+}
+
+.menuRow{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+.menuBtn{
+  flex:1;
+  min-height:46px;
+  border-radius:14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  font-weight:800;
+  color:#dcecff;
+}
+
+.info{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.info div{
+  padding:10px 5px;
+  border-radius:12px;
+  background:rgba(255,255,255,.045);
+}
+
+.info strong{
+  display:block;
+  font-size:18px;
+}
+
+.info span{
+  color:#7f9fc5;
+  font-size:9px;
+  text-transform:uppercase;
+}
+
+#gameover{
+  display:none;
+}
+
+.result{
+  margin:18px 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.result div{
+  padding:12px 5px;
+  border-radius:13px;
+  background:rgba(255,255,255,.06);
+}
+
+.result small{
+  display:block;
+  color:#8eacd0;
+  font-size:9px;
+  text-transform:uppercase;
+}
+
+.result b{
+  display:block;
+  margin-top:4px;
+  font-size:20px;
+}
+
+.tip{
+  margin-top:14px;
+  color:#7394bd;
+  font-size:11px;
+  line-height:1.5;
+}
+
+#homeBtn{
+  position:fixed;
+  top:max(12px,env(safe-area-inset-top));
+  left:12px;
+  z-index:25;
+  display:none;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:rgba(2,12,28,.65);
+  border:1px solid rgba(255,255,255,.16);
+  font-size:19px;
+  backdrop-filter:blur(8px);
+}
+
+#soundBtn{
+  position:fixed;
+  top:max(12px,env(safe-area-inset-top));
+  right:12px;
+  z-index:25;
+  display:none;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:rgba(2,12,28,.65);
+  border:1px solid rgba(255,255,255,.16);
+  font-size:17px;
+  backdrop-filter:blur(8px);
+}
+
+#hint{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  z-index:11;
+  color:rgba(255,255,255,.55);
+  font-size:11px;
+  pointer-events:none;
+  text-align:center;
+}
+
+@media(max-width:420px){
+  .stat{
+    padding:6px 3px;
+  }
+
+  .stat small{
+    font-size:8px;
+  }
+
+  .stat b{
+    font-size:14px;
+  }
+
+  .panel{
+    padding:23px 17px 20px;
+  }
+
+  .logoPlane{
+    width:75px;
+    height:75px;
+  }
+
+  .logoPlane:before{
+    font-size:58px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="game"></canvas>
+
+<div id="hud">
+  <div class="stat">
+    <small>Score</small>
+    <b id="score">0</b>
+  </div>
+
+  <div class="stat">
+    <small>Distance</small>
+    <b id="distance">0 m</b>
+  </div>
+
+  <div class="stat">
+    <small>Speed</small>
+    <b id="speed">1.0x</b>
+  </div>
+
+  <div class="stat" id="livesBox">
+    <small>Lives</small>
+    <b id="lives">❤❤❤</b>
+  </div>
+</div>
+
+<div id="power">⚡ POWER</div>
+
+<div id="hint">Drag / move to fly • Collect rings • Dodge storms</div>
+
+<button id="homeBtn" title="GameWithFun Home">⌂</button>
+<button id="soundBtn" title="Sound">🔊</button>
+
+<div id="screen">
+
+  <div class="panel" id="startPanel">
+
+    <div class="logoPlane">✈️</div>
+
+    <h1>3D AIRPLANE</h1>
+
+    <div class="subtitle">
+      Fly through the storm, dodge lightning and obstacles,
+      collect energy rings and survive as long as you can!
+    </div>
+
+    <button class="startBtn" id="startBtn">
+      ✈️ START FLIGHT
+    </button>
+
+    <div class="menuRow">
+      <button class="menuBtn" id="howBtn">🎮 HOW TO PLAY</button>
+      <button class="menuBtn" id="soundStart">🔊 SOUND ON</button>
+    </div>
+
+    <div class="info">
+      <div>
+        <strong>∞</strong>
+        <span>Endless</span>
+      </div>
+      <div>
+        <strong>⚡</strong>
+        <span>Storm</span>
+      </div>
+      <div>
+        <strong>🏆</strong>
+        <span>Best Score</span>
+      </div>
+    </div>
+
+    <div class="tip">
+      GameWithFun • Free Browser Game
+    </div>
+
+  </div>
+
+  <div class="panel" id="gameover">
+
+    <div class="logoPlane">💥</div>
+
+    <h1>FLIGHT OVER</h1>
+
+    <div class="subtitle">
+      The storm was too strong. Ready for another flight?
+    </div>
+
+    <div class="result">
+      <div>
+        <small>Score</small>
+        <b id="finalScore">0</b>
+      </div>
+
+      <div>
+        <small>Distance</small>
+        <b id="finalDistance">0 m</b>
+      </div>
+
+      <div>
+        <small>Best</small>
+        <b id="finalBest">0</b>
+      </div>
+    </div>
+
+    <button class="startBtn" id="restartBtn">
+      🔄 FLY AGAIN
+    </button>
+
+    <div class="menuRow">
+      <button class="menuBtn" id="homeOver">🏠 HOME</button>
+    </div>
+
+    <div class="tip">
+      Try to beat your best score!
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d", {alpha:false});
+
+let W = 0;
+let H = 0;
+let DPR = 1;
+
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  W = window.innerWidth;
+  H = window.innerHeight;
+
+  canvas.width = Math.floor(W * DPR);
+  canvas.height = Math.floor(H * DPR);
+
+  canvas.style.width = W + "px";
+  canvas.style.height = H + "px";
+
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const screen = document.getElementById("screen");
+const startPanel = document.getElementById("startPanel");
+const gameoverPanel = document.getElementById("gameover");
+
+const hud = document.getElementById("hud");
+const homeBtn = document.getElementById("homeBtn");
+const soundBtn = document.getElementById("soundBtn");
+const powerEl = document.getElementById("power");
+const hint = document.getElementById("hint");
+
+const scoreEl = document.getElementById("score");
+const distanceEl = document.getElementById("distance");
+const speedEl = document.getElementById("speed");
+const livesEl = document.getElementById("lives");
+
+const finalScore = document.getElementById("finalScore");
+const finalDistance = document.getElementById("finalDistance");
+const finalBest = document.getElementById("finalBest");
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+const BEST_KEY = "gamewithfun3DAirplaneBest";
+
+let best = Number(localStorage.getItem(BEST_KEY) || 0);
+
+let running = false;
+let gameTime = 0;
+let lastTime = 0;
+
+let score = 0;
+let distance = 0;
+let lives = 3;
+
+let worldSpeed = 0.30;
+let difficulty = 1;
+
+let spawnTimer = 0;
+let ringTimer = 0;
+let lightningTimer = 0;
+let cloudTimer = 0;
+let mountainTimer = 0;
+
+let shake = 0;
+
+let soundOn = true;
+let audioCtx = null;
+
+let player = {
+  x:0,
+  y:0,
+  tx:0,
+  ty:0,
+  vx:0,
+  vy:0,
+  tilt:0,
+  shield:0,
+  boost:0,
+  magnet:0,
+  invincible:0
+};
+
+let objects = [];
+let particles = [];
+let clouds = [];
+let mountains = [];
+let stars = [];
+
+let lightningFlash = 0;
+
+
+/* =========================================================
+   PERSPECTIVE
+========================================================= */
+
+function horizon(){
+  return H * 0.37;
+}
+
+function project(z, x, y){
+  const zz = Math.max(.02, z);
+
+  const perspective = 1 / zz;
+
+  return {
+    x: W/2 + x * perspective * W * .72,
+    y: horizon() + y * perspective * H * .62,
+    scale: perspective
+  };
+}
+
+
+/* =========================================================
+   SKY
+========================================================= */
+
+function drawSky(){
+
+  const sky = ctx.createLinearGradient(0,0,0,H);
+
+  sky.addColorStop(0,"#020a1b");
+  sky.addColorStop(.35,"#0b2850");
+  sky.addColorStop(.60,"#1b6391");
+  sky.addColorStop(1,"#061426");
+
+  ctx.fillStyle = sky;
+  ctx.fillRect(0,0,W,H);
+
+  /* moon glow */
+
+  const moonX = W * .78;
+  const moonY = H * .17;
+
+  const glow = ctx.createRadialGradient(
+    moonX,moonY,2,
+    moonX,moonY,Math.min(W,H)*.16
+  );
+
+  glow.addColorStop(0,"rgba(210,245,255,.32)");
+  glow.addColorStop(.3,"rgba(110,210,255,.09)");
+  glow.addColorStop(1,"rgba(0,0,0,0)");
+
+  ctx.fillStyle = glow;
+  ctx.fillRect(
+    moonX-Math.min(W,H)*.18,
+    moonY-Math.min(W,H)*.18,
+    Math.min(W,H)*.36,
+    Math.min(W,H)*.36
+  );
+
+  ctx.beginPath();
+  ctx.arc(moonX,moonY,Math.min(W,H)*.035,0,Math.PI*2);
+  ctx.fillStyle="#e9f8ff";
+  ctx.fill();
+
+  /* stars */
+
+  for(const s of stars){
+
+    const a = .25 + Math.sin(gameTime*2+s.twinkle)*.25;
+
+    ctx.fillStyle = `rgba(210,240,255,${a})`;
+
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+function createCloud(z = Math.random()*1.4+.1){
+
+  clouds.push({
+    x:(Math.random()-.5)*1.8,
+    y:Math.random()*.25-.05,
+    z,
+    size:.05+Math.random()*.09,
+    speed:.7+Math.random()*.6,
+    alpha:.25+Math.random()*.35
+  });
+}
+
+function drawCloud(c){
+
+  const p = project(c.z,c.x,c.y);
+
+  const size = c.size * p.scale * Math.min(W,H);
+
+  if(size < 1) return;
+
+  ctx.save();
+
+  ctx.globalAlpha = c.alpha;
+
+  const g = ctx.createRadialGradient(
+    p.x-size*.2,p.y-size*.1,size*.05,
+    p.x,p.y,size
+  );
+
+  g.addColorStop(0,"rgba(245,255,255,.95)");
+  g.addColorStop(.5,"rgba(170,215,235,.65)");
+  g.addColorStop(1,"rgba(80,130,160,0)");
+
+  ctx.fillStyle=g;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    p.x-size*.35,
+    p.y,
+    size*.42,
+    0,
+    Math.PI*2
+  );
+
+  ctx.arc(
+    p.x,
+    p.y-size*.18,
+    size*.52,
+    0,
+    Math.PI*2
+  );
+
+  ctx.arc(
+    p.x+size*.38,
+    p.y,
+    size*.37,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   MOUNTAINS
+========================================================= */
+
+function createMountain(z = 1.3){
+
+  mountains.push({
+    z,
+    x:(Math.random()-.5)*1.5,
+    size:.12+Math.random()*.16
+  });
+}
+
+function drawMountain(m){
+
+  const p = project(m.z,m.x,0);
+
+  const width = m.size*p.scale*W;
+  const height = width*.55;
+
+  if(width<2) return;
+
+  ctx.save();
+
+  ctx.globalAlpha = .65;
+
+  ctx.fillStyle = "#102b45";
+
+  ctx.beginPath();
+
+  ctx.moveTo(p.x-width,p.y);
+  ctx.lineTo(p.x-width*.25,p.y-height*.8);
+  ctx.lineTo(p.x-width*.05,p.y-height*.45);
+  ctx.lineTo(p.x+.15*width,p.y-height);
+  ctx.lineTo(p.x+.45*width,p.y-height*.5);
+  ctx.lineTo(p.x+width,p.y);
+
+  ctx.closePath();
+
+  ctx.fill();
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   STORM ROAD / GRID
+========================================================= */
+
+function drawPerspectiveWorld(){
+
+  const hy = horizon();
+
+  /* horizon glow */
+
+  const hg = ctx.createLinearGradient(0,hy-80,0,hy+80);
+
+  hg.addColorStop(0,"rgba(30,170,255,0)");
+  hg.addColorStop(.5,"rgba(60,190,255,.25)");
+  hg.addColorStop(1,"rgba(0,0,0,0)");
+
+  ctx.fillStyle=hg;
+  ctx.fillRect(0,hy-80,W,160);
+
+
+  /* distant storm clouds */
+
+  ctx.fillStyle="rgba(10,25,45,.55)";
+
+  ctx.beginPath();
+  ctx.ellipse(W*.2,hy+8,W*.3,35,0,0,Math.PI*2);
+  ctx.ellipse(W*.8,hy+5,W*.35,40,0,0,Math.PI*2);
+  ctx.fill();
+
+
+  /* perspective lines */
+
+  ctx.save();
+
+  ctx.globalAlpha=.16;
+  ctx.lineWidth=1;
+
+  const bottomY=H*1.2;
+
+  for(let i=-8;i<=8;i++){
+
+    ctx.beginPath();
+    ctx.moveTo(W/2 + i*20,hy);
+    ctx.lineTo(W/2 + i*W*.18,bottomY);
+    ctx.strokeStyle="#78d9ff";
+    ctx.stroke();
+  }
+
+  /* horizontal depth lines */
+
+  for(let i=0;i<18;i++){
+
+    let z=(i/18 + (gameTime*worldSpeed*.35)%1);
+
+    z=z%1;
+
+    const y=hy + Math.pow(z,2.2)*(H-hy)*1.05;
+
+    ctx.beginPath();
+    ctx.moveTo(0,y);
+    ctx.lineTo(W,y);
+
+    ctx.strokeStyle="rgba(100,210,255,.11)";
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   PLAYER AIRPLANE
+========================================================= */
+
+function drawPlane(){
+
+  const px = player.x;
+  const py = player.y;
+
+  const cx = W/2 + px*W*.30;
+  const cy = H*.72 + py*H*.18;
+
+  const scale = Math.min(W,H)/500;
+
+  ctx.save();
+
+  ctx.translate(cx,cy);
+  ctx.rotate(player.tilt);
+
+  /* engine glow */
+
+  const engineGlow=ctx.createRadialGradient(
+    0,42*scale,2,
+    0,42*scale,50*scale
+  );
+
+  engineGlow.addColorStop(0,"rgba(100,230,255,.85)");
+  engineGlow.addColorStop(.3,"rgba(0,145,255,.3)");
+  engineGlow.addColorStop(1,"rgba(0,100,255,0)");
+
+  ctx.fillStyle=engineGlow;
+  ctx.beginPath();
+  ctx.arc(0,42*scale,50*scale,0,Math.PI*2);
+  ctx.fill();
+
+  /* boost flame */
+
+  const flame = player.boost>0 ? 1.8 : 1;
+
+  const fg=ctx.createLinearGradient(
+    0,25*scale,
+    0,75*scale*flame
+  );
+
+  fg.addColorStop(0,"#fff");
+  fg.addColorStop(.3,"#68e7ff");
+  fg.addColorStop(1,"rgba(0,100,255,0)");
+
+  ctx.fillStyle=fg;
+
+  ctx.beginPath();
+  ctx.moveTo(-9*scale,25*scale);
+  ctx.lineTo(9*scale,25*scale);
+  ctx.lineTo(3*scale,78*scale*flame);
+  ctx.lineTo(0,88*scale*flame);
+  ctx.lineTo(-3*scale,78*scale*flame);
+  ctx.closePath();
+  ctx.fill();
+
+
+  /* shadow */
+
+  ctx.fillStyle="rgba(0,0,0,.22)";
+  ctx.beginPath();
+  ctx.ellipse(0,37*scale,55*scale,12*scale,0,0,Math.PI*2);
+  ctx.fill();
+
+
+  /* wings */
+
+  const wingGrad=ctx.createLinearGradient(
+    -65*scale,0,
+    65*scale,0
+  );
+
+  wingGrad.addColorStop(0,"#185b9c");
+  wingGrad.addColorStop(.5,"#bcecff");
+  wingGrad.addColorStop(1,"#1264a8");
+
+  ctx.fillStyle=wingGrad;
+
+  ctx.beginPath();
+  ctx.moveTo(-9*scale,-4*scale);
+  ctx.lineTo(-72*scale,28*scale);
+  ctx.lineTo(-48*scale,30*scale);
+  ctx.lineTo(-8*scale,14*scale);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(9*scale,-4*scale);
+  ctx.lineTo(72*scale,28*scale);
+  ctx.lineTo(48*scale,30*scale);
+  ctx.lineTo(8*scale,14*scale);
+  ctx.closePath();
+  ctx.fill();
+
+
+  /* tail wings */
+
+  ctx.fillStyle="#2178b9";
+
+  ctx.beginPath();
+  ctx.moveTo(-5*scale,25*scale);
+  ctx.lineTo(-31*scale,42*scale);
+  ctx.lineTo(-7*scale,38*scale);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(5*scale,25*scale);
+  ctx.lineTo(31*scale,42*scale);
+  ctx.lineTo(7*scale,38*scale);
+  ctx.closePath();
+  ctx.fill();
+
+
+  /* body */
+
+  const body=ctx.createLinearGradient(
+    -12*scale,-45*scale,
+    15*scale,40*scale
+  );
+
+  body.addColorStop(0,"#ffffff");
+  body.addColorStop(.32,"#8eeaff");
+  body.addColorStop(.62,"#328bc8");
+  body.addColorStop(1,"#07518d");
+
+  ctx.fillStyle=body;
+
+  ctx.beginPath();
+
+  ctx.moveTo(0,-52*scale);
+  ctx.bezierCurveTo(
+    16*scale,-28*scale,
+    14*scale,15*scale,
+    7*scale,39*scale
+  );
+
+  ctx.quadraticCurveTo(
+    0,47*scale,
+    -7*scale,39*scale
+  );
+
+  ctx.bezierCurveTo(
+    -14*scale,15*scale,
+    -16*scale,-28*scale,
+    0,-52*scale
+  );
+
+  ctx.closePath();
+  ctx.fill();
+
+
+  /* cockpit */
+
+  const glass=ctx.createLinearGradient(
+    -10*scale,-38*scale,
+    10*scale,-8*scale
+  );
+
+  glass.addColorStop(0,"#e8ffff");
+  glass.addColorStop(.35,"#66dcff");
+  glass.addColorStop(1,"#075080");
+
+  ctx.fillStyle=glass;
+
+  ctx.beginPath();
+  ctx.ellipse(
+    0,-24*scale,
+    8*scale,
+    15*scale,
+    0,0,Math.PI*2
+  );
+  ctx.fill();
+
+
+  /* nose highlight */
+
+  ctx.fillStyle="rgba(255,255,255,.8)";
+
+  ctx.beginPath();
+  ctx.ellipse(
+    -3*scale,-39*scale,
+    2*scale,7*scale,
+    -.2,0,Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  /* shield */
+
+  if(player.shield>0){
+
+    const pulse=1+Math.sin(gameTime*7)*.05;
+
+    ctx.strokeStyle="rgba(70,220,255,.8)";
+    ctx.lineWidth=3*scale;
+
+    ctx.shadowBlur=20;
+    ctx.shadowColor="#35dfff";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      0,
+      0,
+      82*scale*pulse,
+      60*scale*pulse,
+      0,0,Math.PI*2
+    );
+
+    ctx.stroke();
+
+    ctx.shadowBlur=0;
+  }
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   OBJECTS
+========================================================= */
+
+function spawnObstacle(){
+
+  const types=["rock","drone","storm"];
+
+  objects.push({
+    type:types[Math.floor(Math.random()*types.length)],
+    x:(Math.random()-.5)*1.15,
+    y:(Math.random()-.5)*.7,
+    z:1.05,
+    size:.035+Math.random()*.035,
+    rot:Math.random()*Math.PI*2,
+    spin:(Math.random()-.5)*2
+  });
+}
+
+function spawnRing(){
+
+  objects.push({
+    type:"ring",
+    x:(Math.random()-.5)*1.15,
+    y:(Math.random()-.5)*.65,
+    z:1.05,
+    size:.045,
+    rot:Math.random()*Math.PI*2,
+    spin:2
+  });
+}
+
+function spawnPower(){
+
+  const types=["shield","magnet","boost"];
+
+  objects.push({
+    type:types[Math.floor(Math.random()*types.length)],
+    x:(Math.random()-.5)*1.1,
+    y:(Math.random()-.5)*.65,
+    z:1.05,
+    size:.045,
+    rot:0,
+    spin:2
+  });
+}
+
+
+/* =========================================================
+   DRAW OBJECT
+========================================================= */
+
+function drawObject(o){
+
+  const p=project(o.z,o.x,o.y);
+
+  const s=o.size*p.scale*Math.min(W,H);
+
+  if(s<1) return;
+
+  ctx.save();
+
+  ctx.translate(p.x,p.y);
+  ctx.rotate(o.rot);
+
+  if(o.type==="ring"){
+
+    ctx.shadowBlur=20;
+    ctx.shadowColor="#00eaff";
+
+    ctx.strokeStyle="#5cf6ff";
+    ctx.lineWidth=Math.max(2,s*.12);
+
+    ctx.beginPath();
+    ctx.ellipse(
+      0,0,
+      s,
+      s*.48,
+      0,0,Math.PI*2
+    );
+    ctx.stroke();
+
+    ctx.shadowBlur=0;
+
+    ctx.fillStyle="rgba(80,245,255,.25)";
+    ctx.beginPath();
+    ctx.ellipse(0,0,s*.65,s*.25,0,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  else if(
+    o.type==="shield" ||
+    o.type==="magnet" ||
+    o.type==="boost"
+  ){
+
+    let color="#39e6ff";
+    let icon="🛡";
+
+    if(o.type==="magnet"){
+      color="#ff55b7";
+      icon="🧲";
+    }
+
+    if(o.type==="boost"){
+      color="#ffd83d";
+      icon="⚡";
+    }
+
+    ctx.shadowBlur=25;
+    ctx.shadowColor=color;
+
+    ctx.fillStyle=color;
+
+    ctx.beginPath();
+    ctx.arc(0,0,s,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+
+    ctx.font=`${Math.max(12,s*1.2)}px Arial`;
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+
+    ctx.fillStyle="#071426";
+    ctx.fillText(icon,0,1);
+  }
+
+  else if(o.type==="rock"){
+
+    ctx.shadowBlur=10;
+    ctx.shadowColor="#ff653c";
+
+    const g=ctx.createRadialGradient(
+      -s*.25,-s*.3,s*.1,
+      0,0,s
+    );
+
+    g.addColorStop(0,"#ffe3a1");
+    g.addColorStop(.35,"#d87840");
+    g.addColorStop(1,"#462638");
+
+    ctx.fillStyle=g;
+
+    ctx.beginPath();
+
+    for(let i=0;i<8;i++){
+
+      const a=i*Math.PI/4;
+      const rr=s*(.72+Math.sin(i*8.3)*.2);
+
+      const x=Math.cos(a)*rr;
+      const y=Math.sin(a)*rr;
+
+      if(i===0) ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.shadowBlur=0;
+  }
+
+  else if(o.type==="drone"){
+
+    ctx.shadowBlur=16;
+    ctx.shadowColor="#ff315e";
+
+    ctx.fillStyle="#263c58";
+
+    ctx.beginPath();
+    ctx.roundRect(-s,-s*.35,s*2,s*.7,s*.18);
+    ctx.fill();
+
+    ctx.fillStyle="#ff355e";
+
+    ctx.beginPath();
+    ctx.arc(-s*.55,0,s*.15,0,Math.PI*2);
+    ctx.arc(s*.55,0,s*.15,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.strokeStyle="#91c7ed";
+    ctx.lineWidth=Math.max(1,s*.07);
+
+    ctx.beginPath();
+    ctx.moveTo(-s*.8,-s*.55);
+    ctx.lineTo(s*.8,-s*.55);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(-s*.8,s*.55);
+    ctx.lineTo(s*.8,s*.55);
+    ctx.stroke();
+
+    ctx.shadowBlur=0;
+  }
+
+  else if(o.type==="storm"){
+
+    ctx.shadowBlur=25;
+    ctx.shadowColor="#9a63ff";
+
+    ctx.fillStyle="rgba(130,70,255,.28)";
+
+    ctx.beginPath();
+    ctx.arc(0,0,s*1.3,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.strokeStyle="#b78cff";
+    ctx.lineWidth=Math.max(2,s*.08);
+
+    ctx.beginPath();
+
+    for(let i=0;i<8;i++){
+
+      const a=i*Math.PI/4;
+
+      const r1=s*.45;
+      const r2=s*(1+Math.random()*.25);
+
+      if(i===0)
+        ctx.moveTo(Math.cos(a)*r1,Math.sin(a)*r1);
+      else
+        ctx.lineTo(Math.cos(a)*r2,Math.sin(a)*r2);
+    }
+
+    ctx.stroke();
+
+    ctx.shadowBlur=0;
+  }
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   LIGHTNING
+========================================================= */
+
+function drawLightning(){
+
+  if(lightningFlash<=0) return;
+
+  const alpha=Math.min(1,lightningFlash);
+
+  ctx.save();
+
+  ctx.globalAlpha=alpha*.9;
+
+  const x=W*(.2+Math.random()*.6);
+
+  ctx.strokeStyle="#b8f8ff";
+  ctx.lineWidth=2+Math.random()*3;
+
+  ctx.shadowBlur=25;
+  ctx.shadowColor="#5cecff";
+
+  ctx.beginPath();
+
+  let y=0;
+
+  ctx.moveTo(x,y);
+
+  for(let i=0;i<9;i++){
+
+    x += (Math.random()-.5)*45;
+    y += H*.07;
+
+    ctx.lineTo(x,y);
+  }
+
+  ctx.stroke();
+
+  ctx.shadowBlur=0;
+
+  if(lightningFlash>.7){
+
+    ctx.fillStyle=`rgba(210,250,255,${(lightningFlash-.7)*.5})`;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function particle(x,y,color="#65eaff",amount=12){
+
+  for(let i=0;i<amount;i++){
+
+    const a=Math.random()*Math.PI*2;
+    const sp=20+Math.random()*100;
+
+    particles.push({
+      x,
+      y,
+      vx:Math.cos(a)*sp,
+      vy:Math.sin(a)*sp,
+      life:.4+Math.random()*.6,
+      max:.4+Math.random()*.6,
+      size:1+Math.random()*4,
+      color
+    });
+  }
+}
+
+function updateParticles(dt){
+
+  for(let i=particles.length-1;i>=0;i--){
+
+    const p=particles[i];
+
+    p.x+=p.vx*dt;
+    p.y+=p.vy*dt;
+
+    p.vy+=30*dt;
+
+    p.life-=dt;
+
+    if(p.life<=0){
+      particles.splice(i,1);
+    }
+  }
+}
+
+function drawParticles(){
+
+  for(const p of particles){
+
+    ctx.globalAlpha=Math.max(0,p.life/p.max);
+
+    ctx.fillStyle=p.color;
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  ctx.globalAlpha=1;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+let pointerActive=false;
+
+function setTarget(clientX,clientY){
+
+  if(!running) return;
+
+  player.tx=(clientX-W/2)/(W*.38);
+  player.ty=(clientY-H*.70)/(H*.27);
+
+  player.tx=Math.max(-1,Math.min(1,player.tx));
+  player.ty=Math.max(-1,Math.min(1,player.ty));
+}
+
+canvas.addEventListener("pointerdown",e=>{
+  pointerActive=true;
+  setTarget(e.clientX,e.clientY);
+});
+
+canvas.addEventListener("pointermove",e=>{
+  if(pointerActive) setTarget(e.clientX,e.clientY);
+});
+
+window.addEventListener("pointerup",()=>{
+  pointerActive=false;
+});
+
+window.addEventListener("keydown",e=>{
+
+  if(!running) return;
+
+  const amount=.14;
+
+  if(e.key==="ArrowLeft" || e.key.toLowerCase()==="a")
+    player.tx-=amount;
+
+  if(e.key==="ArrowRight" || e.key.toLowerCase()==="d")
+    player.tx+=amount;
+
+  if(e.key==="ArrowUp" || e.key.toLowerCase()==="w")
+    player.ty-=amount;
+
+  if(e.key==="ArrowDown" || e.key.toLowerCase()==="s")
+    player.ty+=amount;
+
+  player.tx=Math.max(-1,Math.min(1,player.tx));
+  player.ty=Math.max(-1,Math.min(1,player.ty));
+});
+
+
+/* =========================================================
+   COLLISION
+========================================================= */
+
+function checkCollision(o){
+
+  const dx=o.x-player.x;
+  const dy=o.y-player.y;
+
+  const distance2=dx*dx+dy*dy;
+
+  return distance2 < .085 * .085 && o.z < .16;
+}
+
+
+/* =========================================================
+   COLLECT / HIT
+========================================================= */
+
+function collect(o){
+
+  const p=project(o.z,o.x,o.y);
+
+  particle(
+    p.x,
+    p.y,
+    o.type==="ring" ? "#5cf6ff" : "#ffd83d",
+    18
+  );
+
+  playCollect();
+
+  if(o.type==="ring"){
+
+    score += 50;
+
+    if(player.magnet>0)
+      score += 20;
+
+  }else if(o.type==="shield"){
+
+    player.shield=8;
+    showPower("🛡 SHIELD ACTIVE");
+
+  }else if(o.type==="magnet"){
+
+    player.magnet=10;
+    showPower("🧲 MAGNET ACTIVE");
+
+  }else if(o.type==="boost"){
+
+    player.boost=5;
+    showPower("⚡ TURBO BOOST");
+
+  }
+}
+
+
+function hit(){
+
+  if(player.invincible>0) return;
+
+  if(player.shield>0){
+
+    player.shield=0;
+    player.invincible=1.2;
+
+    shake=14;
+
+    particle(
+      W/2+player.x*W*.3,
+      H*.72+player.y*H*.18,
+      "#4de8ff",
+      35
+    );
+
+    playShield();
+
+    showPower("🛡 SHIELD SAVED YOU!");
+
+    return;
+  }
+
+  lives--;
+
+  player.invincible=1.5;
+
+  shake=20;
+
+  particle(
+    W/2+player.x*W*.3,
+    H*.72+player.y*H*.18,
+    "#ff3c58",
+    35
+  );
+
+  playHit();
+
+  if(lives<=0){
+    endGame();
+  }
+}
+
+
+/* =========================================================
+   UPDATE OBJECTS
+========================================================= */
+
+function updateObjects(dt){
+
+  const currentSpeed=worldSpeed*(player.boost>0?1.8:1);
+
+  for(let i=objects.length-1;i>=0;i--){
+
+    const o=objects[i];
+
+    o.z -= currentSpeed*dt;
+
+    o.rot += o.spin*dt;
+
+    /* magnet */
+
+    if(
+      o.type==="ring" &&
+      player.magnet>0 &&
+      o.z<.55
+    ){
+
+      o.x += (player.x-o.x)*dt*2.5;
+      o.y += (player.y-o.y)*dt*2.5;
+    }
+
+    if(
+      o.z<.18 &&
+      checkCollision(o)
+    ){
+
+      if(
+        o.type==="ring" ||
+        o.type==="shield" ||
+        o.type==="magnet" ||
+        o.type==="boost"
+      ){
+
+        collect(o);
+        objects.splice(i,1);
+        continue;
+
+      }else{
+
+        hit();
+        objects.splice(i,1);
+        continue;
+      }
+    }
+
+    if(o.z<=.025){
+
+      objects.splice(i,1);
+    }
+  }
+}
+
+
+/* =========================================================
+   UPDATE CLOUDS / MOUNTAINS
+========================================================= */
+
+function updateEnvironment(dt){
+
+  for(let i=clouds.length-1;i>=0;i--){
+
+    clouds[i].z-=worldSpeed*dt*.45;
+
+    if(clouds[i].z<.03)
+      clouds.splice(i,1);
+  }
+
+  for(let i=mountains.length-1;i>=0;i--){
+
+    mountains[i].z-=worldSpeed*dt*.25;
+
+    if(mountains[i].z<.03)
+      mountains.splice(i,1);
+  }
+
+  cloudTimer-=dt;
+
+  if(cloudTimer<=0){
+
+    createCloud(1.0+Math.random()*.7);
+
+    cloudTimer=.45+Math.random()*.7;
+  }
+
+  mountainTimer-=dt;
+
+  if(mountainTimer<=0){
+
+    createMountain(1.1+Math.random()*.5);
+
+    mountainTimer=.7+Math.random()*.8;
+  }
+}
+
+
+/* =========================================================
+   UPDATE PLAYER
+========================================================= */
+
+function updatePlayer(dt){
+
+  player.x += (player.tx-player.x)*dt*5;
+  player.y += (player.ty-player.y)*dt*5;
+
+  player.x=Math.max(-1.08,Math.min(1.08,player.x));
+  player.y=Math.max(-.85,Math.min(.8,player.y));
+
+  const desiredTilt=(player.tx-player.x)*-1.0;
+
+  player.tilt += (desiredTilt-player.tilt)*dt*6;
+
+  player.shield=Math.max(0,player.shield-dt);
+  player.boost=Math.max(0,player.boost-dt);
+  player.magnet=Math.max(0,player.magnet-dt);
+  player.invincible=Math.max(0,player.invincible-dt);
+}
+
+
+/* =========================================================
+   SPAWN
+========================================================= */
+
+function spawnManager(dt){
+
+  spawnTimer-=dt;
+  ringTimer-=dt;
+  lightningTimer-=dt;
+
+  const difficultyFactor=Math.min(1.8,1+difficulty*.025);
+
+  if(spawnTimer<=0){
+
+    spawnObstacle();
+
+    spawnTimer=Math.max(
+      .28,
+      .95/difficultyFactor
+    ) + Math.random()*.45;
+  }
+
+  if(ringTimer<=0){
+
+    spawnRing();
+
+    ringTimer=.65+Math.random()*.8;
+  }
+
+  if(
+    gameTime>10 &&
+    Math.random()<.012*difficulty
+  ){
+
+    spawnPower();
+  }
+
+  if(lightningTimer<=0){
+
+    lightningFlash=.18;
+
+    lightningTimer=3+Math.random()*5;
+
+    playThunder();
+  }
+}
+
+
+/* =========================================================
+   GAME UPDATE
+========================================================= */
+
+function update(dt){
+
+  gameTime+=dt;
+
+  difficulty=1+gameTime/18;
+
+  worldSpeed=.27+Math.min(.35,gameTime*.004);
+
+  distance+=worldSpeed*dt*120;
+
+  score+=dt*(12+difficulty*2);
+
+  updatePlayer(dt);
+  spawnManager(dt);
+  updateObjects(dt);
+  updateEnvironment(dt);
+  updateParticles(dt);
+
+  lightningFlash=Math.max(0,lightningFlash-dt*.9);
+
+  shake=Math.max(0,shake-dt*30);
+
+  if(player.shield>0){
+    powerEl.style.display="block";
+    powerEl.textContent="🛡 SHIELD " + Math.ceil(player.shield)+"s";
+  }else if(player.magnet>0){
+    powerEl.style.display="block";
+    powerEl.textContent="🧲 MAGNET " + Math.ceil(player.magnet)+"s";
+  }else if(player.boost>0){
+    powerEl.style.display="block";
+    powerEl.textContent="⚡ TURBO " + Math.ceil(player.boost)+"s";
+  }else{
+    powerEl.style.display="none";
+  }
+
+  updateHUD();
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+function updateHUD(){
+
+  scoreEl.textContent=Math.floor(score);
+  distanceEl.textContent=Math.floor(distance)+" m";
+
+  const multiplier=
+    1+
+    Math.min(1.8,gameTime/25)+
+    (player.boost>0?.8:0);
+
+  speedEl.textContent=multiplier.toFixed(1)+"x";
+
+  livesEl.textContent=
+    "❤".repeat(Math.max(0,lives))+
+    "♡".repeat(Math.max(0,3-lives));
+}
+
+
+/* =========================================================
+   DRAW
+========================================================= */
+
+function draw(){
+
+  ctx.save();
+
+  if(shake>0){
+
+    ctx.translate(
+      (Math.random()-.5)*shake,
+      (Math.random()-.5)*shake
+    );
+  }
+
+  drawSky();
+
+  drawPerspectiveWorld();
+
+  /* mountains behind clouds */
+
+  for(const m of mountains)
+    drawMountain(m);
+
+  for(const c of clouds)
+    drawCloud(c);
+
+  /* objects */
+
+  const sorted=[...objects].sort((a,b)=>b.z-a.z);
+
+  for(const o of sorted)
+    drawObject(o);
+
+  drawPlane();
+
+  drawParticles();
+
+  drawLightning();
+
+  /* speed lines */
+
+  if(player.boost>0){
+
+    ctx.strokeStyle="rgba(120,230,255,.45)";
+    ctx.lineWidth=2;
+
+    for(let i=0;i<12;i++){
+
+      const x=Math.random()*W;
+
+      const y=Math.random()*H;
+
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+      ctx.lineTo(
+        x+(x-W/2)*.08,
+        y+70+Math.random()*100
+      );
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   LOOP
+========================================================= */
+
+function loop(timestamp){
+
+  if(!lastTime)
+    lastTime=timestamp;
+
+  let dt=(timestamp-lastTime)/1000;
+
+  lastTime=timestamp;
+
+  dt=Math.min(dt,.035);
+
+  if(running){
+    update(dt);
+  }
+
+  draw();
+
+  requestAnimationFrame(loop);
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+  initAudio();
+
+  score=0;
+  distance=0;
+  lives=3;
+  gameTime=0;
+  difficulty=1;
+
+  worldSpeed=.27;
+
+  spawnTimer=.5;
+  ringTimer=.8;
+  lightningTimer=3;
+
+  objects=[];
+  particles=[];
+  clouds=[];
+  mountains=[];
+
+  player={
+    x:0,
+    y:0,
+    tx:0,
+    ty:0,
+    vx:0,
+    vy:0,
+    tilt:0,
+    shield:0,
+    boost:0,
+    magnet:0,
+    invincible:0
+  };
+
+  for(let i=0;i<12;i++)
+    createCloud(.15+i*.11);
+
+  for(let i=0;i<8;i++)
+    createMountain(.2+i*.16);
+
+  running=true;
+  lastTime=performance.now();
+
+  screen.style.display="none";
+  hud.style.display="grid";
+  homeBtn.style.display="block";
+  soundBtn.style.display="block";
+  hint.style.display="block";
+
+  updateHUD();
+}
+
+
+/* =========================================================
+   END GAME
+========================================================= */
+
+function endGame(){
+
+  if(!running) return;
+
+  running=false;
+
+  const final=Math.floor(score);
+
+  if(final>best){
+
+    best=final;
+
+    localStorage.setItem(
+      BEST_KEY,
+      String(best)
+    );
+  }
+
+  finalScore.textContent=final;
+  finalDistance.textContent=Math.floor(distance)+" m";
+  finalBest.textContent=best;
+
+  hud.style.display="none";
+  homeBtn.style.display="none";
+  soundBtn.style.display="none";
+  hint.style.display="none";
+  powerEl.style.display="none";
+
+  screen.style.display="flex";
+  startPanel.style.display="none";
+  gameoverPanel.style.display="block";
+
+  playGameOver();
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function goHome(){
+
+  window.location.href="https://gamewithfun.com/";
+}
+
+homeBtn.addEventListener("click",goHome);
+document.getElementById("homeOver").addEventListener("click",goHome);
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+document.getElementById("startBtn").addEventListener(
+  "click",
+  startGame
+);
+
+document.getElementById("restartBtn").addEventListener(
+  "click",
+  startGame
+);
+
+document.getElementById("howBtn").addEventListener(
+  "click",
+  ()=>{
+    alert(
+`✈️ HOW TO PLAY
+
+• Drag your finger to fly.
+• Desktop: use mouse or Arrow/WASD keys.
+• Dodge rocks, drones and storm zones.
+• Collect glowing energy rings.
+• 🛡 Shield protects you from one hit.
+• 🧲 Magnet attracts nearby rings.
+• ⚡ Turbo increases your speed.
+• You have 3 lives.
+• Survive longer to increase your score.
+
+Good luck, pilot!`
+    );
+  }
+);
+
+
+/* =========================================================
+   SOUND
+========================================================= */
+
+function initAudio(){
+
+  if(!soundOn) return;
+
+  if(!audioCtx){
+
+    audioCtx=
+      new (window.AudioContext ||
+           window.webkitAudioContext)();
+  }
+
+  if(audioCtx.state==="suspended")
+    audioCtx.resume();
+}
+
+function tone(
+  frequency,
+  duration,
+  type="sine",
+  volume=.035
+){
+
+  if(!soundOn) return;
+
+  initAudio();
+
+  if(!audioCtx) return;
+
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+
+  osc.type=type;
+  osc.frequency.value=frequency;
+
+  gain.gain.setValueAtTime(
+    volume,
+    audioCtx.currentTime
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    .001,
+    audioCtx.currentTime+duration
+  );
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start();
+  osc.stop(audioCtx.currentTime+duration);
+}
+
+function playCollect(){
+
+  tone(720,.08,"sine",.045);
+
+  setTimeout(()=>{
+    tone(1040,.1,"sine",.035);
+  },50);
+}
+
+function playHit(){
+
+  tone(90,.18,"sawtooth",.08);
+
+  setTimeout(()=>{
+    tone(55,.22,"square",.05);
+  },70);
+}
+
+function playShield(){
+
+  tone(430,.1,"triangle",.05);
+
+  setTimeout(()=>{
+    tone(760,.16,"sine",.04);
+  },70);
+}
+
+function playThunder(){
+
+  if(!soundOn) return;
+
+  tone(45,.35,"sawtooth",.025);
+}
+
+function playGameOver(){
+
+  tone(240,.15,"sawtooth",.04);
+
+  setTimeout(()=>{
+    tone(170,.2,"sawtooth",.04);
+  },130);
+}
+
+
+/* =========================================================
+   SOUND TOGGLE
+========================================================= */
+
+function updateSoundButtons(){
+
+  soundBtn.textContent=soundOn?"🔊":"🔇";
+
+  document.getElementById("soundStart").textContent=
+    soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
+}
+
+function toggleSound(){
+
+  soundOn=!soundOn;
+
+  if(soundOn)
+    initAudio();
+
+  updateSoundButtons();
+}
+
+soundBtn.addEventListener("click",toggleSound);
+
+document.getElementById("soundStart")
+  .addEventListener("click",toggleSound);
+
+updateSoundButtons();
+
+
+/* =========================================================
+   POWER MESSAGE
+========================================================= */
+
+let powerTimeout;
+
+function showPower(text){
+
+  powerEl.textContent=text;
+  powerEl.style.display="block";
+
+  clearTimeout(powerTimeout);
+
+  powerTimeout=setTimeout(()=>{
+
+    if(
+      player.shield<=0 &&
+      player.magnet<=0 &&
+      player.boost<=0
+    ){
+      powerEl.style.display="none";
+    }
+
+  },1800);
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+for(let i=0;i<100;i++){
+
+  stars.push({
+    x:Math.random()*window.innerWidth,
+    y:Math.random()*window.innerHeight*.42,
+    size:.5+Math.random()*1.5,
+    twinkle:Math.random()*Math.PI*2
+  });
+}
+
+
+/* =========================================================
+   PREVIEW ENVIRONMENT
+========================================================= */
+
+for(let i=0;i<10;i++)
+  createCloud(.15+i*.13);
+
+for(let i=0;i<7;i++)
+  createMountain(.25+i*.17);
+
+
+/* =========================================================
+   START LOOP
+========================================================= */
+
+requestAnimationFrame(loop);
+
+
+/* =========================================================
+   BROWSER BACK
+========================================================= */
+
+history.pushState(
+  {game:true},
+  "",
+  location.href
+);
+
+window.addEventListener("popstate",()=>{
+  window.location.href="https://gamewithfun.com/";
+});
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL SCROLL / ZOOM
+========================================================= */
+
+document.addEventListener(
+  "touchmove",
+  e=>e.preventDefault(),
+  {passive:false}
+);
+
+document.addEventListener(
+  "gesturestart",
+  e=>e.preventDefault()
+);
+
+</script>
+
+</body>
+</html>
