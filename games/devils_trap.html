@@ -1,0 +1,3645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Devil's Trap - Ultimate Troll Platformer | GameWithFun</title>
+
+<meta name="description" content="Play Devil's Trap, an ultimate troll platformer game where floors, flags, coins and platforms can become deadly traps. Can you survive all five levels?">
+<meta name="keywords" content="Devil's Trap, troll platformer, trap game, platform game, online game, browser game, GameWithFun">
+<meta name="author" content="GameWithFun">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            fontFamily: {
+                bungee: ['Bungee', 'cursive'],
+                fredoka: ['Fredoka', 'sans-serif']
+            },
+            colors: {
+                devil: {
+                    red: '#FF3366',
+                    darkRed: '#CC0033',
+                    purple: '#6C5CE7',
+                    yellow: '#FFE15D',
+                    dark: '#1E1B2E',
+                    card: '#2D274A'
+                }
+            },
+            animation: {
+                'bounce-short': 'bounceShort 0.5s ease-in-out infinite alternate',
+                'shake': 'shake 0.3s cubic-bezier(.36,.07,.19,.97) both',
+                'pulse-glow': 'pulseGlow 1.5s infinite alternate'
+            },
+            keyframes: {
+                bounceShort: {
+                    '0%': { transform: 'translateY(0)' },
+                    '100%': { transform: 'translateY(-8px)' }
+                },
+                shake: {
+                    '10%, 90%': { transform: 'translate3d(-2px,0,0)' },
+                    '20%, 80%': { transform: 'translate3d(4px,0,0)' },
+                    '30%, 50%, 70%': { transform: 'translate3d(-6px,0,0)' },
+                    '40%, 60%': { transform: 'translate3d(6px,0,0)' }
+                },
+                pulseGlow: {
+                    '0%': {
+                        filter: 'drop-shadow(0 0 5px rgba(255,51,102,.4))'
+                    },
+                    '100%': {
+                        filter: 'drop-shadow(0 0 15px rgba(255,51,102,.9))'
+                    }
+                }
+            }
+        }
+    }
+}
+</script>
+
+<style>
+* {
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:manipulation;
+}
+
+html,body {
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+}
+
+body {
+    font-family:'Fredoka',sans-serif;
+    background:#12101D;
+    color:#fff;
+}
+
+.cartoon-border {
+    border:4px solid #000;
+    box-shadow:4px 4px 0 #000;
+}
+
+.cartoon-button {
+    border:3px solid #000;
+    box-shadow:0 5px 0 #000;
+    transition:.1s ease;
+}
+
+.cartoon-button:active {
+    transform:translateY(4px);
+    box-shadow:0 1px 0 #000;
+}
+
+canvas {
+    image-rendering:pixelated;
+    image-rendering:crisp-edges;
+}
+
+.glass-panel {
+    background:rgba(30,27,46,.88);
+    backdrop-filter:blur(8px);
+    border:3px solid rgba(255,255,255,.1);
+}
+
+.landing-page {
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(108,92,231,.22),transparent 30%),
+        radial-gradient(circle at 80% 30%,rgba(255,51,102,.20),transparent 30%),
+        linear-gradient(135deg,#12101D,#211936,#12101D);
+}
+
+.hero-card {
+    background:rgba(45,39,74,.82);
+    backdrop-filter:blur(12px);
+}
+
+.section-card {
+    background:#211D35;
+    border:3px solid #000;
+    box-shadow:5px 5px 0 #000;
+}
+
+.article-content {
+    line-height:1.85;
+}
+
+.article-content h2 {
+    color:#FFE15D;
+    font-family:'Bungee',cursive;
+    font-size:1.45rem;
+    margin-top:2rem;
+    margin-bottom:.75rem;
+}
+
+.article-content p {
+    margin-bottom:1rem;
+}
+
+::-webkit-scrollbar {
+    width:8px;
+}
+
+::-webkit-scrollbar-track {
+    background:#1E1B2E;
+}
+
+::-webkit-scrollbar-thumb {
+    background:#FF3366;
+    border-radius:4px;
+}
+
+/* GAME SCREEN */
+#game-screen {
+    height:100vh;
+    overflow:hidden;
+    background:#1E1B2E;
+}
+
+.hidden-screen {
+    display:none !important;
+}
+
+@media(max-width:640px) {
+    .landing-title {
+        font-size:2.7rem;
+        line-height:1.05;
+    }
+
+    .landing-page {
+        padding-bottom:40px;
+    }
+}
+
+/* WEBSITE FOOTER */
+.site-footer {
+    text-align:center;
+    padding:30px 20px;
+    margin-top:20px;
+    color:#94a3b8;
+    font-size:14px;
+    line-height:1.8;
+}
+
+.footer-links {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px 20px;
+    margin-bottom:12px;
+}
+
+.footer-links a {
+    color:#c4b5fd;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.footer-links a:hover {
+    color:#FFE15D;
+    text-decoration:underline;
+}
+
+@media(max-width:640px) {
+    .footer-links {
+        gap:8px 14px;
+    }
+}
+
+
+/* =========================================================
+   ROTATED / LANDSCAPE MOBILE VICTORY FIX
+   ========================================================= */
+
+/* Victory overlay itself can scroll */
+#victory-modal {
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:0 !important;
+
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+
+    box-sizing:border-box !important;
+    -webkit-overflow-scrolling:touch;
+
+    z-index:9999 !important;
+}
+
+/* Always keep Next Level button usable */
+#btn-next-level {
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+
+    position:relative !important;
+    z-index:10000 !important;
+
+    min-height:52px;
+
+    align-items:center;
+    justify-content:center;
+
+    pointer-events:auto !important;
+    flex-shrink:0 !important;
+}
+
+/* Rotated phone / landscape */
+@media screen and (orientation:landscape) and (max-height:600px) {
+
+    #victory-modal {
+        justify-content:flex-start !important;
+        align-items:center !important;
+
+        padding:8px !important;
+
+        overflow-y:auto !important;
+        overflow-x:hidden !important;
+
+        height:100% !important;
+        max-height:100% !important;
+    }
+
+    #victory-modal > div {
+        width:100% !important;
+        max-width:500px !important;
+
+        margin:5px auto !important;
+
+        flex-shrink:0 !important;
+    }
+
+    #victory-modal h2 {
+        font-size:clamp(22px,6vw,40px) !important;
+        margin-bottom:5px !important;
+    }
+
+    #victory-modal > div:first-child {
+        font-size:42px !important;
+        margin-bottom:3px !important;
+    }
+
+    #victory-quote {
+        font-size:14px !important;
+        margin-bottom:8px !important;
+    }
+
+    #victory-modal .bg-devil-card {
+        margin-bottom:8px !important;
+        padding:8px !important;
+    }
+
+    #btn-next-level {
+        width:100% !important;
+        min-height:48px !important;
+
+        margin-top:4px !important;
+        margin-bottom:12px !important;
+
+        padding:8px 12px !important;
+    }
+}
+
+
+/* Very short landscape screens */
+@media screen and (orientation:landscape) and (max-height:450px) {
+
+    #victory-modal {
+        padding:5px !important;
+    }
+
+    #victory-modal > div:first-child {
+        font-size:32px !important;
+        margin-bottom:0 !important;
+    }
+
+    #victory-modal h2 {
+        font-size:20px !important;
+        line-height:1.1 !important;
+        margin-bottom:3px !important;
+    }
+
+    #victory-quote {
+        font-size:12px !important;
+        line-height:1.3 !important;
+        margin-bottom:5px !important;
+    }
+
+    #victory-modal .bg-devil-card {
+        padding:5px !important;
+        margin-bottom:5px !important;
+    }
+
+    #victory-modal .bg-devil-card .font-bungee {
+        font-size:18px !important;
+    }
+
+    #btn-next-level {
+        min-height:44px !important;
+        padding:6px 10px !important;
+        font-size:15px !important;
+        margin-bottom:8px !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     FIRST LANDING PAGE
+========================================================= -->
+<section id="landing-page" class="landing-page min-h-screen">
+
+    <div class="max-w-6xl mx-auto px-4 py-6">
+
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-10">
+            <div class="flex items-center gap-3">
+                <div class="text-4xl">😈</div>
+                <div>
+                    <div class="font-bungee text-xl text-yellow-300">
+                        GAMEWITHFUN
+                    </div>
+                    <div class="text-xs text-slate-400">
+                        Devil's Trap
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://gamewithfun.com/"
+               class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl cartoon-button font-bold">
+                HOME
+            </a>
+        </header>
+
+        <!-- Hero -->
+        <div class="hero-card rounded-3xl cartoon-border p-6 sm:p-10 text-center mb-10">
+
+            <div class="animate-bounce-short text-7xl mb-5">
+                😈
+            </div>
+
+            <div class="inline-block bg-red-500 text-white px-4 py-2 rounded-full font-bold mb-4 cartoon-border">
+                ULTIMATE TROLL PLATFORMER
+            </div>
+
+            <h1 class="landing-title font-bungee text-5xl sm:text-7xl text-yellow-300 drop-shadow-[0_5px_0_#000] mb-5">
+                DEVIL'S TRAP
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-slate-200 text-base sm:text-xl font-semibold mb-7">
+                Everything is a lie. Floors can disappear, flags can run away,
+                hidden traps can appear and even innocent-looking coins can betray you.
+                Trust nothing!
+            </p>
+
+            <button
+                onclick="enterGame()"
+                class="bg-devil-red hover:bg-rose-500 text-white font-bungee text-xl sm:text-2xl px-10 py-5 rounded-2xl cartoon-button tracking-wider">
+                ▶ START GAME
+            </button>
+
+            <p class="text-slate-400 text-sm mt-5">
+                5 levels • Troll traps • Keyboard + Touch Controls
+            </p>
+        </div>
+
+        <!-- Quick Information -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+
+            <div class="section-card rounded-2xl p-5 text-center">
+                <div class="text-3xl mb-2">🎮</div>
+                <div class="font-bungee text-yellow-300">5</div>
+                <div class="text-sm text-slate-400">Levels</div>
+            </div>
+
+            <div class="section-card rounded-2xl p-5 text-center">
+                <div class="text-3xl mb-2">😈</div>
+                <div class="font-bungee text-red-400">TROLL</div>
+                <div class="text-sm text-slate-400">Traps</div>
+            </div>
+
+            <div class="section-card rounded-2xl p-5 text-center">
+                <div class="text-3xl mb-2">📱</div>
+                <div class="font-bungee text-purple-300">TOUCH</div>
+                <div class="text-sm text-slate-400">Mobile Ready</div>
+            </div>
+
+            <div class="section-card rounded-2xl p-5 text-center">
+                <div class="text-3xl mb-2">💻</div>
+                <div class="font-bungee text-green-300">WASD</div>
+                <div class="text-sm text-slate-400">Keyboard</div>
+            </div>
+
+        </div>
+
+        <!-- How To Play -->
+        <section class="section-card rounded-3xl p-6 sm:p-8 mb-8">
+
+            <h2 class="font-bungee text-2xl sm:text-3xl text-yellow-300 mb-5 flex items-center gap-3">
+                🎮 HOW TO PLAY
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-5">
+
+                <div class="bg-black/20 rounded-2xl p-5">
+                    <h3 class="font-bungee text-red-400 text-lg mb-3">
+                        💻 Desktop Controls
+                    </h3>
+
+                    <p class="text-slate-300 mb-2">
+                        <b class="text-white">A / Left Arrow</b> — Move left
+                    </p>
+
+                    <p class="text-slate-300 mb-2">
+                        <b class="text-white">D / Right Arrow</b> — Move right
+                    </p>
+
+                    <p class="text-slate-300 mb-2">
+                        <b class="text-white">W / Up Arrow / Space</b> — Jump
+                    </p>
+
+                    <p class="text-slate-300">
+                        <b class="text-white">R</b> — Restart the current level
+                    </p>
+                </div>
+
+                <div class="bg-black/20 rounded-2xl p-5">
+                    <h3 class="font-bungee text-purple-300 text-lg mb-3">
+                        📱 Mobile Controls
+                    </h3>
+
+                    <p class="text-slate-300 mb-2">
+                        Use the <b class="text-white">LEFT</b> and
+                        <b class="text-white">RIGHT</b> buttons to move.
+                    </p>
+
+                    <p class="text-slate-300 mb-2">
+                        Press <b class="text-white">JUMP</b> to jump.
+                    </p>
+
+                    <p class="text-slate-300">
+                        Watch the environment carefully because almost anything
+                        can become a trap.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="mt-6 bg-red-500/10 border-2 border-red-500/40 rounded-2xl p-5">
+                <p class="text-red-200 font-semibold">
+                    😈 <b>Important:</b> This is a troll platformer.
+                    The obvious path is not always the safe path.
+                    Learn from every mistake and remember what triggered each trap.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- About -->
+        <section class="section-card rounded-3xl p-6 sm:p-8 mb-8">
+
+            <h2 class="font-bungee text-2xl sm:text-3xl text-yellow-300 mb-5">
+                😈 ABOUT THE GAME
+            </h2>
+
+            <p class="text-slate-300 mb-4">
+                <b class="text-white">Devil's Trap</b> is a cartoon-style troll
+                platformer created for GameWithFun. The game is designed around
+                surprise, timing, exploration and unexpected traps.
+            </p>
+
+            <p class="text-slate-300 mb-4">
+                Unlike a normal platform game where the environment usually helps
+                the player understand what is safe, Devil's Trap intentionally makes
+                you question everything. A platform may disappear, a flag may move
+                away, a hidden obstacle may appear, or a seemingly useful object
+                may activate a trap.
+            </p>
+
+            <p class="text-slate-300">
+                The goal is simple: reach the flag and survive. The challenge is
+                discovering how the level actually works without getting fooled by
+                the devil's tricks.
+            </p>
+
+        </section>
+
+        <!-- Game Information -->
+        <section class="section-card rounded-3xl p-6 sm:p-8 mb-8">
+
+            <h2 class="font-bungee text-2xl sm:text-3xl text-yellow-300 mb-5">
+                📋 GAME INFORMATION
+            </h2>
+
+            <div class="grid sm:grid-cols-2 gap-3 text-sm">
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Game Name</span>
+                    <div class="font-bold text-white mt-1">Devil's Trap</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Developer</span>
+                    <div class="font-bold text-white mt-1">GameWithFun</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Category</span>
+                    <div class="font-bold text-white mt-1">Platformer / Troll Game</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Levels</span>
+                    <div class="font-bold text-white mt-1">5</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Controls</span>
+                    <div class="font-bold text-white mt-1">Keyboard + Touch</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Platform</span>
+                    <div class="font-bold text-white mt-1">Web Browser</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Game Style</span>
+                    <div class="font-bold text-white mt-1">Cartoon / Troll</div>
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4">
+                    <span class="text-slate-400">Website</span>
+                    <div class="font-bold text-white mt-1">GameWithFun</div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SEO Article -->
+        <section class="section-card rounded-3xl p-6 sm:p-8 mb-10 article-content">
+
+            <h2>Devil's Trap - Ultimate Troll Platformer</h2>
+
+            <p>
+                Devil's Trap is a challenging and entertaining troll platformer
+                game from GameWithFun. The game takes the familiar idea of a
+                platform adventure and turns it into a collection of unexpected
+                surprises. Instead of simply running from one side of a level to
+                another, players must pay attention to the environment and learn
+                how the different traps work. The main objective sounds easy:
+                reach the flag. However, the devil has other plans.
+            </p>
+
+            <p>
+                In a traditional platformer, players normally expect platforms,
+                coins, flags and other objects to behave in predictable ways.
+                Devil's Trap removes that expectation. A platform can become
+                dangerous at exactly the moment you trust it. A flag that looks
+                close enough to touch can move away. A hidden obstacle can appear
+                when you least expect it. This makes every level a small puzzle
+                that requires both movement skills and observation.
+            </p>
+
+            <h2>How Devil's Trap Works</h2>
+
+            <p>
+                The game is built around five different levels, and each level has
+                its own theme and collection of traps. Players control a small
+                cartoon devil character and guide it through the level using
+                movement and jumping. The character can move left and right and
+                jump over dangerous areas. On desktop computers, players can use
+                WASD or the arrow keys. On mobile devices, the game provides
+                touch controls so the adventure can be played directly on a phone
+                or tablet.
+            </p>
+
+            <p>
+                The most important rule is simple: do not assume that something is
+                safe just because it looks safe. The game intentionally uses
+                deceptive level design. Players may need to try a route, discover
+                what happens, and then use that information on the next attempt.
+                This trial-and-error design is a major part of the experience.
+            </p>
+
+            <h2>Level 1 - Trust Nobody</h2>
+
+            <p>
+                The first level introduces the central idea of Devil's Trap.
+                Platforms appear to create a straightforward route toward the
+                finish, but several surprises are waiting. A falling block can
+                activate when the player moves into the wrong area. Another
+                platform can drop when the player stands on it. The final flag
+                can also move away when the player gets close.
+            </p>
+
+            <p>
+                This level teaches players to watch their surroundings instead of
+                rushing forward. The best strategy is to move carefully, observe
+                what changes, and remember which objects caused problems during
+                earlier attempts.
+            </p>
+
+            <h2>Level 2 - Invisible Betrayal</h2>
+
+            <p>
+                The second level increases the difficulty by introducing hidden
+                dangers. Some hazards are not immediately visible, meaning that
+                players need to understand the layout and timing of their jumps.
+                There is also an invisible obstacle and a rocket trap near the
+                goal area.
+            </p>
+
+            <p>
+                Reaching the final section does not necessarily mean that the
+                level is finished. Devil's Trap uses these moments to create
+                tension. Players who rush toward the flag may discover that the
+                final part of the level is another test.
+            </p>
+
+            <h2>Level 3 - Gravity Paradox</h2>
+
+            <p>
+                Level three introduces a tempting coin and a moving platform.
+                The coin looks like a normal collectible, but collecting it can
+                activate another trap. This is an important part of the game's
+                design because it challenges the usual assumption that collecting
+                an item is always beneficial.
+            </p>
+
+            <p>
+                The moving platform can also create a difficult timing challenge.
+                Players need to understand when to jump and when to stay away from
+                certain areas. The level rewards patience rather than simply
+                moving as quickly as possible.
+            </p>
+
+            <h2>Level 4 - Fake Safety</h2>
+
+            <p>
+                Level four plays with the idea of safety. Players encounter an
+                object that looks like a helpful checkpoint, but it is actually
+                part of the trap design. This creates another lesson: appearances
+                can be misleading.
+            </p>
+
+            <p>
+                The level also introduces a hazard that can follow the player.
+                This changes the feeling of the level because staying in one area
+                for too long can become dangerous. Players must balance careful
+                movement with the need to keep progressing.
+            </p>
+
+            <h2>Level 5 - Devil's Finale</h2>
+
+            <p>
+                The final level is designed as the ultimate challenge of the
+                current game. Players must cross a large dangerous area using a
+                series of smaller platforms. Those platforms can disappear after
+                being used, forcing the player to keep moving and plan the next
+                jump.
+            </p>
+
+            <p>
+                A sweeping laser hazard adds another layer of timing. The final
+                level combines many of the ideas introduced earlier in the game:
+                disappearing platforms, dangerous gaps, timing challenges and
+                unexpected hazards. Reaching the final flag means the player has
+                successfully learned how to survive the devil's tricks.
+            </p>
+
+            <h2>Tips for New Players</h2>
+
+            <p>
+                The first tip for playing Devil's Trap is to avoid rushing. Fast
+                movement may look like the best strategy in a platformer, but
+                this game is designed to punish careless decisions. Watch the
+                environment and look for unusual behavior.
+            </p>
+
+            <p>
+                The second tip is to remember what happened after each failed
+                attempt. Deaths are not simply failures; they provide information
+                about the level. If a platform disappears, remember where it
+                happened. If a trap activates after reaching a certain position,
+                use that knowledge on the next attempt.
+            </p>
+
+            <p>
+                Another useful strategy is to control your jumps carefully.
+                Jumping too early or too late can send the character into a
+                dangerous area. Practice the movement timing and use the mobile
+                controls or keyboard controls that feel most comfortable.
+            </p>
+
+            <h2>Why Troll Platformer Games Are Fun</h2>
+
+            <p>
+                Troll platformer games are entertaining because they challenge
+                expectations. Players usually learn common game rules and then
+                rely on those rules automatically. A troll game intentionally
+                changes those expectations, creating funny surprises and memorable
+                moments.
+            </p>
+
+            <p>
+                Devil's Trap uses this concept through moving flags, unexpected
+                hazards, disappearing platforms and other surprises. The result is
+                a game where learning the level is just as important as mastering
+                movement.
+            </p>
+
+            <h2>Play Devil's Trap Online</h2>
+
+            <p>
+                Devil's Trap is designed as a browser game, so players can start
+                playing without installing a large game package. The responsive
+                design supports both desktop and mobile gameplay. On desktop,
+                players can use keyboard controls, while mobile players can use
+                the on-screen movement and jump buttons.
+            </p>
+
+            <p>
+                If you enjoy platform games, puzzle-like challenges, unexpected
+                traps and humorous troll mechanics, Devil's Trap offers a
+                different type of browser gaming experience. Start with the first
+                level, learn how the traps work, and gradually improve your
+                attempts until you can reach the final flag.
+            </p>
+
+            <h2>GameWithFun</h2>
+
+            <p>
+                GameWithFun is focused on creating and sharing simple browser
+                games that can be played directly online. Devil's Trap is one of
+                the games designed around quick gameplay, colorful visuals and
+                accessible controls. The goal is to make the experience easy to
+                start while still giving players enough challenge to keep trying.
+            </p>
+
+            <p>
+                Whether you are playing for a few minutes or trying to complete
+                every level, Devil's Trap is built around one simple question:
+                can you survive when nothing can be trusted?
+            </p>
+
+        </section>
+
+        <!-- Bottom Start -->
+        <div class="text-center pb-10">
+
+            <button
+                onclick="enterGame()"
+                class="bg-devil-red hover:bg-rose-500 text-white font-bungee text-lg px-8 py-4 rounded-2xl cartoon-button">
+                😈 PLAY DEVIL'S TRAP
+            </button>
+
+            <p class="text-slate-500 text-sm mt-5">
+                © 2026 GameWithFun · Devil's Trap
+            </p>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+
+            <div class="footer-links">
+
+                <a href="https://gamewithfun.com/about.html">
+                    About Us
+                </a>
+
+                <a href="https://gamewithfun.com/contact.html">
+                    Contact Us
+                </a>
+
+                <a href="https://gamewithfun.com/privacy.html">
+                    Privacy Policy
+                </a>
+
+                <a href="https://gamewithfun.com/terms.html">
+                    Terms
+                </a>
+
+                <a href="https://gamewithfun.com/disclaimer.html">
+                    Disclaimer
+                </a>
+
+            </div>
+
+            © 2026 GameWithFun. All rights reserved.
+            <br>
+
+            Game developed for GameWithFun
+
+        </footer>
+
+    </div>
+</section>
+
+
+<!-- =========================================================
+     GAME SCREEN
+========================================================= -->
+<div id="game-screen" class="hidden-screen">
+
+<header class="w-full max-w-5xl mx-auto px-4 py-3 flex items-center justify-between z-20">
+
+    <div class="flex items-center gap-3">
+
+        <div class="bg-devil-card px-4 py-2 rounded-2xl cartoon-border flex items-center gap-2">
+            <span class="text-2xl">😈</span>
+            <span class="font-bungee text-xl text-devil-yellow tracking-wider hidden sm:inline">
+                DEVIL'S TRAP
+            </span>
+        </div>
+
+        <div class="bg-devil-card px-4 py-2 rounded-2xl cartoon-border flex items-center gap-2">
+            <span class="text-xl">💀</span>
+            <span class="font-bold text-lg text-red-400">
+                Deaths: <span id="death-counter">0</span>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="hidden md:flex flex-col items-center">
+
+        <span id="level-name-hud"
+              class="font-bungee text-lg text-purple-300">
+            Level 1: Trust Nobody
+        </span>
+
+        <span id="timer-hud"
+              class="text-xs font-mono text-gray-400">
+            TIME: 00:00.0
+        </span>
+
+    </div>
+
+    <div class="flex items-center gap-2">
+
+        <button
+            id="btn-sound"
+            onclick="toggleAudio()"
+            class="bg-purple-600 hover:bg-purple-500 p-2.5 rounded-2xl cartoon-button text-white flex items-center justify-center">
+
+            <i data-lucide="volume-2"
+               id="icon-sound"
+               class="w-5 h-5"></i>
+
+        </button>
+
+        <button
+            onclick="openLevelSelect()"
+            class="bg-yellow-500 hover:bg-yellow-400 p-2.5 rounded-2xl cartoon-button text-black font-bold flex items-center gap-1">
+
+            <i data-lucide="grid" class="w-5 h-5"></i>
+
+            <span class="hidden sm:inline font-bungee text-xs">
+                LEVELS
+            </span>
+
+        </button>
+
+        <button
+            onclick="restartCurrentLevel()"
+            class="bg-red-500 hover:bg-red-400 p-2.5 rounded-2xl cartoon-button text-white flex items-center gap-1"
+            title="Restart Level">
+
+            <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="relative w-full flex-1 max-w-5xl mx-auto flex items-center justify-center px-2 py-1 min-h-0">
+
+<div id="game-container"
+     class="relative w-full h-full max-h-[600px] aspect-[16/9] bg-slate-900 rounded-3xl cartoon-border overflow-hidden flex items-center justify-center shadow-2xl">
+
+<canvas id="gameCanvas"
+        class="w-full h-full block bg-slate-950"></canvas>
+
+
+<div id="troll-toast"
+     class="absolute top-6 left-1/2 -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-full cartoon-border font-bungee text-sm sm:text-base tracking-wide opacity-0 transform -translate-y-6 transition-all duration-300 pointer-events-none z-30 shadow-2xl flex items-center gap-2">
+
+    <span id="toast-icon">😈</span>
+
+    <span id="toast-message">
+        Did you really think that was safe?
+    </span>
+
+</div>
+
+
+<!-- GAME MENU -->
+<div id="menu-overlay"
+     class="absolute inset-0 glass-panel flex flex-col items-center justify-center p-6 z-40 text-center">
+
+    <div class="animate-bounce-short mb-2">
+        <span class="text-7xl">😈</span>
+    </div>
+
+    <h1 class="font-bungee text-4xl sm:text-6xl text-devil-yellow drop-shadow-[0_4px_0_#000] mb-2 tracking-wider">
+        DEVIL'S TRAP
+    </h1>
+
+    <p class="text-slate-300 text-sm sm:text-lg max-w-md mb-6 font-semibold">
+
+        A platformer where
+        <span class="text-red-400 underline decoration-wavy">
+            everything
+        </span>
+        is a lie. Trust no floor, no flag, and no coins!
+
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 w-full max-w-xs">
+
+        <button
+            onclick="startGame()"
+            class="w-full bg-devil-red hover:bg-rose-500 text-white font-bungee py-3.5 px-6 rounded-2xl cartoon-button text-xl tracking-wider flex items-center justify-center gap-2">
+
+            <i data-lucide="play"
+               class="fill-current w-6 h-6"></i>
+
+            PLAY GAME
+
+        </button>
+
+        <button
+            onclick="openLevelSelect()"
+            class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bungee py-3.5 px-6 rounded-2xl cartoon-button text-xl tracking-wider flex items-center justify-center gap-2">
+
+            <i data-lucide="layers"
+               class="w-6 h-6"></i>
+
+            LEVELS
+
+        </button>
+
+    </div>
+
+    <div class="mt-8 text-xs text-slate-400 flex items-center gap-4">
+
+        <span>🖥️ WASD / Arrows to Move</span>
+
+        <span>•</span>
+
+        <span>📱 Touch D-Pad supported</span>
+
+    </div>
+
+</div>
+
+
+<!-- LEVEL SELECT -->
+<div id="level-modal"
+     class="absolute inset-0 glass-panel hidden flex-col items-center justify-center p-6 z-40">
+
+    <div class="flex items-center justify-between w-full max-w-xl mb-6">
+
+        <h2 class="font-bungee text-2xl sm:text-3xl text-devil-yellow flex items-center gap-2">
+
+            <i data-lucide="map" class="w-8 h-8"></i>
+
+            SELECT LEVEL
+
+        </h2>
+
+        <button
+            onclick="closeLevelSelect()"
+            class="bg-red-500 text-white p-2 rounded-xl cartoon-button">
+
+            <i data-lucide="x" class="w-6 h-6"></i>
+
+        </button>
+
+    </div>
+
+    <div id="level-grid"
+         class="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-xl max-h-[60vh] overflow-y-auto p-2">
+    </div>
+
+</div>
+
+
+<!-- VICTORY -->
+<div id="victory-modal"
+     class="absolute inset-0 glass-panel hidden flex-col items-center justify-center p-6 z-40 text-center">
+
+    <div class="text-6xl mb-3 animate-bounce">
+        🏆
+    </div>
+
+    <h2 class="font-bungee text-3xl sm:text-5xl text-yellow-400 mb-2">
+        LEVEL CLEARED!
+    </h2>
+
+    <p id="victory-quote"
+       class="text-slate-200 text-base sm:text-xl max-w-md mb-6">
+
+        You actually survived the devil's traps?!
+
+    </p>
+
+    <div class="bg-devil-card border-2 border-black/40 p-4 rounded-2xl mb-6 flex justify-around w-full max-w-xs">
+
+        <div>
+
+            <div class="text-xs text-gray-400">
+                Level Deaths
+            </div>
+
+            <div id="victory-deaths"
+                 class="font-bungee text-2xl text-red-400">
+                0
+            </div>
+
+        </div>
+
+        <div class="border-r border-gray-700"></div>
+
+        <div>
+
+            <div class="text-xs text-gray-400">
+                Time Taken
+            </div>
+
+            <div id="victory-time"
+                 class="font-bungee text-2xl text-green-400">
+                00:00
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="flex gap-4 w-full max-w-xs">
+
+        <button
+            id="btn-next-level"
+            type="button"
+            onclick="nextLevel()"
+            class="w-full bg-green-500 hover:bg-green-400 text-black font-bungee py-3 px-6 rounded-2xl cartoon-button text-lg flex items-center justify-center gap-2">
+
+            NEXT LEVEL
+
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+</main>
+
+
+<!-- MOBILE CONTROLS -->
+<footer class="w-full max-w-5xl mx-auto px-4 py-2 mb-2 z-20 flex justify-between items-center select-none">
+
+    <div class="flex gap-3">
+
+        <button
+            id="btn-left"
+            class="w-16 h-16 sm:w-20 sm:h-20 bg-purple-700 active:bg-purple-500 rounded-2xl cartoon-button flex items-center justify-center text-white text-3xl font-bold touch-none">
+
+            <i data-lucide="arrow-left"
+               class="w-8 h-8 stroke-[3]"></i>
+
+        </button>
+
+        <button
+            id="btn-right"
+            class="w-16 h-16 sm:w-20 sm:h-20 bg-purple-700 active:bg-purple-500 rounded-2xl cartoon-button flex items-center justify-center text-white text-3xl font-bold touch-none">
+
+            <i data-lucide="arrow-right"
+               class="w-8 h-8 stroke-[3]"></i>
+
+        </button>
+
+    </div>
+
+    <div class="flex gap-3">
+
+        <button
+            id="btn-jump"
+            class="w-20 h-16 sm:w-28 sm:h-20 bg-devil-red active:bg-rose-400 rounded-2xl cartoon-button flex items-center justify-center text-white font-bungee text-xl tracking-wider touch-none">
+
+            JUMP
+
+        </button>
+
+    </div>
+
+</footer>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   LANDING PAGE
+========================================================= */
+
+function enterGame() {
+
+    document.getElementById('landing-page')
+        .classList.add('hidden-screen');
+
+    document.getElementById('game-screen')
+        .classList.remove('hidden-screen');
+
+    document.body.style.overflow='hidden';
+
+    lucide.createIcons();
+
+    startGame();
+
+}
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+let soundEnabled=true;
+let synth,noiseSynth,polySynth;
+
+function initAudio(){
+
+    if(synth)return;
+
+    try{
+
+        synth=new Tone.Synth({
+            oscillator:{type:'triangle'},
+            envelope:{
+                attack:.005,
+                decay:.1,
+                sustain:.1,
+                release:.2
+            }
+        }).toDestination();
+
+        polySynth=new Tone.PolySynth(
+            Tone.Synth
+        ).toDestination();
+
+        noiseSynth=new Tone.NoiseSynth({
+            noise:{type:'white'},
+            envelope:{
+                attack:.005,
+                decay:.15,
+                sustain:0
+            }
+        }).toDestination();
+
+    }catch(e){
+        console.warn(e);
+    }
+
+}
+
+function playSound(type){
+
+    if(!soundEnabled)return;
+
+    try{
+
+        Tone.start();
+        initAudio();
+
+        const now=Tone.now();
+
+        if(type==='jump'){
+
+            synth.triggerAttackRelease(
+                'C5','8n',now
+            );
+
+            synth.frequency.setValueAtTime(
+                'C5',now
+            );
+
+            synth.frequency.exponentialRampToValueAtTime(
+                'G5',
+                now+.1
+            );
+
+        }
+
+        else if(type==='die'){
+
+            synth.triggerAttackRelease(
+                'F4','16n',now
+            );
+
+            synth.frequency.setValueAtTime(
+                'F4',now
+            );
+
+            synth.frequency.exponentialRampToValueAtTime(
+                'C2',
+                now+.25
+            );
+
+            if(noiseSynth)
+                noiseSynth.triggerAttackRelease(
+                    '8n',
+                    now+.05
+                );
+
+        }
+
+        else if(type==='trap'){
+
+            synth.triggerAttackRelease(
+                'C3','8n',now
+            );
+
+            synth.frequency.setValueAtTime(
+                'C3',now
+            );
+
+            synth.frequency.exponentialRampToValueAtTime(
+                'C2',
+                now+.15
+            );
+
+        }
+
+        else if(type==='win'){
+
+            polySynth.triggerAttackRelease(
+                ['C5','E5','G5','C6'],
+                '4n',
+                now
+            );
+
+        }
+
+        else if(type==='coin'){
+
+            synth.triggerAttackRelease(
+                'B5','16n',now
+            );
+
+            synth.triggerAttackRelease(
+                'E6','16n',now+.08
+            );
+
+        }
+
+    }catch(e){}
+
+}
+
+function toggleAudio(){
+
+    soundEnabled=!soundEnabled;
+
+    const icon=
+        document.getElementById('icon-sound');
+
+    const btn=
+        document.getElementById('btn-sound');
+
+    if(soundEnabled){
+
+        icon.setAttribute(
+            'data-lucide',
+            'volume-2'
+        );
+
+        btn.classList.remove(
+            'bg-gray-600'
+        );
+
+        btn.classList.add(
+            'bg-purple-600'
+        );
+
+    }else{
+
+        icon.setAttribute(
+            'data-lucide',
+            'volume-x'
+        );
+
+        btn.classList.remove(
+            'bg-purple-600'
+        );
+
+        btn.classList.add(
+            'bg-gray-600'
+        );
+
+    }
+
+    lucide.createIcons();
+
+}
+
+
+/* =========================================================
+   QUOTES
+========================================================= */
+
+const TROLL_QUOTES=[
+
+    "Did you really think it was that easy?",
+    "Trust level: ZERO!",
+    "The floor was a paid actor.",
+    "Spikes go BRRRR!",
+    "Gravity is optional here.",
+    "You touched it... why did you touch it?",
+    "Classic trap! Gotcha!",
+    "Nice try, human!",
+    "Safe zone? What safe zone?",
+    "Devil smile intensifies 😈",
+    "Are you rage-quitting yet?",
+    "Step closer... oops!"
+
+];
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+const CANVAS_WIDTH=960;
+const CANVAS_HEIGHT=540;
+
+const canvas=
+    document.getElementById('gameCanvas');
+
+const ctx=
+    canvas.getContext('2d');
+
+function resizeCanvas(){
+
+    canvas.width=CANVAS_WIDTH;
+    canvas.height=CANVAS_HEIGHT;
+
+}
+
+resizeCanvas();
+
+window.addEventListener(
+    'resize',
+    resizeCanvas
+);
+
+
+/* =========================================================
+   LEVEL DATA
+========================================================= */
+
+const LEVELS=[
+
+{
+id:1,
+name:"Level 1: Trust Nobody",
+quote:"Welcome to Devil's Trap. First rule: do not trust anything!",
+
+spawn:{x:80,y:380},
+
+flag:{
+x:840,
+y:380,
+realX:840,
+realY:380
+},
+
+platforms:[
+
+{x:0,y:460,w:960,h:80,color:'#2D3748'},
+
+{x:250,y:360,w:120,h:24,color:'#4A5568'},
+
+{x:450,y:320,w:140,h:24,color:'#4A5568',id:'fakeDropPlatform'},
+
+{x:670,y:260,w:120,h:24,color:'#4A5568'}
+
+],
+
+spikes:[
+
+{x:380,y:430,w:60,h:30},
+
+{x:600,y:430,w:80,h:30}
+
+],
+
+traps:[
+
+{
+id:'fallingCeiling1',
+type:'falling_block',
+x:300,
+y:-80,
+w:60,
+h:60,
+triggerX:260,
+active:false,
+speed:18
+},
+
+{
+id:'dropFloor',
+type:'drop_platform',
+platformId:'fakeDropPlatform',
+triggerX:470,
+triggered:false
+},
+
+{
+id:'trollFlag',
+type:'flee_flag',
+triggerX:780,
+distance:160,
+triggered:false
+}
+
+]
+
+},
+
+{
+id:2,
+name:"Level 2: Invisible Betrayal",
+quote:"Spikes that jump out of nowhere? Absolutely.",
+
+spawn:{x:70,y:380},
+
+flag:{
+x:870,
+y:180,
+realX:870,
+realY:180
+},
+
+platforms:[
+
+{x:0,y:460,w:220,h:80,color:'#2D3748'},
+
+{x:280,y:460,w:200,h:80,color:'#2D3748'},
+
+{x:540,y:460,w:420,h:80,color:'#2D3748'},
+
+{x:320,y:340,w:100,h:20,color:'#4A5568'},
+
+{x:500,y:270,w:120,h:20,color:'#4A5568'},
+
+{x:720,y:230,w:200,h:20,color:'#4A5568'}
+
+],
+
+spikes:[
+
+{x:220,y:430,w:60,h:30},
+
+{x:480,y:430,w:60,h:30},
+
+{x:340,y:310,w:40,h:30,hidden:true,id:'hiddenSpike1'}
+
+],
+
+traps:[
+
+{
+id:'popSpike',
+type:'reveal_spike',
+targetId:'hiddenSpike1',
+triggerX:300,
+triggered:false
+},
+
+{
+id:'invisBlock',
+type:'invisible_wall',
+x:530,
+y:150,
+w:30,
+h:100,
+triggerX:500,
+triggered:false
+},
+
+{
+id:'goalTrap',
+type:'rocket_launcher',
+x:960,
+y:220,
+triggerX:800,
+fired:false
+}
+
+]
+
+},
+
+{
+id:3,
+name:"Level 3: Gravity Paradox",
+quote:"Do not touch the shiny coin unless you like flying spikes!",
+
+spawn:{x:80,y:380},
+
+flag:{
+x:880,
+y:380,
+realX:880,
+realY:380
+},
+
+platforms:[
+
+{x:0,y:460,w:300,h:80,color:'#2D3748'},
+
+{x:380,y:460,w:200,h:80,color:'#2D3748'},
+
+{x:650,y:460,w:310,h:80,color:'#2D3748'},
+
+{x:200,y:320,w:100,h:20,color:'#4A5568'},
+
+{x:420,y:240,w:120,h:20,color:'#4A5568',id:'elevator1'},
+
+{x:680,y:300,w:110,h:20,color:'#4A5568'}
+
+],
+
+spikes:[
+
+{x:300,y:430,w:80,h:30},
+
+{x:580,y:430,w:70,h:30}
+
+],
+
+coins:[
+
+{x:240,y:270,collected:false,id:'baitCoin'}
+
+],
+
+traps:[
+
+{
+id:'coinTrap',
+type:'coin_crush',
+coinId:'baitCoin',
+blockX:200,
+blockY:-100,
+w:120,
+h:80
+},
+
+{
+id:'elevatorRocket',
+type:'fast_elevator',
+platformId:'elevator1',
+triggerX:430,
+triggered:false
+},
+
+{
+id:'ceilingSpikes',
+type:'ceiling_spikes',
+x:420,
+y:0,
+w:120,
+h:30
+}
+
+]
+
+},
+
+{
+id:4,
+name:"Level 4: Fake Safety",
+quote:"Checkpoints? There are no checkpoints in hell!",
+
+spawn:{x:70,y:380},
+
+flag:{
+x:880,
+y:380,
+realX:880,
+realY:380
+},
+
+platforms:[
+
+{x:0,y:460,w:960,h:80,color:'#2D3748'},
+
+{x:220,y:350,w:120,h:20,color:'#4A5568'},
+
+{x:420,y:280,w:120,h:20,color:'#4A5568'},
+
+{x:620,y:220,w:120,h:20,color:'#4A5568'}
+
+],
+
+spikes:[
+
+{x:150,y:430,w:60,h:30},
+
+{x:350,y:430,w:60,h:30},
+
+{x:550,y:430,w:60,h:30},
+
+{x:750,y:430,w:60,h:30}
+
+],
+
+checkpoints:[
+
+{x:460,y:230,w:30,h:50,fake:true}
+
+],
+
+traps:[
+
+{
+id:'fakeCheckpointTrap',
+type:'explode_checkpoint',
+triggerX:440,
+triggered:false
+},
+
+{
+id:'chasingSpike',
+type:'chasing_hazard',
+x:-50,
+y:380,
+w:40,
+h:80,
+speed:4.5,
+triggerX:600,
+active:false
+}
+
+]
+
+},
+
+{
+id:5,
+name:"Level 5: Devil's Finale",
+quote:"The final gauntlet of pure chaos!",
+
+spawn:{x:60,y:380},
+
+flag:{
+x:890,
+y:380,
+realX:890,
+realY:380
+},
+
+platforms:[
+
+{x:0,y:460,w:180,h:80,color:'#2D3748'},
+
+{x:240,y:400,w:100,h:20,color:'#4A5568',id:'disappearing1'},
+
+{x:400,y:330,w:100,h:20,color:'#4A5568',id:'disappearing2'},
+
+{x:560,y:260,w:100,h:20,color:'#4A5568',id:'disappearing3'},
+
+{x:740,y:460,w:220,h:80,color:'#2D3748'}
+
+],
+
+spikes:[
+
+{x:180,y:430,w:560,h:30}
+
+],
+
+traps:[
+
+{
+id:'vanish1',
+type:'vanish_platform',
+platformId:'disappearing1',
+delay:200
+},
+
+{
+id:'vanish2',
+type:'vanish_platform',
+platformId:'disappearing2',
+delay:200
+},
+
+{
+id:'vanish3',
+type:'vanish_platform',
+platformId:'disappearing3',
+delay:200
+},
+
+{
+id:'laserBeam',
+type:'laser_sweep',
+y:200,
+active:true,
+speed:3
+}
+
+]
+
+}
+
+];
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let currentLevelIndex=0;
+
+let currentLevel=
+    JSON.parse(JSON.stringify(LEVELS[0]));
+
+let isPlaying=false;
+
+let deathCount=0;
+
+let levelDeaths=0;
+
+let timerStart=0;
+
+let timerElapsed=0;
+
+let timerInterval=null;
+
+let animationFrameId=null;
+
+const keys={
+    left:false,
+    right:false,
+    jump:false
+};
+
+const player={
+
+    x:80,
+    y:380,
+
+    w:28,
+    h:36,
+
+    vx:0,
+    vy:0,
+
+    speed:5.5,
+
+    jumpForce:12.8,
+
+    gravity:.58,
+
+    isGrounded:false,
+
+    facing:'right',
+
+    isAlive:true
+
+};
+
+let particles=[];
+
+let projectiles=[];
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+window.addEventListener('keydown',e=>{
+
+    if(
+        e.code==='ArrowLeft'||
+        e.code==='KeyA'
+    )
+        keys.left=true;
+
+    if(
+        e.code==='ArrowRight'||
+        e.code==='KeyD'
+    )
+        keys.right=true;
+
+    if(
+        e.code==='ArrowUp'||
+        e.code==='KeyW'||
+        e.code==='Space'
+    ){
+
+        if(
+            !keys.jump &&
+            player.isGrounded &&
+            player.isAlive
+        ){
+
+            player.vy=-player.jumpForce;
+
+            player.isGrounded=false;
+
+            playSound('jump');
+
+        }
+
+        keys.jump=true;
+
+    }
+
+    if(e.code==='KeyR')
+        restartCurrentLevel();
+
+});
+
+window.addEventListener('keyup',e=>{
+
+    if(
+        e.code==='ArrowLeft'||
+        e.code==='KeyA'
+    )
+        keys.left=false;
+
+    if(
+        e.code==='ArrowRight'||
+        e.code==='KeyD'
+    )
+        keys.right=false;
+
+    if(
+        e.code==='ArrowUp'||
+        e.code==='KeyW'||
+        e.code==='Space'
+    )
+        keys.jump=false;
+
+});
+
+
+/* =========================================================
+   TOUCH
+========================================================= */
+
+function setupTouchBtn(btnId,keyProp){
+
+    const btn=
+        document.getElementById(btnId);
+
+    if(!btn)return;
+
+    const startPress=e=>{
+
+        e.preventDefault();
+
+        keys[keyProp]=true;
+
+        if(
+            keyProp==='jump' &&
+            player.isGrounded &&
+            player.isAlive
+        ){
+
+            player.vy=-player.jumpForce;
+
+            player.isGrounded=false;
+
+            playSound('jump');
+
+        }
+
+    };
+
+    const endPress=e=>{
+
+        e.preventDefault();
+
+        keys[keyProp]=false;
+
+    };
+
+    btn.addEventListener(
+        'touchstart',
+        startPress,
+        {passive:false}
+    );
+
+    btn.addEventListener(
+        'touchend',
+        endPress,
+        {passive:false}
+    );
+
+    btn.addEventListener(
+        'mousedown',
+        startPress
+    );
+
+    btn.addEventListener(
+        'mouseup',
+        endPress
+    );
+
+    btn.addEventListener(
+        'mouseleave',
+        endPress
+    );
+
+}
+
+setupTouchBtn('btn-left','left');
+setupTouchBtn('btn-right','right');
+setupTouchBtn('btn-jump','jump');
+
+
+/* =========================================================
+   LEVEL MANAGEMENT
+========================================================= */
+
+function loadLevel(index){
+
+    currentLevelIndex=index;
+
+    currentLevel=
+        JSON.parse(
+            JSON.stringify(
+                LEVELS[index]
+            )
+        );
+
+    player.x=currentLevel.spawn.x;
+    player.y=currentLevel.spawn.y;
+
+    player.vx=0;
+    player.vy=0;
+
+    player.isGrounded=false;
+    player.isAlive=true;
+
+    particles=[];
+    projectiles=[];
+
+    levelDeaths=0;
+
+    document.getElementById(
+        'level-name-hud'
+    ).innerText=currentLevel.name;
+
+    document.getElementById(
+        'menu-overlay'
+    ).classList.add('hidden');
+
+    document.getElementById(
+        'victory-modal'
+    ).classList.add('hidden');
+
+    /* IMPORTANT:
+       Remove flex too so the victory overlay
+       cannot remain active in rotated mode.
+    */
+    document.getElementById(
+        'victory-modal'
+    ).classList.remove('flex');
+
+    document.getElementById(
+        'level-modal'
+    ).classList.add('hidden');
+
+    document.getElementById(
+        'level-modal'
+    ).classList.remove('flex');
+
+    startTimer();
+
+    isPlaying=true;
+
+}
+
+function restartCurrentLevel(){
+
+    loadLevel(currentLevelIndex);
+
+}
+
+function triggerDeath(reason){
+
+    if(!player.isAlive)return;
+
+    player.isAlive=false;
+
+    deathCount++;
+    levelDeaths++;
+
+    document.getElementById(
+        'death-counter'
+    ).innerText=deathCount;
+
+    playSound('die');
+
+    for(let i=0;i<25;i++){
+
+        particles.push({
+
+            x:player.x+player.w/2,
+
+            y:player.y+player.h/2,
+
+            vx:(Math.random()-.5)*12,
+
+            vy:(Math.random()-.5)*12,
+
+            size:Math.random()*8+4,
+
+            color:
+                i%2===0
+                ?'#FF3366'
+                :'#FFE15D',
+
+            life:1
+
+        });
+
+    }
+
+    showTrollToast();
+
+    setTimeout(()=>{
+
+        if(
+            document
+            .getElementById('menu-overlay')
+            .classList.contains('hidden')===false
+        )return;
+
+        player.x=currentLevel.spawn.x;
+        player.y=currentLevel.spawn.y;
+
+        player.vx=0;
+        player.vy=0;
+
+        player.isAlive=true;
+
+        resetLevelTraps();
+
+    },450);
+
+}
+
+function resetLevelTraps(){
+
+    const original=
+        JSON.parse(
+            JSON.stringify(
+                LEVELS[currentLevelIndex]
+            )
+        );
+
+    currentLevel.platforms=
+        original.platforms;
+
+    currentLevel.spikes=
+        original.spikes;
+
+    currentLevel.traps=
+        original.traps;
+
+    currentLevel.flag=
+        original.flag;
+
+    if(original.coins)
+        currentLevel.coins=
+            original.coins;
+
+    projectiles=[];
+
+}
+
+function showTrollToast(){
+
+    const toast=
+        document.getElementById('troll-toast');
+
+    const msg=
+        document.getElementById('toast-message');
+
+    const randomQuote=
+        TROLL_QUOTES[
+            Math.floor(
+                Math.random()*
+                TROLL_QUOTES.length
+            )
+        ];
+
+    msg.innerText=randomQuote;
+
+    toast.classList.remove(
+        'opacity-0',
+        '-translate-y-6'
+    );
+
+    toast.classList.add(
+        'opacity-100',
+        'translate-y-0'
+    );
+
+    setTimeout(()=>{
+
+        toast.classList.remove(
+            'opacity-100',
+            'translate-y-0'
+        );
+
+        toast.classList.add(
+            'opacity-0',
+            '-translate-y-6'
+        );
+
+    },1800);
+
+}
+
+
+/* =========================================================
+   TRAPS
+========================================================= */
+
+function updateTraps(){
+
+    if(!player.isAlive)return;
+
+    currentLevel.traps.forEach(trap=>{
+
+        if(trap.type==='falling_block'){
+
+            if(
+                player.x>trap.triggerX &&
+                !trap.active &&
+                trap.y<0
+            ){
+
+                trap.active=true;
+
+                playSound('trap');
+
+            }
+
+            if(trap.active){
+
+                trap.y+=trap.speed;
+
+                if(
+                    checkRectOverlap(
+                        player,
+                        {
+                            x:trap.x,
+                            y:trap.y,
+                            w:trap.w,
+                            h:trap.h
+                        }
+                    )
+                ){
+
+                    triggerDeath(
+                        'Falling trap'
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        if(trap.type==='drop_platform'){
+
+            const plat=
+                currentLevel.platforms.find(
+                    p=>p.id===trap.platformId
+                );
+
+            if(
+                plat &&
+                player.x+player.w>plat.x &&
+                player.x<plat.x+plat.w &&
+                Math.abs(
+                    (player.y+player.h)-plat.y
+                )<5
+            ){
+
+                if(!trap.triggered){
+
+                    trap.triggered=true;
+
+                    playSound('trap');
+
+                }
+
+            }
+
+            if(trap.triggered&&plat)
+                plat.y+=12;
+
+        }
+
+
+        if(trap.type==='flee_flag'){
+
+            const distToFlag=
+                Math.abs(
+                    player.x-
+                    currentLevel.flag.x
+                );
+
+            if(
+                distToFlag<trap.distance &&
+                !trap.triggered
+            ){
+
+                trap.triggered=true;
+
+                playSound('trap');
+
+            }
+
+            if(trap.triggered){
+
+                if(currentLevel.flag.x<900)
+                    currentLevel.flag.x+=6;
+
+            }
+
+        }
+
+
+        if(trap.type==='reveal_spike'){
+
+            if(
+                player.x>trap.triggerX &&
+                !trap.triggered
+            ){
+
+                trap.triggered=true;
+
+                const spike=
+                    currentLevel.spikes.find(
+                        s=>s.id===trap.targetId
+                    );
+
+                if(spike)
+                    spike.hidden=false;
+
+                playSound('trap');
+
+            }
+
+        }
+
+
+        if(trap.type==='rocket_launcher'){
+
+            if(
+                player.x>trap.triggerX &&
+                !trap.fired
+            ){
+
+                trap.fired=true;
+
+                playSound('trap');
+
+                projectiles.push({
+
+                    x:trap.x,
+
+                    y:trap.y,
+
+                    vx:-9,
+
+                    vy:0,
+
+                    w:24,
+
+                    h:12
+
+                });
+
+            }
+
+        }
+
+
+        if(trap.type==='coin_crush'){
+
+            const coin=
+                currentLevel.coins?.find(
+                    c=>c.id===trap.coinId
+                );
+
+            if(
+                coin &&
+                coin.collected &&
+                !trap.active
+            ){
+
+                trap.active=true;
+
+                playSound('trap');
+
+            }
+
+            if(trap.active){
+
+                trap.blockY+=15;
+
+                if(
+                    checkRectOverlap(
+                        player,
+                        {
+                            x:trap.blockX,
+                            y:trap.blockY,
+                            w:trap.w,
+                            h:trap.h
+                        }
+                    )
+                ){
+
+                    triggerDeath(
+                        'Coin trap'
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        if(trap.type==='fast_elevator'){
+
+            const plat=
+                currentLevel.platforms.find(
+                    p=>p.id===trap.platformId
+                );
+
+            if(
+                plat &&
+                player.x+player.w>plat.x &&
+                player.x<plat.x+plat.w &&
+                Math.abs(
+                    (player.y+player.h)-plat.y
+                )<8
+            ){
+
+                trap.triggered=true;
+
+            }
+
+            if(trap.triggered&&plat)
+                plat.y-=14;
+
+        }
+
+
+        if(trap.type==='explode_checkpoint'){
+
+            if(
+                player.x>trap.triggerX &&
+                !trap.triggered
+            ){
+
+                trap.triggered=true;
+
+                playSound('trap');
+
+                currentLevel.spikes.push({
+
+                    x:450,
+                    y:240,
+                    w:50,
+                    h:40
+
+                });
+
+            }
+
+        }
+
+
+        if(trap.type==='vanish_platform'){
+
+            const plat=
+                currentLevel.platforms.find(
+                    p=>p.id===trap.platformId
+                );
+
+            if(
+                plat &&
+                player.x+player.w>plat.x &&
+                player.x<plat.x+plat.w &&
+                Math.abs(
+                    (player.y+player.h)-plat.y
+                )<6
+            ){
+
+                if(!plat.stepping){
+
+                    plat.stepping=true;
+
+                    setTimeout(()=>{
+
+                        plat.vanished=true;
+
+                        playSound('trap');
+
+                    },trap.delay);
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+    for(
+        let i=projectiles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p=projectiles[i];
+
+        p.x+=p.vx;
+
+        if(
+            checkRectOverlap(
+                player,
+                p
+            )
+        ){
+
+            triggerDeath(
+                'Rocket trap'
+            );
+
+        }
+
+        if(p.x<-50)
+            projectiles.splice(i,1);
+
+    }
+
+}
+
+function checkRectOverlap(a,b){
+
+    return(
+        a.x<b.x+b.w &&
+        a.x+a.w>b.x &&
+        a.y<b.y+b.h &&
+        a.y+a.h>b.y
+    );
+
+}
+
+
+/* =========================================================
+   PHYSICS
+========================================================= */
+
+function updatePhysics(){
+
+    if(!player.isAlive)return;
+
+    if(keys.left){
+
+        player.vx=-player.speed;
+        player.facing='left';
+
+    }else if(keys.right){
+
+        player.vx=player.speed;
+        player.facing='right';
+
+    }else{
+
+        player.vx*=.65;
+
+    }
+
+    player.x+=player.vx;
+
+    currentLevel.platforms.forEach(plat=>{
+
+        if(plat.vanished)return;
+
+        if(checkRectOverlap(player,plat)){
+
+            if(player.vx>0)
+                player.x=plat.x-player.w;
+
+            else if(player.vx<0)
+                player.x=plat.x+plat.w;
+
+        }
+
+    });
+
+    player.vy+=player.gravity;
+
+    player.y+=player.vy;
+
+    player.isGrounded=false;
+
+    currentLevel.platforms.forEach(plat=>{
+
+        if(plat.vanished)return;
+
+        if(checkRectOverlap(player,plat)){
+
+            if(
+                player.vy>0 &&
+                player.y+player.h-player.vy<=plat.y+12
+            ){
+
+                player.y=
+                    plat.y-player.h;
+
+                player.vy=0;
+
+                player.isGrounded=true;
+
+            }else if(player.vy<0){
+
+                player.y=
+                    plat.y+plat.h;
+
+                player.vy=0;
+
+            }
+
+        }
+
+    });
+
+
+    currentLevel.spikes.forEach(spike=>{
+
+        if(spike.hidden)return;
+
+        if(checkRectOverlap(player,spike))
+            triggerDeath('Spikes');
+
+    });
+
+
+    const ceilingTrap=
+        currentLevel.traps.find(
+            t=>t.type==='ceiling_spikes'
+        );
+
+    if(
+        ceilingTrap &&
+        checkRectOverlap(
+            player,
+            ceilingTrap
+        )
+    ){
+
+        triggerDeath(
+            'Ceiling trap'
+        );
+
+    }
+
+
+    if(currentLevel.coins){
+
+        currentLevel.coins.forEach(coin=>{
+
+            if(
+                !coin.collected &&
+                checkRectOverlap(
+                    player,
+                    {
+                        x:coin.x,
+                        y:coin.y,
+                        w:20,
+                        h:20
+                    }
+                )
+            ){
+
+                coin.collected=true;
+
+                playSound('coin');
+
+            }
+
+        });
+
+    }
+
+
+    if(player.y>CANVAS_HEIGHT+100)
+        triggerDeath('Void');
+
+
+    const flagBox={
+
+        x:currentLevel.flag.x,
+        y:currentLevel.flag.y,
+        w:30,
+        h:50
+
+    };
+
+    if(checkRectOverlap(player,flagBox))
+        winLevel();
+
+
+    updateTraps();
+
+
+    for(
+        let i=particles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p=particles[i];
+
+        p.x+=p.vx;
+        p.y+=p.vy;
+
+        p.life-=.03;
+
+        if(p.life<=0)
+            particles.splice(i,1);
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+    ctx.fillStyle='#1A162B';
+
+    ctx.fillRect(
+        0,
+        0,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+    );
+
+
+    ctx.fillStyle='rgba(255,255,255,.05)';
+
+    for(
+        let i=0;
+        i<CANVAS_WIDTH;
+        i+=40
+    ){
+
+        for(
+            let j=0;
+            j<CANVAS_HEIGHT;
+            j+=40
+        ){
+
+            ctx.fillRect(
+                i+18,
+                j+18,
+                4,
+                4
+            );
+
+        }
+
+    }
+
+
+    /* PLATFORMS */
+
+    currentLevel.platforms.forEach(plat=>{
+
+        if(plat.vanished)return;
+
+        ctx.fillStyle=
+            plat.color||'#334155';
+
+        ctx.fillRect(
+            plat.x,
+            plat.y,
+            plat.w,
+            plat.h
+        );
+
+        ctx.fillStyle='#4ADE80';
+
+        ctx.fillRect(
+            plat.x,
+            plat.y,
+            plat.w,
+            6
+        );
+
+        ctx.strokeStyle='#000';
+
+        ctx.lineWidth=3;
+
+        ctx.strokeRect(
+            plat.x,
+            plat.y,
+            plat.w,
+            plat.h
+        );
+
+    });
+
+
+    /* SPIKES */
+
+    currentLevel.spikes.forEach(spike=>{
+
+        if(spike.hidden)return;
+
+        ctx.fillStyle='#EF4444';
+
+        const count=
+            Math.max(
+                1,
+                Math.floor(spike.w/15)
+            );
+
+        const spikeW=
+            spike.w/count;
+
+        for(let i=0;i<count;i++){
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                spike.x+i*spikeW,
+                spike.y+spike.h
+            );
+
+            ctx.lineTo(
+                spike.x+(i+.5)*spikeW,
+                spike.y
+            );
+
+            ctx.lineTo(
+                spike.x+(i+1)*spikeW,
+                spike.y+spike.h
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+
+            ctx.strokeStyle='#000';
+            ctx.lineWidth=2;
+            ctx.stroke();
+
+        }
+
+    });
+
+
+    /* CEILING SPIKES */
+
+    const ceilingTrap=
+        currentLevel.traps.find(
+            t=>t.type==='ceiling_spikes'
+        );
+
+    if(ceilingTrap){
+
+        ctx.fillStyle='#DC2626';
+
+        const count=
+            Math.floor(
+                ceilingTrap.w/15
+            );
+
+        const spikeW=
+            ceilingTrap.w/count;
+
+        for(let i=0;i<count;i++){
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                ceilingTrap.x+i*spikeW,
+                ceilingTrap.y
+            );
+
+            ctx.lineTo(
+                ceilingTrap.x+(i+.5)*spikeW,
+                ceilingTrap.y+ceilingTrap.h
+            );
+
+            ctx.lineTo(
+                ceilingTrap.x+(i+1)*spikeW,
+                ceilingTrap.y
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+
+            ctx.stroke();
+
+        }
+
+    }
+
+
+    /* TRAPS */
+
+    currentLevel.traps.forEach(trap=>{
+
+        if(trap.type==='falling_block'){
+
+            ctx.fillStyle='#94A3B8';
+
+            ctx.fillRect(
+                trap.x,
+                trap.y,
+                trap.w,
+                trap.h
+            );
+
+            ctx.strokeStyle='#000';
+            ctx.lineWidth=3;
+
+            ctx.strokeRect(
+                trap.x,
+                trap.y,
+                trap.w,
+                trap.h
+            );
+
+            ctx.fillStyle='#000';
+            ctx.font='20px sans-serif';
+
+            ctx.fillText(
+                '💀',
+                trap.x+16,
+                trap.y+38
+            );
+
+        }
+
+
+        if(
+            trap.type==='coin_crush' &&
+            trap.active
+        ){
+
+            ctx.fillStyle='#64748B';
+
+            ctx.fillRect(
+                trap.blockX,
+                trap.blockY,
+                trap.w,
+                trap.h
+            );
+
+            ctx.strokeStyle='#000';
+            ctx.lineWidth=3;
+
+            ctx.strokeRect(
+                trap.blockX,
+                trap.blockY,
+                trap.w,
+                trap.h
+            );
+
+        }
+
+    });
+
+
+    /* COINS */
+
+    if(currentLevel.coins){
+
+        currentLevel.coins.forEach(coin=>{
+
+            if(!coin.collected){
+
+                ctx.fillStyle='#FACC15';
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    coin.x+10,
+                    coin.y+10,
+                    10,
+                    0,
+                    Math.PI*2
+                );
+
+                ctx.fill();
+
+                ctx.strokeStyle='#000';
+                ctx.lineWidth=2;
+
+                ctx.stroke();
+
+                ctx.fillStyle='#FFF';
+
+                ctx.fillRect(
+                    coin.x+6,
+                    coin.y+6,
+                    3,
+                    3
+                );
+
+            }
+
+        });
+
+    }
+
+
+    /* CHECKPOINTS */
+
+    if(currentLevel.checkpoints){
+
+        currentLevel.checkpoints.forEach(cp=>{
+
+            ctx.fillStyle='#38BDF8';
+
+            ctx.fillRect(
+                cp.x,
+                cp.y,
+                cp.w,
+                cp.h
+            );
+
+            ctx.beginPath();
+
+            ctx.arc(
+                cp.x+cp.w/2,
+                cp.y-10,
+                12,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+
+        });
+
+    }
+
+
+    /* PROJECTILES */
+
+    projectiles.forEach(p=>{
+
+        ctx.fillStyle='#F97316';
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            p.w,
+            p.h
+        );
+
+        ctx.fillStyle='#EF4444';
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y+p.h/2,
+            p.h/2,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+
+    /* FLAG */
+
+    const flag=currentLevel.flag;
+
+    ctx.fillStyle='#64748B';
+
+    ctx.fillRect(
+        flag.x,
+        flag.y,
+        6,
+        50
+    );
+
+    ctx.fillStyle='#FF3366';
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        flag.x+6,
+        flag.y
+    );
+
+    ctx.lineTo(
+        flag.x+36,
+        flag.y+15
+    );
+
+    ctx.lineTo(
+        flag.x+6,
+        flag.y+30
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.strokeStyle='#000';
+    ctx.lineWidth=2;
+
+    ctx.stroke();
+
+
+    /* PLAYER */
+
+    if(player.isAlive){
+
+        ctx.save();
+
+        ctx.translate(
+            player.x+player.w/2,
+            player.y+player.h/2
+        );
+
+        ctx.fillStyle='#FF3366';
+
+        ctx.beginPath();
+
+        ctx.roundRect(
+            -player.w/2,
+            -player.h/2,
+            player.w,
+            player.h,
+            [10]
+        );
+
+        ctx.fill();
+
+        ctx.strokeStyle='#000';
+        ctx.lineWidth=3;
+
+        ctx.stroke();
+
+
+        const eyeX=
+            player.facing==='right'
+            ?4
+            :-4;
+
+        ctx.fillStyle='#FFF';
+
+        ctx.beginPath();
+
+        ctx.arc(
+            -4+eyeX,
+            -4,
+            5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            6+eyeX,
+            -4,
+            5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle='#000';
+
+        ctx.beginPath();
+
+        ctx.arc(
+            -3+eyeX,
+            -4,
+            2.5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            7+eyeX,
+            -4,
+            2.5,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        /* HORNS */
+
+        ctx.fillStyle='#FFE15D';
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -10,
+            -player.h/2
+        );
+
+        ctx.lineTo(
+            -14,
+            -player.h/2-8
+        );
+
+        ctx.lineTo(
+            -6,
+            -player.h/2-2
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+        ctx.stroke();
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            10,
+            -player.h/2
+        );
+
+        ctx.lineTo(
+            14,
+            -player.h/2-8
+        );
+
+        ctx.lineTo(
+            6,
+            -player.h/2-2
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+
+    }
+
+
+    /* PARTICLES */
+
+    particles.forEach(p=>{
+
+        ctx.fillStyle=p.color;
+
+        ctx.globalAlpha=p.life;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.globalAlpha=1;
+
+    });
+
+}
+
+
+/* =========================================================
+   GAME LOOP
+========================================================= */
+
+function gameLoop(){
+
+    if(isPlaying){
+
+        updatePhysics();
+
+        render();
+
+    }
+
+    animationFrameId=
+        requestAnimationFrame(gameLoop);
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+    timerStart=Date.now();
+
+    timerElapsed=0;
+
+    if(timerInterval)
+        clearInterval(timerInterval);
+
+    timerInterval=setInterval(()=>{
+
+        if(!isPlaying||!player.isAlive)
+            return;
+
+        timerElapsed=
+            Date.now()-timerStart;
+
+        const totalSec=
+            (timerElapsed/1000).toFixed(1);
+
+        const mins=
+            Math.floor(
+                totalSec/60
+            ).toString().padStart(2,'0');
+
+        const secs=
+            (totalSec%60)
+            .toFixed(1)
+            .padStart(4,'0');
+
+        document.getElementById(
+            'timer-hud'
+        ).innerText=
+            `TIME: ${mins}:${secs}`;
+
+    },100);
+
+}
+
+
+/* =========================================================
+   WIN
+   FIXED FOR ROTATED / LANDSCAPE MOBILE
+========================================================= */
+
+function winLevel(){
+
+    if(!isPlaying || !player.isAlive)
+        return;
+
+    /* Stop game immediately */
+    isPlaying=false;
+
+    /* Prevent duplicate win calls */
+    player.isAlive=false;
+
+    playSound('win');
+
+    if(timerInterval){
+
+        clearInterval(timerInterval);
+        timerInterval=null;
+
+    }
+
+    const totalSec=
+        (timerElapsed/1000).toFixed(1);
+
+    const mins=
+        Math.floor(
+            totalSec/60
+        ).toString().padStart(2,'0');
+
+    const secs=
+        (totalSec%60)
+        .toFixed(1)
+        .padStart(4,'0');
+
+    document.getElementById(
+        'victory-deaths'
+    ).innerText=levelDeaths;
+
+    document.getElementById(
+        'victory-time'
+    ).innerText=
+        `${mins}:${secs}`;
+
+    document.getElementById(
+        'victory-quote'
+    ).innerText=
+        currentLevel.quote;
+
+
+    /* =====================================================
+       NEXT LEVEL BUTTON
+    ===================================================== */
+
+    const nextBtn=
+        document.getElementById(
+            'btn-next-level'
+        );
+
+    /* Force button visible */
+    nextBtn.style.display='flex';
+    nextBtn.style.visibility='visible';
+    nextBtn.style.opacity='1';
+    nextBtn.style.pointerEvents='auto';
+
+    nextBtn.type='button';
+
+
+    if(
+        currentLevelIndex<
+        LEVELS.length-1
+    ){
+
+        nextBtn.innerHTML=`
+            <span>NEXT LEVEL</span>
+            <i data-lucide="arrow-right"
+               class="w-5 h-5"></i>
+        `;
+
+        nextBtn.onclick=function(){
+
+            nextLevel();
+
+        };
+
+    }else{
+
+        nextBtn.innerHTML=`
+            <span>GAME COMPLETED! 🎉</span>
+        `;
+
+        nextBtn.onclick=function(){
+
+            openLevelSelect();
+
+        };
+
+    }
+
+
+    /* =====================================================
+       SHOW VICTORY MODAL
+    ===================================================== */
+
+    const victory=
+        document.getElementById(
+            'victory-modal'
+        );
+
+    victory.classList.remove('hidden');
+
+    victory.classList.add('flex');
+
+    /* Reset scroll position */
+    victory.scrollTop=0;
+
+    /* Rebuild icons */
+    if(window.lucide)
+        lucide.createIcons();
+
+
+    /* =====================================================
+       EXTRA MOBILE LANDSCAPE SAFETY
+       Ensures button is reachable even on short screens.
+    ===================================================== */
+
+    setTimeout(()=>{
+
+        if(
+            window.matchMedia(
+                '(orientation: landscape)'
+            ).matches
+        ){
+
+            victory.scrollTop=0;
+
+            /* Make sure the button exists and is visible */
+            nextBtn.style.display='flex';
+            nextBtn.style.visibility='visible';
+            nextBtn.style.opacity='1';
+
+        }
+
+    },50);
+
+}
+
+
+/* =========================================================
+   NEXT LEVEL
+========================================================= */
+
+function nextLevel(){
+
+    if(
+        currentLevelIndex<
+        LEVELS.length-1
+    ){
+
+        const nextIndex=
+            currentLevelIndex+1;
+
+        const victory=
+            document.getElementById(
+                'victory-modal'
+            );
+
+        /* Hide victory screen before loading next level */
+        victory.classList.add('hidden');
+        victory.classList.remove('flex');
+
+        loadLevel(nextIndex);
+
+    }else{
+
+        openLevelSelect();
+
+    }
+
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+    loadLevel(0);
+
+}
+
+
+/* =========================================================
+   LEVEL SELECT
+========================================================= */
+
+function openLevelSelect(){
+
+    isPlaying=false;
+
+    if(timerInterval){
+
+        clearInterval(timerInterval);
+        timerInterval=null;
+
+    }
+
+    const grid=
+        document.getElementById(
+            'level-grid'
+        );
+
+    grid.innerHTML='';
+
+    LEVELS.forEach((lvl,idx)=>{
+
+        const btn=
+            document.createElement(
+                'button'
+            );
+
+        btn.className=
+            `p-4 rounded-2xl cartoon-button
+             flex flex-col items-center justify-center
+             font-bungee text-left transition-all
+             ${
+                idx===currentLevelIndex
+                ?'bg-devil-red text-white'
+                :'bg-slate-800 hover:bg-slate-700 text-slate-200'
+             }`;
+
+        btn.innerHTML=`
+
+            <span class="text-xs text-yellow-400">
+                LEVEL ${lvl.id}
+            </span>
+
+            <span class="text-base text-center mt-1">
+                ${lvl.name.split(':')[1]||lvl.name}
+            </span>
+
+        `;
+
+        btn.onclick=
+            ()=>loadLevel(idx);
+
+        grid.appendChild(btn);
+
+    });
+
+    document.getElementById(
+        'victory-modal'
+    ).classList.add('hidden');
+
+    document.getElementById(
+        'victory-modal'
+    ).classList.remove('flex');
+
+    document.getElementById(
+        'menu-overlay'
+    ).classList.add('hidden');
+
+    document.getElementById(
+        'level-modal'
+    ).classList.remove('hidden');
+
+    document.getElementById(
+        'level-modal'
+    ).classList.add('flex');
+
+}
+
+function closeLevelSelect(){
+
+    document.getElementById(
+        'level-modal'
+    ).classList.add('hidden');
+
+    document.getElementById(
+        'level-modal'
+    ).classList.remove('flex');
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+window.onload=()=>{
+
+    lucide.createIcons();
+
+    gameLoop();
+
+};
+
+</script>
+
+</body>
+</html>
