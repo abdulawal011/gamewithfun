@@ -175,17 +175,17 @@ const games = [
     id: 101,
     title: "Dragon",
     category: "",
-    icon: "",
+    icon: "games/dragon.webp",
     url: "games/dragon_mountain.html",
     newGame: false,
     popular: true
   },
    {
-    id: 10,
-    title: "",
+    id: 102,
+    title: "Spider",
     category: "",
-    icon: "",
-    url: "",
+    icon: "games/spider .webp",
+    url: "games/spider.html",
     newGame: false,
     popular: true
   },
