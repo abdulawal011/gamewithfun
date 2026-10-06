@@ -5,7 +5,7 @@
 const games = [
    {
     id: 17,
-    title: "Cat Run",
+    title: "",
     category: "",
     icon: "games/cat.webp",
     url: "games/cat.html",
@@ -14,7 +14,7 @@ const games = [
   },
    {
     id: 16,
-    title: "Bubble Shooter",
+    title: "",
     category: "Puzzle",
     icon: "games/balls.webp",
     url: "games/bubbleshooter.html",
@@ -23,7 +23,7 @@ const games = [
   },
    {
     id: 15,
-    title: "Carrom Board",
+    title: "",
     category: "Board",
     icon: "games/caroom.webp",
     url: "games/carromboard.html",
@@ -32,7 +32,7 @@ const games = [
   },
    {
     id: 14,
-    title: "Game With Fun Crush",
+    title: "",
     category: "Puzzle",
     icon: "games/colour.webp",
     url:"games/gamewithfuncrush.html",
@@ -42,7 +42,7 @@ const games = [
 
   {
     id: 13,
-    title: "Fruit Cut",
+    title: "",
     category: "",
     icon: "games/1000150283_11zon.jpg",
     url: "games/bdcut.html",
@@ -51,7 +51,7 @@ const games = [
   },
    {
     id: 12,
-    title: "Ghost House",
+    title: "",
     category: "",
     icon: "games/ghost.webp",
     url:"games/ghosthouse.html",
@@ -60,7 +60,7 @@ const games = [
   },
    {
     id: 11,
-    title: "flaying bird",
+    title: "",
     category: "",
     icon: "games/bird.webp",
     url:"games/gamewithfun-flaying-bird.html",
@@ -69,7 +69,7 @@ const games = [
   },
    {
     id: 10,
-    title: "Color Ball",
+    title: "",
     category: "",
     icon: "games/colulm.webp",
     url: "games/colorsort.html",
@@ -78,7 +78,7 @@ const games = [
   },
    {
     id: 9,
-    title: "8 Ball Pool",
+    title: "",
     category: "",
     icon: "games/8ball.webp",
     url: "games/8ballgame.html",
@@ -87,7 +87,7 @@ const games = [
   },
    {
     id: 8,
-    title: "Traffic Jam",
+    title: "",
     category: "Puzzle",
     icon: "games/jam.webp",
     url: "games/trafficjamsolve.html",
@@ -96,7 +96,7 @@ const games = [
   },
   {
     id: 7,
-    title: "Endless Runner",
+    title: "",
     category: "Recing",
     icon: "games/end.webp",
     url: "games/endlessrunner.html",
@@ -106,7 +106,7 @@ const games = [
 
   {
     id: 6,
-    title: "O&X Game",
+    title: "",
     category: "Puzzle",
     icon: "games/Ox.webp",
     url: "games/oxgame.html",
@@ -116,7 +116,7 @@ const games = [
 
   {
     id: 5,
-    title: "Pipe Script",
+    title: "",
     category: "Puzzle",
     icon: "games/Pipe Script.webp",
     url: "games/pipe_script.html",
@@ -126,7 +126,7 @@ const games = [
 
   {
     id: 4,
-    title: "Flag Guess",
+    title: "",
     category: "Quiz",
     icon: "games/flags.webp",
     url: "games/flag-guess.html",
@@ -136,7 +136,7 @@ const games = [
 
   {
     id: 3,
-    title: "Math Quiz",
+    title: "",
     category: "Quiz",
     icon: "games/math.webp",
     url: "games/math_quiz_sound.html",
@@ -146,7 +146,7 @@ const games = [
 
   {
     id: 2,
-    title: "Sliding Puzzle",
+    title: "",
     category: "Puzzle",
     icon: "games/fuzzle.webp",
     url: "games/puzzle-game.html",
@@ -155,7 +155,7 @@ const games = [
   },
    {
     id: 20,
-    title: "Hill Climb",
+    title: "",
     category: "",
     icon: "games/hill_climb.webp",
     url: "games/hill_climb.html",
@@ -164,7 +164,7 @@ const games = [
   },
   {
     id: 1,
-    title: "Car Racing",
+    title: "",
     category: "Recing",
     icon: "games/car.webp",
     url: "games/careering.html",
@@ -173,7 +173,7 @@ const games = [
   },
    {
     id: 101,
-    title: "Dragon",
+    title: "",
     category: "",
     icon: "games/dragon.webp",
     url: "games/dragon_mountain.html",
@@ -182,7 +182,7 @@ const games = [
   },
    {
     id: 102,
-    title: "Spider",
+    title: "",
     category: "",
     icon: "games/spider .webp",
     url: "games/spider.html",
