@@ -1,21 +1,17 @@
 /* ==================================================
    GAME DATA
-   Game names are stored for SEARCH.
-   They are NOT displayed on the homepage.
 ================================================== */
 
 const games = [
-
   {
     id: 17,
     title: "Shadow Cat",
-    category: "Arcade",
+    category: "",
     icon: "games/cat.webp",
     url: "games/cat.html",
     newGame: true,
     popular: false
   },
-
   {
     id: 16,
     title: "Bubble Shooter",
@@ -25,7 +21,6 @@ const games = [
     newGame: false,
     popular: true
   },
-
   {
     id: 15,
     title: "Carrom Board",
@@ -35,7 +30,6 @@ const games = [
     newGame: false,
     popular: true
   },
-
   {
     id: 14,
     title: "GameWithFun Crush",
@@ -45,57 +39,51 @@ const games = [
     newGame: false,
     popular: true
   },
-
   {
     id: 13,
     title: "Fruit Cut",
-    category: "Arcade",
+    category: "",
     icon: "games/1000150283_11zon.jpg",
     url: "games/bdcut.html",
     newGame: true,
     popular: false
   },
-
   {
     id: 12,
     title: "Ghost House",
-    category: "Arcade",
+    category: "",
     icon: "games/ghost.webp",
     url: "games/ghosthouse.html",
     newGame: false,
     popular: true
   },
-
   {
     id: 11,
     title: "Flaying Bird",
-    category: "Arcade",
+    category: "",
     icon: "games/bird.webp",
     url: "games/gamewithfun-flaying-bird.html",
     newGame: false,
     popular: true
   },
-
   {
     id: 10,
     title: "Color Ball",
-    category: "Puzzle",
+    category: "",
     icon: "games/colulm.webp",
     url: "games/colorsort.html",
     newGame: false,
     popular: true
   },
-
   {
     id: 9,
     title: "8 Ball Pool",
-    category: "Sports",
+    category: "",
     icon: "games/8ball.webp",
     url: "games/8ballgame.html",
     newGame: false,
     popular: true
   },
-
   {
     id: 8,
     title: "Traffic Jam",
@@ -105,7 +93,6 @@ const games = [
     newGame: false,
     popular: true
   },
-
   {
     id: 7,
     title: "Endless Runner",
@@ -115,7 +102,6 @@ const games = [
     newGame: true,
     popular: false
   },
-
   {
     id: 6,
     title: "O&X Game",
@@ -125,7 +111,6 @@ const games = [
     newGame: true,
     popular: false
   },
-
   {
     id: 5,
     title: "Pipe Script",
@@ -135,7 +120,6 @@ const games = [
     newGame: false,
     popular: true
   },
-
   {
     id: 4,
     title: "Flag Guess",
@@ -145,7 +129,6 @@ const games = [
     newGame: true,
     popular: false
   },
-
   {
     id: 3,
     title: "Math Quiz",
@@ -155,7 +138,6 @@ const games = [
     newGame: false,
     popular: true
   },
-
   {
     id: 2,
     title: "Sliding Puzzle",
@@ -165,17 +147,15 @@ const games = [
     newGame: true,
     popular: false
   },
-
   {
     id: 20,
     title: "Hill Climb",
-    category: "Recing",
+    category: "",
     icon: "games/hill_climb.webp",
     url: "games/hill_climb.html",
     newGame: false,
     popular: true
   },
-
   {
     id: 1,
     title: "Car Racing",
@@ -185,27 +165,54 @@ const games = [
     newGame: true,
     popular: false
   },
-
   {
     id: 101,
     title: "Dragon Mountain",
-    category: "Adventure",
+    category: "",
     icon: "games/dragon.webp",
     url: "games/dragon_mountain.html",
     newGame: false,
     popular: true
   },
-
   {
     id: 102,
     title: "Spider",
-    category: "Adventure",
+    category: "",
     icon: "games/spider .webp",
     url: "games/spider.html",
     newGame: false,
     popular: true
-  }
+  },
 
+  {
+    id: 103,
+    title: "Game Coming Soon",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+
+  {
+    id: 104,
+    title: "Game Coming Soon",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  },
+
+  {
+    id: 105,
+    title: "Game Coming Soon",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: true
+  }
 ];
 
 
@@ -217,10 +224,7 @@ const categories = [
   "Puzzle",
   "Quiz",
   "Recing",
-  "Board",
-  "Arcade",
-  "Sports",
-  "Adventure"
+  "Board"
 ];
 
 
@@ -239,8 +243,7 @@ let favorites = JSON.parse(
 
 function gameCard(game) {
 
-  const isFavorite =
-    favorites.includes(game.id);
+  const isFavorite = favorites.includes(game.id);
 
   const isImage =
     game.icon &&
@@ -290,34 +293,46 @@ function gameCard(game) {
 
             ${
               isImage
-              ? `
-                <img
-                  src="${game.icon}"
-                  alt="${escapeHTML(game.title)}"
-                  loading="lazy">
-              `
-              : `
-                <span class="emoji-logo">
-                  ${game.icon || "🎮"}
-                </span>
-              `
+                ? `<img src="${game.icon}" alt="${escapeHTML(game.title)}">`
+                : `<span class="emoji-logo">${game.icon}</span>`
             }
 
           </div>
 
-          <h3>
+          <h3 class="home-game-title">
             ${escapeHTML(game.title)}
           </h3>
-
-          <p class="game-category">
-            ${escapeHTML(game.category || "Game")}
-          </p>
 
         </a>
 
     </article>
   `;
 }
+
+
+/* ==================================================
+   HIDE GAME NAME ONLY ON HOME PAGE
+================================================== */
+
+(function addHomeGameTitleStyle() {
+
+  if (document.getElementById("homeGameTitleStyle")) {
+    return;
+  }
+
+  const style = document.createElement("style");
+
+  style.id = "homeGameTitleStyle";
+
+  style.textContent = `
+    #homePage .home-game-title {
+      display: none;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+})();
 
 
 /* ==================================================
@@ -329,53 +344,46 @@ function openGameFromCard(event, id) {
 
   event.preventDefault();
 
-  const game =
-    games.find(item => item.id === id);
+  const game = games.find(item => item.id === id);
 
-  if (
-    !game ||
-    !game.url ||
-    game.url === "#"
-  ) {
+  if (!game || !game.url || game.url === "#") {
 
-    showToast(
-      "This game is coming soon 🎮"
-    );
+    showToast("This game is coming soon 🎮");
 
     return false;
+
   }
 
+  /*
+     Firebase tracking function comes from
+     leaderboard.js
+  */
 
-  if (
-    typeof window.trackGameStart ===
-    "function"
-  ) {
+  if (typeof window.trackGameStart === "function") {
 
     window.trackGameStart(id);
 
   }
 
+  /*
+     Give Firebase a short moment to start
+     the database request before leaving
+     index.html.
+  */
 
   setTimeout(() => {
 
-    window.location.href =
-      game.url;
+    window.location.href = game.url;
 
   }, 250);
 
-
   return false;
+
 }
 
 
 /* ==================================================
    RENDER GAMES
-   IMPORTANT:
-   Homepage New Games and Popular Games
-   remain EMPTY.
-
-   The games still exist in the data and
-   can be found through SEARCH.
 ================================================== */
 
 function renderGames() {
@@ -389,14 +397,20 @@ function renderGames() {
 
   if (newGrid) {
 
-    newGrid.innerHTML = "";
+    newGrid.innerHTML = games
+      .filter(game => game.newGame)
+      .map(gameCard)
+      .join("");
 
   }
 
 
   if (popularGrid) {
 
-    popularGrid.innerHTML = "";
+    popularGrid.innerHTML = games
+      .filter(game => game.popular)
+      .map(gameCard)
+      .join("");
 
   }
 
@@ -410,50 +424,43 @@ function renderGames() {
 function renderCategories() {
 
   const categoryGrid =
-    document.getElementById(
-      "categoryGrid"
-    );
+    document.getElementById("categoryGrid");
 
   const allCategoryGrid =
-    document.getElementById(
-      "allCategoryGrid"
-    );
+    document.getElementById("allCategoryGrid");
 
 
-  const html =
-    categories
-      .map(category => `
+  const html = categories
+    .map(category => `
 
-        <button
-          class="category-card"
-          onclick="showCategory('${escapeHTML(category)}')">
+      <button
+        class="category-card"
+        onclick="showCategory('${category}')">
 
-          <span>
-            ${categoryIcon(category)}
-          </span>
+        <span>
+          ${categoryIcon(category)}
+        </span>
 
-          <b>
-            ${escapeHTML(category)}
-          </b>
+        <b>
+          ${category}
+        </b>
 
-        </button>
+      </button>
 
-      `)
-      .join("");
+    `)
+    .join("");
 
 
   if (categoryGrid) {
 
-    categoryGrid.innerHTML =
-      html;
+    categoryGrid.innerHTML = html;
 
   }
 
 
   if (allCategoryGrid) {
 
-    allCategoryGrid.innerHTML =
-      html;
+    allCategoryGrid.innerHTML = html;
 
   }
 
@@ -474,11 +481,9 @@ function categoryIcon(category) {
     Arcade: "🕹️",
     Sports: "⚽",
     Strategy: "🧠",
-    Recing: "🏎️",
-    Adventure: "🐉"
+    Recing: "🏎️"
 
   };
-
 
   return icons[category] || "🎮";
 
@@ -494,9 +499,7 @@ function toggleFavorite(id) {
   if (favorites.includes(id)) {
 
     favorites =
-      favorites.filter(
-        item => item !== id
-      );
+      favorites.filter(item => item !== id);
 
   } else {
 
@@ -511,25 +514,16 @@ function toggleFavorite(id) {
   );
 
 
-  /*
-     Homepage remains empty.
-     This does NOT display games there.
-  */
-
   renderGames();
 
 
   const favoritesPage =
-    document.getElementById(
-      "favoritesPage"
-    );
+    document.getElementById("favoritesPage");
 
 
   if (
     favoritesPage &&
-    !favoritesPage.classList.contains(
-      "hidden"
-    )
+    !favoritesPage.classList.contains("hidden")
   ) {
 
     renderFavorites();
@@ -538,13 +532,9 @@ function toggleFavorite(id) {
 
 
   showToast(
-
     favorites.includes(id)
-
       ? "Added to favorites ❤️"
-
       : "Removed from favorites"
-
   );
 
 }
@@ -557,24 +547,19 @@ function toggleFavorite(id) {
 function renderFavorites() {
 
   const favoriteGrid =
-    document.getElementById(
-      "favoriteGrid"
-    );
+    document.getElementById("favoriteGrid");
 
 
   if (!favoriteGrid) return;
 
 
   const favoriteGames =
-    games.filter(
-      game =>
-        favorites.includes(game.id)
+    games.filter(game =>
+      favorites.includes(game.id)
     );
 
 
-  if (
-    favoriteGames.length === 0
-  ) {
+  if (favoriteGames.length === 0) {
 
     favoriteGrid.innerHTML = `
 
@@ -587,8 +572,7 @@ function renderFavorites() {
         </h3>
 
         <p>
-          Search for a game and add it
-          to your favorites.
+          Tap the heart on a game to add it here.
         </p>
 
       </div>
@@ -615,18 +599,13 @@ function renderFavorites() {
 function playGame(id) {
 
   const game =
-    games.find(
-      item => item.id === id
-    );
+    games.find(item => item.id === id);
 
 
   if (!game) return;
 
 
-  if (
-    !game.url ||
-    game.url === "#"
-  ) {
+  if (!game.url || game.url === "#") {
 
     showToast(
       "This game is coming soon 🎮"
@@ -637,10 +616,7 @@ function playGame(id) {
   }
 
 
-  if (
-    typeof window.trackGameStart ===
-    "function"
-  ) {
+  if (typeof window.trackGameStart === "function") {
 
     window.trackGameStart(id);
 
@@ -707,21 +683,18 @@ function showPage(
      Hide All Pages
   ------------------------------ */
 
-  Object.values(pages)
-    .forEach(id => {
+  Object.values(pages).forEach(id => {
 
-      const element =
-        document.getElementById(id);
+    const element =
+      document.getElementById(id);
 
-      if (element) {
+    if (element) {
 
-        element.classList.add(
-          "hidden"
-        );
+      element.classList.add("hidden");
 
-      }
+    }
 
-    });
+  });
 
 
   /* ------------------------------
@@ -736,9 +709,7 @@ function showPage(
 
   if (target) {
 
-    target.classList.remove(
-      "hidden"
-    );
+    target.classList.remove("hidden");
 
   }
 
@@ -748,14 +719,10 @@ function showPage(
   ------------------------------ */
 
   document
-    .querySelectorAll(
-      ".bottom-nav button"
-    )
+    .querySelectorAll(".bottom-nav button")
     .forEach(button => {
 
-      button.classList.remove(
-        "active"
-      );
+      button.classList.remove("active");
 
     });
 
@@ -768,9 +735,7 @@ function showPage(
 
     document
       .getElementById("navHome")
-      ?.classList.add(
-        "active"
-      );
+      ?.classList.add("active");
 
   }
 
@@ -783,9 +748,7 @@ function showPage(
 
     document
       .getElementById("navCategories")
-      ?.classList.add(
-        "active"
-      );
+      ?.classList.add("active");
 
   }
 
@@ -798,15 +761,14 @@ function showPage(
 
     document
       .getElementById("navLeaderboard")
-      ?.classList.add(
-        "active"
-      );
+      ?.classList.add("active");
 
+    /*
+       Real Firebase leaderboard
+       is loaded by leaderboard.js.
+    */
 
-    if (
-      typeof window.loadLeaderboard ===
-      "function"
-    ) {
+    if (typeof window.loadLeaderboard === "function") {
 
       window.loadLeaderboard();
 
@@ -823,10 +785,7 @@ function showPage(
 
     document
       .getElementById("navFavorites")
-      ?.classList.add(
-        "active"
-      );
-
+      ?.classList.add("active");
 
     renderFavorites();
 
@@ -857,9 +816,7 @@ window.addEventListener(
   function(event) {
 
     const page =
-      event.state?.page ||
-      "home";
-
+      event.state?.page || "home";
 
     showPage(
       page,
@@ -892,10 +849,7 @@ if (!location.hash) {
 function loadInitialPage() {
 
   const hash =
-    location.hash.replace(
-      "#",
-      ""
-    );
+    location.hash.replace("#", "");
 
 
   const allowedPages = [
@@ -932,20 +886,15 @@ function loadInitialPage() {
 
 /* ==================================================
    VIEW ALL
-   These pages still work if manually opened.
 ================================================== */
 
 function openAll(type) {
 
   const title =
-    document.getElementById(
-      "allTitle"
-    );
+    document.getElementById("allTitle");
 
   const grid =
-    document.getElementById(
-      "allGrid"
-    );
+    document.getElementById("allGrid");
 
 
   if (!grid) return;
@@ -1009,14 +958,10 @@ function openAll(type) {
 function showCategory(category) {
 
   const title =
-    document.getElementById(
-      "allTitle"
-    );
+    document.getElementById("allTitle");
 
   const grid =
-    document.getElementById(
-      "allGrid"
-    );
+    document.getElementById("allGrid");
 
 
   const selectedGames =
@@ -1037,31 +982,30 @@ function showCategory(category) {
   if (grid) {
 
     grid.innerHTML =
-
       selectedGames.length
 
-      ? selectedGames
-          .map(gameCard)
-          .join("")
+        ? selectedGames
+            .map(gameCard)
+            .join("")
 
-      : `
+        : `
 
-        <div class="empty-state">
+          <div class="empty-state">
 
-          <div>🎮</div>
+            <div>🎮</div>
 
-          <h3>
-            No games yet
-          </h3>
+            <h3>
+              No games yet
+            </h3>
 
-          <p>
-            More ${escapeHTML(category)}
-            games are coming soon.
-          </p>
+            <p>
+              More ${escapeHTML(category)}
+              games are coming soon.
+            </p>
 
-        </div>
+          </div>
 
-      `;
+        `;
 
   }
 
@@ -1073,8 +1017,6 @@ function showCategory(category) {
 
 /* ==================================================
    SEARCH
-   SEARCH WORKS EVEN THOUGH HOMEPAGE GAMES
-   ARE NOT DISPLAYED.
 ================================================== */
 
 function searchGames() {
@@ -1088,17 +1030,11 @@ function searchGames() {
   if (!input) return;
 
 
-  const originalQuery =
-    input.value.trim();
-
-
   const query =
-    originalQuery.toLowerCase();
+    input.value
+      .trim()
+      .toLowerCase();
 
-
-  /* ------------------------------
-     Empty Search
-  ------------------------------ */
 
   if (!query) {
 
@@ -1109,23 +1045,16 @@ function searchGames() {
   }
 
 
-  /* ------------------------------
-     Search Game Title + Category
-  ------------------------------ */
-
   const results =
     games.filter(game => {
 
       const title =
-        String(
-          game.title || ""
-        ).toLowerCase();
+        String(game.title || "")
+          .toLowerCase();
 
       const category =
-        String(
-          game.category || ""
-        ).toLowerCase();
-
+        String(game.category || "")
+          .toLowerCase();
 
       return (
         title.includes(query) ||
@@ -1147,81 +1076,46 @@ function searchGames() {
     );
 
 
-  /* ------------------------------
-     Search Result Title
-  ------------------------------ */
-
   if (title) {
 
     title.textContent =
-      results.length
-
-      ? `Search results for "${originalQuery}"`
-
-      : `No results for "${originalQuery}"`;
+      `Search results for "${input.value}"`;
 
   }
 
-
-  /* ------------------------------
-     Search Results
-  ------------------------------ */
 
   if (grid) {
 
-    if (results.length) {
+    grid.innerHTML =
+      results.length
 
-      grid.innerHTML =
-        results
-          .map(gameCard)
-          .join("");
+        ? results
+            .map(gameCard)
+            .join("")
 
-    } else {
+        : `
 
-      grid.innerHTML = `
+          <div class="empty-state">
 
-        <div class="empty-state">
+            <div>🔍</div>
 
-          <div>🔍</div>
+            <h3>
+              No games found
+            </h3>
 
-          <h3>
-            No games found
-          </h3>
+            <p>
+              Try another game name
+              or category.
+            </p>
 
-          <p>
-            No game matches
-            "<strong>${escapeHTML(originalQuery)}</strong>".
-          </p>
+          </div>
 
-          <p>
-            Try another game name or category.
-          </p>
-
-        </div>
-
-      `;
-
-    }
+        `;
 
   }
 
 
-  /* ------------------------------
-     Open Search Results Page
-  ------------------------------ */
-
   showPage("all");
-
-}
-
-
-/* ==================================================
-   SEARCH BUTTON SUPPORT
-================================================== */
-
-function handleSearch() {
-
-  searchGames();
 
 }
 
@@ -1268,31 +1162,11 @@ function showToast(message) {
 function escapeHTML(value) {
 
   return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
@@ -1305,11 +1179,6 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
 
-    /*
-       IMPORTANT:
-       This does NOT display games on homepage.
-    */
-
     renderGames();
 
     renderCategories();
@@ -1318,7 +1187,7 @@ document.addEventListener(
 
 
     /* ------------------------------
-       Search Enter Key
+       Search Enter
     ------------------------------ */
 
     const searchInput =
@@ -1336,8 +1205,6 @@ document.addEventListener(
           if (
             event.key === "Enter"
           ) {
-
-            event.preventDefault();
 
             searchGames();
 
