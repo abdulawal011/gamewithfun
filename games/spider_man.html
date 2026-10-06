@@ -1,0 +1,3149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<title>Spider Night Vision - GameWithFun</title>
+<meta name="description" content="Play Spider Night Vision online for free at GameWithFun. Swing through a dark city, collect glowing energy orbs, avoid drones and survive as long as possible.">
+<meta name="keywords" content="Spider Night Vision, spider game, superhero game, night vision game, web swinging game, online games, free browser games, GameWithFun">
+<meta name="theme-color" content="#050b08">
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  background:#020604;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#baffc8;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+body.game-active{
+  overflow:hidden;
+  height:100%;
+  touch-action:none;
+}
+
+button{
+  font-family:inherit;
+}
+
+#game{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  background:#020604;
+  z-index:1;
+  pointer-events:none;
+}
+
+#hud{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:5;
+  padding:
+    max(10px,env(safe-area-inset-top))
+    12px
+    8px;
+  pointer-events:none;
+  display:none;
+}
+
+.hud-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+
+.hud-box{
+  background:rgba(2,15,8,.78);
+  border:1px solid rgba(100,255,130,.42);
+  box-shadow:
+    0 0 12px rgba(50,255,100,.15),
+    inset 0 0 12px rgba(50,255,100,.05);
+  border-radius:12px;
+  padding:7px 11px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.5px;
+  text-shadow:0 0 7px #66ff88;
+}
+
+#healthBar{
+  width:120px;
+  height:9px;
+  margin-top:5px;
+  border:1px solid #65ff82;
+  border-radius:20px;
+  overflow:hidden;
+  background:#07150b;
+}
+
+#healthFill{
+  height:100%;
+  width:100%;
+  background:#61ff7b;
+  box-shadow:0 0 10px #61ff7b;
+}
+
+#nightVision{
+  position:fixed;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  opacity:.22;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(100,255,130,.09) 0px,
+      rgba(100,255,130,.09) 1px,
+      transparent 2px,
+      transparent 5px
+    );
+  mix-blend-mode:screen;
+  display:none;
+}
+
+#vignette{
+  position:fixed;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 38%,
+      rgba(0,0,0,.18) 62%,
+      rgba(0,0,0,.82) 100%
+    );
+  display:none;
+}
+
+#crosshair{
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:36px;
+  height:36px;
+  border:1px solid rgba(120,255,140,.35);
+  border-radius:50%;
+  z-index:4;
+  pointer-events:none;
+  display:none;
+}
+
+#crosshair:before,
+#crosshair:after{
+  content:"";
+  position:absolute;
+  background:rgba(120,255,140,.35);
+}
+
+#crosshair:before{
+  width:1px;
+  height:48px;
+  left:17px;
+  top:-7px;
+}
+
+#crosshair:after{
+  height:1px;
+  width:48px;
+  left:-7px;
+  top:17px;
+}
+
+.screen{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(30,150,60,.15),transparent 35%),
+    rgba(0,4,2,.93);
+}
+
+.panel{
+  width:min(480px,94vw);
+  padding:30px 22px;
+  text-align:center;
+  border:1px solid rgba(95,255,125,.5);
+  border-radius:24px;
+  background:rgba(3,15,8,.94);
+  box-shadow:
+    0 0 35px rgba(45,255,90,.14),
+    inset 0 0 30px rgba(45,255,90,.05);
+}
+
+.logo{
+  width:92px;
+  height:92px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #6cff89;
+  color:#71ff8a;
+  font-size:45px;
+  text-shadow:0 0 20px #4cff72;
+  box-shadow:
+    0 0 25px rgba(70,255,100,.28),
+    inset 0 0 20px rgba(70,255,100,.08);
+}
+
+h1{
+  margin:0;
+  font-size:34px;
+  letter-spacing:2px;
+  color:#aaffb8;
+  text-shadow:0 0 15px #48ff70;
+}
+
+.subtitle{
+  margin:8px 0 20px;
+  color:#70c47e;
+  font-size:14px;
+}
+
+.btn{
+  width:100%;
+  border:1px solid #68ff83;
+  border-radius:14px;
+  padding:15px 18px;
+  margin-top:10px;
+  background:linear-gradient(#173b20,#09190d);
+  color:#aaffb6;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:1px;
+  box-shadow:0 0 16px rgba(75,255,100,.14);
+  cursor:pointer;
+}
+
+.btn:active{
+  transform:scale(.97);
+}
+
+.info{
+  margin-top:18px;
+  padding:12px;
+  border-radius:13px;
+  background:rgba(60,255,100,.04);
+  border:1px solid rgba(100,255,130,.14);
+  color:#7cae84;
+  font-size:12px;
+  line-height:1.6;
+}
+
+#gameOver{
+  display:none;
+}
+
+.final-score{
+  font-size:24px;
+  font-weight:900;
+  margin:12px 0;
+  color:#baffc3;
+}
+
+#mobileControls{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:10;
+  display:none;
+  justify-content:center;
+  gap:12px;
+  padding:
+    10px
+    14px
+    max(15px,env(safe-area-inset-bottom));
+  pointer-events:none;
+}
+
+.control{
+  width:74px;
+  height:58px;
+  border-radius:18px;
+  border:1px solid rgba(110,255,135,.5);
+  background:rgba(4,25,11,.78);
+  color:#9dffae;
+  font-size:25px;
+  font-weight:bold;
+  box-shadow:0 0 15px rgba(70,255,100,.1);
+  pointer-events:auto;
+  user-select:none;
+  cursor:pointer;
+}
+
+.control:active{
+  background:rgba(30,90,42,.85);
+  transform:scale(.94);
+}
+
+#webBtn{
+  width:92px;
+  color:#c5ffd0;
+}
+
+.tip{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:92px;
+  z-index:8;
+  padding:8px 14px;
+  border-radius:20px;
+  background:rgba(0,15,5,.7);
+  border:1px solid rgba(100,255,130,.2);
+  color:#71ba7e;
+  font-size:11px;
+  pointer-events:none;
+  white-space:nowrap;
+  display:none;
+}
+
+/* =========================================================
+   WEBSITE CONTENT
+========================================================= */
+
+#siteContent{
+  position:relative;
+  z-index:30;
+  display:block;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(50,255,90,.06),transparent 420px),
+    #020604;
+  color:#baffc8;
+}
+
+.site-header{
+  position:relative;
+  padding:25px 16px;
+  text-align:center;
+  border-bottom:1px solid rgba(100,255,130,.14);
+  background:#030b05;
+}
+
+.brand{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#aaffb8;
+  text-shadow:0 0 12px #42ff69;
+}
+
+.brand span{
+  color:#64ff82;
+}
+
+.header-sub{
+  margin-top:6px;
+  color:#6ea878;
+  font-size:12px;
+}
+
+.content-wrap{
+  width:min(1000px,94%);
+  margin:auto;
+}
+
+.hero-content{
+  text-align:center;
+  padding:42px 10px 28px;
+}
+
+.hero-content h2{
+  margin:0;
+  font-size:clamp(28px,5vw,44px);
+  color:#aaffb8;
+  text-shadow:0 0 18px rgba(70,255,100,.3);
+}
+
+.hero-content p{
+  max-width:760px;
+  margin:14px auto 0;
+  color:#82b98d;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.content-section{
+  margin:22px 0;
+  padding:28px;
+  border:1px solid rgba(100,255,130,.15);
+  border-radius:20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(40,100,50,.08),
+      rgba(2,15,7,.72)
+    );
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.18),
+    inset 0 0 20px rgba(70,255,100,.025);
+}
+
+.content-section h2{
+  margin:0 0 15px;
+  color:#9fffad;
+  font-size:26px;
+}
+
+.content-section h3{
+  color:#8dff9e;
+  margin:22px 0 8px;
+  font-size:18px;
+}
+
+.content-section p{
+  margin:10px 0;
+  color:#86ad8c;
+  line-height:1.8;
+  font-size:15px;
+}
+
+.content-section ul{
+  margin:12px 0;
+  padding-left:22px;
+}
+
+.content-section li{
+  margin:9px 0;
+  color:#86ad8c;
+  line-height:1.7;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.feature-card{
+  padding:20px;
+  border-radius:16px;
+  border:1px solid rgba(100,255,130,.13);
+  background:rgba(60,255,100,.035);
+}
+
+.feature-card .icon{
+  font-size:28px;
+  margin-bottom:9px;
+}
+
+.feature-card strong{
+  display:block;
+  color:#9dffab;
+  margin-bottom:7px;
+}
+
+.feature-card span{
+  color:#719879;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.controls-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:16px;
+}
+
+.control-card{
+  padding:18px;
+  border-radius:15px;
+  border:1px solid rgba(100,255,130,.14);
+  background:#061009;
+}
+
+.control-card strong{
+  display:block;
+  color:#a6ffb2;
+  margin-bottom:7px;
+}
+
+.control-card span{
+  color:#78a981;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.game-info-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  overflow:hidden;
+  border-radius:12px;
+}
+
+.game-info-table tr{
+  border-bottom:1px solid rgba(100,255,130,.1);
+}
+
+.game-info-table td{
+  padding:13px 12px;
+  text-align:left;
+  color:#79a882;
+  font-size:14px;
+}
+
+.game-info-table td:first-child{
+  width:38%;
+  color:#a1ffae;
+  font-weight:800;
+}
+
+.faq-item{
+  padding:17px 0;
+  border-bottom:1px solid rgba(100,255,130,.1);
+}
+
+.faq-item:last-child{
+  border-bottom:0;
+}
+
+.faq-item h3{
+  margin:0 0 7px;
+  color:#9dffab;
+  font-size:17px;
+}
+
+.faq-item p{
+  margin:0;
+}
+
+.more-games{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:17px;
+}
+
+.more-game{
+  display:block;
+  text-decoration:none;
+  text-align:center;
+  padding:17px 10px;
+  border:1px solid rgba(100,255,130,.15);
+  border-radius:14px;
+  color:#9effac;
+  background:#061009;
+  transition:.2s;
+}
+
+.more-game:hover{
+  transform:translateY(-2px);
+  border-color:#65ff81;
+}
+
+.more-game .game-icon{
+  display:block;
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.more-game span{
+  font-size:12px;
+}
+
+.cta{
+  text-align:center;
+}
+
+.home-btn{
+  display:inline-block;
+  padding:14px 25px;
+  border-radius:13px;
+  border:1px solid #68ff83;
+  color:#aaffb5;
+  background:#0a2110;
+  text-decoration:none;
+  font-weight:900;
+  box-shadow:0 0 18px rgba(70,255,100,.1);
+}
+
+.site-footer{
+  margin-top:35px;
+  padding:30px 15px;
+  text-align:center;
+  border-top:1px solid rgba(100,255,130,.13);
+  background:#020804;
+}
+
+.site-footer p{
+  margin:7px 0;
+  color:#668b6e;
+  font-size:12px;
+}
+
+.footer-links{
+  margin:12px 0;
+}
+
+.footer-links a{
+  color:#78bd84;
+  text-decoration:none;
+  margin:0 8px;
+  font-size:12px;
+}
+
+/* Game active mode */
+body.game-active #siteContent{
+  display:none;
+}
+
+body.game-active #game{
+  pointer-events:auto;
+}
+
+body.game-active #hud,
+body.game-active #nightVision,
+body.game-active #vignette,
+body.game-active #crosshair{
+  display:block;
+}
+
+body.game-active .tip{
+  display:block;
+}
+
+body.game-active #mobileControls{
+  display:flex;
+}
+
+/* Start screen should appear while game is selected */
+body:not(.game-active) #startScreen{
+  display:none!important;
+}
+
+/* Game launcher */
+#gameLauncher{
+  margin:30px auto;
+  width:min(600px,94%);
+  padding:28px;
+  text-align:center;
+  border:1px solid rgba(100,255,130,.18);
+  border-radius:20px;
+  background:#040d06;
+}
+
+#gameLauncher h2{
+  margin:0 0 10px;
+  color:#a5ffb1;
+}
+
+#gameLauncher p{
+  color:#769e7d;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.launch-btn{
+  border:1px solid #68ff83;
+  border-radius:14px;
+  padding:15px 25px;
+  background:#0b2611;
+  color:#adffb8;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* Mobile */
+@media(max-width:700px){
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .controls-grid{
+    grid-template-columns:1fr;
+  }
+
+  .more-games{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .content-section{
+    padding:21px 17px;
+  }
+
+  .hero-content{
+    padding-top:32px;
+  }
+
+  .hud-row{
+    gap:5px;
+  }
+
+  .hud-box{
+    font-size:10px;
+    padding:6px 7px;
+  }
+
+  #healthBar{
+    width:70px;
+  }
+}
+
+@media(max-width:420px){
+
+  .more-games{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .control{
+    width:65px;
+    height:54px;
+  }
+
+  #webBtn{
+    width:84px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     GAME CANVAS
+====================================================== -->
+
+<canvas id="game"></canvas>
+
+<div id="nightVision"></div>
+<div id="vignette"></div>
+<div id="crosshair"></div>
+
+<div id="hud">
+  <div class="hud-row">
+
+    <div class="hud-box">
+      SCORE <span id="score">0</span><br>
+      DIST <span id="distance">0</span>m
+    </div>
+
+    <div class="hud-box">
+      HEALTH
+      <div id="healthBar">
+        <div id="healthFill"></div>
+      </div>
+    </div>
+
+    <div class="hud-box">
+      COINS <span id="coins">0</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="tip">
+  HOLD WEB TO SWING • COLLECT GREEN ORBS
+</div>
+
+<div id="mobileControls">
+
+  <button class="control" id="leftBtn">◀</button>
+
+  <button class="control" id="webBtn">🕸️</button>
+
+  <button class="control" id="rightBtn">▶</button>
+
+</div>
+
+<!-- ======================================================
+     START SCREEN
+====================================================== -->
+
+<div class="screen" id="startScreen">
+
+  <div class="panel">
+
+    <div class="logo">🕷️</div>
+
+    <h1>SPIDER NIGHT VISION</h1>
+
+    <div class="subtitle">
+      CITY AFTER DARK
+    </div>
+
+    <button class="btn" id="startBtn">
+      ▶ START MISSION
+    </button>
+
+    <button class="btn" onclick="exitGame()">
+      ↩ BACK TO GAME PAGE
+    </button>
+
+    <div class="info">
+      Swing through the dark city using your web.
+      Avoid drones, collect energy orbs and survive
+      as long as possible.
+      <br><br>
+      MOBILE: Hold 🕸️ to swing<br>
+      DESKTOP: Hold SPACE to swing
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ======================================================
+     GAME OVER
+====================================================== -->
+
+<div class="screen" id="gameOver">
+
+  <div class="panel">
+
+    <div class="logo">☠</div>
+
+    <h1>MISSION OVER</h1>
+
+    <div class="final-score">
+      SCORE: <span id="finalScore">0</span>
+    </div>
+
+    <div class="info">
+      Distance: <span id="finalDistance">0</span>m<br>
+      Coins: <span id="finalCoins">0</span>
+    </div>
+
+    <button class="btn" id="restartBtn">
+      ↻ PLAY AGAIN
+    </button>
+
+    <button class="btn" onclick="exitGame()">
+      ↩ BACK TO GAME PAGE
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ======================================================
+     WEBSITE CONTENT
+====================================================== -->
+
+<div id="siteContent">
+
+  <header class="site-header">
+    <div class="brand">
+      🕷️ <span>GameWithFun</span>
+    </div>
+    <div class="header-sub">
+      Free Online Browser Games
+    </div>
+  </header>
+
+  <main class="content-wrap">
+
+    <section class="hero-content">
+      <h2>Spider Night Vision</h2>
+      <p>
+        Enter the dark city, activate your night vision and
+        swing through the skyline in this fast-paced original
+        superhero-style browser game.
+      </p>
+    </section>
+
+    <div id="gameLauncher">
+
+      <h2>🕷️ Ready to Play?</h2>
+
+      <p>
+        Use your web, move through the night and collect as
+        many glowing energy orbs as possible. Avoid dangerous
+        drones and try to beat your highest score.
+      </p>
+
+      <button class="launch-btn" id="launchGameBtn">
+        ▶ PLAY SPIDER NIGHT VISION
+      </button>
+
+    </div>
+
+    <!-- ==================================================
+         HOW TO PLAY
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>🎮 How to Play Spider Night Vision</h2>
+
+      <p>
+        Spider Night Vision is a fast and simple endless
+        city-swinging game designed for both mobile and
+        desktop browsers. Your objective is to travel as
+        far as possible while collecting glowing energy
+        orbs and protecting your health. The city becomes
+        increasingly challenging as you continue playing,
+        so quick reactions and good timing are important.
+      </p>
+
+      <p>
+        When the game begins, your character appears in a
+        dark futuristic city surrounded by tall buildings,
+        glowing windows and a night sky. The special
+        night-vision presentation gives the entire game a
+        green tactical appearance. You will see energy
+        orbs floating through the city and drones moving
+        through the air. Your score increases while you
+        continue moving, and collecting an energy orb gives
+        you an additional score bonus.
+      </p>
+
+      <p>
+        The main movement mechanic is the web button. Hold
+        the web button on a mobile device or hold the Space
+        key on a desktop keyboard to activate the web swing.
+        Releasing the button lets your character fall and
+        continue moving through the environment. Use the
+        left and right controls to adjust your horizontal
+        position and line up with energy orbs while avoiding
+        obstacles.
+      </p>
+
+      <p>
+        Your health bar is displayed at the top of the game.
+        Colliding with enemy drones reduces your health.
+        Staying too low for too long can also become
+        dangerous, so keep your character moving and use
+        the web mechanic to control your position. Once
+        your health reaches zero, the mission ends and your
+        final score, distance and collected coins are shown.
+      </p>
+
+      <p>
+        There is no complicated installation process. The
+        game is designed to run directly in a modern web
+        browser. You can play on a phone, tablet or computer.
+        The controls are intentionally simple so that you
+        can start playing quickly without needing to learn
+        a large number of buttons.
+      </p>
+
+    </section>
+
+    <!-- ==================================================
+         CONTROLS
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>🕹️ Controls</h2>
+
+      <div class="controls-grid">
+
+        <div class="control-card">
+          <strong>📱 Mobile - Left</strong>
+          <span>
+            Tap or hold the ◀ button to move your character
+            toward the left side of the screen.
+          </span>
+        </div>
+
+        <div class="control-card">
+          <strong>📱 Mobile - Right</strong>
+          <span>
+            Tap or hold the ▶ button to move your character
+            toward the right side of the screen.
+          </span>
+        </div>
+
+        <div class="control-card">
+          <strong>🕸️ Mobile - Web</strong>
+          <span>
+            Hold the 🕸️ button to activate the web-swing
+            mechanic and control your vertical movement.
+          </span>
+        </div>
+
+        <div class="control-card">
+          <strong>⌨️ Desktop</strong>
+          <span>
+            Use A/D or Left/Right Arrow keys for horizontal
+            movement and hold Space to use the web.
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================
+         FEATURES
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>⭐ Game Features</h2>
+
+      <div class="feature-grid">
+
+        <div class="feature-card">
+          <div class="icon">🌃</div>
+          <strong>Dark City</strong>
+          <span>
+            Explore a continuously moving night-time city
+            filled with buildings and glowing windows.
+          </span>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">🕸️</div>
+          <strong>Web Swinging</strong>
+          <span>
+            Use the web mechanic to control your movement
+            and stay airborne.
+          </span>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">👾</div>
+          <strong>Enemy Drones</strong>
+          <span>
+            Avoid flying drones that can damage your health
+            when they collide with you.
+          </span>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">🟢</div>
+          <strong>Energy Orbs</strong>
+          <span>
+            Collect glowing energy orbs to increase your
+            coin count and score.
+          </span>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">📈</div>
+          <strong>Increasing Speed</strong>
+          <span>
+            The game gradually becomes faster, requiring
+            quicker reactions as your run continues.
+          </span>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">📱</div>
+          <strong>Mobile Friendly</strong>
+          <span>
+            Play comfortably on phones, tablets and desktop
+            browsers with responsive controls.
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================
+         ABOUT
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>📖 About Spider Night Vision</h2>
+
+      <p>
+        Spider Night Vision is an original browser game
+        created for GameWithFun with a focus on quick
+        arcade gameplay, simple controls and a distinctive
+        night-vision atmosphere. Instead of requiring a
+        large download or complicated installation, the
+        game is designed to be played directly inside a
+        supported web browser.
+      </p>
+
+      <p>
+        The game combines endless-runner mechanics with a
+        web-swinging movement system. The player travels
+        through a dark urban environment while trying to
+        maintain control of the character. Buildings move
+        across the screen, drones create hazards and energy
+        orbs provide opportunities to increase the score.
+      </p>
+
+      <p>
+        The green night-vision visual style is an important
+        part of the experience. Scan lines, glowing objects,
+        a dark skyline and a tactical-style crosshair create
+        the feeling of navigating a city after dark. The
+        visual presentation is intentionally lightweight so
+        that the game can remain suitable for browser play
+        without requiring large external game assets.
+      </p>
+
+      <p>
+        Spider Night Vision is intended for casual players
+        who enjoy short arcade sessions. You can play for a
+        few minutes and try to beat your previous score, or
+        continue playing to see how far you can travel as
+        the speed increases. The scoring system rewards
+        distance and collected energy orbs, giving players
+        multiple ways to improve their performance.
+      </p>
+
+    </section>
+
+    <!-- ==================================================
+         TIPS
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>🎯 Tips and Tricks</h2>
+
+      <h3>1. Keep Moving</h3>
+
+      <p>
+        The city continuously moves toward you, so staying
+        active is important. Watch the position of your
+        character and make small adjustments rather than
+        waiting until an obstacle is extremely close.
+      </p>
+
+      <h3>2. Use the Web Carefully</h3>
+
+      <p>
+        Holding the web button changes your movement. Learn
+        how long you need to hold it to reach a comfortable
+        height. Releasing it at the right moment can help
+        you control your descent.
+      </p>
+
+      <h3>3. Watch the Drones</h3>
+
+      <p>
+        Enemy drones can reduce your health. If a drone is
+        approaching your position, use horizontal movement
+        and the web mechanic together to create distance.
+      </p>
+
+      <h3>4. Collect Energy Orbs</h3>
+
+      <p>
+        Energy orbs are valuable because they increase your
+        coin count and provide additional points. However,
+        do not put your entire run at risk for one orb.
+        Survival and distance are also important.
+      </p>
+
+      <h3>5. Improve Your High Score</h3>
+
+      <p>
+        The game becomes faster over time. Your first goal
+        can be learning the controls, followed by surviving
+        longer and collecting more energy. Once you become
+        comfortable with the movement, challenge yourself
+        to set a new personal best.
+      </p>
+
+    </section>
+
+    <!-- ==================================================
+         GAME INFORMATION
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>📋 Game Information</h2>
+
+      <table class="game-info-table">
+
+        <tr>
+          <td>Game Name</td>
+          <td>Spider Night Vision</td>
+        </tr>
+
+        <tr>
+          <td>Developer</td>
+          <td>GameWithFun</td>
+        </tr>
+
+        <tr>
+          <td>Platform</td>
+          <td>Web Browser</td>
+        </tr>
+
+        <tr>
+          <td>Category</td>
+          <td>Arcade / Action / Endless Runner</td>
+        </tr>
+
+        <tr>
+          <td>Game Mode</td>
+          <td>Single Player</td>
+        </tr>
+
+        <tr>
+          <td>Controls</td>
+          <td>Touch + Keyboard</td>
+        </tr>
+
+        <tr>
+          <td>Objective</td>
+          <td>Survive, swing, collect orbs and score points</td>
+        </tr>
+
+        <tr>
+          <td>Enemies</td>
+          <td>Flying Drones</td>
+        </tr>
+
+        <tr>
+          <td>Collectibles</td>
+          <td>Energy Orbs / Coins</td>
+        </tr>
+
+        <tr>
+          <td>Visual Style</td>
+          <td>Dark Night Vision</td>
+        </tr>
+
+        <tr>
+          <td>Game Type</td>
+          <td>Endless</td>
+        </tr>
+
+        <tr>
+          <td>Developer Site</td>
+          <td>GameWithFun</td>
+        </tr>
+
+      </table>
+
+    </section>
+
+    <!-- ==================================================
+         800+ WORD ARTICLE
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>🌙 Play Spider Night Vision Online</h2>
+
+      <p>
+        Welcome to Spider Night Vision, a fast-paced
+        browser game from GameWithFun that places you in a
+        mysterious city after dark. The game is designed
+        around a simple idea: move quickly, use your web,
+        collect energy and survive for as long as possible.
+        The dark environment and green night-vision effect
+        create a unique arcade atmosphere while keeping the
+        controls easy to understand for new players.
+      </p>
+
+      <p>
+        When you start your mission, the city stretches
+        across the screen with tall buildings, glowing
+        windows and a dark sky above. Your character is
+        surrounded by the visual effect of a night-vision
+        system. The green glow makes important objects easy
+        to recognize while the darker background helps
+        create the feeling of moving through a city at
+        night. Every run is slightly different because
+        elements such as buildings, energy orbs and drones
+        are positioned dynamically.
+      </p>
+
+      <p>
+        The central gameplay mechanic is web movement. On
+        mobile devices, press and hold the web button to
+        activate the web. On desktop computers, hold the
+        Space key. The character responds to this input
+        while continuing to move through the city. You can
+        combine the web mechanic with left and right
+        movement to adjust your position and avoid danger.
+        Learning the rhythm of holding and releasing the
+        web is one of the most important parts of becoming
+        better at the game.
+      </p>
+
+      <p>
+        Energy orbs are scattered throughout the city.
+        Collecting them increases your coin count and gives
+        you extra points. The glowing appearance of the
+        orbs makes them easy to identify against the darker
+        environment. However, collecting every orb is not
+        always the best decision. Sometimes an orb may be
+        positioned close to an enemy drone or may require a
+        risky movement. Good players learn when to collect
+        and when to continue safely.
+      </p>
+
+      <p>
+        Enemy drones are another important part of Spider
+        Night Vision. These flying hazards move through the
+        environment and can damage your health when you
+        collide with them. Your health is displayed at the
+        top of the screen, allowing you to understand how
+        much room you have left for mistakes. When you take
+        damage, creating more space between your character
+        and nearby drones becomes important.
+      </p>
+
+      <p>
+        The game also becomes more challenging as your run
+        continues. The movement speed gradually increases,
+        which means that a strategy that works during the
+        first few seconds may not be enough later. This
+        increasing difficulty gives the game an endless
+        challenge. Instead of completing a fixed collection
+        of levels, your goal is to survive longer, travel
+        farther and achieve a higher score.
+      </p>
+
+      <p>
+        Spider Night Vision is built for quick browser
+        sessions. You do not need to install a large game
+        package before playing. The game can be opened in a
+        compatible browser on a phone, tablet or computer.
+        The responsive design adapts the interface to
+        different screen sizes, while touch controls make
+        the game accessible to mobile players. Desktop
+        players can use keyboard controls for a different
+        style of gameplay.
+      </p>
+
+      <p>
+        Another important part of the experience is the
+        atmosphere. The night-vision filter, scan lines,
+        glowing objects and dark buildings create a
+        futuristic tactical feeling. The goal is not to
+        reproduce a specific movie or comic scene, but to
+        create an original spider-themed arcade experience
+        for GameWithFun. The simple visual system also helps
+        keep the game lightweight and suitable for web
+        browsers.
+      </p>
+
+      <p>
+        If you are playing for the first time, start by
+        learning the basic movement instead of immediately
+        chasing every energy orb. Practice moving left and
+        right, then add the web mechanic. Once you understand
+        how the character rises and falls, begin collecting
+        more orbs. Pay attention to drones and avoid sudden
+        movements when possible. Small corrections can often
+        be safer than large movements.
+      </p>
+
+      <p>
+        The scoring system gives you several ways to improve.
+        Your score increases as you travel, while energy
+        orbs provide additional points. This means that a
+        long survival run can produce a strong score even if
+        you do not collect every available orb. On the other
+        hand, skilled players can combine distance with
+        careful collection to achieve an even higher result.
+      </p>
+
+      <p>
+        Spider Night Vision is made for players who enjoy
+        arcade games that are easy to start but become more
+        challenging with practice. Every attempt can be used
+        to learn something new about movement, timing and
+        positioning. Your first run might end quickly, but
+        repeated attempts can help you understand the pace
+        of the city and improve your reactions.
+      </p>
+
+      <p>
+        GameWithFun is designed to provide free browser games
+        that can be enjoyed without complicated setup.
+        Spider Night Vision is one example of that approach:
+        a compact game, simple controls, a distinctive visual
+        style and an endless scoring challenge. Whether you
+        have a few minutes to spare or want to compete with
+        your own previous score, the game is ready whenever
+        you are.
+      </p>
+
+      <p>
+        Turn on your night vision, enter the city and begin
+        your mission. Watch the skyline, avoid the drones,
+        collect glowing energy and use your web at the right
+        moment. The longer you survive, the faster the
+        challenge becomes. Your objective is simple: go
+        farther, score higher and become better with every
+        run.
+      </p>
+
+    </section>
+
+    <!-- ==================================================
+         FAQ
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>❓ Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h3>Is Spider Night Vision free to play?</h3>
+        <p>
+          Yes. Spider Night Vision is designed as a free
+          browser game for GameWithFun.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I play Spider Night Vision on mobile?</h3>
+        <p>
+          Yes. The game includes touch controls for mobile
+          phones and tablets.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>How do I use the web?</h3>
+        <p>
+          On mobile, hold the 🕸️ button. On desktop, hold
+          the Space key.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>What are the glowing green objects?</h3>
+        <p>
+          They are energy orbs. Collecting them increases
+          your coin count and gives you bonus points.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>What happens when my health reaches zero?</h3>
+        <p>
+          Your mission ends and the game displays your final
+          score, distance and collected coins.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Does the game have levels?</h3>
+        <p>
+          Spider Night Vision uses an endless-run style
+          system rather than fixed levels. The challenge
+          increases as you continue.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I play on a computer?</h3>
+        <p>
+          Yes. Desktop players can use the keyboard controls
+          including A/D or the Arrow keys and Space.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ==================================================
+         MORE GAMES
+    ================================================== -->
+
+    <section class="content-section">
+
+      <h2>🎮 More Games from GameWithFun</h2>
+
+      <p>
+        Finished your Spider Night Vision mission? Try
+        another free browser game from GameWithFun.
+      </p>
+
+      <div class="more-games">
+
+        <a class="more-game" href="/p/flag-guess.html">
+          <span class="game-icon">🇧🇩</span>
+          <span>Flag Guess</span>
+        </a>
+
+        <a class="more-game" href="/p/sliding-puzzle.html">
+          <span class="game-icon">🔢</span>
+          <span>Sliding Puzzle</span>
+        </a>
+
+        <a class="more-game" href="/p/fruit-frenzy.html">
+          <span class="game-icon">🍉</span>
+          <span>Fruit Frenzy</span>
+        </a>
+
+        <a class="more-game" href="/p/shooting-game.html">
+          <span class="game-icon">🎯</span>
+          <span>Shooting Game</span>
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================
+         FINAL CTA
+    ================================================== -->
+
+    <section class="content-section cta">
+
+      <h2>🕷️ Ready for Another Mission?</h2>
+
+      <p>
+        Play again and try to beat your best score. The city
+        is waiting, the night vision is active and the next
+        mission is yours.
+      </p>
+
+      <button class="home-btn" id="playAgainPageBtn">
+        ▶ PLAY SPIDER NIGHT VISION
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="brand">
+      🕷️ <span>GameWithFun</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/p/about.html">About</a>
+      <a href="/p/contact.html">Contact</a>
+      <a href="/p/privacy-policy.html">Privacy Policy</a>
+      <a href="/p/disclaimer.html">Disclaimer</a>
+    </div>
+
+    <p>
+      © 2026 GameWithFun · Spider Night Vision
+    </p>
+
+    <p>
+      Free online browser games for everyone.
+    </p>
+
+  </footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   SPIDER NIGHT VISION
+   GameWithFun
+========================================================= */
+
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let W = 0;
+let H = 0;
+let DPR = Math.min(devicePixelRatio || 1,2);
+
+function resize(){
+
+  W = innerWidth;
+  H = innerHeight;
+
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+
+  canvas.style.width = W+"px";
+  canvas.style.height = H+"px";
+
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+
+}
+
+addEventListener("resize",resize);
+resize();
+
+/* ---------- AUDIO ---------- */
+
+let audioCtx = null;
+
+function sound(freq=440,duration=.07,type="sine"){
+
+  try{
+
+    if(!audioCtx){
+      audioCtx =
+        new (window.AudioContext ||
+             window.webkitAudioContext)();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = type;
+    osc.frequency.value = freq;
+
+    gain.gain.setValueAtTime(
+      .045,
+      audioCtx.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioCtx.currentTime+duration
+    );
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+
+    osc.stop(
+      audioCtx.currentTime+duration
+    );
+
+  }catch(e){}
+
+}
+
+/* ---------- GAME STATE ---------- */
+
+let running = false;
+let gameTime = 0;
+let score = 0;
+let coins = 0;
+let distance = 0;
+let health = 100;
+
+let worldX = 0;
+let speed = 3.4;
+let last = 0;
+
+const player = {
+  x:180,
+  y:300,
+  vx:0,
+  vy:0,
+  r:18,
+  swing:false,
+  webX:0,
+  webY:0,
+  inv:0
+};
+
+let buildings = [];
+let orbs = [];
+let drones = [];
+let particles = [];
+let stars = [];
+
+const keys = {
+  left:false,
+  right:false,
+  web:false
+};
+
+/* ---------- STARS ---------- */
+
+function createStars(){
+
+  stars=[];
+
+  for(let i=0;i<130;i++){
+
+    stars.push({
+      x:Math.random()*W,
+      y:Math.random()*H*.65,
+      r:Math.random()*1.4+.2,
+      a:Math.random()*.7+.2
+    });
+
+  }
+
+}
+
+createStars();
+
+/* ---------- WORLD ---------- */
+
+function makeBuilding(x){
+
+  const width =
+    70 + Math.random()*110;
+
+  const height =
+    100 + Math.random()*230;
+
+  buildings.push({
+    x,
+    width,
+    height,
+    roof:Math.random()<.25
+  });
+
+  return width;
+
+}
+
+function resetWorld(){
+
+  buildings=[];
+  orbs=[];
+  drones=[];
+  particles=[];
+
+  let x=-100;
+
+  for(let i=0;i<20;i++){
+
+    x += 15+Math.random()*35;
+
+    x += makeBuilding(x)+35;
+
+  }
+
+  for(let i=0;i<16;i++){
+
+    orbs.push({
+
+      x:250+i*170+Math.random()*100,
+
+      y:150+Math.random()*280,
+
+      r:7,
+
+      collected:false,
+
+      pulse:Math.random()*6
+
+    });
+
+  }
+
+  for(let i=0;i<7;i++){
+
+    drones.push({
+
+      x:650+i*360+Math.random()*150,
+
+      y:150+Math.random()*250,
+
+      r:17,
+
+      hp:1,
+
+      phase:Math.random()*10
+
+    });
+
+  }
+
+}
+
+/* ---------- PARTICLES ---------- */
+
+function particle(
+  x,
+  y,
+  colorType="green"
+){
+
+  particles.push({
+
+    x,
+    y,
+
+    vx:(Math.random()-.5)*3,
+
+    vy:(Math.random()-.5)*3,
+
+    life:1,
+
+    size:Math.random()*3+1,
+
+    type:colorType
+
+  });
+
+}
+
+/* ---------- START GAME ---------- */
+
+function startGame(){
+
+  document.body.classList.add("game-active");
+
+  document.getElementById("startScreen")
+    .style.display="flex";
+
+  document.getElementById("gameOver")
+    .style.display="none";
+
+  running=false;
+
+  gameTime=0;
+  score=0;
+  coins=0;
+  distance=0;
+  health=100;
+  worldX=0;
+
+  player.x=180;
+  player.y=H*.45;
+  player.vx=0;
+  player.vy=0;
+  player.swing=false;
+  player.inv=0;
+
+  speed=3.4;
+
+  resetWorld();
+  createStars();
+
+  sound(620,.12,"triangle");
+
+  last=performance.now();
+
+  updateHUD();
+
+}
+
+/* ---------- ACTUAL PLAY ---------- */
+
+function beginMission(){
+
+  document.getElementById("startScreen")
+    .style.display="none";
+
+  document.getElementById("gameOver")
+    .style.display="none";
+
+  running=true;
+
+  last=performance.now();
+
+  requestAnimationFrame(loop);
+
+}
+
+/* ---------- END ---------- */
+
+function endGame(){
+
+  if(!running)
+    return;
+
+  running=false;
+
+  document.getElementById("finalScore")
+    .textContent=Math.floor(score);
+
+  document.getElementById("finalDistance")
+    .textContent=Math.floor(distance);
+
+  document.getElementById("finalCoins")
+    .textContent=coins;
+
+  document.getElementById("gameOver")
+    .style.display="flex";
+
+  sound(120,.3,"sawtooth");
+
+}
+
+/* ---------- EXIT GAME ---------- */
+
+function exitGame(){
+
+  running=false;
+
+  document.body.classList.remove("game-active");
+
+  document.getElementById("startScreen")
+    .style.display="none";
+
+  document.getElementById("gameOver")
+    .style.display="none";
+
+}
+
+/* ---------- CONTROLS ---------- */
+
+addEventListener("keydown",e=>{
+
+  if(e.code==="ArrowLeft" ||
+     e.code==="KeyA"){
+
+    keys.left=true;
+
+  }
+
+  if(e.code==="ArrowRight" ||
+     e.code==="KeyD"){
+
+    keys.right=true;
+
+  }
+
+  if(e.code==="Space"){
+
+    e.preventDefault();
+
+    keys.web=true;
+
+  }
+
+});
+
+addEventListener("keyup",e=>{
+
+  if(e.code==="ArrowLeft" ||
+     e.code==="KeyA"){
+
+    keys.left=false;
+
+  }
+
+  if(e.code==="ArrowRight" ||
+     e.code==="KeyD"){
+
+    keys.right=false;
+
+  }
+
+  if(e.code==="Space"){
+
+    keys.web=false;
+
+  }
+
+});
+
+function holdButton(id,key){
+
+  const el =
+    document.getElementById(id);
+
+  const down=e=>{
+
+    e.preventDefault();
+
+    keys[key]=true;
+
+  };
+
+  const up=e=>{
+
+    e.preventDefault();
+
+    keys[key]=false;
+
+  };
+
+  el.addEventListener(
+    "pointerdown",
+    down
+  );
+
+  el.addEventListener(
+    "pointerup",
+    up
+  );
+
+  el.addEventListener(
+    "pointercancel",
+    up
+  );
+
+  el.addEventListener(
+    "pointerleave",
+    up
+  );
+
+}
+
+holdButton("leftBtn","left");
+holdButton("rightBtn","right");
+holdButton("webBtn","web");
+
+document.getElementById("launchGameBtn")
+  .addEventListener("click",startGame);
+
+document.getElementById("startBtn")
+  .addEventListener("click",beginMission);
+
+document.getElementById("restartBtn")
+  .addEventListener("click",startGame);
+
+document.getElementById("playAgainPageBtn")
+  .addEventListener("click",startGame);
+
+/* ---------- UPDATE ---------- */
+
+function update(dt){
+
+  gameTime += dt;
+
+  speed =
+    Math.min(
+      7.5,
+      3.4+gameTime*.045
+    );
+
+  worldX +=
+    speed*dt*60;
+
+  distance +=
+    speed*dt*1.5;
+
+  score +=
+    speed*dt*2;
+
+  /* PLAYER */
+
+  if(keys.left){
+
+    player.vx -=
+      0.18*dt*60;
+
+  }
+
+  if(keys.right){
+
+    player.vx +=
+      0.18*dt*60;
+
+  }
+
+  player.vx *=
+    Math.pow(.91,dt*60);
+
+  player.x +=
+    player.vx*dt*60;
+
+  /* WEB */
+
+  if(keys.web){
+
+    if(!player.swing){
+
+      player.swing=true;
+
+      player.webX =
+        player.x+100;
+
+      player.webY =
+        80+Math.random()*120;
+
+      sound(
+        900,
+        .06,
+        "triangle"
+      );
+
+    }
+
+    const dx =
+      player.webX-player.x;
+
+    player.vy +=
+      .10*dt*60;
+
+    player.vx +=
+      dx*.0008*dt*60;
+
+    if(player.y >
+       player.webY+145){
+
+      player.vy -=
+        .16*dt*60;
+
+    }
+
+  }else{
+
+    player.swing=false;
+
+    player.vy +=
+      .18*dt*60;
+
+  }
+
+  player.vy *=
+    Math.pow(.995,dt*60);
+
+  player.y +=
+    player.vy*dt*60;
+
+  /* LIMITS */
+
+  if(player.x<70){
+
+    player.x=70;
+    player.vx=0;
+
+  }
+
+  if(player.x>W-70){
+
+    player.x=W-70;
+    player.vx=0;
+
+  }
+
+  if(player.y<80){
+
+    player.y=80;
+    player.vy=0;
+
+  }
+
+  if(player.y>H-125){
+
+    player.y=H-125;
+    player.vy=-5;
+
+    health -=
+      .12*dt*60;
+
+    particle(
+      player.x,
+      player.y,
+      "green"
+    );
+
+  }
+
+  if(player.inv>0)
+    player.inv-=dt;
+
+  /* BUILDINGS */
+
+  for(const b of buildings){
+
+    b.x -=
+      speed*dt*60;
+
+    if(b.x+b.width<-100){
+
+      const maxX =
+        Math.max(
+          ...buildings.map(
+            x=>x.x+x.width
+          )
+        );
+
+      b.x =
+        maxX+50+Math.random()*80;
+
+      b.width =
+        70+Math.random()*110;
+
+      b.height =
+        100+Math.random()*230;
+
+    }
+
+  }
+
+  /* ORBS */
+
+  for(const o of orbs){
+
+    o.x -=
+      speed*dt*60;
+
+    o.pulse +=
+      dt*5;
+
+    if(o.x<-30){
+
+      o.x =
+        W+300+Math.random()*300;
+
+      o.y =
+        140+Math.random()*300;
+
+      o.collected=false;
+
+    }
+
+    if(!o.collected){
+
+      const dx =
+        o.x-player.x;
+
+      const dy =
+        o.y-player.y;
+
+      if(
+        Math.hypot(dx,dy) <
+        player.r+o.r+10
+      ){
+
+        o.collected=true;
+
+        coins++;
+
+        score+=100;
+
+        for(let i=0;i<12;i++)
+          particle(
+            o.x,
+            o.y,
+            "gold"
+          );
+
+        sound(
+          1000,
+          .08,
+          "sine"
+        );
+
+      }
+
+    }
+
+  }
+
+  /* DRONES */
+
+  for(const d of drones){
+
+    d.x -=
+      speed*dt*60;
+
+    d.phase +=
+      dt*3;
+
+    d.y +=
+      Math.sin(d.phase)*.5;
+
+    if(d.x<-80){
+
+      d.x =
+        W+400+Math.random()*500;
+
+      d.y =
+        120+Math.random()*320;
+
+    }
+
+    const dx =
+      d.x-player.x;
+
+    const dy =
+      d.y-player.y;
+
+    if(
+      Math.hypot(dx,dy) <
+      player.r+d.r
+    ){
+
+      if(player.inv<=0){
+
+        health-=18;
+
+        player.inv=1;
+
+        player.vx=-5;
+        player.vy=-4;
+
+        for(let i=0;i<15;i++)
+          particle(
+            player.x,
+            player.y,
+            "red"
+          );
+
+        sound(
+          90,
+          .18,
+          "square"
+        );
+
+      }
+
+    }
+
+  }
+
+  /* PARTICLES */
+
+  for(
+    let i=particles.length-1;
+    i>=0;
+    i--
+  ){
+
+    const p=particles[i];
+
+    p.x +=
+      p.vx*dt*60;
+
+    p.y +=
+      p.vy*dt*60;
+
+    p.vy +=
+      .03*dt*60;
+
+    p.life -=
+      dt*1.8;
+
+    if(p.life<=0)
+      particles.splice(i,1);
+
+  }
+
+  if(health<=0)
+    endGame();
+
+  updateHUD();
+
+}
+
+/* ---------- HUD ---------- */
+
+function updateHUD(){
+
+  document.getElementById("score")
+    .textContent=Math.floor(score);
+
+  document.getElementById("coins")
+    .textContent=coins;
+
+  document.getElementById("distance")
+    .textContent=Math.floor(distance);
+
+  document.getElementById("healthFill")
+    .style.width=Math.max(0,health)+"%";
+
+}
+
+/* ---------- DRAW ---------- */
+
+function draw(){
+
+  ctx.clearRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+  drawSky();
+  drawStars();
+  drawMoon();
+  drawCity();
+  drawOrbs();
+  drawDrones();
+
+  if(player.swing)
+    drawWeb();
+
+  drawPlayer();
+  drawParticles();
+
+  const glow =
+    ctx.createRadialGradient(
+      player.x,
+      player.y,
+      20,
+      player.x,
+      player.y,
+      330
+    );
+
+  glow.addColorStop(
+    0,
+    "rgba(90,255,120,.08)"
+  );
+
+  glow.addColorStop(
+    1,
+    "rgba(0,0,0,0)"
+  );
+
+  ctx.fillStyle=glow;
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+}
+
+/* ---------- SKY ---------- */
+
+function drawSky(){
+
+  const g =
+    ctx.createLinearGradient(
+      0,0,0,H
+    );
+
+  g.addColorStop(
+    0,
+    "#010604"
+  );
+
+  g.addColorStop(
+    .55,
+    "#03120a"
+  );
+
+  g.addColorStop(
+    1,
+    "#020804"
+  );
+
+  ctx.fillStyle=g;
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+}
+
+/* ---------- STARS ---------- */
+
+function drawStars(){
+
+  for(const s of stars){
+
+    ctx.globalAlpha=s.a;
+
+    ctx.fillStyle="#71ff91";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      (s.x-worldX*.015)%W,
+      s.y,
+      s.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+  }
+
+  ctx.globalAlpha=1;
+
+}
+
+/* ---------- MOON ---------- */
+
+function drawMoon(){
+
+  const x=W*.78;
+  const y=H*.17;
+
+  ctx.save();
+
+  ctx.shadowBlur=35;
+  ctx.shadowColor="#65ff84";
+
+  ctx.fillStyle=
+    "rgba(145,255,160,.15)";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    52,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.fillStyle=
+    "rgba(150,255,165,.45)";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    34,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.restore();
+
+}
+
+/* ---------- CITY ---------- */
+
+function drawCity(){
+
+  const ground=H-105;
+
+  for(const b of buildings){
+
+    const x=b.x;
+    const y=ground-b.height;
+
+    const g =
+      ctx.createLinearGradient(
+        x,y,x,ground
+      );
+
+    g.addColorStop(
+      0,
+      "#071d0d"
+    );
+
+    g.addColorStop(
+      1,
+      "#020905"
+    );
+
+    ctx.fillStyle=g;
+
+    ctx.fillRect(
+      x,
+      y,
+      b.width,
+      b.height
+    );
+
+    ctx.strokeStyle=
+      "rgba(75,255,105,.16)";
+
+    ctx.strokeRect(
+      x,
+      y,
+      b.width,
+      b.height
+    );
+
+    const cols =
+      Math.max(
+        2,
+        Math.floor(b.width/20)
+      );
+
+    const rows =
+      Math.max(
+        3,
+        Math.floor(b.height/28)
+      );
+
+    for(
+      let cx=0;
+      cx<cols;
+      cx++
+    ){
+
+      for(
+        let cy=0;
+        cy<rows;
+        cy++
+      ){
+
+        const seed =
+          Math.sin(
+            (b.x+
+             cx*31+
+             cy*77)*.1
+          );
+
+        if(seed>.35){
+
+          const wx =
+            x+8+cx*18;
+
+          const wy =
+            y+12+cy*27;
+
+          ctx.fillStyle=
+            "rgba(93,255,117,.35)";
+
+          ctx.fillRect(
+            wx,
+            wy,
+            6,
+            9
+          );
+
+        }
+
+      }
+
+    }
+
+    if(b.roof){
+
+      ctx.fillStyle="#0a3515";
+
+      ctx.fillRect(
+        x+b.width*.25,
+        y-8,
+        b.width*.5,
+        8
+      );
+
+    }
+
+  }
+
+  ctx.fillStyle="#010302";
+
+  ctx.fillRect(
+    0,
+    ground,
+    W,
+    H-ground
+  );
+
+  ctx.strokeStyle=
+    "rgba(85,255,105,.13)";
+
+  ctx.lineWidth=2;
+
+  for(let i=0;i<8;i++){
+
+    const yy =
+      ground+20+i*18;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      yy
+    );
+
+    ctx.lineTo(
+      W,
+      yy
+    );
+
+    ctx.stroke();
+
+  }
+
+}
+
+/* ---------- ORBS ---------- */
+
+function drawOrbs(){
+
+  for(const o of orbs){
+
+    if(o.collected)
+      continue;
+
+    const pulse =
+      1+Math.sin(o.pulse)*.2;
+
+    ctx.save();
+
+    ctx.shadowBlur=22;
+    ctx.shadowColor="#74ff91";
+
+    ctx.fillStyle="#a7ffb6";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      o.x,
+      o.y,
+      o.r*pulse,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+  }
+
+}
+
+/* ---------- DRONES ---------- */
+
+function drawDrones(){
+
+  for(const d of drones){
+
+    ctx.save();
+
+    ctx.translate(
+      d.x,
+      d.y
+    );
+
+    ctx.shadowBlur=18;
+    ctx.shadowColor="#ff5260";
+
+    ctx.fillStyle="#112016";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      d.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle="#5cff78";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      d.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.stroke();
+
+    ctx.fillStyle="#ff5965";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      5,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle=
+      "rgba(100,255,130,.5)";
+
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      -28,
+      0
+    );
+
+    ctx.lineTo(
+      -13,
+      0
+    );
+
+    ctx.moveTo(
+      13,
+      0
+    );
+
+    ctx.lineTo(
+      28,
+      0
+    );
+
+    ctx.stroke();
+
+    ctx.restore();
+
+  }
+
+}
+
+/* ---------- WEB ---------- */
+
+function drawWeb(){
+
+  ctx.save();
+
+  ctx.strokeStyle=
+    "rgba(165,255,180,.85)";
+
+  ctx.lineWidth=2;
+
+  ctx.shadowBlur=8;
+  ctx.shadowColor="#65ff83";
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    player.x,
+    player.y
+  );
+
+  ctx.lineTo(
+    player.webX,
+    player.webY
+  );
+
+  ctx.stroke();
+
+  for(let i=1;i<5;i++){
+
+    const t=i/5;
+
+    const x =
+      player.x+
+      (player.webX-player.x)*t;
+
+    const y =
+      player.y+
+      (player.webY-player.y)*t;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,
+      y,
+      4+i*3,
+      0,
+      Math.PI*2
+    );
+
+    ctx.stroke();
+
+  }
+
+  ctx.fillStyle="#b8ffc4";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    player.webX,
+    player.webY,
+    4,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.restore();
+
+}
+
+/* ---------- PLAYER ---------- */
+
+function drawPlayer(){
+
+  if(
+    player.inv>0 &&
+    Math.floor(
+      player.inv*12
+    )%2===0
+  )
+    return;
+
+  ctx.save();
+
+  ctx.translate(
+    player.x,
+    player.y
+  );
+
+  ctx.fillStyle=
+    "rgba(60,255,90,.12)";
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    27,
+    25,
+    8,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.strokeStyle=
+    "rgba(80,255,110,.35)";
+
+  ctx.lineWidth=5;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    -8,
+    12
+  );
+
+  ctx.quadraticCurveTo(
+    -30,
+    25,
+    -45,
+    10
+  );
+
+  ctx.stroke();
+
+  ctx.fillStyle="#071a0c";
+  ctx.strokeStyle="#77ff8f";
+  ctx.lineWidth=2;
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    0,
+    7,
+    14,
+    22,
+    0,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle="#102518";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    0,
+    -17,
+    13,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle="#d2ffda";
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    -9,
+    -20
+  );
+
+  ctx.lineTo(
+    -2,
+    -23
+  );
+
+  ctx.lineTo(
+    -3,
+    -16
+  );
+
+  ctx.closePath();
+
+  ctx.fill();
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    9,
+    -20
+  );
+
+  ctx.lineTo(
+    2,
+    -23
+  );
+
+  ctx.lineTo(
+    3,
+    -16
+  );
+
+  ctx.closePath();
+
+  ctx.fill();
+
+  ctx.strokeStyle="#7aff90";
+  ctx.lineWidth=1.4;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    0,
+    -2
+  );
+
+  ctx.lineTo(
+    0,
+    12
+  );
+
+  ctx.stroke();
+
+  for(let i=0;i<3;i++){
+
+    const yy =
+      1+i*5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      -1,
+      yy
+    );
+
+    ctx.lineTo(
+      -12,
+      yy-5
+    );
+
+    ctx.moveTo(
+      1,
+      yy
+    );
+
+    ctx.lineTo(
+      12,
+      yy-5
+    );
+
+    ctx.stroke();
+
+  }
+
+  ctx.strokeStyle="#7aff90";
+  ctx.lineWidth=3;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    -7,
+    20
+  );
+
+  ctx.lineTo(
+    -13,
+    31
+  );
+
+  ctx.moveTo(
+    7,
+    20
+  );
+
+  ctx.lineTo(
+    13,
+    31
+  );
+
+  ctx.stroke();
+
+  ctx.restore();
+
+}
+
+/* ---------- PARTICLES ---------- */
+
+function drawParticles(){
+
+  for(const p of particles){
+
+    ctx.save();
+
+    ctx.globalAlpha =
+      Math.max(0,p.life);
+
+    ctx.fillStyle =
+      p.type==="red"
+      ? "#ff5865"
+      : p.type==="gold"
+      ? "#baffc4"
+      : "#68ff86";
+
+    ctx.shadowBlur=10;
+    ctx.shadowColor=
+      ctx.fillStyle;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      p.x,
+      p.y,
+      p.size,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+  }
+
+}
+
+/* ---------- LOOP ---------- */
+
+function loop(now){
+
+  if(!running)
+    return;
+
+  const dt =
+    Math.min(
+      .035,
+      (now-last)/1000
+    );
+
+  last=now;
+
+  update(dt);
+  draw();
+
+  requestAnimationFrame(loop);
+
+}
+
+/* ---------- INITIAL ---------- */
+
+updateHUD();
+
+</script>
+
+</body>
+</html>
