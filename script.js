@@ -162,16 +162,6 @@ const games = [
     newGame: false,
     popular: true
   },
-   {
-    id: 21,
-    title: "c",
-    category: "",
-    icon: "",
-    url: "games/ca.html",
-    newGame: false,
-    popular: true
-  },
-
   {
     id: 1,
     title: "Car Racing",
