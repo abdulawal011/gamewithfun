@@ -189,7 +189,7 @@ const games = [
     title: "Game Coming Soon",
     category: "",
     icon: "",
-    url: "",
+    url: "games/airplane.html",
     newGame: false,
     popular: true
   },
