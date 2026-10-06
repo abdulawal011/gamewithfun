@@ -191,14 +191,14 @@ const games = [
     icon: "",
     url: "games/airplane.html",
     newGame: false,
-    popular: true
+    popular: false
   },
 
   {
     id: 104,
     title: "Devil's Trap",
     category: "",
-    icon: "",
+    icon: "devil's_trap.webp",
     url: "games/devils_trap.html",
     newGame: false,
     popular: true
