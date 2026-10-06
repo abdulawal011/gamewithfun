@@ -186,7 +186,7 @@ const games = [
 
   {
     id: 103,
-    title: "Game Coming Soon",
+    title: "Game ",
     category: "",
     icon: "",
     url: "games/airplane.html",
@@ -196,10 +196,10 @@ const games = [
 
   {
     id: 104,
-    title: "Game Coming Soon",
+    title: "Devil's Trap",
     category: "",
     icon: "",
-    url: "",
+    url: "games/devils_trap.html",
     newGame: false,
     popular: true
   },
