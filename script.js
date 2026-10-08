@@ -4,6 +4,42 @@
 
 const games = [
   {
+    id: 21,
+    title: "Horror Game",
+    category: "",
+    icon: "",
+    url: "games/horror_game.html",
+    newGame: true,
+    popular: false
+  },
+   {
+    id: 20,
+    title: "Jungle Survivor",
+    category: "",
+    icon: "",
+    url: "games/jungle_survivor.html",
+    newGame: true,
+    popular: false
+  },
+   {
+    id: 19,
+    title: "Fight Action",
+    category: "",
+    icon: "",
+    url: "games/Last_Soldier.html",
+    newGame: true,
+    popular: false
+  },
+   {
+    id: 18,
+    title: "",
+    category: "",
+    icon: "",
+    url: "",
+    newGame: false,
+    popular: false
+  },
+   {
     id: 17,
     title: "Shadow Cat",
     category: "",
