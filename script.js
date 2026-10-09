@@ -7,7 +7,7 @@ const games = [
     id: 21,
     title: "Horror Game",
     category: "",
-    icon: "",
+    icon: "games/horror_game.webp",
     url: "games/horror_game.html",
     newGame: true,
     popular: false
@@ -16,7 +16,7 @@ const games = [
     id: 20,
     title: "Jungle Survivor",
     category: "",
-    icon: "",
+    icon: "games/jungle_survival.webp",
     url: "games/jungle_survivor.html",
     newGame: true,
     popular: false
@@ -25,7 +25,7 @@ const games = [
     id: 19,
     title: "Fight Action",
     category: "",
-    icon: "",
+    icon: "games/last_soldier.webp",
     url: "games/Last_Soldier.html",
     newGame: true,
     popular: false
