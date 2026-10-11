@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Haunted Escape - GameWithFun</title>
+<style>
+:root{--bg:#07060a;--fg:#d8d2c8;--red:#b3262b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:Georgia,serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#w{height:100%;display:flex;align-items:center;justify-content:center;position:relative}
+canvas{display:block;background:#000}
+#ov{position:absolute;inset:0;background:rgba(0,0,0,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+h1{color:var(--red);font-size:clamp(28px,6vw,52px);margin:0 0 10px;letter-spacing:3px}
+p{max-width:520px;line-height:1.5;margin:0 0 18px;white-space:pre-line}
+button{background:var(--red);color:#fff;border:0;padding:12px 28px;font:inherit;font-size:18px;border-radius:6px;cursor:pointer}
+.tb{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));right:16px;width:70px;height:70px;border-radius:50%;background:rgba(179,38,43,.55);font-size:13px;padding:0;display:none}
+#dp{position:absolute;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:156px;height:156px;display:none}
+#dp button{position:absolute;width:52px;height:52px;padding:0;font-size:22px;background:rgba(179,38,43,.55);touch-action:none}
+@media(pointer:coarse){.tb,#dp{display:block}}
+
+/* GameWithFun landing page: isolated vertical scrolling */
+#gfLanding{
+  position:fixed;inset:0;width:100%;height:100%;height:100dvh;
+  z-index:99999;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;
+  touch-action:pan-y;background:#07060a;color:#e8e0d7;
+  font-family:Arial,Helvetica,sans-serif;user-select:text;-webkit-user-select:text;
+  scrollbar-width:thin;scrollbar-color:#b3262b #171218;
+}
+#gfLanding *{box-sizing:border-box}
+#gfLanding .gf-wrap{width:min(980px,100%);margin:0 auto;padding:18px 16px calc(42px + env(safe-area-inset-bottom,0px))}
+#gfLanding .gf-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 0 22px;border-bottom:1px solid #33252a}
+#gfLanding .gf-brand{font-weight:900;font-size:21px;letter-spacing:.5px;color:#fff;text-decoration:none}
+#gfLanding .gf-brand span{color:#e34b50}
+#gfLanding .gf-home{color:#f3c8c8;text-decoration:none;border:1px solid #6c3034;border-radius:8px;padding:10px 13px;font-size:14px}
+#gfLanding .gf-hero{text-align:center;padding:42px 14px 34px;background:radial-gradient(ellipse at 50% 0%,#42151d 0%,#160d13 48%,#07060a 100%);border:1px solid #382128;border-radius:18px;margin:22px 0}
+#gfLanding .gf-kicker{color:#ff777b;font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+#gfLanding h1{font-family:Georgia,serif;color:#f0444b;font-size:clamp(34px,8vw,66px);letter-spacing:2px;line-height:1.08;margin:13px 0}
+#gfLanding .gf-sub{max-width:650px;margin:0 auto 22px;color:#d9cbd0;line-height:1.7;font-size:16px}
+#gfLanding .gf-start{display:inline-block;border:0;border-radius:9px;padding:16px 28px;background:linear-gradient(135deg,#e13c43,#8e171e);color:#fff;font-weight:900;font-size:17px;letter-spacing:.6px;box-shadow:0 8px 24px #a51f2a45;cursor:pointer}
+#gfLanding .gf-note{color:#ad9da4;font-size:13px;margin:15px 0 0}
+#gfLanding .gf-section{padding:23px 22px;margin:16px 0;background:#100d12;border:1px solid #302129;border-radius:14px}
+#gfLanding h2{color:#f1d6d7;font-size:23px;margin:0 0 13px}
+#gfLanding h3{color:#f08b90;font-size:17px;margin:18px 0 7px}
+#gfLanding p,#gfLanding li{font-size:15px;line-height:1.8;color:#d0c5cb}
+#gfLanding p{margin:0 0 12px}
+#gfLanding ul{padding-left:22px;margin:8px 0}
+#gfLanding .gf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#gfLanding .gf-info{padding:14px;border-radius:10px;background:#1b131a;border:1px solid #39252d}
+#gfLanding .gf-info b{display:block;color:#ff9ca0;margin-bottom:5px}
+#gfLanding .gf-footer{text-align:center;color:#998b92;padding:24px 10px 8px;font-size:13px;line-height:1.8}
+#gfLanding .gf-footer a{color:#f1a0a4;text-decoration:none}
+#gfLanding .gf-footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin-bottom:14px}
+#gfLanding .gf-footer-links a{display:inline-block;padding:4px 0}
+#gfLanding a,#gfLanding button{touch-action:manipulation}
+@media(max-width:600px){
+ #gfLanding .gf-wrap{padding:12px 12px calc(32px + env(safe-area-inset-bottom,0px))}
+ #gfLanding .gf-hero{padding:32px 13px 28px;margin:15px 0}
+ #gfLanding .gf-section{padding:19px 16px}
+ #gfLanding .gf-grid{grid-template-columns:1fr}
+ #gfLanding .gf-top{padding-bottom:15px}
+}
+
+</style></head><body>
+<div id="gfLanding">
+ <div class="gf-wrap">
+  <header class="gf-top">
+   <a class="gf-brand" href="https://gamewithfun.com/" aria-label="GameWithFun Home">Game<span>With</span>Fun</a>
+   <a class="gf-home" href="https://gamewithfun.com/">← Return to GameWithFun</a>
+  </header>
+  <main>
+   <section class="gf-hero">
+    <div class="gf-kicker">A survival horror browser game</div>
+    <h1>HAUNTED ESCAPE</h1>
+    <p class="gf-sub">Enter a dark, shifting maze, search for keys, uncover a route to freedom, and stay out of the monster’s sight. Keep your flashlight ready and choose every step carefully.</p>
+    <button class="gf-start" id="gfStart">START THE GAME</button>
+    <p class="gf-note">Free to play in your browser · Keyboard and touch controls · Best experienced in landscape</p>
+   </section>
+   <section class="gf-section">
+    <h2>How to Play Haunted Escape</h2>
+    <p>Your goal is to explore the haunted maze, collect every required key, and reach the locked exit. A monster roams the corridors and can chase you when it spots you. Watch your surroundings, listen for warning sounds, and use hiding places when danger gets close.</p>
+    <ul>
+     <li>Explore the corridors and look for the glowing keys.</li>
+     <li>Collect all required keys before trying to open the exit door.</li>
+     <li>Use the flashlight to see farther, but remember that visibility affects how the monster detects you.</li>
+     <li>Find a nearby closet and hide when you need to avoid danger.</li>
+     <li>On later levels, look for the silver key needed to pass the iron gate.</li>
+     <li>Reach the exit to clear the level and continue your escape.</li>
+    </ul>
+   </section>
+   <section class="gf-section">
+    <h2>Controls</h2>
+    <div class="gf-grid">
+     <div class="gf-info"><b>PC / Keyboard</b><p>WASD or Arrow Keys: Move<br>F: Toggle flashlight<br>E or Space: Hide or leave a hiding place</p></div>
+     <div class="gf-info"><b>Mobile / Touch</b><p>Drag on the left side of the game screen to move. Use the HIDE and LIGHT buttons on the right side. Landscape mode gives the maze more room.</p></div>
+    </div>
+   </section>
+   <section class="gf-section">
+    <h2>Game Information</h2>
+    <div class="gf-grid">
+     <div class="gf-info"><b>Game Title</b>Haunted Escape</div>
+     <div class="gf-info"><b>Developer</b>GameWithFun</div>
+     <div class="gf-info"><b>Genre</b>Horror · Maze · Survival</div>
+     <div class="gf-info"><b>Platform</b>Web browser · Desktop and mobile</div>
+     <div class="gf-info"><b>Objective</b>Collect keys and escape</div>
+     <div class="gf-info"><b>Progression</b>10 increasingly challenging levels</div>
+    </div>
+   </section>
+   <article class="gf-section gf-article">
+    <h2>Haunted Escape – A Dark Maze Survival Challenge</h2>
+    <p>Haunted Escape is a free browser horror game from GameWithFun that combines maze exploration, careful movement, key collecting, flashlight management, and monster avoidance. You enter a mysterious house where the corridors form a maze and the exit will not open until you have found the keys. Every journey asks you to balance curiosity with caution. The quickest-looking path may lead you close to danger, while a quiet detour can give you time to think and plan.</p>
+    <h3>Explore a Maze That Changes</h3>
+    <p>Each new level generates a fresh maze layout, so learning one route will not automatically solve the next. You need to read the corridors as you move, remember where you have already searched, and keep track of possible routes back to the exit. The maze becomes more demanding as you advance, adding more space to explore and additional challenges to consider. This changing layout helps keep repeat attempts interesting because your route and decisions matter each time you enter.</p>
+    <h3>Find the Keys Before the Exit</h3>
+    <p>Keys are the central objective of Haunted Escape. Search the open corridors and collect the glowing items scattered throughout the maze. The exit door stays locked while you still need keys, so rushing directly to the door is not enough. Check side passages, keep an eye on the progress counter, and think about how to return safely after collecting an item. On later levels, a special silver key may also be required to open an iron gate. Finding it changes which routes are available and can make your escape plan more complicated.</p>
+    <h3>Stay Aware of the Monster</h3>
+    <p>The monster is the main threat inside the haunted house. It patrols the maze, and when it detects you, it can change direction and begin a chase. Walls and barriers can interrupt its view, so corners and corridors are important when deciding where to move. Pay attention to the atmosphere and sound cues, especially when the danger feels close. Standing still in an exposed corridor is risky; keep thinking about the nearest turn, alternate route, or hiding place instead of moving without a plan.</p>
+    <h3>Use Your Flashlight Wisely</h3>
+    <p>The flashlight helps you see more of the dark environment, but using it is a tactical choice rather than a reason to stop paying attention. Toggle it when you need to inspect a corridor, locate an item, or understand the route ahead. The game’s detection rules also make light management part of the challenge. Try to combine short periods of careful exploration with awareness of nearby exits and hiding places. You will often make better decisions when you know where you can go next rather than simply moving toward the brightest area.</p>
+    <h3>Hiding Can Give You Time</h3>
+    <p>Closets and other marked hiding spots offer a way to avoid being seen when you are close enough to use one. If you are not near a hiding place, the game will tell you that you cannot hide there, so notice useful spots while exploring instead of searching for one only at the last moment. Hiding is not a substitute for navigation: you still need to collect keys and reach the exit. Use it as one part of a larger plan, and leave your hiding place when it is safe to continue.</p>
+    <h3>Tips for New Players</h3>
+    <p>First, learn the controls in a quiet section of the maze. On a computer, use WASD or the arrow keys to move, F to toggle the flashlight, and E or Space to hide or leave a hiding place. On a phone or tablet, drag on the left side of the game screen to move and tap the HIDE or LIGHT buttons when needed. Landscape mode is recommended because the game’s play area is designed around a wide view. Move deliberately at intersections, keep track of the key counter, and avoid taking a route you cannot explain to yourself.</p>
+    <p>If the monster begins chasing you, use the maze layout to break its line of sight and head toward a route you already recognize. Do not forget the exit location while collecting the last key. In later levels, remember that the silver key and iron gate may affect your route. If a run ends early, treat it as practice: the next attempt will have a different maze, and the experience you gain from reading the corridors can help you make better decisions.</p>
+    <h3>Why Play Haunted Escape on GameWithFun?</h3>
+    <p>Haunted Escape is designed for players who enjoy suspense, exploration, and survival challenges in a simple browser format. There is no separate installation process required to begin playing on a compatible device; open the game page, read the instructions, and start when you are ready. Its mix of procedural maze layouts, collectable objectives, hiding places, a flashlight, and an active monster creates several decisions to make during every escape. The controls are straightforward, while the changing maze encourages observation and patience.</p>
+    <p>Whether you are playing on a desktop computer or a mobile browser, your goal remains the same: explore carefully, collect the keys, avoid the monster, and find the exit. Take your time with the instructions, adjust to the touch controls if you are on a phone, and try to complete all ten levels. When you are ready, press Start the Game and see whether you can escape the haunted house.</p>
+   </article>
+  </main>
+  <footer class="gf-footer">
+    <div class="gf-footer-links">
+      <a href="https://gamewithfun.com/about.html">About Us</a>
+      <a href="https://gamewithfun.com/contact.html">Contact Us</a>
+      <a href="https://gamewithfun.com/privacy.html">Privacy Policy</a>
+      <a href="https://gamewithfun.com/terms.html">Terms</a>
+      <a href="https://gamewithfun.com/disclaimer.html">Disclaimer</a>
+    </div>
+    © 2026 GameWithFun. All rights reserved.<br>
+    Game developed for GameWithFun
+  </footer>
+ </div>
+</div>
+
+<div id="w"><canvas id="c"></canvas>
+<button class="tb" id="bh" style="right:96px">HIDE</button><button class="tb" id="bl">LIGHT</button>
+<div id="dp"><button data-k="ArrowUp" style="left:52px;top:0">▲</button><button data-k="ArrowLeft" style="left:0;top:52px">◀</button><button data-k="ArrowRight" style="left:104px;top:52px">▶</button><button data-k="ArrowDown" style="left:52px;top:104px">▼</button></div>
+<div id="ov"><h1 id="t"></h1><p id="p"></p><button id="b"></button></div></div>
+<script>
+const C=document.getElementById('c'),X=C.getContext('2d'),W=800,H=450,TS=44,R=11,DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
+C.width=W;C.height=H;
+const D=document.createElement('canvas');D.width=W;D.height=H;const DX=D.getContext('2d');
+let lvl=1;try{lvl=+localStorage.getItem('hh_lvl')||1}catch(e){}
+let T,GW,GH,P,mons,items,cl,ex,ey,gx=-1,gy=-1,fl,got,need,hasS,st='menu',msg='',msgT=0,bn=0,sc=0,hb=0,stp=0,cx0=0,cy0=0,jx=0,jy=0,jo=null;
+const k={},rnd=n=>Math.random()*n|0;
+/* audio */
+let A,mg;
+function au(){if(A)return;try{A=new(window.AudioContext||window.webkitAudioContext)();mg=A.createGain();mg.gain.value=.6;mg.connect(A.destination);const o=A.createOscillator(),g=A.createGain();o.type='sawtooth';o.frequency.value=46;g.gain.value=.04;o.connect(g);g.connect(mg);o.start()}catch(e){}}
+function tn(f,d,t,v,f2){if(!A)return;const o=A.createOscillator(),g=A.createGain(),n=A.currentTime;o.type=t||'sine';o.frequency.setValueAtTime(f,n);if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+d);g.gain.setValueAtTime(v||.2,n);g.gain.exponentialRampToValueAtTime(.001,n+d);o.connect(g);g.connect(mg);o.start();o.stop(n+d)}
+function ns(d,v){if(!A)return;const b=A.createBuffer(1,A.sampleRate*d,A.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=(Math.random()*2-1)*(1-i/a.length);const s=A.createBufferSource(),g=A.createGain();g.gain.value=v;s.buffer=b;s.connect(g);g.connect(mg);s.start()}
+/* level generation */
+function bfs(x0,y0,bl){const d=new Int16Array(GW*GH).fill(-1),q=[[x0,y0]];d[y0*GW+x0]=0;for(let i=0;i<q.length;i++){const[x,y]=q[i];for(const[dx,dy]of DIRS){const a=x+dx,b=y+dy;if(a<0||b<0||a>=GW||b>=GH)continue;const t=T[b][a];if(t==1||t==2||(bl&&t==3)||d[b*GW+a]>=0)continue;d[b*GW+a]=d[y*GW+x]+1;q.push([a,b])}}return d}
+function gen(){
+const cw=5+lvl,ch=4+(lvl*.6|0);GW=2*cw+1;GH=2*ch+1;T=Array.from({length:GH},()=>Array(GW).fill(1));
+const s=[[0,0]],vis=new Set(['0,0']);T[1][1]=0;
+while(s.length){const[x,y]=s[s.length-1];const nb=DIRS.map(d=>[x+d[0],y+d[1],d]).filter(([a,b])=>a>=0&&b>=0&&a<cw&&b<ch&&!vis.has(a+','+b));if(!nb.length){s.pop();continue}const[a,b,d]=nb[rnd(nb.length)];vis.add(a+','+b);T[2*y+1+d[1]][2*x+1+d[0]]=0;T[2*b+1][2*a+1]=0;s.push([a,b])}
+for(let i=0;i<cw*ch/5;i++){const x=1+rnd(GW-2),y=1+rnd(GH-2);if((x+y)%2==1&&T[y][x]==1)T[y][x]=0}
+const d=bfs(1,1,false);fl=[];let cells=[];
+for(let y=0;y<GH;y++)for(let x=0;x<GW;x++)if(T[y][x]==0){fl.push([x,y]);if(x%2&&y%2)cells.push([x,y,d[y*GW+x]])}
+cells.sort((a,b)=>b[2]-a[2]);let ax=1,ay=1;
+for(const[x,y]of cells){const w=DIRS.map(q=>[x+q[0],y+q[1]]).filter(([a,b])=>T[b][a]==1);if(w.length){const[a,b]=w[rnd(w.length)];T[b][a]=2;ex=a;ey=b;ax=x;ay=y;break}}
+gx=gy=-1;hasS=true;items=[];
+const maxd=cells[0][2];
+if(lvl>=4){const d2=bfs(ax,ay,false),path=[];let x=1,y=1;while(d2[y*GW+x]>0){path.push([x,y]);const v=d2[y*GW+x];for(const[dx,dy]of DIRS){const a=x+dx,b=y+dy;if(a>=0&&b>=0&&a<GW&&b<GH&&d2[b*GW+a]==v-1){x=a;y=b;break}}}
+for(let i=Math.floor(path.length*.35);i<path.length*.85;i++){const[x,y]=path[i];T[y][x]=3;if(bfs(1,1,true)[ay*GW+ax]<0){gx=x;gy=y;break}T[y][x]=0}
+if(gx>=0){hasS=false;const d3=bfs(1,1,true),c=fl.filter(([x,y])=>d3[y*GW+x]>4&&T[y][x]==0);const[x,y]=c[rnd(c.length)];items.push({x:x*TS+TS/2,y:y*TS+TS/2,s:1})}}
+need=2+(lvl/3|0);got=0;
+const far=fl.filter(([x,y])=>d[y*GW+x]>=5);
+for(let i=0;i<need;i++){const[x,y]=far[rnd(far.length)];items.push({x:x*TS+TS/2,y:y*TS+TS/2})}
+cl=[];const cc=fl.filter(([x,y])=>x%2&&y%2&&(x>1||y>1));for(let i=0;i<2+(lvl/2|0);i++){const[x,y]=cc[rnd(cc.length)];cl.push({x:x*TS+TS/2,y:y*TS+TS/2})}
+P={x:TS*1.5,y:TS*1.5,fa:0,fl:true,hid:false};
+mons=[];const sp=fl.filter(([x,y])=>d[y*GW+x]>=Math.min(14,maxd*.6));
+for(let i=0;i<(lvl>=8?2:1);i++){const[x,y]=sp[rnd(sp.length)];mons.push({x:x*TS+TS/2,y:y*TS+TS/2,nt:null,goal:pick(),mode:'patrol',t:0,fa:0,ps:55+lvl*3,cs:82+lvl*4})}
+}
+function pick(){const[x,y]=fl[rnd(fl.length)];return[x,y]}
+/* player */
+function hit(x,y){for(const[a,b]of[[-R,-R],[R,-R],[-R,R],[R,R]]){const t=T[(y+b)/TS|0][(x+a)/TS|0];if(t)return t}return 0}
+function mv(dx,dy){const nx=P.x+dx,ny=P.y+dy;let t=hit(nx,P.y);if(!t)P.x=nx;else touch(t);t=hit(P.x,ny);if(!t)P.y=ny;else touch(t)}
+function say(s){msg=s;msgT=3}
+function touch(t){if(t==2){if(got>=need)win();else say('The door is locked. Find all keys ('+got+'/'+need+')')}
+else if(t==3){if(hasS){T[gy][gx]=0;say('The iron gate creaks open...');tn(90,.7,'sawtooth',.2,50)}else say('An iron gate. You need the silver key.')}}
+function hide(){if(st!='play')return;if(P.hid){P.hid=false;tn(120,.3,'sawtooth',.1,80);return}
+const c=cl.find(c=>Math.hypot(c.x-P.x,c.y-P.y)<TS*.7);if(c){P.hid=true;P.x=c.x;P.y=c.y;tn(100,.4,'sawtooth',.12,60);say('Hiding... stay quiet')}else say('No hiding spot nearby')}
+/* monster */
+function see(m){if(P.hid)return false;const dx=P.x-m.x,dy=P.y-m.y,d=Math.hypot(dx,dy);if(d>(P.fl?7.5:4.5)*TS&&d>1.5*TS)return false;for(let i=1;i<d/8;i++){const t=T[(m.y+dy*i*8/d)/TS|0][(m.x+dx*i*8/d)/TS|0];if(t==1||t==2||t==3)return false}return true}
+function upd(m,dt){
+const sees=see(m);if(sees){if(m.mode!='chase'){tn(260,.5,'sawtooth',.18,90);ns(.3,.15)}m.mode='chase';m.goal=[P.x/TS|0,P.y/TS|0]}
+if(m.mode=='search'){m.t-=dt;if(m.t<=0){m.mode='patrol';m.goal=pick()}return}
+if(!m.nt){const cx=m.x/TS|0,cy=m.y/TS|0;
+if(cx==m.goal[0]&&cy==m.goal[1]){if(m.mode=='chase'){m.mode='search';m.t=3;if(P.hid&&(P.x/TS|0)==cx&&(P.y/TS|0)==cy&&Math.random()<.35)caught()}else m.goal=pick();return}
+const d=bfs(m.goal[0],m.goal[1],false);let b=null,bd=d[cy*GW+cx];
+for(const[dx,dy]of DIRS){const a=cx+dx,c=cy+dy,v=d[c*GW+a];if(v>=0&&v<bd){bd=v;b=[a,c]}}
+if(!b){m.goal=pick();return}m.nt=b}
+const tx=m.nt[0]*TS+TS/2,ty=m.nt[1]*TS+TS/2,dx=tx-m.x,dy=ty-m.y,dd=Math.hypot(dx,dy),s=(m.mode=='chase'?m.cs:m.ps)*dt;
+m.fa=Math.atan2(dy,dx);if(dd<=s){m.x=tx;m.y=ty;m.nt=null}else{m.x+=dx/dd*s;m.y+=dy/dd*s}
+if(!P.hid&&Math.hypot(P.x-m.x,P.y-m.y)<22)caught()}
+/* flow */
+function ov(t,p,b,f){document.getElementById('t').textContent=t;document.getElementById('p').textContent=p;const e=document.getElementById('b');e.textContent=b;e.onclick=()=>{au();document.getElementById('ov').style.display='none';f()};document.getElementById('ov').style.display='flex'}
+function start(){gen();st='play';bn=2.5;msg='';msgT=0}
+function caught(){if(st!='play')return;st='scare';sc=0;ns(1,1);tn(90,1.2,'sawtooth',.5,40);tn(900,.6,'square',.25,200)}
+function win(){if(st!='play')return;st='over';tn(520,.3,'sine',.2);setTimeout(()=>tn(780,.5,'sine',.2),200);
+if(lvl>=10){lvl=1;try{localStorage.setItem('hh_lvl',1)}catch(e){}ov('YOU ESCAPED','You survived all 10 levels of the haunted house.\nThe monster is still out there...','Play again',start)}
+else{lvl++;try{localStorage.setItem('hh_lvl',lvl)}catch(e){}ov('Level cleared','You found the way out. The house shifts and rearranges...','Next level',start)}}
+function menu(){ov('HAUNTED ESCAPE','Find the keys, unlock the door, avoid the monster.\nWASD / arrows: move   F: flashlight   E: hide / leave closet\nTouch: drag left side to move, buttons for HIDE and LIGHT.\nBest played in landscape.',lvl>1?'Continue (level '+lvl+')':'Enter the house',start)}
+/* input */
+addEventListener('keydown',e=>{k[e.code]=1;if(e.code=='KeyF'&&st=='play')P.fl=!P.fl;if(e.code=='KeyE'||e.code=='Space')hide();if(e.code.startsWith('Arrow')||e.code=='Space')e.preventDefault()});
+addEventListener('keyup',e=>k[e.code]=0);
+function tc(e){e.preventDefault();jx=jy=0;if(!e.touches.length)jo=null;for(const t of e.touches){if(t.clientX<innerWidth/2){if(!jo)jo=[t.clientX,t.clientY];const dx=t.clientX-jo[0],dy=t.clientY-jo[1],l=Math.hypot(dx,dy)||1,m=Math.min(l/40,1);jx=dx/l*m;jy=dy/l*m}}}
+['touchstart','touchmove','touchend','touchcancel'].forEach(n=>C.addEventListener(n,e=>{if(n=='touchstart'&&!e.touches[1]&&e.touches[0].clientX<innerWidth/2)jo=[e.touches[0].clientX,e.touches[0].clientY];tc(e)},{passive:false}));
+document.getElementById('bh').onpointerdown=e=>{e.preventDefault();hide()};document.getElementById('bl').onpointerdown=e=>{e.preventDefault();if(st=='play')P.fl=!P.fl};
+document.querySelectorAll('#dp button').forEach(b=>{const c=b.dataset.k,on=e=>{e.preventDefault();k[c]=1},off=e=>{e.preventDefault();k[c]=0};b.onpointerdown=on;b.onpointerup=off;b.onpointerleave=off;b.onpointercancel=off;b.oncontextmenu=e=>e.preventDefault()});
+function rs(){const s=Math.min(innerWidth/W,innerHeight/H);C.style.width=W*s+'px';C.style.height=H*s+'px'}addEventListener('resize',rs);rs();
+/* draw */
+function face(t){X.fillStyle='#000';X.fillRect(0,0,W,H);const s=1+t*1.8,sh=(Math.random()-.5)*24;X.save();X.translate(W/2+sh,H/2+sh);X.scale(s,s);
+X.fillStyle='#cfc6b5';X.beginPath();X.ellipse(0,0,90,120,0,0,7);X.fill();X.fillStyle='#000';X.beginPath();X.ellipse(-35,-30,22,32,.2,0,7);X.fill();X.beginPath();X.ellipse(35,-30,22,32,-.2,0,7);X.fill();
+X.fillStyle='#e22';X.beginPath();X.arc(-35,-26,6,0,7);X.fill();X.beginPath();X.arc(35,-26,6,0,7);X.fill();
+X.fillStyle='#000';X.beginPath();X.ellipse(0,62,46,42,0,0,7);X.fill();X.fillStyle='#eee';for(let i=0;i<7;i++){X.beginPath();X.moveTo(-40+i*13,26);X.lineTo(-33+i*13,50);X.lineTo(-26+i*13,26);X.fill()}X.restore();if(t<.12){X.fillStyle='rgba(255,255,255,.8)';X.fillRect(0,0,W,H)}}
+function draw(){
+X.fillStyle='#000';X.fillRect(0,0,W,H);
+let cx=GW*TS<W?(GW*TS-W)/2:Math.max(0,Math.min(GW*TS-W,P.x-W/2)),cy=GH*TS<H?(GH*TS-H)/2:Math.max(0,Math.min(GH*TS-H,P.y-H/2));
+X.save();X.translate(-cx|0,-cy|0);
+for(let y=Math.max(0,cy/TS|0);y<Math.min(GH,(cy+H)/TS+1);y++)for(let x=Math.max(0,cx/TS|0);x<Math.min(GW,(cx+W)/TS+1);x++){const t=T[y][x],px=x*TS,py=y*TS;
+if(t==1){X.fillStyle='#4a3b44';X.fillRect(px,py,TS,TS);X.fillStyle='#2b2128';X.fillRect(px+3,py+3,TS-6,TS-6)}
+else{X.fillStyle=(x+y)%2?'#3a2f2a':'#34292540';X.fillStyle=(x+y)%2?'#3a2f2a':'#332924';X.fillRect(px,py,TS,TS);
+if(t==2){X.fillStyle=got>=need?'#4f8a5a':'#6b3a1e';X.fillRect(px+4,py+2,TS-8,TS-4);X.fillStyle=got>=need?'#cfe':'#d9b13b';X.fillRect(px+TS/2-4,py+TS/2-4,8,8)}
+if(t==3){X.strokeStyle='#9aa';X.lineWidth=3;for(let i=0;i<5;i++){X.beginPath();X.moveTo(px+6+i*8,py+2);X.lineTo(px+6+i*8,py+TS-2);X.stroke()}}}}
+for(const c of cl){X.fillStyle='#5a3a22';X.fillRect(c.x-15,c.y-19,30,38);X.fillStyle='#3a2414';X.fillRect(c.x-1,c.y-19,2,38);X.fillStyle='#d9b13b';X.fillRect(c.x-6,c.y,3,4);X.fillRect(c.x+3,c.y,3,4)}
+const pu=Math.sin(performance.now()/250)*2;
+for(const i of items){if(i.g)continue;X.fillStyle=i.s?'#9ad0ff':'#ffd23b';X.beginPath();X.arc(i.x,i.y+pu,6,0,7);X.fill();X.fillRect(i.x-1,i.y+pu,3,12);X.fillRect(i.x,i.y+pu+8,6,3)}
+if(!P.hid){X.fillStyle='#e8dcc6';X.beginPath();X.arc(P.x,P.y,R,0,7);X.fill();X.fillStyle='#222';X.beginPath();X.arc(P.x+Math.cos(P.fa)*7,P.y+Math.sin(P.fa)*7,3,0,7);X.fill()}
+for(const m of mons){X.fillStyle='#050305';X.beginPath();X.ellipse(m.x,m.y,15,19,0,0,7);X.fill();X.strokeStyle='#050305';X.lineWidth=5;X.beginPath();X.moveTo(m.x-12,m.y);X.lineTo(m.x-24,m.y+16);X.moveTo(m.x+12,m.y);X.lineTo(m.x+24,m.y+16);X.stroke()}
+X.restore();
+/* darkness */
+DX.globalCompositeOperation='source-over';DX.clearRect(0,0,W,H);DX.fillStyle='rgba(0,0,0,.965)';DX.fillRect(0,0,W,H);DX.globalCompositeOperation='destination-out';
+const px=P.x-cx,py=P.y-cy;let g=DX.createRadialGradient(px,py,4,px,py,75);g.addColorStop(0,'#000');g.addColorStop(1,'rgba(0,0,0,0)');DX.fillStyle=g;DX.beginPath();DX.arc(px,py,75,0,7);DX.fill();
+if(P.fl&&!P.hid){const f=Math.random()<.03*dn?.4:1;DX.save();DX.translate(px,py);DX.rotate(P.fa);g=DX.createRadialGradient(0,0,10,0,0,270);g.addColorStop(0,'rgba(0,0,0,'+f+')');g.addColorStop(1,'rgba(0,0,0,0)');DX.fillStyle=g;DX.beginPath();DX.moveTo(0,0);DX.arc(0,0,270,-.5,.5);DX.fill();DX.restore()}
+X.drawImage(D,0,0);
+for(const m of mons){const ex=m.x-cx,ey=m.y-cy;X.fillStyle='#f22';X.shadowColor='#f00';X.shadowBlur=10;X.beginPath();X.arc(ex-5+Math.cos(m.fa)*3,ey-8+Math.sin(m.fa)*3,2.5,0,7);X.fill();X.beginPath();X.arc(ex+5+Math.cos(m.fa)*3,ey-8+Math.sin(m.fa)*3,2.5,0,7);X.fill();X.shadowBlur=0}
+if(dn>0){g=X.createRadialGradient(W/2,H/2,H/3,W/2,H/2,W/1.6);g.addColorStop(0,'rgba(120,0,0,0)');g.addColorStop(1,'rgba(150,0,0,'+dn*.5+')');X.fillStyle=g;X.fillRect(0,0,W,H)}
+X.fillStyle='#d8d2c8';X.font='16px Georgia';X.fillText('Level '+lvl+'   Keys '+got+'/'+need+(gx>=0?(hasS?'   Silver key: yes':'   Silver key: no'):'')+(P.fl?'':'   (light off)'),12,24);
+if(bn>0){X.globalAlpha=Math.min(1,bn);X.font='36px Georgia';X.textAlign='center';X.fillText('Level '+lvl,W/2,H/2-60);X.textAlign='left';X.globalAlpha=1}
+if(msgT>0){X.globalAlpha=Math.min(1,msgT);X.textAlign='center';X.font='17px Georgia';X.fillText(msg,W/2,H-24);X.textAlign='left';X.globalAlpha=1}}
+/* loop */
+let dn=0,last=performance.now();
+function loop(n){const dt=Math.min(.05,(n-last)/1000);last=n;
+if(st=='scare'){sc+=dt;if(sc<1.5)face(sc);else{st='over';draw();ov('YOU WERE CAUGHT','It found you in the dark.','Try again',start)}}
+else if(st=='play'||st=='over'){
+if(st=='play'){
+let ix=(k.KeyD|k.ArrowRight)-(k.KeyA|k.ArrowLeft)+jx,iy=(k.KeyS|k.ArrowDown)-(k.KeyW|k.ArrowUp)+jy;const l=Math.hypot(ix,iy);
+if(l>.1&&!P.hid){if(l>1){ix/=l;iy/=l}P.fa=Math.atan2(iy,ix);const ox=P.x,oy=P.y;mv(ix*120*dt,0);mv(0,iy*120*dt);stp+=Math.hypot(P.x-ox,P.y-oy);if(stp>34){stp=0;ns(.05,.05)}}
+for(const i of items)if(!i.g&&Math.hypot(i.x-P.x,i.y-P.y)<20){i.g=1;if(i.s){hasS=true;say('You found the silver key')}else{got++;say('Key found ('+got+'/'+need+')')}tn(1200,.3,'sine',.15,1800)}
+let md=1e9;for(const m of mons){upd(m,dt);md=Math.min(md,Math.hypot(m.x-P.x,m.y-P.y))}
+dn=Math.max(0,1-md/(8*TS));hb-=dt;if(dn>0&&hb<=0){hb=.35+(1-dn)*.8;tn(65,.14,'sine',.5,40);setTimeout(()=>tn(58,.14,'sine',.4,38),160)}
+bn-=dt;msgT-=dt}
+draw()}
+else{X.fillStyle='#000';X.fillRect(0,0,W,H)}
+requestAnimationFrame(loop)}
+requestAnimationFrame(loop);menu();
+</script>
+<script>
+/* Landing start bridge: reveal the original game menu and activate its existing start action. */
+(function(){
+  const landing=document.getElementById('gfLanding');
+  const startButton=document.getElementById('gfStart');
+  const originalButton=document.getElementById('b');
+  if(!landing||!startButton||!originalButton)return;
+  startButton.addEventListener('click',function(){
+    landing.style.display='none';
+    originalButton.click();
+  });
+})();
+</script>
+</body></html>
