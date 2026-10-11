@@ -32,15 +32,24 @@ const games = [
   },
    {
     id: 18,
-    title: "",
+    title: "World Football",
     category: "",
     icon: "",
-    url: "",
-    newGame: false,
+    url: "games/world_football.html",
+    newGame: true,
     popular: false
   },
    {
-    id: 17,
+    id: 22,
+    title: "Find City",
+    category: "",
+    icon: "",
+    url: "games/find_the_city.html",
+    newGame: true,
+    popular: false
+  },
+   {
+    id: 24,
     title: "Shadow Cat",
     category: "",
     icon: "games/cat.webp",
@@ -222,10 +231,10 @@ const games = [
 
   {
     id: 103,
-    title: "Game ",
+    title: " Haunted Escape",
     category: "",
     icon: "",
-    url: "games/airplane.html",
+    url: "games/haunted_escape.html",
     newGame: false,
     popular: false
   },
@@ -240,15 +249,6 @@ const games = [
     popular: true
   },
 
-  {
-    id: 105,
-    title: "Game Coming Soon",
-    category: "",
-    icon: "",
-    url: "",
-    newGame: false,
-    popular: true
-  }
 ];
 
 
