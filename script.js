@@ -7,7 +7,7 @@ const games = [
     id: 21,
     title: "Horror Game",
     category: "",
-    icon: "games/horror_game.webp",
+    icon: "games/horrors.webp",
     url: "games/horror_game.html",
     newGame: true,
     popular: false
@@ -16,7 +16,7 @@ const games = [
     id: 20,
     title: "Jungle Survivor",
     category: "",
-    icon: "games/jungle_survival.webp",
+    icon: "games/jungle-survival.webp",
     url: "games/jungle_survivor.html",
     newGame: true,
     popular: false
@@ -34,7 +34,7 @@ const games = [
     id: 18,
     title: "World Football",
     category: "",
-    icon: "",
+    icon: "games/world_football.webp",
     url: "games/world_football.html",
     newGame: true,
     popular: false
@@ -43,7 +43,7 @@ const games = [
     id: 22,
     title: "Find City",
     category: "",
-    icon: "",
+    icon: "games/lost_road.webp",
     url: "games/find_the_city.html",
     newGame: true,
     popular: false
@@ -233,7 +233,7 @@ const games = [
     id: 103,
     title: " Haunted Escape",
     category: "",
-    icon: "",
+    icon: "games/horror_game.webp",
     url: "games/haunted_escape.html",
     newGame: false,
     popular: true
