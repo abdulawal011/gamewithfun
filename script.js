@@ -236,7 +236,7 @@ const games = [
     icon: "",
     url: "games/haunted_escape.html",
     newGame: false,
-    popular: false
+    popular: true
   },
 
   {
