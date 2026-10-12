@@ -52,7 +52,7 @@ const games = [
     id: 10,
     title: "Island Survivor 3D",
     category: "",
-    icon: "games/island.wedp",
+    icon: "games/island.webp",
     url: "games/island_survivor_3d.html",
     newGame: true,
     popular: false
