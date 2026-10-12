@@ -49,6 +49,15 @@ const games = [
     popular: false
   },
    {
+    id: 10,
+    title: "Island Survivor 3D",
+    category: "",
+    icon: "games/island.wedp",
+    url: "games/island_survivor_3d.html",
+    newGame: true,
+    popular: false
+  },
+   {
     id: 24,
     title: "Shadow Cat",
     category: "",
@@ -207,8 +216,8 @@ const games = [
     category: "Recing",
     icon: "games/car.webp",
     url: "games/careering.html",
-    newGame: true,
-    popular: false
+    newGame: false,
+    popular: true
   },
   {
     id: 101,
