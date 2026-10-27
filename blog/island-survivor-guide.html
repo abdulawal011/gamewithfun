@@ -1,1 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Island Survivor 3D Guide: Survival Tips, Crafting & Raft Escape | GameWithFun</title>
+  <meta name="description" content="Learn how to play Island Survivor 3D with practical survival tips for collecting resources, managing hunger and thirst, building shelters, crafting tools and escaping by raft.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://gamewithfun.com/blog/island-survivor-3d-guide.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Island Survivor 3D: Complete Survival Guide">
+  <meta property="og:description" content="Discover useful strategies for exploring the island, collecting materials, building shelter and planning your escape.">
+  <meta property="og:url" content="https://gamewithfun.com/blog/island-survivor-3d-guide.html">
+  <meta name="theme-color" content="#0b171b">
+
+  <style>
+    :root {
+      --bg: #0b171b;
+      --panel: #122329;
+      --panel2: #182d32;
+      --text: #edf7f4;
+      --muted: #a8bfba;
+      --green: #52e0a0;
+      --blue: #64c8ed;
+      --border: rgba(255,255,255,.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.8;
+    }
+
+    a { color: var(--green); }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0;
+      background: var(--green);
+      z-index: 9999;
+    }
+
+    .topbar {
+      padding: 15px 20px;
+      background: #101f24;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1120px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: white;
+      text-decoration: none;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .brand span { color: var(--green); }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 65px 20px 48px;
+      background:
+        radial-gradient(ellipse at top right, rgba(49,181,128,.16), transparent 48%),
+        linear-gradient(145deg, #12292c, #0b171b 75%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-inner {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .tag {
+      display: inline-block;
+      color: var(--green);
+      background: rgba(82,224,160,.1);
+      border: 1px solid rgba(82,224,160,.25);
+      border-radius: 30px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font-size: clamp(32px, 5vw, 53px);
+      line-height: 1.17;
+      letter-spacing: -1.5px;
+      margin: 20px 0;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .meta {
+      color: #8fa9a4;
+      font-size: 13px;
+      margin-top: 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 19px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: #062016;
+      background: var(--green);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+
+    .layout {
+      max-width: 1120px;
+      margin: 38px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 285px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    article, aside {
+      min-width: 0;
+    }
+
+    .content-card, .sidebar-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 27px;
+      margin-bottom: 22px;
+    }
+
+    article h2 {
+      font-size: 27px;
+      line-height: 1.35;
+      margin: 0 0 15px;
+      letter-spacing: -.5px;
+    }
+
+    article h3 {
+      font-size: 19px;
+      margin: 25px 0 8px;
+      color: #d8f7e9;
+    }
+
+    article p { color: #c1d3cf; }
+
+    article li {
+      color: #c1d3cf;
+      margin-bottom: 8px;
+    }
+
+    .toc-title {
+      font-size: 17px;
+      font-weight: bold;
+      margin: 0 0 12px;
+    }
+
+    .toc-list {
+      padding-left: 19px;
+      margin: 0;
+    }
+
+    .toc-list li { margin: 7px 0; }
+
+    .toc-list a {
+      color: #c1d3cf;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .toc-list a:hover { color: var(--green); }
+
+    .tip {
+      background: rgba(82,224,160,.07);
+      border-left: 4px solid var(--green);
+      padding: 15px 17px;
+      border-radius: 0 10px 10px 0;
+      margin: 20px 0;
+      color: #d6e9e2;
+    }
+
+    .warning {
+      background: rgba(100,200,237,.07);
+      border-left: 4px solid var(--blue);
+      padding: 15px 17px;
+      border-radius: 0 10px 10px 0;
+      margin: 20px 0;
+      color: #d6e9e2;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .resource {
+      background: var(--panel2);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .resource strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 5px;
+    }
+
+    .resource span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 360px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--panel2);
+      color: var(--green);
+    }
+
+    td { color: #c1d3cf; }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .faq {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq:last-child { border-bottom: 0; }
+
+    .faq h3 {
+      margin: 0 0 7px;
+      font-size: 17px;
+    }
+
+    .faq p { margin: 0; }
+
+    .cta {
+      text-align: center;
+      background: linear-gradient(145deg, #16382f, #122329);
+      border: 1px solid rgba(82,224,160,.25);
+      border-radius: 16px;
+      padding: 30px 22px;
+      margin-bottom: 22px;
+    }
+
+    .cta h2 { margin-bottom: 10px; }
+
+    .cta p {
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .sidebar-card h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+    }
+
+    .sidebar-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .sidebar-card a { text-decoration: none; }
+
+    .side-button {
+      display: block;
+      padding: 11px 13px;
+      background: var(--panel2);
+      border-radius: 9px;
+      margin-top: 9px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: #081215;
+      padding: 30px 20px;
+      text-align: center;
+      color: #8fa9a4;
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 12px 0;
+    }
+
+    .footer-links a {
+      color: #b6cbc5;
+      text-decoration: none;
+    }
+
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { order: -1; }
+      .sidebar-card.toc { display: block; }
+    }
+
+    @media (max-width: 520px) {
+      .hero { padding: 43px 17px 35px; }
+      .layout { padding: 0 13px; margin: 22px auto; gap: 12px; }
+      .content-card, .sidebar-card { padding: 19px; border-radius: 12px; }
+      article h2 { font-size: 23px; }
+      .resource-grid { grid-template-columns: 1fr; }
+      .brand { font-size: 19px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Island Survivor 3D Guide: Survival Tips, Crafting and Raft Escape",
+    "description": "An original beginner's guide to surviving, gathering resources, building shelters and escaping in Island Survivor 3D.",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://gamewithfun.com/blog/island-survivor-3d-guide.html"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "GameWithFun"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GameWithFun",
+      "url": "https://gamewithfun.com/"
+    },
+    "inLanguage": "en"
+  }
+  </script>
+</head>
+
+<body>
+  <div class="progress" id="readingProgress"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="https://gamewithfun.com/">Game<span>With</span>Fun</a>
+      <a class="nav-link" href="https://gamewithfun.com/">← Back to Games</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="tag">Survival Game Guide</span>
+      <h1>Island Survivor 3D: A Smarter Way to Survive the Island</h1>
+      <p>
+        A remote island can look peaceful at first, but surviving there takes
+        planning. Learn how to collect materials, manage your needs, create a
+        safe place to rest and prepare a raft for your next big move.
+      </p>
+      <div class="meta">By GameWithFun · Beginner's Guide · Island Survivor 3D</div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://gamewithfun.com/games/island_survivor_3d.html">Play Island Survivor 3D →</a>
+        <a class="btn btn-secondary" href="#getting-started">Read the Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="layout">
+    <article>
+      <section class="content-card" id="introduction">
+        <h2>Welcome to Your Island Survival Challenge</h2>
+        <p>
+          In Island Survivor 3D, you begin in an unfamiliar tropical environment
+          where your next decision can make the journey easier or harder. You
+          are not simply exploring scenery: you need to find useful materials,
+          look after your character and decide what to build before moving
+          toward a way off the island.
+        </p>
+        <p>
+          There are two main goals to work toward. You can prepare a raft and
+          attempt to leave, or test your planning skills by making it through
+          30 in-game days. Both approaches reward careful preparation rather
+          than rushing from one activity to another.
+        </p>
+        <div class="tip">
+          <strong>Beginner tip:</strong> Spend your first moments learning the
+          controls and checking your survival meters. A short plan can save
+          valuable time later.
+        </div>
+      </section>
+
+      <section class="content-card" id="getting-started">
+        <h2>1. What to Do When You First Arrive</h2>
+        <p>
+          After pressing the game's start buttons, take a moment to look around.
+          Nearby natural resources are your starting point. Trees, rocks and
+          bushes can provide materials or useful supplies, so explore the area
+          methodically instead of wandering without a goal.
+        </p>
+        <h3>Follow a simple opening routine</h3>
+        <ol>
+          <li>Move around the starting area and identify nearby resources.</li>
+          <li>Collect wood and stone whenever you can safely reach them.</li>
+          <li>Check health, hunger, thirst and stamina regularly.</li>
+          <li>Look for food and water while exploring.</li>
+          <li>Decide whether your first priority is a fire, a shelter or gathering more supplies.</li>
+        </ol>
+        <p>
+          The aim is to create a useful starting stock of materials. If you
+          begin building without checking what you have collected, you may
+          need to interrupt the task and return to resource gathering.
+        </p>
+      </section>
+
+      <section class="content-card" id="survival">
+        <h2>2. Keep Your Survival Meters Under Control</h2>
+        <p>
+          Staying alive is about more than moving through the landscape. Your
+          character has several needs to manage, and ignoring them while
+          exploring can make a promising run much more difficult.
+        </p>
+        <div class="resource-grid">
+          <div class="resource">
+            <strong>Health</strong>
+            <span>Watch your condition and avoid unnecessary risks.</span>
+          </div>
+          <div class="resource">
+            <strong>Hunger</strong>
+            <span>Look for food during your exploration instead of waiting until it becomes urgent.</span>
+          </div>
+          <div class="resource">
+            <strong>Thirst</strong>
+            <span>Make finding water part of your regular route around the island.</span>
+          </div>
+          <div class="resource">
+            <strong>Stamina</strong>
+            <span>Use sprinting thoughtfully so you have energy available when you need it.</span>
+          </div>
+        </div>
+        <p>
+          A useful habit is to check your meters before starting a long trip
+          or a building session. If a need is becoming urgent, deal with it
+          before committing to a distant destination.
+        </p>
+        <div class="warning">
+          <strong>Watch the shoreline:</strong> The game warns about dangers
+          around deep water. Do not assume that every part of the coast is safe
+          simply because it is close to land.
+        </div>
+      </section>
+
+      <section class="content-card" id="resources">
+        <h2>3. Collect Materials With a Purpose</h2>
+        <p>
+          Wood and stone are important building materials. Gathering them
+          without a plan can leave you carrying too little of what your next
+          project requires. Before you begin collecting, decide what you want
+          to construct and work toward that target.
+        </p>
+        <h3>Make each trip useful</h3>
+        <ul>
+          <li>Collect nearby wood and stone while exploring a new section of the island.</li>
+          <li>Remember where useful resource areas are so you can revisit them.</li>
+          <li>Check the construction requirements before spending your supplies.</li>
+          <li>Keep the raft goal in mind if escaping is your chosen ending.</li>
+        </ul>
+        <p>
+          Think of resources as a budget. Spending every piece of wood on
+          optional structures may delay a raft, while focusing only on escape
+          may leave you without a comfortable place to recover during a longer
+          survival attempt.
+        </p>
+      </section>
+
+      <section class="content-card" id="crafting">
+        <h2>4. Choose Buildings That Support Your Plan</h2>
+        <p>
+          Construction gives you a way to turn collected materials into useful
+          facilities. The game offers options such as a fire, tent, house,
+          farm and beds. Each costs resources, so the order in which you build
+          can make a real difference to your progress.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Structure</th>
+                <th>Materials required</th>
+                <th>Planning note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fire</td>
+                <td>3 wood, 2 stone</td>
+                <td>A useful early construction target.</td>
+              </tr>
+              <tr>
+                <td>Tent</td>
+                <td>5 wood</td>
+                <td>Consider it when organizing a basic base.</td>
+              </tr>
+              <tr>
+                <td>House</td>
+                <td>12 wood, 4 stone</td>
+                <td>Requires a larger stock of materials.</td>
+              </tr>
+              <tr>
+                <td>Farm</td>
+                <td>6 wood</td>
+                <td>Plan its cost alongside your other needs.</td>
+              </tr>
+              <tr>
+                <td>Bed</td>
+                <td>4 wood</td>
+                <td>Include it in your longer-term building plan.</td>
+              </tr>
+              <tr>
+                <td>Beach bed</td>
+                <td>5 wood</td>
+                <td>Compare its cost with other priorities.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          These material amounts are useful planning references, but the best
+          build order depends on your chosen objective and current supplies.
+          Check the in-game building interface before committing resources.
+        </p>
+
+        <h3>Escape-focused strategy</h3>
+        <p>
+          If leaving the island is your priority, avoid spending materials on
+          every available structure. Gather what the raft requires first, and
+          build other items only when they support your survival along the way.
+        </p>
+
+        <h3>Thirty-day survival strategy</h3>
+        <p>
+          If you want to last the full 30 days, consider a more balanced base.
+          Think about a fire, shelter and other available structures while
+          continuing to monitor food, water and stamina. Expand in stages
+          instead of using all your materials at once.
+        </p>
+      </section>
+
+      <section class="content-card" id="raft">
+        <h2>5. Prepare Your Raft Before Heading to the Shore</h2>
+        <p>
+          The raft is your route toward escape, but it takes planning to get
+          there. You need to collect the required materials and make sure your
+          character is ready for the trip. Reaching the shoreline without
+          enough supplies can mean returning to gather more.
+        </p>
+        <div class="tip">
+          <strong>Raft material target:</strong> Plan for 12 wood and 5 stone.
+          Check the in-game requirements before starting construction.
+        </div>
+        <h3>A practical escape checklist</h3>
+        <ul>
+          <li>Gather the wood and stone needed for the raft.</li>
+          <li>Check hunger, thirst, health and stamina before travelling.</li>
+          <li>Approach the shore carefully and pay attention to water warnings.</li>
+          <li>Use the raft-building control when you are at the appropriate shore location.</li>
+          <li>Keep enough time and supplies for any remaining preparation.</li>
+        </ul>
+        <p>
+          Avoid treating the raft as an afterthought. If escaping is your main
+          objective, let that goal guide your resource decisions from early in
+          the game.
+        </p>
+      </section>
+
+      <section class="content-card" id="controls">
+        <h2>6. Controls for Desktop and Mobile Players</h2>
+        <p>
+          Island Survivor 3D supports keyboard and mouse input on desktop, along
+          with touch controls for mobile devices. Learning the basic actions
+          first makes exploration and construction easier to manage.
+        </p>
+
+        <h3>Desktop controls</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Action</th><th>Control</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Move</td><td>W, A, S, D</td></tr>
+              <tr><td>Sprint</td><td>Shift</td></tr>
+              <tr><td>Look around</td><td>Mouse</td></tr>
+              <tr><td>Interact</td><td>E</td></tr>
+              <tr><td>Build fire</td><td>F</td></tr>
+              <tr><td>Build structures</td><td>C, H, V, B, N</td></tr>
+              <tr><td>Move a building</td><td>M</td></tr>
+              <tr><td>Remove a structure or fire</td><td>X</td></tr>
+              <tr><td>Build raft at the shore</td><td>R</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Mobile controls</h3>
+        <ul>
+          <li>Use the virtual joystick on the left side to move.</li>
+          <li>Drag the right side of the screen to look around.</li>
+          <li>Tap <strong>Act</strong> to interact with objects.</li>
+          <li>Use <strong>Run</strong> when you need to sprint.</li>
+          <li>Open <strong>Craft</strong> to access building actions.</li>
+          <li>Use <strong>Edit</strong> to manage structures.</li>
+        </ul>
+        <p>
+          On a phone, landscape orientation is recommended for a more
+          comfortable view of the environment and touch controls.
+        </p>
+      </section>
+
+      <section class="content-card" id="common-mistakes">
+        <h2>7. Mistakes That Can Slow Your Progress</h2>
+
+        <h3>Building before checking costs</h3>
+        <p>
+          A structure may look useful, but its material cost matters. Check the
+          requirements before spending resources needed for your main goal.
+        </p>
+
+        <h3>Ignoring the survival meters</h3>
+        <p>
+          Exploration can distract you from hunger, thirst or stamina. Make
+          checking your character's condition part of your routine.
+        </p>
+
+        <h3>Sprinting everywhere</h3>
+        <p>
+          Sprinting can help you move quickly, but using it constantly is not
+          always the best approach. Walk when you can and save bursts of speed
+          for moments when they are useful.
+        </p>
+
+        <h3>Leaving raft preparation too late</h3>
+        <p>
+          If you want to escape, keep track of the required wood and stone
+          throughout the run. A clear target helps prevent unnecessary detours.
+        </p>
+
+        <h3>Trying to do everything immediately</h3>
+        <p>
+          You do not need to construct every building at once. Choose the
+          next useful task, finish it and then decide what the island requires
+          from you next.
+        </p>
+      </section>
+
+      <section class="content-card" id="faq">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq">
+          <h3>What is the main objective of Island Survivor 3D?</h3>
+          <p>
+            You can work toward escaping the island with a raft or challenge
+            yourself to survive for 30 in-game days.
+          </p>
+        </div>
+
+        <div class="faq">
+          <h3>Which resources should beginners collect?</h3>
+          <p>
+            Start by gathering useful materials such as wood and stone. Also
+            look for food and water, and check construction costs before using
+            your supplies.
+          </p>
+        </div>
+
+        <div class="faq">
+          <h3>How much material does the raft require?</h3>
+          <p>
+            The listed requirement is 12 wood and 5 stone. Check the game's
+            building interface before beginning construction.
+          </p>
+        </div>
+
+        <div class="faq">
+          <h3>Can I play Island Survivor 3D on a mobile phone?</h3>
+          <p>
+            Yes. The game includes touch controls, including a movement
+            joystick and buttons for looking, interacting, running and crafting.
+          </p>
+        </div>
+
+        <div class="faq">
+          <h3>What are the desktop movement controls?</h3>
+          <p>
+            Use W, A, S and D to move, Shift to sprint, and the mouse to look
+            around. Press E to interact with objects.
+          </p>
+        </div>
+
+        <div class="faq">
+          <h3>Should I build a house immediately?</h3>
+          <p>
+            Not necessarily. A house costs more materials than several smaller
+            options. Decide whether a large structure fits your current needs
+            before committing to it.
+          </p>
+        </div>
+      </section>
+
+      <section class="cta" id="play">
+        <h2>Ready to Test Your Survival Skills?</h2>
+        <p>
+          Explore the island, make careful use of your resources and choose
+          your own route toward escape or a 30-day survival challenge.
+        </p>
+        <a class="btn btn-primary" href="https://gamewithfun.com/games/island_survivor_3d.html">
+          Play Island Survivor 3D Now →
+        </a>
+      </section>
+    </article>
+
+    <aside>
+      <div class="sidebar-card toc">
+        <div class="toc-title">📖 In This Guide</div>
+        <ol class="toc-list">
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#getting-started">Getting Started</a></li>
+          <li><a href="#survival">Survival Meters</a></li>
+          <li><a href="#resources">Collecting Resources</a></li>
+          <li><a href="#crafting">Crafting and Buildings</a></li>
+          <li><a href="#raft">Raft and Escape</a></li>
+          <li><a href="#controls">Game Controls</a></li>
+          <li><a href="#common-mistakes">Common Mistakes</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ol>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>🎮 Play the Game</h3>
+        <p>Ready to put these tips into practice? Open the game and begin your island adventure.</p>
+        <a class="side-button" href="https://gamewithfun.com/games/island_survivor_3d.html">
+          Play Island Survivor 3D →
+        </a>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>More from GameWithFun</h3>
+        <p>Explore more browser games and discover your next challenge.</p>
+        <a class="side-button" href="https://gamewithfun.com/">Browse All Games →</a>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <a class="brand" href="https://gamewithfun.com/">Game<span>With</span>Fun</a>
+    <div class="footer-links">
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </div>
+    <p>© 2026 GameWithFun. All rights reserved.</p>
+    <p>Game developed for GameWithFun.</p>
+  </footer>
+
+  <script>
+    (function () {
+      const progress = document.getElementById("readingProgress");
+
+      function updateProgress() {
+        const doc = document.documentElement;
+        const scrollable = doc.scrollHeight - window.innerHeight;
+        const percentage = scrollable > 0
+          ? (window.scrollY / scrollable) * 100
+          : 0;
+
+        progress.style.width = Math.min(100, Math.max(0, percentage)) + "%";
+      }
+
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress);
+      updateProgress();
+    })();
+  </script>
+</body>
+  </html>
