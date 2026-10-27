@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>GameWithFun Blog - Gaming Guides, Tips & Tutorials</title>
+  <meta name="description" content="Discover gaming tips, browser game guides, tutorials, game development ideas, and helpful articles from GameWithFun.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#7024d9">
+  <link rel="canonical" href="https://gamewithfun.com/blog/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GameWithFun Blog - Gaming Guides & Articles">
+  <meta property="og:description" content="Explore gaming tips, browser game guides, tutorials, and game development articles.">
+  <meta property="og:url" content="https://gamewithfun.com/blog/">
+  <meta property="og:site_name" content="GameWithFun">
+
+  <style>
+    :root {
+      --purple: #7024d9;
+      --purple-dark: #321064;
+      --orange: #ff8126;
+      --background: #f7f7fc;
+      --text: #202033;
+      --muted: #68687c;
+      --white: #fff;
+      --border: #e9e5f1;
+      --radius: 18px;
+      --shadow: 0 8px 28px rgba(44, 20, 80, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-wrap: break-word;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 36px));
+      margin-inline: auto;
+    }
+
+    /* HEADER AND NAVIGATION */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, .97);
+      border-bottom: 1px solid var(--border);
+      padding-top: env(safe-area-inset-top, 0px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--purple-dark);
+      flex-shrink: 0;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 9px;
+    }
+
+    .brand span {
+      color: var(--purple);
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 4px 8px;
+    }
+
+    .main-nav a {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 8px;
+      color: #454458;
+      font-size: .82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border-radius: 8px;
+    }
+
+    .main-nav a:hover {
+      color: var(--orange);
+      background: #fff7f0;
+    }
+
+    .main-nav a[aria-current="page"] {
+      color: var(--purple);
+      background: #f3eaff;
+    }
+
+    .main-nav .nav-home {
+      padding: 8px 12px;
+      color: #fff;
+      background: var(--purple);
+      border-radius: 10px;
+    }
+
+    .main-nav .nav-home:hover {
+      color: #fff;
+      background: var(--purple-dark);
+    }
+
+    /* HERO */
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      margin-top: 24px;
+      padding: clamp(48px, 8vw, 90px) clamp(18px, 5vw, 35px);
+      border-radius: 24px;
+      text-align: center;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 8% 100%, rgba(255, 123, 25, .96), transparent 45%),
+        radial-gradient(ellipse at 95% 0%, rgba(255, 151, 42, .88), transparent 42%),
+        linear-gradient(125deg, #411078 0%, #7024d9 45%, #9638c8 72%, #ed7029 100%);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 250px;
+      height: 250px;
+      right: -100px;
+      bottom: -150px;
+      border: 30px solid rgba(255, 255, 255, .10);
+    }
+
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      left: -90px;
+      top: -100px;
+      border: 25px solid rgba(255, 255, 255, .09);
+    }
+
+    .hero-content {
+      max-width: 850px;
+      margin-inline: auto;
+    }
+
+    .hero-label {
+      display: inline-block;
+      padding: 7px 14px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 50px;
+      background: rgba(255, 255, 255, .13);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 4.3rem);
+      line-height: 1.14;
+      font-weight: 900;
+      letter-spacing: -.8px;
+      margin-bottom: 18px;
+      color: #fff;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #ffe27a, #ffad48, #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin-inline: auto;
+      font-size: clamp(.96rem, 2vw, 1.08rem);
+      line-height: 1.85;
+      color: rgba(255, 255, 255, .96);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+      touch-action: manipulation;
+    }
+
+    .button:active {
+      transform: scale(.98);
+    }
+
+    .button-light {
+      color: var(--purple-dark);
+      background: #fff;
+    }
+
+    .button-outline {
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .7);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    /* CONTENT SECTIONS */
+
+    .section {
+      padding-block: clamp(40px, 7vw, 65px);
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      color: var(--purple-dark);
+      font-size: clamp(1.55rem, 4vw, 2.4rem);
+      line-height: 1.3;
+      margin-bottom: 7px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .article-count {
+      color: var(--purple);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* SEARCH */
+
+    .search-panel {
+      background: #fff;
+      padding: clamp(14px, 3vw, 22px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .search-label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .search-input {
+      display: block;
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 15px;
+      border: 1px solid #ddd6ed;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      font-size: 16px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(112, 36, 217, .12);
+    }
+
+    .filter-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 15px;
+    }
+
+    .filter-button {
+      min-height: 42px;
+      padding: 8px 14px;
+      border: 1px solid #e4dced;
+      border-radius: 50px;
+      background: #fff;
+      color: #575268;
+      font-size: .88rem;
+      font-weight: 700;
+    }
+
+    .filter-button.active,
+    .filter-button:hover {
+      background: var(--purple);
+      color: #fff;
+      border-color: var(--purple);
+    }
+
+    /* ARTICLE GRID */
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .article-card {
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 5px 22px rgba(38, 20, 65, .035);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .article-card[hidden] {
+      display: none !important;
+    }
+
+    .article-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    /* CSS ARTICLE ILLUSTRATIONS */
+
+    .article-art {
+      min-height: 175px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .article-art::before,
+    .article-art::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+    }
+
+    .article-art::before {
+      width: 170px;
+      height: 170px;
+      top: -90px;
+      right: -40px;
+      background: rgba(255, 255, 255, .17);
+    }
+
+    .article-art::after {
+      width: 110px;
+      height: 110px;
+      bottom: -70px;
+      left: -20px;
+      border: 18px solid rgba(255, 255, 255, .14);
+    }
+
+    .art-icon {
+      font-size: 4.4rem;
+      line-height: 1;
+      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .14));
+      transition: transform .2s ease;
+    }
+
+    .article-card:hover .art-icon {
+      transform: scale(1.07);
+    }
+
+    .art-airplane { background: linear-gradient(135deg, #1769aa, #59c4e8); }
+    .art-island { background: linear-gradient(135deg, #087f70, #76d9a1); }
+    .art-browser { background: linear-gradient(135deg, #6433bd, #c16be9); }
+    .art-coding { background: linear-gradient(135deg, #202b56, #657de9); }
+    .art-3d { background: linear-gradient(135deg, #9b3a16, #ffb347); }
+    .art-mobile { background: linear-gradient(135deg, #c12c77, #ff8b77); }
+    .art-puzzle { background: linear-gradient(135deg, #2563eb, #7c9bff); }
+    .art-survival { background: linear-gradient(135deg, #17633b, #8ac85c); }
+    .art-racing { background: linear-gradient(135deg, #a92332, #ff8a3d); }
+
+    .article-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .article-category {
+      align-self: flex-start;
+      display: inline-flex;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      border-radius: 50px;
+      background: #f1eaff;
+      color: #6827c7;
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
+    .article-body h3 {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      color: #28223a;
+    }
+
+    .article-body h3 a:hover {
+      color: var(--purple);
+    }
+
+    .article-body p {
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.8;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid #f0edf5;
+      color: #858197;
+      font-size: .8rem;
+    }
+
+    .read-link {
+      color: var(--purple);
+      font-weight: 800;
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .read-link:hover {
+      color: var(--orange);
+    }
+
+    .no-results {
+      display: none;
+      background: #fff;
+      padding: 30px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* ABOUT */
+
+    .about-box {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255, 129, 38, .12), transparent 35%),
+        linear-gradient(135deg, #fff, #f4edff);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: clamp(22px, 5vw, 46px);
+    }
+
+    .about-box h2 {
+      color: var(--purple-dark);
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      line-height: 1.35;
+      margin-bottom: 15px;
+    }
+
+    .about-box p {
+      color: #5e5a6e;
+      margin-bottom: 14px;
+    }
+
+    .about-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* CALL TO ACTION */
+
+    .cta {
+      text-align: center;
+      padding: clamp(35px, 6vw, 55px) 22px;
+      margin-bottom: 55px;
+      border-radius: 24px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(255, 139, 41, .85), transparent 38%),
+        linear-gradient(120deg, #47118f, #7024d9 65%, #a23dc4);
+    }
+
+    .cta h2 {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      max-width: 650px;
+      margin: 0 auto 23px;
+      color: rgba(255, 255, 255, .93);
+    }
+
+    /* FOOTER */
+
+    .site-footer {
+      background: #20132f;
+      color: #fff;
+      padding: 40px 0 20px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 30px;
+      padding-bottom: 28px;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .footer-brand span {
+      color: #ff9b49;
+    }
+
+    .footer-description {
+      max-width: 380px;
+      color: #c9bfd6;
+      font-size: .93rem;
+    }
+
+    .footer-column h3 {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: #ffb36e;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 7px;
+    }
+
+    .footer-links a {
+      color: #d3c9df;
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      font-size: .91rem;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .footer-bottom {
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, .13);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #b8acc8;
+      font-size: .84rem;
+    }
+
+    /* TABLET */
+
+    @media (max-width: 1050px) {
+      .header-inner {
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px 0;
+        gap: 6px;
+      }
+
+      .main-nav {
+        justify-content: center;
+      }
+
+      .article-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-main {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+      .container {
+        width: calc(100% - 28px);
+      }
+
+      .header-inner {
+        align-items: stretch;
+        padding: 9px 0 7px;
+        gap: 8px;
+      }
+
+      .brand {
+        align-self: center;
+        font-size: 1.18rem;
+      }
+
+      .brand img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .main-nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 1px 6px;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .main-nav a {
+        flex: 0 0 auto;
+        min-height: 40px;
+        padding: 0 10px;
+        font-size: .82rem;
+      }
+
+      .hero {
+        margin-top: 15px;
+        padding: 48px 17px;
+        border-radius: 18px;
+      }
+
+      .hero-label {
+        font-size: .7rem;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.9rem, 8vw, 2.8rem);
+        letter-spacing: -.6px;
+        overflow-wrap: anywhere;
+      }
+
+      .hero p {
+        font-size: .96rem;
+        line-height: 1.75;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 23px;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+        min-height: 48px;
+      }
+
+      .section {
+        padding-block: 38px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 20px;
+      }
+
+      .search-panel {
+        padding: 14px;
+        margin-bottom: 18px;
+      }
+
+      .filter-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2px 1px 8px;
+        gap: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .filter-button {
+        flex: 0 0 auto;
+        min-height: 42px;
+        padding: 8px 13px;
+      }
+
+      .article-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 17px;
+      }
+
+      .article-art {
+        min-height: 160px;
+      }
+
+      .art-icon {
+        font-size: 4rem;
+      }
+
+      .article-body {
+        padding: 18px;
+      }
+
+      .article-body h3 {
+        font-size: 1.12rem;
+      }
+
+      .article-body p {
+        font-size: .94rem;
+      }
+
+      .about-box {
+        padding: 22px 18px;
+      }
+
+      .cta {
+        margin-bottom: 38px;
+        border-radius: 18px;
+      }
+
+      .cta .button {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 23px;
+      }
+
+      .footer-main {
+        grid-column: auto;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        width: calc(100% - 22px);
+      }
+
+      .hero {
+        padding: 40px 14px;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .article-body {
+        padding: 15px;
+      }
+
+      .article-meta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    /* ACCESSIBILITY */
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #ffad48;
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "GameWithFun Blog",
+    "url": "https://gamewithfun.com/blog/",
+    "description": "Gaming guides, browser game tips, tutorials, and game development articles from GameWithFun.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "GameWithFun",
+      "url": "https://gamewithfun.com/"
+    }
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a class="brand" href="/" aria-label="GameWithFun homepage">
+        <img src="/logo.webp" alt="GameWithFun logo" width="42" height="42">
+        <div>Game<span>WithFun</span></div>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/#games">Games</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+        <a class="nav-home" href="/#games">Play Games</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="container">
+      <div class="hero">
+        <div class="hero-content">
+          <div class="hero-label">THE GAMEWITHFUN BLOG</div>
+
+          <h1>
+            GAMEWITHFUN BLOG<br>
+            Gaming Guides &amp; <span>Articles</span>
+          </h1>
+
+          <p>
+            Discover gaming tips, browser game guides, tutorials,
+            game development ideas, and helpful articles from
+            GameWithFun. Explore everything in one place.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-light" href="#latest-articles">
+              Explore Articles
+            </a>
+
+            <a class="button button-outline" href="/#games">
+              Play Free Games
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLES -->
+    <section class="section" id="latest-articles">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <h2>Latest Gaming Articles</h2>
+            <p>
+              Explore gaming guides, helpful tutorials, browser gaming
+              tips, and game development ideas.
+            </p>
+          </div>
+
+          <div class="article-count" id="article-count">9 Articles</div>
+        </div>
+
+        <!-- SEARCH AND FILTERS -->
+        <div class="search-panel">
+          <label class="search-label" for="article-search">
+            Find an Article
+          </label>
+
+          <input
+            type="search"
+            id="article-search"
+            class="search-input"
+            placeholder="Search gaming guides, tutorials, development..."
+            autocomplete="off"
+            aria-label="Search articles"
+          >
+
+          <div class="filter-list" aria-label="Filter articles by category">
+            <button class="filter-button active" type="button"
+              data-category="all" aria-pressed="true">
+              All Articles
+            </button>
+
+            <button class="filter-button" type="button"
+              data-category="guides" aria-pressed="false">
+              Game Guides
+            </button>
+
+            <button class="filter-button" type="button"
+              data-category="tips" aria-pressed="false">
+              Gaming Tips
+            </button>
+
+            <button class="filter-button" type="button"
+              data-category="development" aria-pressed="false">
+              Game Development
+            </button>
+
+            <button class="filter-button" type="button"
+              data-category="browser" aria-pressed="false">
+              Browser Games
+            </button>
+          </div>
+        </div>
+
+        <!-- ARTICLE CARDS -->
+        <div class="article-grid" id="article-grid">
+
+          <article class="article-card" data-category="guides">
+            <a href="./3d-airplane-storm-guide.html" aria-label="Read 3D Airplane Storm guide">
+              <div class="article-art art-airplane" aria-hidden="true">
+                <span class="art-icon">✈️</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Game Guides</span>
+              <h3><a href="./3d-airplane-storm-guide.html">3D Airplane Storm: Beginner's Guide</a></h3>
+              <p>Learn the basics of flying, avoiding obstacles, collecting rewards, and improving your performance in an airplane game.</p>
+              <div class="article-meta">
+                <span>Beginner Guide</span>
+                <a class="read-link" href="./3d-airplane-storm-guide.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="guides">
+            <a href="./island-survivor-guide.html" aria-label="Read Island Survivor guide">
+              <div class="article-art art-island" aria-hidden="true">
+                <span class="art-icon">🏝️</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Game Guides</span>
+              <h3><a href="./island-survivor-guide.html">Island Survivor: Survival Tips for Beginners</a></h3>
+              <p>Explore survival game basics, resource management, exploration strategies, and ways to plan your next move.</p>
+              <div class="article-meta">
+                <span>Survival Games</span>
+                <a class="read-link" href="./island-survivor-guide.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="browser">
+            <a href="./browser-gaming-tips.html" aria-label="Read browser gaming tips">
+              <div class="article-art art-browser" aria-hidden="true">
+                <span class="art-icon">🎮</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Browser Games</span>
+              <h3><a href="./browser-gaming-tips.html">10 Tips for a Better Browser Gaming Experience</a></h3>
+              <p>Discover practical ways to improve browser game performance, reduce interruptions, and enjoy games on different devices.</p>
+              <div class="article-meta">
+                <span>Gaming Tips</span>
+                <a class="read-link" href="./browser-gaming-tips.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="development">
+            <a href="./how-to-make-browser-games.html" aria-label="Read how to make browser games">
+              <div class="article-art art-coding" aria-hidden="true">
+                <span class="art-icon">💻</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Game Development</span>
+              <h3><a href="./how-to-make-browser-games.html">How to Make Your Own Browser Game</a></h3>
+              <p>Learn how HTML, CSS, and JavaScript work together to create interactive games that run directly in a web browser.</p>
+              <div class="article-meta">
+                <span>Development</span>
+                <a class="read-link" href="./how-to-make-browser-games.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="development">
+            <a href="./3d-game-development.html" aria-label="Read 3D game development guide">
+              <div class="article-art art-3d" aria-hidden="true">
+                <span class="art-icon">🧊</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Game Development</span>
+              <h3><a href="./3d-game-development.html">Introduction to 3D Browser Game Development</a></h3>
+              <p>Discover 3D game concepts, virtual environments, player controls, and technologies used to create browser games.</p>
+              <div class="article-meta">
+                <span>3D Development</span>
+                <a class="read-link" href="./3d-game-development.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="browser">
+            <a href="./mobile-browser-games.html" aria-label="Read mobile browser games guide">
+              <div class="article-art art-mobile" aria-hidden="true">
+                <span class="art-icon">📱</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Browser Games</span>
+              <h3><a href="./mobile-browser-games.html">Playing Browser Games on Mobile Devices</a></h3>
+              <p>Find out what makes a browser game mobile-friendly, including touch controls, responsive layouts, and screen orientation.</p>
+              <div class="article-meta">
+                <span>Mobile Gaming</span>
+                <a class="read-link" href="./mobile-browser-games.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="tips">
+            <a href="./puzzle-game-strategies.html" aria-label="Read puzzle game strategies">
+              <div class="article-art art-puzzle" aria-hidden="true">
+                <span class="art-icon">🧩</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Gaming Tips</span>
+              <h3><a href="./puzzle-game-strategies.html">Puzzle Game Strategies to Improve Your Skills</a></h3>
+              <p>Practice observation, logical thinking, and step-by-step planning to approach different types of puzzle games.</p>
+              <div class="article-meta">
+                <span>Puzzle Games</span>
+                <a class="read-link" href="./puzzle-game-strategies.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="guides">
+            <a href="./survival-game-beginners.html" aria-label="Read survival game beginner tips">
+              <div class="article-art art-survival" aria-hidden="true">
+                <span class="art-icon">🌲</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Game Guides</span>
+              <h3><a href="./survival-game-beginners.html">Survival Games: Essential Beginner Tips</a></h3>
+              <p>Understand exploration, resource planning, environmental awareness, and other common survival game mechanics.</p>
+              <div class="article-meta">
+                <span>Survival Guides</span>
+                <a class="read-link" href="./survival-game-beginners.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="article-card" data-category="tips">
+            <a href="./racing-game-tips.html" aria-label="Read racing game tips">
+              <div class="article-art art-racing" aria-hidden="true">
+                <span class="art-icon">🏎️</span>
+              </div>
+            </a>
+            <div class="article-body">
+              <span class="article-category">Gaming Tips</span>
+              <h3><a href="./racing-game-tips.html">Racing Game Tips: Improve Your Driving Skills</a></h3>
+              <p>Explore general racing strategies involving braking, cornering, track awareness, and maintaining control.</p>
+              <div class="article-meta">
+                <span>Racing Games</span>
+                <a class="read-link" href="./racing-game-tips.html">Read More →</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="no-results" id="no-results" role="status">
+          <h3>No articles found</h3>
+          <p>Try another search term or select a different category.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT THE BLOG -->
+    <section class="section" id="about-blog">
+      <div class="container">
+        <div class="about-box">
+          <h2>About the GameWithFun Blog</h2>
+
+          <p>
+            Welcome to the GameWithFun Blog, a place for gaming guides,
+            browser game tutorials, development ideas, and helpful gaming
+            information. Our goal is to make gaming and game development
+            easier to explore for players and beginners.
+          </p>
+
+          <p>
+            Discover articles about browser games, puzzle challenges,
+            racing games, survival adventures, mobile gaming, and 3D game
+            development. Whether you enjoy playing games or want to learn
+            how games are created, this blog helps you explore useful topics.
+          </p>
+
+          <p>
+            GameWithFun offers browser-based gaming experiences alongside
+            articles about gameplay mechanics, gaming strategies, and web
+            game technologies. Game availability and features may vary by
+            title and device.
+          </p>
+
+          <p>
+            We aim to make our content clear, useful, and accessible on
+            desktop computers, tablets, and mobile phones. Explore our
+            articles and visit the GameWithFun homepage to discover games
+            you can enjoy online.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="container">
+      <div class="cta">
+        <h2>Ready to Play?</h2>
+        <p>
+          Explore GameWithFun to discover browser games, try new challenges,
+          and find your next gaming adventure.
+        </p>
+        <a href="/#games" class="button button-light">
+          Explore Free Games →
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-main">
+          <a href="/" class="footer-brand">
+            <img src="/logo.webp" alt="GameWithFun logo" width="40" height="40">
+            <div>Game<span>WithFun</span></div>
+          </a>
+
+          <p class="footer-description">
+            GameWithFun brings together browser games, gaming guides,
+            tutorials, and game development articles for curious players
+            and aspiring creators.
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h3>Explore</h3>
+          <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/#games">Play Games</a>
+            <a href="/blog/">Gaming Blog</a>
+            <a href="/about.html">About Us</a>
+            <a href="/contact.html">Contact Us</a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Legal &amp; Information</h3>
+          <div class="footer-links">
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms and Conditions</a>
+            <a href="/disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 GameWithFun. All rights reserved.</p>
+        <p>Game developed for GameWithFun.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ARTICLE SEARCH AND CATEGORY FILTERS -->
+  <script>
+    (function () {
+      "use strict";
+
+      const searchInput = document.getElementById("article-search");
+      const filterButtons = document.querySelectorAll(".filter-button");
+      const cards = Array.from(document.querySelectorAll(".article-card"));
+      const noResults = document.getElementById("no-results");
+      const articleCount = document.getElementById("article-count");
+
+      let activeCategory = "all";
+
+      function filterArticles() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach(function (card) {
+          const category = card.dataset.category || "";
+          const text = card.textContent.toLowerCase();
+
+          const matchesCategory =
+            activeCategory === "all" || category === activeCategory;
+
+          const matchesSearch =
+            query === "" || text.includes(query);
+
+          const visible = matchesCategory && matchesSearch;
+
+          card.hidden = !visible;
+
+          if (visible) {
+            visibleCount++;
+          }
+        });
+
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+
+        articleCount.textContent =
+          visibleCount + (visibleCount === 1 ? " Article" : " Articles");
+      }
+
+      searchInput.addEventListener("input", filterArticles);
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          activeCategory = button.dataset.category;
+
+          filterButtons.forEach(function (item) {
+            const isActive = item === button;
+            item.classList.toggle("active", isActive);
+            item.setAttribute("aria-pressed", String(isActive));
+          });
+
+          filterArticles();
+        });
+      });
+
+      filterArticles();
+    })();
+  </script>
+
+</body>
+  </html>
