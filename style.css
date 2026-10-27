@@ -2008,3 +2008,57 @@ body {
     font-size: 13px;
   }
 }
+
+.blog-promo {
+  margin: 24px 0;
+  padding: 22px;
+  background: linear-gradient(135deg, #ffffff, #eaf3ff);
+  border: 1px solid #dce8f6;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(8, 120, 249, 0.08);
+}
+
+.blog-promo-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.blog-icon {
+  font-size: 34px;
+}
+
+.blog-promo h2 {
+  margin: 0 0 5px;
+  color: #0878f9;
+  font-size: 22px;
+}
+
+.blog-promo p {
+  line-height: 1.6;
+}
+
+.blog-promo-content p {
+  margin: 0;
+  color: #52657d;
+}
+
+.blog-description {
+  color: #34465d;
+  margin: 16px 0;
+}
+
+.blog-promo-button {
+  display: block;
+  padding: 13px 16px;
+  background: #0878f9;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.blog-promo-button:hover {
+  background: #0665d4;
+}
