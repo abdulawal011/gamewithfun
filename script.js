@@ -170,7 +170,7 @@ const games = [
     title: "bo",
     category: "",
     icon: "",
-    url: "games/trap-door-online.html",
+    url: "games/trap-door-online/index.html",
     newGame: false,
     popular: true
   },
