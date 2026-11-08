@@ -52,8 +52,8 @@ connect();
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/SkeletonUtils.js"></script>
 <script>
 // ---------- GLB characters (Draco + animations), loaded early while players are in the lobby ----------
-// Player 1 gets the first file, player 2 the second (assigned automatically when the match starts).
-const CHARACTER_FILES = ['characters/character_one.glb', 'characters/retargeted_tooo.glb'];
+// Player 1 gets the first file, player 2 the second. Put a different file as the 2nd entry to give them different looks.
+const CHARACTER_FILES = ['characters/character.glb', 'characters/character.glb'];
 function loadCharacters() {
   try {
     const draco = new THREE.DRACOLoader();
