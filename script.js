@@ -165,6 +165,15 @@ const games = [
     newGame: true,
     popular: false
   },
+   {
+    id: 28,
+    title: "bo",
+    category: "",
+    icon: "",
+    url: "games/trap-door-online.html",
+    newGame: false,
+    popular: true
+  },
   {
     id: 5,
     title: "Pipe Script",
